@@ -5,15 +5,16 @@
 
 int main(int argc, char** argv)
 {
+	WindowsSystem::setCursorVisible(false);
+
 	System sys;
+	PathHandler* sysPath = sys.path();
 
-	sys.setCursorVisible(false);
-
-	while (true) {
+	while (!sys.getAbort()) {
+		sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 		std::string aux = INStream::getLine();
 
-		sysprintln("inputed text: " + clr(aux, green));
-
-		sysprintln((aux == "hello, world") ? "true" : "false");
+		if (aux == "back") 
+			sysPath->back();
 	}
 }

@@ -129,17 +129,22 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
+    <ClCompile Include="src\pathHandler\pathScanner.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
-    <ClInclude Include="src\instream\instreamControl.h" />
     <ClInclude Include="src\instream\instreamRender.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
+    <ClInclude Include="src\pathHandler\pathHandler.h" />
+    <ClInclude Include="src\pathHandler\pathScanner.h" />
+    <ClInclude Include="src\pathHandler\pathToken.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
+    <ClInclude Include="src\system\windowsSystem.h" />
+    <ClInclude Include="src\utilities\stringUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

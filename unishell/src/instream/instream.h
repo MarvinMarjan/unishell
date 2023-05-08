@@ -31,7 +31,7 @@ private:
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);
 	static std::string formatString(std::string text, int cursorPos);	
 
-	static inline void updateConsoleInput(const INStreamBuffer& lineInput) noexcept {
-		sysprint(delWindow() + formatString(lineInput, lineInput.getCursorIndex()));
+	static inline void updateConsoleInput(const INStreamBuffer& lineInput, bool drawCursor = true) noexcept {
+		sysprint(delWindow() + formatString(lineInput, ((drawCursor) ? lineInput.getCursorIndex() : -1)));
 	}
 };

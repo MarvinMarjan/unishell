@@ -16,28 +16,33 @@ private:
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static inline std::string cursor(char ch, std::string after = endclr) noexcept {
-		return clr(INSCharToStr(ch), 75, underline) + after;
+		return clr(UTCharToStr(ch), 75, underline) + after;
 	}
 
-
-	static inline void renderCommand(size_t& i, int cursorPos, size_t firstWordSize, const std::string& text, std::stringstream& stream) {
+	// command string
+	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordSize) {
 		if (i >= firstWordSize) return;
 
+		// start color rendering
+		stream << id(141);
+
+		// draw command characters
 		for (i; i < firstWordSize; i++)
-			INStreamRender::renderChar(i, cursorPos, text[i], stream, id(141) + text[i]);	
+			INStreamRender::renderChar(i, cursorPos, text[i], stream, UTCharToStr(text[i]), id(141));
 		
+		// end color rendering
 		stream << endclr;
 	}
 
 	// quoted string: "hello, world"
 	static inline void renderQuoted(std::stringstream* stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		INStreamRender render(stream, cursorPos);
-		render.renderChar(i, current, id(106) + current, id(106));
+		render.renderChar(i, current, id(106) + current, id(106)); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
-			render.renderChar(i, text[i], INSCharToStr(text[i]), id(106));
+			render.renderChar(i, text[i], UTCharToStr(text[i]), id(106));
 
-		render.renderChar(i, text[i], INSCharToStr(text[i]) + endclr, "");
+		render.renderChar(i, text[i], UTCharToStr(text[i]) + endclr, ""); // draw last quote
 	}
 
 	// draws a cursor if currentPos equals to cursorPos.
@@ -48,7 +53,7 @@ private:
 	static inline void renderChar(size_t currentPos, int cursorPos, char cursorChar, std::stringstream& stream,
 		std::string defaultValue, std::string after = endclr)
 	{
-		if (currentPos == cursorPos)
+		if (currentPos == cursorPos && cursorPos != -1)
 			stream << cursor(cursorChar, after);
 
 		else

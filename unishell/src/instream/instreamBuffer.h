@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
+#include "../utilities/stringUtil.h"
 
-#define INSCharToStr INStreamBuffer::charToStr
+#include <string>
 
 class INStreamBuffer : public std::string
 {
@@ -40,42 +40,6 @@ public:
 		assign(buff);
 
 		cursorIndex--;
-	}
-
-	inline void eraseLast() noexcept {
-		if (!size()) return;
-
-		std::string buff = "";
-
-		for (size_t i = 0; i < size() - 1; i++)
-			buff += (*this)[i];
-
-		assign(buff);
-
-		cursorIndex--;
-	}
-
-	static inline std::string charToStr(char ch) noexcept {
-		return std::string(1, ch);
-	}
-
-	static inline std::vector<std::string> split(const std::string& src, char delimiter = ' ') {
-		std::vector<std::string> vec;
-		std::string aux = "";
-
-		for (size_t i = 0; i < src.size(); i++) {
-			if (src[i] == delimiter) {
-				vec.push_back(aux);
-				aux = "";
-				continue;
-			}
-
-			aux += src[i];
-		}
-
-		vec.push_back(aux);
-
-		return vec;
 	}
 
 private:

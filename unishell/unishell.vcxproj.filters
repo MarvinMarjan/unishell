@@ -20,6 +20,9 @@
     <ClCompile Include="src\instream\instream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\pathHandler\pathScanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -40,10 +43,22 @@
     <ClInclude Include="src\instream\instreamBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\instreamControl.h">
+    <ClInclude Include="src\instream\instreamRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\instreamRender.h">
+    <ClInclude Include="src\pathHandler\pathHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\windowsSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\stringUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pathHandler\pathScanner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pathHandler\pathToken.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

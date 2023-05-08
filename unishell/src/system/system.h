@@ -2,9 +2,13 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <ShlObj.h>
 
 #include "systemException.h"
+#include "windowsSystem.h"
+
 #include "../outstream/outputColor.h"
+#include "../pathHandler/pathHandler.h"
 
 #define sysprint        System::print
 #define sysprintln(msg) System::print(msg, true)
@@ -43,11 +47,12 @@ public:
 		abort = true;
 	}
 
-	static inline void setCursorVisible(bool visible) {
-		CONSOLE_CURSOR_INFO info = { 1, visible };
-		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+	static inline PathHandler* path() noexcept {
+		return workingPath;
 	}
 
 private:
 	static bool abort;
+
+	static PathHandler* workingPath;
 };

@@ -2,6 +2,7 @@
 
 #include <sstream>
 
+// user input
 std::string INStream::getLine()
 {
 	INStreamBuffer lineInput;
@@ -29,6 +30,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	switch ((int) charInput)
 	{
 	case CarriageReturn:
+		updateConsoleInput(lineInput, false);
 		sysprintln(""); // new line
 		end = true;
 		break;
@@ -63,20 +65,21 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	default:
-		lineInput.insertStr(lineInput.getCursorIndex(), INSCharToStr(charInput));
+		lineInput.insertStr(lineInput.getCursorIndex(), UTCharToStr(charInput));
 		updateConsoleInput(lineInput);
 	}
 }
 
+// format string
 std::string INStream::formatString(std::string text, int cursorPos)
 {
 	const std::string srcText = text;
 	std::stringstream fText;
-	size_t firstWordSize = INStreamBuffer::split(text)[0].size();
+	size_t firstWordSize = StringUtil::split(text)[0].size();
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
-		INStreamRender::renderCommand(i, cursorPos, firstWordSize, text, fText);
+		INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordSize);
 
 		char current = text[i];
 
@@ -87,12 +90,12 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			break;
 
 		default:
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, INSCharToStr(text[i]));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, UTCharToStr(text[i]));
 		}
 	}
 
 	// cursor is at end of the text
-	if (cursorPos >= text.size())
+	if (cursorPos >= text.size() && cursorPos != -1)
 		fText << INSCursor('_');
 	
 	return fText.str();
