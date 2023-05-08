@@ -4,10 +4,10 @@
 #include <conio.h>
 
 #include "../outstream/outputControl.h"
-#include "instreamBuffer.h"
 #include "../system/system.h"
 
-#define INSCharToStr INStreamBuffer::charToStr
+#include "instreamRender.h"
+
 
 enum ASCIICode
 {
@@ -32,7 +32,6 @@ private:
 	static std::string formatString(std::string text, int cursorPos);	
 
 	static inline void updateConsoleInput(const INStreamBuffer& lineInput) noexcept {
-		sysprint(delWindow());
-		sysprint(formatString(lineInput, lineInput.getCursorIndex()));
+		sysprint(delWindow() + formatString(lineInput, lineInput.getCursorIndex()));
 	}
 };

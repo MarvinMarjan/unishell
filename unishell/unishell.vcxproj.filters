@@ -43,5 +43,8 @@
     <ClInclude Include="src\instream\instreamControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\instream\instreamRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,8 @@
 
 #include <string>
 
+#define INSCharToStr INStreamBuffer::charToStr
+
 class INStreamBuffer : public std::string
 {
 public:
@@ -55,6 +57,25 @@ public:
 
 	static inline std::string charToStr(char ch) noexcept {
 		return std::string(1, ch);
+	}
+
+	static inline std::vector<std::string> split(const std::string& src, char delimiter = ' ') {
+		std::vector<std::string> vec;
+		std::string aux = "";
+
+		for (size_t i = 0; i < src.size(); i++) {
+			if (src[i] == delimiter) {
+				vec.push_back(aux);
+				aux = "";
+				continue;
+			}
+
+			aux += src[i];
+		}
+
+		vec.push_back(aux);
+
+		return vec;
 	}
 
 private:

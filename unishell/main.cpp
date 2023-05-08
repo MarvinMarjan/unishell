@@ -13,5 +13,7 @@ int main(int argc, char** argv)
 		std::string aux = INStream::getLine();
 
 		sysprintln("inputed text: " + clr(aux, green));
+
+		sysprintln((aux == "hello, world") ? "true" : "false");
 	}
 }

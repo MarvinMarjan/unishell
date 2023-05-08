@@ -1,5 +1,7 @@
 #include "instream.h"
 
+#include <sstream>
+
 std::string INStream::getLine()
 {
 	INStreamBuffer lineInput;
@@ -27,12 +29,12 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	switch ((int) charInput)
 	{
 	case CarriageReturn:
-		sysprintln("");
+		sysprintln(""); // new line
 		end = true;
 		break;
 
 	case Backspace:
-		lineInput.eraseAtIndex(lineInput.getCursorIndex() - 1);
+		lineInput.eraseAtIndex(lineInput.getCursorIndex() - 1); // erase the character before cursor
 		updateConsoleInput(lineInput);
 		
 		break;
@@ -68,18 +70,30 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 
 std::string INStream::formatString(std::string text, int cursorPos)
 {
-	std::string formatedStr = "";
+	const std::string srcText = text;
+	std::stringstream fText;
+	size_t firstWordSize = INStreamBuffer::split(text)[0].size();
 
-	if (cursorPos >= text.size())
-		text += clr("_", 75);
+	for (size_t i = 0; i < text.size(); i++)
+	{
+		INStreamRender::renderCommand(i, cursorPos, firstWordSize, text, fText);
 
-	else {
-		char buff = text[cursorPos];
-		text = text.erase(cursorPos, 1);
-		text.insert(cursorPos, clr(INSCharToStr(buff), 75, underline));
+		char current = text[i];
+
+		switch (current)
+		{
+		case '\"':
+			INStreamRender::renderQuoted(&fText, text, current, i, cursorPos);
+			break;
+
+		default:
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, INSCharToStr(text[i]));
+		}
 	}
 
-	formatedStr = text;
-
-	return formatedStr;
+	// cursor is at end of the text
+	if (cursorPos >= text.size())
+		fText << INSCursor('_');
+	
+	return fText.str();
 }

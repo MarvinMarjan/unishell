@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#define str std::to_string
+#define tostr std::to_string
 #define endclr "\033[0m"
 
 enum Color {
@@ -48,14 +48,14 @@ inline std::string clr(const std::string& text, std::vector<unsigned int> rgbVec
 
 // returns the color assigned to the id (0 - 255)
 inline std::string id(unsigned int i, ColorMode mode) noexcept {
-	return "\033[" + str((int) mode) + ";38;5;" + str(i) + 'm';
+	return "\033[" + tostr((int) mode) + ";38;5;" + tostr(i) + 'm';
 }
 
 // returns rgb ANSI notation
 inline std::string rgb(unsigned int red, unsigned int green, unsigned int blue, ColorMode mode) noexcept {
-	return "\033[" + str((int) mode) + ";38;2;" + str(red) + ';' + str(green) + ';' + str(blue) + 'm';
+	return "\033[" + tostr((int) mode) + ";38;2;" + tostr(red) + ';' + tostr(green) + ';' + tostr(blue) + 'm';
 }
 
 inline std::string colorToString(Color color, ColorMode mode) noexcept {
-	return "\033[" + str((int) mode) + ';' + str((int) color) + 'm';
+	return "\033[" + tostr((int) mode) + ';' + tostr((int) color) + 'm';
 }
