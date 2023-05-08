@@ -1,6 +1,17 @@
 #include <iostream>
 
-int main(void)
+#include "src/system/system.h"
+#include "src/instream/instream.h"
+
+int main(int argc, char** argv)
 {
-	std::cout << "hello, world" << std::endl;
+	System sys;
+
+	sys.setCursorVisible(false);
+
+	while (true) {
+		std::string aux = INStream::getLine();
+
+		sysprintln("inputed text: " + clr(aux, green));
+	}
 }
