@@ -18,7 +18,7 @@ public:
 		switch (type)
 		{
 		default:
-			init("");
+			ignoreCurrentIndexChange("");
 		}
 	}
 
@@ -27,7 +27,7 @@ public:
 	}
 
 private:
-	inline void init(const std::string& msg, const std::string& arg = "") noexcept {
+	inline void ignoreCurrentIndexChange(const std::string& msg, const std::string& arg = "") noexcept {
 		this->msg = msg;
 		this->arg = arg;
 	}

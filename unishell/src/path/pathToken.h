@@ -9,9 +9,7 @@ typedef std::vector<PathToken> TokenList;
 
 enum PathTokenType
 {
-	Dot, TwoDots, DirSeparator, Indentifier,
-
-	End
+	Dot, TwoDots, DirSeparator, Indentifier, Root
 };
 
 class PathToken

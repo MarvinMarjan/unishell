@@ -8,7 +8,7 @@
 #include "windowsSystem.h"
 
 #include "../outstream/outputColor.h"
-#include "../pathHandler/pathHandler.h"
+#include "../path/pathHandler.h"
 
 #define sysprint        System::print
 #define sysprintln(msg) System::print(msg, true)

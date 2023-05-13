@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,21 +130,24 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
-    <ClCompile Include="src\pathHandler\pathScanner.cpp" />
+    <ClCompile Include="src\path\pathHandler.cpp" />
+    <ClCompile Include="src\path\pathScanner.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
+    <ClInclude Include="src\instream\instreamListBuffer.h" />
     <ClInclude Include="src\instream\instreamRender.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
-    <ClInclude Include="src\pathHandler\pathHandler.h" />
-    <ClInclude Include="src\pathHandler\pathScanner.h" />
-    <ClInclude Include="src\pathHandler\pathToken.h" />
+    <ClInclude Include="src\path\pathHandler.h" />
+    <ClInclude Include="src\path\pathScanner.h" />
+    <ClInclude Include="src\path\pathToken.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />
+    <ClInclude Include="src\utilities\fileUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
