@@ -13,6 +13,24 @@ typedef std::vector<std::string> StringList;
 class StringUtil
 {
 public:
+	constexpr static inline bool isAlphaNumeric(char ch) noexcept {
+		return isAlpha(ch) || isDigit(ch);
+	}
+
+	constexpr static inline bool isAlpha(char ch) noexcept {
+		return (ch >= 'a' && ch <= 'z') ||
+			(ch >= 'A' && ch <= 'Z') ||
+			(ch == '_');
+	}
+
+	constexpr static inline bool isDigit(char ch) noexcept {
+		return (ch >= '0' && ch <= '9') || ch == '.';
+	}
+
+	constexpr static inline bool isMathOperator(char ch) noexcept {
+		return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch == ')');
+	}
+
 	static inline size_t findLast(const std::string& src, char ch) {
 		size_t index = 0;
 

@@ -11,13 +11,13 @@ void PathScanner::scanToken() {
 	switch (ch)
 	{
 	case '.':
-		if (match('.')) addToken(TwoDots);
-		else addToken(Dot);
+		if (match('.')) addToken(PathToken::TwoDots);
+		else addToken(PathToken::Dot);
 		break;
 
 	case '\\':
 	case '/':
-		addToken(DirSeparator);
+		addToken(PathToken::DirSeparator);
 		break;
 
 	default:

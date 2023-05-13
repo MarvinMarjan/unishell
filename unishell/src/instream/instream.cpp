@@ -100,8 +100,33 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			INStreamRender::renderQuoted(&fText, text, current, i, cursorPos);
 			break;
 
+		case '(':
+		case ')':
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 210));
+			break;
+
+		case '+':
+		case '-':
+		case '*':
+		case '/':
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 222));
+			break;
+
+		case '$':
+			INStreamRender::renderIndentifier(fText, text, current, i, cursorPos);
+			break;
+
 		default:
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, UTCharToStr(text[i]));
+			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
+			{
+				for (i; StringUtil::isDigit(text[i]); i++)
+					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 192));
+
+				i--;
+			}
+
+			else
+				INStreamRender::renderChar(i, cursorPos, text[i], fText, UTCharToStr(text[i]));
 		}
 	}
 

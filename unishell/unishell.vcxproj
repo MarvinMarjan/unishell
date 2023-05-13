@@ -129,12 +129,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\instream\inputParser\scanner.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\instream\inputParser\scanner.h" />
+    <ClInclude Include="src\instream\inputParser\token.h" />
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />

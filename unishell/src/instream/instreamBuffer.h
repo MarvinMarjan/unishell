@@ -16,7 +16,7 @@ public:
 	}
 
 	inline void cursorRight() noexcept {
-		if (cursorIndex < size() - 1) cursorIndex++;
+		if (cursorIndex < size()) cursorIndex++;
 	}
 
 	constexpr inline int getCursorIndex() const noexcept {

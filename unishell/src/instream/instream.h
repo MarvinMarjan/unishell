@@ -37,4 +37,8 @@ private:
 	static inline void updateConsoleInput(const INStreamBuffer& lineInput, bool drawCursor = true) noexcept {
 		sysprint(delWindow() + formatString(lineInput, ((drawCursor) ? lineInput.getCursorIndex() : -1)));
 	}
+
+	constexpr static inline bool isValidForNum(char ch) noexcept {
+		return (StringUtil::isDigit(ch) || StringUtil::isMathOperator(ch) || ch == ' ');
+	}
 };

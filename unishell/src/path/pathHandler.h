@@ -12,7 +12,7 @@ class PathHandler
 public:
 	PathHandler(const std::string& path);
 
-	void manip(TokenList instructions);
+	void manip(PathTokenList instructions);
 
 
 	// returns false if dirName doesn't exists

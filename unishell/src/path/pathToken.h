@@ -5,16 +5,16 @@
 
 class PathToken;
 
-typedef std::vector<PathToken> TokenList;
-
-enum PathTokenType
-{
-	Dot, TwoDots, DirSeparator, Indentifier, Root
-};
+typedef std::vector<PathToken> PathTokenList;
 
 class PathToken
 {
 public:
+	enum PathTokenType
+	{
+		Dot, TwoDots, DirSeparator, Indentifier, Root
+	};
+
 	PathToken(PathTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}
 
 	constexpr inline PathTokenType getType() const noexcept {

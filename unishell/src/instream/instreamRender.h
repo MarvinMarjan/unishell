@@ -23,26 +23,39 @@ private:
 	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordSize) {
 		if (i >= firstWordSize) return;
 
-		// start color rendering
-		stream << id(141);
+		stream << id(141); // start color rendering
 
 		// draw command characters
 		for (i; i < firstWordSize; i++)
 			INStreamRender::renderChar(i, cursorPos, text[i], stream, UTCharToStr(text[i]), id(141));
 		
-		// end color rendering
-		stream << endclr;
+		stream << endclr; // end color rendering
 	}
 
 	// quoted string: "hello, world"
 	static inline void renderQuoted(std::stringstream* stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		INStreamRender render(stream, cursorPos);
+
 		render.renderChar(i, current, id(106) + current, id(106)); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
 			render.renderChar(i, text[i], UTCharToStr(text[i]), id(106));
 
 		render.renderChar(i, text[i], UTCharToStr(text[i]) + endclr, ""); // draw last quote
+	}
+
+	// indentifier: $indentifier
+	static inline void renderIndentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		stream << id(115);
+
+		INStreamRender::renderChar(i, cursorPos, current, stream, UTCharToStr(text[i]), id(115));
+
+		while (StringUtil::isAlphaNumeric(text[++i]))
+			INStreamRender::renderChar(i, cursorPos, text[i], stream, UTCharToStr(text[i]), id(115));
+
+		i--; // necessary to draw next char
+
+		stream << endclr;
 	}
 
 	// draws a cursor if currentPos equals to cursorPos.

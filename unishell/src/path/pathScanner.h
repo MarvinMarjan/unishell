@@ -10,7 +10,7 @@ class PathScanner
 public:
 	PathScanner(const std::string& src);
 
-	inline TokenList scanTokens() noexcept {
+	inline PathTokenList scanTokens() noexcept {
 		while (!isAtEnd()) {
 			start = current;
 			scanToken();
@@ -20,7 +20,7 @@ public:
 	}
 
 private:
-	inline void addToken(PathTokenType type) noexcept {
+	inline void addToken(PathToken::PathTokenType type) noexcept {
 		tokens.push_back(PathToken(type, src.substr(start, current - start)));
 	}
 
@@ -30,7 +30,7 @@ private:
 	inline void rootIndentifier() {
 		if (src.size() >= 3 && FileUtil::exists(UTCharToStr(peekPrev()) + peek() + peekNext())) {
 			current += 2;
-			addToken(Root);
+			addToken(PathToken::Root);
 		}
 
 		// TODO: else, throw a error
@@ -39,7 +39,7 @@ private:
 	inline void indentifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
 		if (peek() == ':' && !tokens.size()) rootIndentifier();
-		else addToken(Indentifier);
+		else addToken(PathToken::Indentifier);
 	}
 
 	inline bool isAtEnd() const noexcept {
@@ -47,8 +47,7 @@ private:
 	}
 
 	inline bool match(char ch) noexcept {
-		if (isAtEnd()) return false;
-		if (peek() != ch) return false;
+		if (isAtEnd() || peek() != ch) return false;
 
 		current++;
 		return true;
@@ -63,13 +62,13 @@ private:
 	}
 	
 	inline char peekNext() const noexcept {
-		if ((size_t)current + 1 >= src.size()) return '\0';
-		return src[(size_t)current + 1];
-	}
+		if (current + 1 >= src.size()) return '\0';
+		return src[current + 1];
+	}	
 
 	inline char peekPrev() const noexcept {
-		if ((size_t)current - 1 < 0) return '\0';
-		return src[(size_t)current - 1];
+		if (current - 1 < 0) return '\0';
+		return src[current - 1];
 	}
 
 	static constexpr inline bool isValidChar(char ch) noexcept {
@@ -77,10 +76,10 @@ private:
 				ch != '<' && ch != '>' && ch != '|' && ch != ':');
 	}
 
-	TokenList tokens;
+	PathTokenList tokens;
 
 	std::string src;
 
-	unsigned int start;
-	unsigned int current;
+	size_t start;
+	size_t current;
 };

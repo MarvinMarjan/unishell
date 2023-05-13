@@ -6,35 +6,35 @@ PathHandler::PathHandler(const std::string& path) {
 	canManip = true;
 }
 
-void PathHandler::manip(TokenList instructions) {
+void PathHandler::manip(PathTokenList instructions) {
 	canManip = true;
 
 	for (PathToken token : instructions)
 		switch (token.getType())
 		{
-		case Dot:
+		case PathToken::Dot:
 			canManip = false;
 			break;
 
-		case DirSeparator:
+		case PathToken::DirSeparator:
 			canManip = true;
 			break;
 
-		case TwoDots:
+		case PathToken::TwoDots:
 			if (!canManip) break;
 
 			back();
 			canManip = false;
 			break;
 
-		case Indentifier:
+		case PathToken::Indentifier:
 			if (!canManip) break;
 
 			into(token.getLexical());
 			canManip = false;
 			break;
 
-		case Root:
+		case PathToken::Root:
 			if (!canManip) break;
 
 			into(token.getLexical(), true);
