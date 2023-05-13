@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+INSListBuffer INStream::globalInputList = INSListBuffer();
+
 // user input
 std::string INStream::getLine()
 {
@@ -27,10 +29,15 @@ std::string INStream::getLine()
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
-	switch ((int) charInput)
+	// reset input list current index
+	if ((int)charInput != SpecialChar)
+		globalInputList.reset();
+
+	switch ((int)charInput)
 	{
 	case CarriageReturn:
 		updateConsoleInput(lineInput, false);
+		globalInputList.add(lineInput);
 		sysprintln(""); // new line
 		end = true;
 		break;
@@ -46,19 +53,23 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	case SpecialChar:
 		charInput = _getch(); // each code is consumed individually, so you need to consume twice
 
-		// TODO: arrow character processing
-		if (charInput == UpArrow)
-		{
+		// TODO: arrow character processing (not working)
+		if (charInput == UpArrow) {
+			globalInputList.up();
+			lineInput.assign(globalInputList.get());
+			lineInput.setCursorIndex(lineInput.size());
+		}
+			
+		else if (charInput == DownArrow && !globalInputList.ignoreCurrentIndexChange) {
+			globalInputList.down();
+			lineInput.assign(globalInputList.get());
+			lineInput.setCursorIndex(lineInput.size());
 		}
 
-		else if (charInput == DownArrow)
-		{
-		}
-
-		else if (charInput == LeftArrow && lineInput.getCursorIndex() > 0)
+		else if (charInput == LeftArrow)
 			lineInput.cursorLeft();
 
-		else if (charInput == RightArrow && lineInput.getCursorIndex() < lineInput.size())
+		else if (charInput == RightArrow)
 			lineInput.cursorRight();
 
 		updateConsoleInput(lineInput);

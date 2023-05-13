@@ -7,6 +7,7 @@
 #include "../system/system.h"
 
 #include "instreamRender.h"
+#include "instreamListBuffer.h"
 
 
 enum ASCIICode
@@ -28,6 +29,8 @@ public:
 	static std::string getLine();
 
 private:
+	static INSListBuffer globalInputList; // global
+
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);
 	static std::string formatString(std::string text, int cursorPos);	
 

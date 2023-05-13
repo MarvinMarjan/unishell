@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../utilities/fileUtil.h"
+#include "../utilities/stringUtil.h"
+
 #include "pathToken.h"
 
 class PathScanner
@@ -23,9 +26,20 @@ private:
 
 	void scanToken();
 
+	// path to system root "C:/"
+	inline void rootIndentifier() {
+		if (src.size() >= 3 && FileUtil::exists(UTCharToStr(peekPrev()) + peek() + peekNext())) {
+			current += 2;
+			addToken(Root);
+		}
+
+		// TODO: else, throw a error
+	}
+
 	inline void indentifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
-		addToken(Indentifier);
+		if (peek() == ':' && !tokens.size()) rootIndentifier();
+		else addToken(Indentifier);
 	}
 
 	inline bool isAtEnd() const noexcept {
@@ -53,10 +67,14 @@ private:
 		return src[(size_t)current + 1];
 	}
 
+	inline char peekPrev() const noexcept {
+		if ((size_t)current - 1 < 0) return '\0';
+		return src[(size_t)current - 1];
+	}
 
 	static constexpr inline bool isValidChar(char ch) noexcept {
 		return (ch != '\\' && ch != '/' && ch != '*' && ch != '?' && 
-				ch != '<' && ch != '>' && ch != '|');
+				ch != '<' && ch != '>' && ch != '|' && ch != ':');
 	}
 
 	TokenList tokens;

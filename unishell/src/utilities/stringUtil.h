@@ -2,10 +2,13 @@
 
 #include <string>
 #include <vector>
-#include <codecvt>
+
+#include <Windows.h>
 
 #define UTCharToStr StringUtil::charToStr
 #define UTFromWStr  StringUtil::wstringToString
+
+typedef std::vector<std::string> StringList;
 
 class StringUtil
 {
@@ -24,8 +27,8 @@ public:
 		return src.substr(0, src.size() - 1);
 	}
 
-	static inline std::vector<std::string> split(const std::string& src, char delimiter = ' ') noexcept {
-		std::vector<std::string> vec;
+	static inline StringList split(const std::string& src, char delimiter = ' ') noexcept {
+		StringList vec;
 		std::string aux = "";
 
 		for (size_t i = 0; i < src.size(); i++) {
@@ -43,11 +46,17 @@ public:
 		return vec;
 	}
 
-	static inline std::string wstringToString(const std::wstring& src) noexcept {
-		std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-		std::string str = converter.to_bytes(src);
+	static inline std::string wstringToString(const std::wstring& wstr) noexcept {
+		return std::string(wcharToChar(wstr.c_str()));
+	}
 
-		return str;
+	// using Windows API for conversion. wstring_convert is deprecated since C++17
+	static inline char* wcharToChar(const wchar_t* wchar) {
+		int len = WideCharToMultiByte(CP_UTF8, 0, wchar, -1, nullptr, 0, nullptr, nullptr);
+		char* charStr = new char[len];
+		WideCharToMultiByte(CP_UTF8, 0, wchar, -1, charStr, len, nullptr, nullptr);
+		
+		return charStr;
 	}
 
 	static inline std::string charToStr(char ch) noexcept {

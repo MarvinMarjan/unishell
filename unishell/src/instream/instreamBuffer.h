@@ -11,16 +11,20 @@ public:
 		cursorIndex = 0;
 	}
 
-	constexpr inline void cursorLeft() noexcept {
-		cursorIndex--;
+	inline void cursorLeft() noexcept {
+		if (cursorIndex > 0) cursorIndex--;
 	}
 
-	constexpr inline void cursorRight() noexcept {
-		cursorIndex++;
+	inline void cursorRight() noexcept {
+		if (cursorIndex < size() - 1) cursorIndex++;
 	}
 
 	constexpr inline int getCursorIndex() const noexcept {
 		return cursorIndex;
+	}
+
+	constexpr inline void setCursorIndex(int index) noexcept {
+		cursorIndex = index;
 	}
 
 	inline void insertStr(size_t index, const std::string& text) {
