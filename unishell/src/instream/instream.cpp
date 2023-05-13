@@ -58,7 +58,8 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 			lineInput.assign(globalInputList.get());
 			lineInput.setCursorIndex(lineInput.size());
 		}
-			
+		
+		// don't allow DownArrow processing if ignoreCurrenIndexChange is true
 		else if (charInput == DownArrow && !globalInputList.ignoreCurrentIndexChange) {
 			globalInputList.down();
 			lineInput.assign(globalInputList.get());
