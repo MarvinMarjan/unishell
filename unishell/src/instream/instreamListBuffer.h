@@ -42,6 +42,7 @@ public:
 
 	inline std::string get() noexcept {
 		if (size() && current < size()) return (*this)[current];
+		return std::string();
 	}
 
 	bool ignoreCurrentIndexChange;

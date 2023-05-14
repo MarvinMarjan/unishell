@@ -26,7 +26,7 @@
     <ClCompile Include="src\path\pathHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\instream\inputParser\scanner.cpp">
+    <ClCompile Include="src\parser\instream\scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,10 +73,19 @@
     <ClInclude Include="src\instream\instreamListBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\inputParser\scanner.h">
+    <ClInclude Include="src\scanner\scannerBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\inputParser\token.h">
+    <ClInclude Include="src\parser\instream\scanner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parser\instream\token.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parser\expression\expr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\parser\expression\type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

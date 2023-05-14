@@ -56,14 +56,14 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		if (charInput == UpArrow) {
 			globalInputList.up();
 			lineInput.assign(globalInputList.get());
-			lineInput.setCursorIndex(lineInput.size());
+			lineInput.setCursorIndex((int) lineInput.size());
 		}
 		
 		// don't allow DownArrow processing if ignoreCurrenIndexChange is true
 		else if (charInput == DownArrow && !globalInputList.ignoreCurrentIndexChange) {
 			globalInputList.down();
 			lineInput.assign(globalInputList.get());
-			lineInput.setCursorIndex(lineInput.size());
+			lineInput.setCursorIndex((int) lineInput.size());
 		}
 
 		else if (charInput == LeftArrow)

@@ -2,14 +2,15 @@
 
 #include "../../utilities/stringUtil.h"
 
+#include "../../base/scannerBase.h"
 #include "token.h"
 
-class InputScanner
+class InputScanner : public ScannerBase<InputToken>
 {
 public:
-	InputScanner(const std::string& src);
+	InputScanner(const std::string& src) : ScannerBase(src) {}
 
-	inline InputTokenList scanTokens() {
+	InputTokenList scanTokens() override {
 		while (!isAtEnd()) {
 			start = current;
 			scanToken();
@@ -19,7 +20,7 @@ public:
 	}
 
 private:
-	void scanToken();
+	void scanToken() override;
 
 	inline void addToken(InputToken::InputTokenType type) noexcept {
 		tokens.push_back(InputToken(type, src.substr(start, current - start)));
@@ -59,34 +60,5 @@ private:
 		addToken(type);
 	}
 
-	inline bool isAtEnd() const noexcept {
-		return current >= src.size();
-	}
-
-	inline bool match(char ch) noexcept {
-		if (isAtEnd() || peek() != ch) return false;
-
-		current++;
-		return true;
-	}
-
-	inline char advance() noexcept {
-		return src[current++];
-	}
-
-	inline char peek() noexcept {
-		return src[current];
-	}
-
-	inline char peekNext() const noexcept {
-		if (current + 1 >= src.size()) return '\0';
-		return src[current + 1];
-	}
-
 	InputTokenList tokens;
-
-	std::string src;
-
-	size_t start;
-	size_t current;
 };

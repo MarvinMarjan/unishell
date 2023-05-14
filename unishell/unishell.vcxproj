@@ -129,24 +129,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\instream\inputParser\scanner.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
+    <ClCompile Include="src\parser\instream\scanner.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\instream\inputParser\scanner.h" />
-    <ClInclude Include="src\instream\inputParser\token.h" />
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />
     <ClInclude Include="src\instream\instreamRender.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
+    <ClInclude Include="src\parser\expression\expr.h" />
+    <ClInclude Include="src\parser\expression\type.h" />
+    <ClInclude Include="src\parser\instream\scanner.h" />
+    <ClInclude Include="src\parser\instream\token.h" />
     <ClInclude Include="src\path\pathHandler.h" />
     <ClInclude Include="src\path\pathScanner.h" />
     <ClInclude Include="src\path\pathToken.h" />
+    <ClInclude Include="src\scanner\scannerBase.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />

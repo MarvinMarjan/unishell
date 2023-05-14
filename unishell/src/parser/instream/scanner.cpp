@@ -1,12 +1,5 @@
 #include "scanner.h"
 
-InputScanner::InputScanner(const std::string& src) {
-	start = 0;
-	current = 0;
-
-	this->src = src;
-}
-
 void InputScanner::scanToken()
 {
 	char ch = advance();
