@@ -5,6 +5,8 @@
 
 #include <string>
 
+#define UNEXPECTED_TOKEN_MSG "Unexpected token"
+
 enum SystemExceptionType
 {
 	ExprScannerError,
@@ -37,12 +39,13 @@ public:
 		}
 	}
 
+	// formated error message
 	inline std::string toString() const noexcept {
 		return clr('#' + typeMsg, 153) + clr(" Error\n", 196) + ref.getString() + "\n" + " > " + msg + '\n';
 	}
 
 private:
-	std::string typeMsg;
+	std::string typeMsg; 
 	std::string msg;
 	ExceptionRef ref;
 

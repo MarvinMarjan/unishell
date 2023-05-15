@@ -29,6 +29,10 @@ public:
 		return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch == ')');
 	}
 
+	constexpr static inline bool isComparisonOperator(char ch) noexcept {
+		return (ch == '=' || ch == '!' || ch == '>' || ch == '<');
+	}
+
 	static inline size_t findLast(const std::string& src, char ch) {
 		size_t index = 0;
 

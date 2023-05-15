@@ -39,6 +39,6 @@ private:
 	}
 
 	constexpr static inline bool isValidForNum(char ch) noexcept {
-		return (StringUtil::isDigit(ch) || StringUtil::isMathOperator(ch) || ch == ' ');
+		return (StringUtil::isDigit(ch) || StringUtil::isMathOperator(ch) || StringUtil::isComparisonOperator(ch) || ch == ' ');
 	}
 };

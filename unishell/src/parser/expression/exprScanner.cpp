@@ -24,9 +24,9 @@ void ExprScanner::scanToken() {
 	case '*': addToken(STAR); break;
 	case '/': addToken(SLASH); break;
 
-	case '=':
-		if (match('=')) 
-			addToken(EQUAL_EQUAL); 
+	case '=': 
+		if (match('='))	addToken(EQUAL_EQUAL);
+		else throw SystemException(ExprScannerError, UNEXPECTED_TOKEN_MSG, ExceptionRef(src, current - 1));
 		break;
 
 	case '!': addToken((match('=') ? BANG_EQUAL : BANG)); break;
@@ -41,6 +41,6 @@ void ExprScanner::scanToken() {
 			number();
 
 		else
-			throw SystemException(ExprScannerError, "Unexpected token", ExceptionRef(src, current - 1));
+			throw SystemException(ExprScannerError, UNEXPECTED_TOKEN_MSG, ExceptionRef(src, current - 1));
 	}
 }

@@ -105,6 +105,10 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 210));
 			break;
 
+		case '!':
+		case '<':
+		case '>':
+		case '=':
 		case '+':
 		case '-':
 		case '*':

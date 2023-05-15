@@ -84,10 +84,11 @@ private:
 
 		if (match({ LPAREN })) {
 			Expr* expr = expression();
-			advance();//consume(RPAREN, "Expected ')' after expression");
+			advance();
 			return new Group(expr);
 		}
 
+		// TODO: improve this:
 		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(prev().getLexical()));
 	}
 

@@ -37,8 +37,11 @@ void InputScanner::expression() {
 	}
 
 	// ')' missing in expression
-	if (!isEnclosing) throw SystemException(InstreamScannerError, "Unterminated expression", ExceptionRef(src, current - 1));
+	if (!isEnclosing) 
+		throw SystemException(InstreamScannerError, "Unterminated expression", ExceptionRef(src, current - 1));
 
 	addToken(Expression, src.substr(start + 1, current - 1 - start));
-	advance(); // closing char
+
+	// closing char
+	advance(); 
 }
