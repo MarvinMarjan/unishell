@@ -27,5 +27,24 @@ private:
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
 
+	inline bool keyword() {
+		for (current; StringUtil::isAlpha(peek()); current++) {}
+		return addKeyword(getCurrentSubstring());
+	}
+
+	inline bool addKeyword(const std::string keyword) {
+		if (keyword == "and") {
+			addToken(AND);
+			return true;
+		}
+
+		else if (keyword == "or") {
+			addToken(OR);
+			return true;
+		}
+
+		return false;
+	}
+
 	ExprTokenList tokens;
 };

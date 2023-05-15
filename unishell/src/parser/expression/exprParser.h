@@ -18,7 +18,19 @@ public:
 
 private:
 	inline Expr* expression() {
-		return equality();
+		return logicOperator();
+	}
+
+	inline Expr* logicOperator() {
+		Expr* expr = equality();
+
+		while (match({ AND, OR })) {
+			ExprToken op = prev();
+			Expr* right = equality();
+			expr = new Binary(expr, op, right);
+		}
+
+		return expr;
 	}
 
 	inline Expr* equality() {

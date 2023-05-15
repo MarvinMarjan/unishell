@@ -3,7 +3,7 @@
 #include "instreamBuffer.h"
 #include "../outstream/outputColor.h"
 
-
+#include "../system/global.h"
 
 #define INSCursor INStreamRender::cursor
 
@@ -48,6 +48,7 @@ private:
 	static inline void renderIndentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		stream << id(115);
 
+		// first char
 		INStreamRender::renderChar(i, cursorPos, current, stream, StringUtil::charToStr(text[i]), id(115));
 
 		while (StringUtil::isAlphaNumeric(text[++i]))
@@ -56,6 +57,28 @@ private:
 		i--; // necessary to draw next char
 
 		stream << endclr;
+	}
+
+	// keywords that exists in GBL_keywords
+	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		size_t aux = i;
+
+		while (StringUtil::isAlpha(text[aux])) aux++;
+
+		if (std::find(GBL_keywords.begin(), GBL_keywords.end(), text.substr(i, aux - i)) != GBL_keywords.end()) {
+			stream << id(128);
+
+			for (i; i < aux; i++)
+				INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(128));
+
+			i--; // necessary to draw next char
+
+			stream << endclr;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	// draws a cursor if currentPos equals to cursorPos.

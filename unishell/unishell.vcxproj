@@ -156,6 +156,7 @@
     <ClInclude Include="src\path\pathScanner.h" />
     <ClInclude Include="src\path\pathToken.h" />
     <ClInclude Include="src\system\exceptionReference.h" />
+    <ClInclude Include="src\system\global.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />
