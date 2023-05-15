@@ -129,7 +129,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 				i--;
 			}
 
-			else
+			else if (!INStreamRender::renderKeyword(fText, text, current, i, cursorPos))
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 		}
 	}

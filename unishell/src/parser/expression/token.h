@@ -10,9 +10,16 @@ typedef std::vector<ExprToken> ExprTokenList;
 
 enum ExprTokenType
 {
-	PLUS, MINUS, STAR, SLASH, BANG, LESS, GREATER,
+	// math operators
+	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
+	
+	// comparison operators
+	BANG, LESS, GREATER,
 	EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
-	NUMBER, LPAREN, RPAREN
+	AND, OR,
+
+	// literals
+	NUMBER
 };
 
 class ExprToken

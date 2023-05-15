@@ -26,7 +26,7 @@ void ExprScanner::scanToken() {
 
 	case '=': 
 		if (match('='))	addToken(EQUAL_EQUAL);
-		else throw SystemException(ExprScannerError, UNEXPECTED_TOKEN_MSG, ExceptionRef(src, current - 1));
+		else throw SystemException(ExprScannerError, UNEXPECTED_TOKEN_MSG, ExceptionRef(src, current - 1)); // single '=' not allowed
 		break;
 
 	case '!': addToken((match('=') ? BANG_EQUAL : BANG)); break;
@@ -37,10 +37,9 @@ void ExprScanner::scanToken() {
 	case ')': addToken(RPAREN); break;
 
 	default:
-		if (StringUtil::isDigit(ch))
-			number();
+		if (StringUtil::isDigit(ch)) number();
 
-		else
+		else if (!keyword())
 			throw SystemException(ExprScannerError, UNEXPECTED_TOKEN_MSG, ExceptionRef(src, current - 1));
 	}
 }

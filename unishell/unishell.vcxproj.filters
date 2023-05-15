@@ -109,5 +109,8 @@
     <ClInclude Include="src\system\exceptionReference.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\system\global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
