@@ -81,28 +81,6 @@ private:
 		return false;
 	}
 
-	// keywords that exists in GBL_keywords
-	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		size_t aux = i;
-
-		while (StringUtil::isAlpha(text[aux])) aux++;
-
-		if (std::find(GBL_keywords.begin(), GBL_keywords.end(), text.substr(i, aux - i)) != GBL_keywords.end()) {
-			stream << id(128);
-
-			for (i; i < aux; i++)
-				INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(128));
-
-			i--; // necessary to draw next char
-
-			stream << endclr;
-
-			return true;
-		}
-
-		return false;
-	}
-
 	// draws a cursor if currentPos equals to cursorPos.
 	// "stream" is the drawing stringstream, "cursorChar" is the character of the cursor, 
 	// "defaultValue" is the value to be drawed if currentPos not equals to cursorPos.
