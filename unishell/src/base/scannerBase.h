@@ -2,6 +2,8 @@
 
 #include "../utilities/stringUtil.h"
 
+#include "../system/systemException.h"
+
 template <typename T>
 class ScannerBase 
 {
@@ -15,6 +17,10 @@ public:
 
 protected:
 	virtual void scanToken() = 0;
+
+	virtual inline std::string getCurrentSubstring() noexcept {
+		return src.substr(start, current - start);
+	}
 
 	virtual inline bool isAtEnd() const noexcept {
 		return current >= src.size();

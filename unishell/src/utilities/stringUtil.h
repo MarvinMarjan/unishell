@@ -1,12 +1,10 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 #include <vector>
 
 #include <Windows.h>
-
-#define UTCharToStr StringUtil::charToStr
-#define UTFromWStr  StringUtil::wstringToString
 
 typedef std::vector<std::string> StringList;
 
@@ -19,8 +17,8 @@ public:
 
 	constexpr static inline bool isAlpha(char ch) noexcept {
 		return (ch >= 'a' && ch <= 'z') ||
-			(ch >= 'A' && ch <= 'Z') ||
-			(ch == '_');
+			   (ch >= 'A' && ch <= 'Z') ||
+			   (ch == '_');
 	}
 
 	constexpr static inline bool isDigit(char ch) noexcept {

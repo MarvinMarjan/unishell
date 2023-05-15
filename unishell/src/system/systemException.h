@@ -1,37 +1,50 @@
 #pragma once
 
+#include "../outstream/outputColor.h"
+#include "exceptionReference.h"
+
 #include <string>
 
 enum SystemExceptionType
 {
+	ExprScannerError,
+	ExprParserError,
 
+	InstreamScannerError
 };
 
 class SystemException
 {
 public:
-	SystemException(const std::string& msg, const std::string& arg = "") : msg(msg), arg(arg)
-	{}
-
-	SystemException(SystemExceptionType type)
+	SystemException(SystemExceptionType type, const std::string& msg, ExceptionRef ref = ExceptionRef("")) : msg(msg), type(type), ref(ref)
 	{
 		switch (type)
 		{
+		case ExprScannerError:
+			typeMsg = "expression_scanner";
+			break;
+
+		case ExprParserError:
+			typeMsg = "expression_parser";
+			break;
+
+		case InstreamScannerError:
+			typeMsg = "instream_scanner";
+			break;
+
 		default:
-			ignoreCurrentIndexChange("");
+			typeMsg = "unknown";
 		}
 	}
 
 	inline std::string toString() const noexcept {
-		return msg + ((arg.empty()) ? "" : ": " + arg);
+		return clr('#' + typeMsg, 153) + clr(" Error\n", 196) + ref.getString() + "\n" + " > " + msg + '\n';
 	}
 
 private:
-	inline void ignoreCurrentIndexChange(const std::string& msg, const std::string& arg = "") noexcept {
-		this->msg = msg;
-		this->arg = arg;
-	}
-
+	std::string typeMsg;
 	std::string msg;
-	std::string arg;
+	ExceptionRef ref;
+
+	SystemExceptionType type;
 };

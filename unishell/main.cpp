@@ -2,7 +2,12 @@
 
 #include "src/system/system.h"
 #include "src/instream/instream.h"
-#include "src/parser/instream/scanner.h"
+
+#include "src/parser/instream/instrScanner.h"
+#include "src/parser/expression/exprScanner.h"
+
+#include "src/parser/expression/exprASTPrinter.h"
+#include "src/parser/expression/exprParser.h"
 
 #include "src/utilities/fileUtil.h"
 
@@ -14,13 +19,22 @@ int main(int argc, char** argv)
 	PathHandler* sysPath = sys.path();
 
 	while (!sys.getAbort()) {
-		sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
-		std::string aux = INStream::getLine();
+		try {
+			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
+			InputTokenList input = InputScanner(INStream::getLine()).scanTokens();
 
-		StringList input = StringUtil::split(aux);
+			if (input[0].getLexical() == "math")
+				for (ExprToken token : ExprScanner(input[1].getLexical()).scanTokens())
+					sysprintln(token.getLexical());
 
-		if (input[0] == "math") {}
+			else if (input[0].getLexical() == "ast")
+				sysprintln(asStr(ExprASTPrinter().print(ExprParser(ExprScanner(input[1].getLexical()).scanTokens()).parse())));
 
-		else if (input[0] == "exit") sys.exit();
+			else if (input[0].getLexical() == "exit") sys.exit();
+		}
+
+		catch (SystemException sysErr) {
+			sys.error(sysErr);
+		}
 	}
 }

@@ -25,12 +25,12 @@ private:
 	void scanToken() override;
 
 	inline void addToken(PathToken::PathTokenType type) noexcept {
-		tokens.push_back(PathToken(type, src.substr(start, current - start)));
+		tokens.push_back(PathToken(type, getCurrentSubstring()));
 	}
 
 	// path to system root "C:/"
 	inline void rootIndentifier() {
-		if (src.size() >= 3 && FileUtil::exists(UTCharToStr(peekPrev()) + peek() + peekNext())) {
+		if (src.size() >= 3 && FileUtil::exists(StringUtil::charToStr(peekPrev()) + peek() + peekNext())) {
 			current += 2;
 			addToken(PathToken::Root);
 		}

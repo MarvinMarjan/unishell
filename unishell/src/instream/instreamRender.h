@@ -3,7 +3,7 @@
 #include "instreamBuffer.h"
 #include "../outstream/outputColor.h"
 
-#include <sstream>
+
 
 #define INSCursor INStreamRender::cursor
 
@@ -16,7 +16,7 @@ private:
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static inline std::string cursor(char ch, std::string after = endclr) noexcept {
-		return clr(UTCharToStr(ch), 75, underline) + after;
+		return clr(StringUtil::charToStr(ch), 75, underline) + after;
 	}
 
 	// command string
@@ -27,7 +27,7 @@ private:
 
 		// draw command characters
 		for (i; i < firstWordSize; i++)
-			INStreamRender::renderChar(i, cursorPos, text[i], stream, UTCharToStr(text[i]), id(141));
+			INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(141));
 		
 		stream << endclr; // end color rendering
 	}
@@ -39,19 +39,19 @@ private:
 		render.renderChar(i, current, id(106) + current, id(106)); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
-			render.renderChar(i, text[i], UTCharToStr(text[i]), id(106));
+			render.renderChar(i, text[i], StringUtil::charToStr(text[i]), id(106));
 
-		render.renderChar(i, text[i], UTCharToStr(text[i]) + endclr, ""); // draw last quote
+		render.renderChar(i, text[i], StringUtil::charToStr(text[i]) + endclr, ""); // draw last quote
 	}
 
 	// indentifier: $indentifier
 	static inline void renderIndentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		stream << id(115);
 
-		INStreamRender::renderChar(i, cursorPos, current, stream, UTCharToStr(text[i]), id(115));
+		INStreamRender::renderChar(i, cursorPos, current, stream, StringUtil::charToStr(text[i]), id(115));
 
 		while (StringUtil::isAlphaNumeric(text[++i]))
-			INStreamRender::renderChar(i, cursorPos, text[i], stream, UTCharToStr(text[i]), id(115));
+			INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(115));
 
 		i--; // necessary to draw next char
 

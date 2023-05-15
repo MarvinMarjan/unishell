@@ -4,4 +4,4 @@
 
 bool System::abort = false;
 
-PathHandler* System::workingPath = new PathHandler(UTFromWStr(WindowsSystem::getSystemDesktopPath()) + '/');
+PathHandler* System::workingPath = new PathHandler(StringUtil::wstringToString(WindowsSystem::getSystemDesktopPath()) + '/');

@@ -1,6 +1,6 @@
 #include "instream.h"
 
-#include <sstream>
+
 
 INSListBuffer INStream::globalInputList = INSListBuffer();
 
@@ -76,7 +76,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	default:
-		lineInput.insertStr(lineInput.getCursorIndex(), UTCharToStr(charInput));
+		lineInput.insertStr(lineInput.getCursorIndex(), StringUtil::charToStr(charInput));
 		updateConsoleInput(lineInput);
 	}
 }
@@ -102,14 +102,14 @@ std::string INStream::formatString(std::string text, int cursorPos)
 
 		case '(':
 		case ')':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 210));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 210));
 			break;
 
 		case '+':
 		case '-':
 		case '*':
 		case '/':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 222));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 222));
 			break;
 
 		case '$':
@@ -120,13 +120,13 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
 			{
 				for (i; StringUtil::isDigit(text[i]); i++)
-					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(UTCharToStr(text[i]), 192));
+					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 192));
 
 				i--;
 			}
 
 			else
-				INStreamRender::renderChar(i, cursorPos, text[i], fText, UTCharToStr(text[i]));
+				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 		}
 	}
 

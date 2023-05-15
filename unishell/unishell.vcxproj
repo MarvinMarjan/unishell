@@ -130,12 +130,14 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
-    <ClCompile Include="src\parser\instream\scanner.cpp" />
+    <ClCompile Include="src\parser\expression\exprScanner.cpp" />
+    <ClCompile Include="src\parser\instream\instrScanner.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\base\scannerBase.h" />
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />
@@ -143,18 +145,23 @@
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
     <ClInclude Include="src\parser\expression\expr.h" />
+    <ClInclude Include="src\parser\expression\exprASTPrinter.h" />
+    <ClInclude Include="src\parser\expression\exprParser.h" />
+    <ClInclude Include="src\parser\expression\exprScanner.h" />
+    <ClInclude Include="src\parser\expression\token.h" />
     <ClInclude Include="src\parser\expression\type.h" />
-    <ClInclude Include="src\parser\instream\scanner.h" />
+    <ClInclude Include="src\parser\instream\instrScanner.h" />
     <ClInclude Include="src\parser\instream\token.h" />
     <ClInclude Include="src\path\pathHandler.h" />
     <ClInclude Include="src\path\pathScanner.h" />
     <ClInclude Include="src\path\pathToken.h" />
-    <ClInclude Include="src\scanner\scannerBase.h" />
+    <ClInclude Include="src\system\exceptionReference.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />
     <ClInclude Include="src\utilities\fileUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />
+    <ClInclude Include="src\utilities\typeUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

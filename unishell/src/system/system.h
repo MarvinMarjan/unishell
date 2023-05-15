@@ -24,11 +24,7 @@ public:
 	}
 
 	static inline void error(const SystemException& exception) noexcept {
-		error(exception.toString());
-	}
-
-	static inline void error(const std::string& errMsg) noexcept {
-		std::cout << clr("Error: ", red) << errMsg << std::endl;
+		sysprintln(exception.toString());
 	}
 
 	static inline void warning(const std::string& warnMsg) noexcept {
