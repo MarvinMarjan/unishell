@@ -58,7 +58,8 @@ private:
 
 		stream << endclr;
 	}
-
+	
+	// keywords that exists in GBL_keywords
 	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		size_t aux = i;
 
