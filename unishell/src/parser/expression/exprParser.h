@@ -93,7 +93,7 @@ private:
 	}
 
 	inline Expr* primary() {
-		if (match({ NUMBER })) return new LiteralExpr(prev().getLiteral());
+		if (match({ NUMBER, LITERAL, BOOLEANVAL })) return new LiteralExpr(prev().getLiteral());
 
 		if (match({ LPAREN })) {
 			Expr* expr = expression();

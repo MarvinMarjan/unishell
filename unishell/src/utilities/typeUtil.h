@@ -15,8 +15,16 @@
 class TypeUtil
 {
 public:
+	static inline bool isBoolean(const std::string& strBool) noexcept {
+		return (strBool == "true" || strBool == "false");
+	}
+
 	static inline std::string boolToString(bool boolean) {
 		return (boolean) ? "true" : "false";
+	}
+
+	static inline bool stringToBool(const std::string& boolStr) noexcept {
+		return (boolStr == "true") ? true : false;
 	}
 
 	static inline bool isInteger(double value) {

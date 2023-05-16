@@ -4,7 +4,10 @@
 
 static const StringList GBL_keywords = {
 	"and",
-	"or",
+	"or"
+};
+
+static const StringList GBL_boolean = {
 	"true",
 	"false"
 };

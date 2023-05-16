@@ -1,5 +1,16 @@
 #include "instrScanner.h"
 
+TokenList InputScanner::scanTokens() {
+	while (!isAtEnd()) {
+		start = current;
+		scanToken();
+	}
+
+	tokens = generateExpressions(tokens);
+
+	return tokens;
+}
+
 void InputScanner::scanToken()
 {
 	char ch = advance();
@@ -32,11 +43,11 @@ void InputScanner::scanToken()
 	default:
 		if (tokens.empty() && !ignoreCommand) word(COMMAND);
 		else if (StringUtil::isDigit(ch)) number();
-		else if (!keyword()) word(LITERAL);
+		else if (!keyword() && !boolean()) word(LITERAL, true);
 	}
 }
 
-void InputScanner::expression() {
+//void InputScanner::expression() {
 //	unsigned short aux = 0;
 //  bool isEnclosing = false;
 //
@@ -59,4 +70,4 @@ void InputScanner::expression() {
 //
 //	// closing char
 //	advance(); 
-}
+//}

@@ -83,6 +83,30 @@ private:
 		return false;
 	}
 
+	// render boolean values (true | false)
+	static inline bool renderBoolean(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		size_t aux = i;
+
+		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
+
+		while (StringUtil::isAlpha(text[aux])) aux++;
+
+		if (std::find(GBL_boolean.begin(), GBL_boolean.end(), text.substr(i, aux - i)) != GBL_boolean.end()) {
+			stream << id(219);
+
+			for (i; i < aux; i++)
+				INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(219));
+
+			i--; // necessary to draw next char
+
+			stream << endclr;
+
+			return true;
+		}
+
+		return false;
+	}
+
 	// draws a cursor if currentPos equals to cursorPos.
 	// "stream" is the drawing stringstream, "cursorChar" is the character of the cursor, 
 	// "defaultValue" is the value to be drawed if currentPos not equals to cursorPos.

@@ -25,7 +25,11 @@ int main(int argc, char** argv)
 			TokenList input = InputScanner(INStream::getLine()).scanTokens();
 
 			if (input[0].getLexical() == "ast")
-				sysprintln(asStr(ExprASTPrinter().print(ExprParser(InputScanner(input[1].getLexical(), IgnoreCommand).scanTokens()).parse())));
+				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub()).parse())));
+
+			else if (input[0].getLexical() == "tokens")
+				for (size_t i = 1; i < input.size(); i++)
+					sysprintln(input[i].getLexical() + " - " + std::to_string((int)input[i].getType()));
 
 			else if (input[0].getLexical() == "print")
 				sysprintln(input[1].getLexical());

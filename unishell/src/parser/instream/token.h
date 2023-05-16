@@ -10,7 +10,10 @@ typedef std::vector<Token> TokenList;
 
 enum TokenEnum
 {
-	COMMAND, LITERAL, INDENTIFIER,
+	COMMAND, INDENTIFIER, 
+	
+	// sub tokens
+	EXPRESSION,
 
 	// math operators
 	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
@@ -23,14 +26,15 @@ enum TokenEnum
 	// atribuition
 	EQUAL,
 
-	// literals
-	NUMBER
+	// data
+	NUMBER, LITERAL, BOOLEANVAL
 };
 
 class Token
 {
 public:
-	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit) : type(type), lexical(lexical), lit(lit) {}
+	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub) : type(type), lexical(lexical), lit(lit), sub(sub)
+	{}
 
 	constexpr inline TokenEnum getType() const noexcept {
 		return type;
@@ -44,8 +48,14 @@ public:
 		return lit;
 	}
 
+	inline TokenList getSub() const noexcept {
+		return sub;
+	}
+
 private:
 	TokenEnum type;
 	std::string lexical;
 	LiteralValue* lit;
+
+	TokenList sub;
 };
