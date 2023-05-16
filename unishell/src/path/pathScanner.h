@@ -41,7 +41,7 @@ private:
 	inline void indentifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
 		if (peek() == ':' && !tokens.size()) rootIndentifier();
-		else addToken(PathToken::Indentifier);
+		else addToken(PathToken::INDENTIFIER);
 	}
 
 	static constexpr inline bool isValidChar(char ch) noexcept {

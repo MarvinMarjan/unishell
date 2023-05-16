@@ -1,14 +1,15 @@
 #pragma once
 
 #include "expr.h"
-#include "token.h"
+
+#include "../instream/token.h"
 
 #include "../../system/systemException.h"
 
 class ExprParser
 {
 public:
-	ExprParser(ExprTokenList tokens) : tokens(tokens) {
+	ExprParser(TokenList tokens) : tokens(tokens) {
 		current = 0;
 	}
 
@@ -25,7 +26,7 @@ private:
 		Expr* expr = equality();
 
 		while (match({ AND, OR })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* right = equality();
 			expr = new Binary(expr, op, right);
 		}
@@ -37,7 +38,7 @@ private:
 		Expr* expr = comparison();
 
 		while (match({ EQUAL_EQUAL, BANG_EQUAL })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* right = comparison();
 			expr = new Binary(expr, op, right);
 		}
@@ -49,7 +50,7 @@ private:
 		Expr* expr = term();
 
 		while (match({ GREATER, LESS, GREATER_EQUAL, LESS_EQUAL })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* right = term();
 			expr = new Binary(expr, op, right);
 		}
@@ -61,7 +62,7 @@ private:
 		Expr* expr = factor();
 
 		while (match({ PLUS, MINUS })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* right = factor();
 			expr = new Binary(expr, op, right);
 		}
@@ -73,7 +74,7 @@ private:
 		Expr* expr = unary();
 
 		while (match({ STAR, SLASH })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* right = unary();
 			expr = new Binary(expr, op, right);
 		}
@@ -83,7 +84,7 @@ private:
 
 	inline Expr* unary() {
 		if (match({ BANG, MINUS })) {
-			ExprToken op = prev();
+			Token op = prev();
 			Expr* expr = unary();
 			return new Unary(op, expr);
 		}
@@ -105,8 +106,8 @@ private:
 	}
 
 
-	inline bool match(std::vector<ExprTokenType> tokenTypes) {
-		for (ExprTokenType type : tokenTypes) {
+	inline bool match(std::vector<TokenEnum> tokenTypes) {
+		for (TokenEnum type : tokenTypes) {
 			if (check(type)) {
 				advance();
 				return true;
@@ -117,28 +118,28 @@ private:
 	}
 
 
-	inline ExprToken consume(ExprTokenType type, const std::string& msg) {
+	inline Token consume(TokenEnum type, const std::string& msg) {
 		if (check(type)) return advance();
 
 		throw SystemException(ExprParserError, msg);
 	}
 
 
-	inline bool check(ExprTokenType type) {
+	inline bool check(TokenEnum type) {
 		if (isAtEnd()) return false;
 		return (peek().getType() == type);
 	}
 
-	inline ExprToken advance() noexcept {
+	inline Token advance() noexcept {
 		if (!isAtEnd()) current++;
 		return prev();
 	}
 
-	inline ExprToken peek() const noexcept {
+	inline Token peek() const noexcept {
 		return tokens[current];
 	}
 
-	inline ExprToken prev() const noexcept {
+	inline Token prev() const noexcept {
 		return tokens[(size_t)current - 1];
 	}
 
@@ -146,6 +147,6 @@ private:
 		return ((size_t)current >= tokens.size());
 	}
 
-	ExprTokenList tokens;
+	TokenList tokens;
 	unsigned int current;
 };

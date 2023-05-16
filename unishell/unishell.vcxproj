@@ -130,7 +130,6 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
-    <ClCompile Include="src\parser\expression\exprScanner.cpp" />
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
@@ -147,8 +146,6 @@
     <ClInclude Include="src\parser\expression\expr.h" />
     <ClInclude Include="src\parser\expression\exprASTPrinter.h" />
     <ClInclude Include="src\parser\expression\exprParser.h" />
-    <ClInclude Include="src\parser\expression\exprScanner.h" />
-    <ClInclude Include="src\parser\expression\token.h" />
     <ClInclude Include="src\parser\expression\type.h" />
     <ClInclude Include="src\parser\instream\instrScanner.h" />
     <ClInclude Include="src\parser\instream\token.h" />

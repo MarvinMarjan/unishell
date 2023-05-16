@@ -12,7 +12,7 @@ class PathToken
 public:
 	enum PathTokenType
 	{
-		Dot, TwoDots, DirSeparator, Indentifier, Root
+		Dot, TwoDots, DirSeparator, INDENTIFIER, Root
 	};
 
 	PathToken(PathTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}

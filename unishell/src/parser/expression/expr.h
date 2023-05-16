@@ -27,7 +27,7 @@ class Binary : public Expr
 public:
 	friend class ExprASTPrinter;
 
-	Binary(Expr* left, ExprToken op, Expr* right) : left(left), op(op), right(right) {}
+	Binary(Expr* left, Token op, Expr* right) : left(left), op(op), right(right) {}
 
 	LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitBinary(this);
@@ -35,7 +35,7 @@ public:
 
 private:
 	Expr* left;
-	ExprToken op;
+	Token op;
 	Expr* right;
 };
 
@@ -44,14 +44,14 @@ class Unary : public Expr
 public:
 	friend class ExprASTPrinter;
 
-	Unary(ExprToken op, Expr* expr) : op(op), expr(expr) {}
+	Unary(Token op, Expr* expr) : op(op), expr(expr) {}
 
 	LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitUnary(this);
 	}
 
 private:
-	ExprToken op;
+	Token op;
 	Expr* expr;
 };
 

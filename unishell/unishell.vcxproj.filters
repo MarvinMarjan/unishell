@@ -29,9 +29,6 @@
     <ClCompile Include="src\parser\instream\instrScanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\parser\expression\exprScanner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -85,13 +82,7 @@
     <ClInclude Include="src\parser\expression\type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\parser\expression\token.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\parser\instream\instrScanner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\parser\expression\exprScanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\parser\expression\exprASTPrinter.h">

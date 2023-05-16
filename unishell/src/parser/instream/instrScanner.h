@@ -1,18 +1,25 @@
 #pragma once
 
-#include "../../system/systemException.h"
+#include "../../system/system.h"
 
 #include "../../utilities/stringUtil.h"
 
 #include "../../base/scannerBase.h"
 #include "token.h"
 
-class InputScanner : public ScannerBase<InputToken>
+enum InputScannerHints
+{
+	IgnoreCommand = 1
+};
+
+class InputScanner : public ScannerBase<Token>
 {
 public:
-	InputScanner(const std::string& src) : ScannerBase(src) {}
+	InputScanner(const std::string& src, int hints = 0) : ScannerBase(src) {
+		ignoreCommand = ((hints & IgnoreCommand) == IgnoreCommand);
+	}
 
-	InputTokenList scanTokens() override {
+	TokenList scanTokens() override {
 		while (!isAtEnd()) {
 			start = current;
 			scanToken();
@@ -24,28 +31,58 @@ public:
 private:
 	void scanToken() override;
 
-	inline void addToken(InputTokenType type) noexcept {
-		tokens.push_back(InputToken(type, getCurrentSubstring()));
+	inline void addToken(TokenEnum type) noexcept {
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr));
 	}
 
-	inline void addToken(InputTokenType type, const std::string& lex) noexcept {
-		tokens.push_back(InputToken(type, lex));
+	inline void addToken(TokenEnum type, const std::string& lex) noexcept {
+		tokens.push_back(Token(type, lex, nullptr));
+	}
+
+	inline void addToken(TokenEnum type, LiteralValue* lit) {
+		tokens.push_back(Token(type, getCurrentSubstring(), lit));
 	}
 
 	inline void string() noexcept {
 		while (peek() != '\"' && !isAtEnd()) advance();
 
-		addToken(Literal, src.substr(start + 1, current - 1 - start));
+		addToken(LITERAL, src.substr(start + 1, current - 1 - start));
 
 		advance(); // closing char
 	}
 
-	void expression(); // an expression is between '(' and ')'
+	inline void number() {
+		for (current; StringUtil::isDigit(peek()); current++) {}
+		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
+	}
 
-	inline void word(InputTokenType type) {
+	inline bool keyword() {
+		for (current; StringUtil::isAlpha(peek()); current++) {}
+		return addKeyword(getCurrentSubstring());
+	}
+
+	inline void word(TokenEnum type) {
 		while (StringUtil::isAlphaNumeric(peek())) advance();
 		addToken(type);
 	}
 
-	InputTokenList tokens;
+	inline bool addKeyword(const std::string keyword) {
+		if (keyword == "and") {
+			addToken(AND);
+			return true;
+		}
+
+		else if (keyword == "or") {
+			addToken(OR);
+			return true;
+		}
+
+		return false;
+	}
+
+	void expression(); // an expression is between '(' and ')'
+
+	TokenList tokens;
+
+	bool ignoreCommand;
 };

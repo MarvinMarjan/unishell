@@ -4,7 +4,6 @@
 #include "src/instream/instream.h"
 
 #include "src/parser/instream/instrScanner.h"
-#include "src/parser/expression/exprScanner.h"
 
 #include "src/parser/expression/exprASTPrinter.h"
 #include "src/parser/expression/exprParser.h"
@@ -23,10 +22,10 @@ int main(int argc, char** argv)
 	while (!sys.getAbort()) {
 		try {
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
-			InputTokenList input = InputScanner(INStream::getLine()).scanTokens();
+			TokenList input = InputScanner(INStream::getLine()).scanTokens();
 
 			if (input[0].getLexical() == "ast")
-				sysprintln(asStr(ExprASTPrinter().print(ExprParser(ExprScanner(input[1].getLexical()).scanTokens()).parse())));
+				sysprintln(asStr(ExprASTPrinter().print(ExprParser(InputScanner(input[1].getLexical(), IgnoreCommand).scanTokens()).parse())));
 
 			else if (input[0].getLexical() == "print")
 				sysprintln(input[1].getLexical());

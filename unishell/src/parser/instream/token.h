@@ -4,21 +4,35 @@
 
 #include "../expression/type.h"
 
-class InputToken;
+class Token;
 
-typedef std::vector<InputToken> InputTokenList;
+typedef std::vector<Token> TokenList;
 
-enum InputTokenType
+enum TokenEnum
 {
-	Command, Literal, Indentifier, Expression
+	COMMAND, LITERAL, INDENTIFIER,
+
+	// math operators
+	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
+
+	// comparison operators
+	BANG, LESS, GREATER,
+	EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
+	AND, OR,
+
+	// atribuition
+	EQUAL,
+
+	// literals
+	NUMBER
 };
 
-class InputToken
+class Token
 {
 public:
-	InputToken(InputTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}
+	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit) : type(type), lexical(lexical), lit(lit) {}
 
-	constexpr inline InputTokenType getType() const noexcept {
+	constexpr inline TokenEnum getType() const noexcept {
 		return type;
 	}
 
@@ -26,7 +40,12 @@ public:
 		return lexical;
 	}
 
+	inline LiteralValue* getLiteral() const noexcept {
+		return lit;
+	}
+
 private:
-	InputTokenType type;
+	TokenEnum type;
 	std::string lexical;
+	LiteralValue* lit;
 };
