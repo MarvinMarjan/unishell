@@ -63,6 +63,8 @@ private:
 	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		size_t aux = i;
 
+		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
+
 		while (StringUtil::isAlpha(text[aux])) aux++;
 
 		if (std::find(GBL_keywords.begin(), GBL_keywords.end(), text.substr(i, aux - i)) != GBL_keywords.end()) {

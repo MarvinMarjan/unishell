@@ -20,7 +20,6 @@ void ExprScanner::scanToken() {
 
 	case '+': addToken(PLUS); break;
 	case '-': addToken(MINUS); break;
-
 	case '*': addToken(STAR); break;
 	case '/': addToken(SLASH); break;
 

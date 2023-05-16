@@ -13,11 +13,11 @@ void InputScanner::scanToken()
 
 	case '\"': string(); break;
 	case '(': expression(); break;
-	case '$': characters(Indentifier); break;
+	case '$': word(Indentifier); break;
 
 	default:
-		if (tokens.empty()) characters(Command);
-		else characters(Literal);
+		if (tokens.empty()) word(Command);
+		else word(Literal);
 	}
 }
 

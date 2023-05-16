@@ -42,7 +42,7 @@ private:
 
 	void expression(); // an expression is between '(' and ')'
 
-	inline void characters(InputTokenType type) {
+	inline void word(InputTokenType type) {
 		while (StringUtil::isAlphaNumeric(peek())) advance();
 		addToken(type);
 	}
