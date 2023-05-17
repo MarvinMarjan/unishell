@@ -11,6 +11,35 @@ TokenList InputScanner::scanTokens() {
 	return tokens;
 }
 
+TokenList InputScanner::generateExpressions(TokenList source) {
+	TokenList res;
+
+	size_t start = 0, end = 0;
+	unsigned short aux = 0;
+
+	for (size_t i = 0; i < source.size(); i++)
+	{
+		if (source[i].getType() == LPAREN) {
+			aux++;
+
+			start = i;
+
+			while (aux) {
+				checkIndex(source, i, aux);
+				checkParen(source, i, aux);
+			}
+
+			end = i;
+
+			res.push_back(Token(EXPRESSION, "", nullptr, TokenList(source.begin() + start + 1, source.begin() + end), res.size() - 1));
+		}
+
+		else res.push_back(source[i]);
+	}
+
+	return res;
+}
+
 void InputScanner::scanToken()
 {
 	char ch = advance();
@@ -46,28 +75,3 @@ void InputScanner::scanToken()
 		else if (!keyword() && !boolean()) word(LITERAL, true);
 	}
 }
-
-//void InputScanner::expression() {
-//	unsigned short aux = 0;
-//  bool isEnclosing = false;
-//
-//	while (!isAtEnd()) {
-//		if (peek() == '(') aux++;
-//		if (peek() == ')' && !aux) {
-//			isEnclosing = true;
-//			break;
-//		}
-//		else if (peek() == ')' && aux && current + 1 < src.size()) aux--;
-//
-//		advance();
-//	}
-//
-//	// ')' missing in expression
-//	if (!isEnclosing) 
-//		throw SystemException(InstreamScannerError, "Unterminated expression", ExceptionRef(src, current - 1));
-//
-//	addToken(Expression, src.substr(start + 1, current - 1 - start));
-//
-//	// closing char
-//	advance(); 
-//}

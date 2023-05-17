@@ -4,4 +4,5 @@
 
 bool System::abort = false;
 
-PathHandler* System::workingPath = new PathHandler(StringUtil::wstringToString(WindowsSystem::getSystemDesktopPath()) + '/');
+PathHandler* System::GLOBAL_workingPath = new PathHandler(StringUtil::wstringToString(WindowsSystem::getSystemDesktopPath()) + '/');
+std::string* System::GLOBAL_userInput = new std::string();

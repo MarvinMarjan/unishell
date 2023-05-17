@@ -22,17 +22,19 @@ int main(int argc, char** argv)
 	while (!sys.getAbort()) {
 		try {
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
-			TokenList input = InputScanner(INStream::getLine()).scanTokens();
+			*sys.input() = INStream::getLine(); // sets global user input
+			
+			TokenList input = InputScanner(*sys.input()).scanTokens();
 
 			if (input[0].getLexical() == "ast")
-				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub()).parse())));
+				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub(), *sys.input()).parse())));
 
 			else if (input[0].getLexical() == "tokens")
 				for (size_t i = 1; i < input.size(); i++)
 					sysprintln(input[i].getLexical() + " - " + std::to_string((int)input[i].getType()));
 
-			else if (input[0].getLexical() == "print")
-				sysprintln(input[1].getLexical());
+			else if (input[0].getLexical() == "print" && input[1].getLiteral())
+				sysprintln(TypeUtil::literalValueToString(input[1].getLiteral()));
 
 			else if (input[0].getLexical() == "exit") sys.exit();
 		}
@@ -40,6 +42,11 @@ int main(int argc, char** argv)
 		// system exception was thrown
 		catch (SystemException sysErr) {
 			sys.error(sysErr);
+		}
+
+		// unhandled exception
+		catch (...) {
+			sys.error(SystemException(InternalSystem, "Unexpected error"));
 		}
 	}
 }

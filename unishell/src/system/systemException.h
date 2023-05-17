@@ -11,7 +11,9 @@ enum SystemExceptionType
 {
 	ExprParserError,
 
-	InstreamScannerError
+	InstreamScannerError,
+
+	InternalSystem
 };
 
 class SystemException
@@ -27,6 +29,10 @@ public:
 
 		case InstreamScannerError:
 			typeMsg = "instream_scanner";
+			break;
+
+		case InternalSystem:
+			typeMsg = "internal_system";
 			break;
 
 		default:

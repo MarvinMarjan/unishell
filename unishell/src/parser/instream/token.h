@@ -33,7 +33,8 @@ enum TokenEnum
 class Token
 {
 public:
-	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub) : type(type), lexical(lexical), lit(lit), sub(sub)
+	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub, size_t index) : 
+		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
 	{}
 
 	constexpr inline TokenEnum getType() const noexcept {
@@ -48,6 +49,10 @@ public:
 		return lit;
 	}
 
+	constexpr inline size_t getIndex() const noexcept {
+		return index;
+	}
+
 	inline TokenList getSub() const noexcept {
 		return sub;
 	}
@@ -56,6 +61,7 @@ private:
 	TokenEnum type;
 	std::string lexical;
 	LiteralValue* lit;
+	size_t index;
 
 	TokenList sub;
 };

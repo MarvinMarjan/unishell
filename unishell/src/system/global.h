@@ -2,6 +2,8 @@
 
 #include "../utilities/stringUtil.h"
 
+// global const variables
+
 static const StringList GBL_keywords = {
 	"and",
 	"or"

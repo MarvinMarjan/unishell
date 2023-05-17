@@ -9,7 +9,9 @@
 class ExprParser
 {
 public:
-	ExprParser(TokenList tokens) : tokens(tokens) {
+	ExprParser(TokenList tokens, const std::string& rawSource) : 
+		tokens(tokens), rawSource(rawSource)
+	{
 		current = 0;
 	}
 
@@ -30,6 +32,9 @@ private:
 			Expr* right = equality();
 			expr = new Binary(expr, op, right);
 		}
+
+		if (match({ NUMBER, LITERAL, BOOLEANVAL, LPAREN }))
+			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
 
 		return expr;
 	}
@@ -101,8 +106,7 @@ private:
 			return new Group(expr);
 		}
 
-		// TODO: improve this:
-		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(prev().getLexical()));
+		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
 	}
 
 
@@ -147,6 +151,7 @@ private:
 		return ((size_t)current >= tokens.size());
 	}
 
+	std::string rawSource;
 	TokenList tokens;
 	unsigned int current;
 };

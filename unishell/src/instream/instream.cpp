@@ -96,8 +96,13 @@ std::string INStream::formatString(std::string text, int cursorPos)
 
 		switch (current)
 		{
+		case ' ':
+		case '\t':
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
+			break;
+
 		case '\"':
-			INStreamRender::renderQuoted(&fText, text, current, i, cursorPos);
+			INStreamRender::renderQuoted(fText, text, current, i, cursorPos);
 			break;
 
 		case '(':

@@ -43,12 +43,19 @@ public:
 		abort = true;
 	}
 
+
+
 	static inline PathHandler* path() noexcept {
-		return workingPath;
+		return GLOBAL_workingPath;
+	}
+
+	static inline std::string* input() noexcept {
+		return GLOBAL_userInput;
 	}
 
 private:
 	static bool abort;
 
-	static PathHandler* workingPath;
+	static PathHandler* GLOBAL_workingPath; // global variable for storing the current working directory path
+	static std::string* GLOBAL_userInput;   // global variable for storing the last user input raw string
 };

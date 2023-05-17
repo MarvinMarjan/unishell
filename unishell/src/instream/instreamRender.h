@@ -27,36 +27,28 @@ private:
 
 		// draw command characters
 		for (i; i < firstWordSize; i++)
-			INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(141));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(141));
 		
 		stream << endclr; // end color rendering
 	}
 
 	// quoted string: "hello, world"
-	static inline void renderQuoted(std::stringstream* stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		INStreamRender render(stream, cursorPos);
+	static inline void renderQuoted(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		stream << id(106);
 
-		render.renderChar(i, current, id(106) + current, id(106)); // draw first quote
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(106)); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
-			render.renderChar(i, text[i], StringUtil::charToStr(text[i]), id(106));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(106));
 
-		render.renderChar(i, text[i], StringUtil::charToStr(text[i]) + endclr, ""); // draw last quote
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last quote
+
+		stream << endclr;
 	}
 
 	// indentifier: $indentifier
 	static inline void renderIndentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		stream << id(115);
-
-		// first char
-		INStreamRender::renderChar(i, cursorPos, current, stream, StringUtil::charToStr(text[i]), id(115));
-
-		while (StringUtil::isAlphaNumeric(text[++i]))
-			INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(115));
-
-		i--; // necessary to draw next char
-
-		stream << endclr;
+		renderWord(stream, text, current, i, cursorPos, 115, true);
 	}
 	
 	// keywords that exists in GBL_keywords
@@ -68,15 +60,7 @@ private:
 		while (StringUtil::isAlpha(text[aux])) aux++;
 
 		if (std::find(GBL_keywords.begin(), GBL_keywords.end(), text.substr(i, aux - i)) != GBL_keywords.end()) {
-			stream << id(128);
-
-			for (i; i < aux; i++)
-				INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(128));
-
-			i--; // necessary to draw next char
-
-			stream << endclr;
-
+			renderWord(stream, text, current, i, cursorPos, 128);
 			return true;
 		}
 
@@ -92,19 +76,28 @@ private:
 		while (StringUtil::isAlpha(text[aux])) aux++;
 
 		if (std::find(GBL_boolean.begin(), GBL_boolean.end(), text.substr(i, aux - i)) != GBL_boolean.end()) {
-			stream << id(219);
-
-			for (i; i < aux; i++)
-				INStreamRender::renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(219));
-
-			i--; // necessary to draw next char
-
-			stream << endclr;
-
+			renderWord(stream, text, current, i, cursorPos, 219);
 			return true;
 		}
 
 		return false;
+	}
+
+	static inline void renderWord(std::stringstream& stream, const std::string& text, char current, size_t& i,
+		int cursorPos, int idclr, bool digit = false) noexcept
+	{
+		// render color
+		stream << id(idclr);
+
+		// render first char
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(idclr));
+
+		while (StringUtil::isAlpha(text[++i]) || (StringUtil::isDigit(text[i]) && digit))
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(idclr));
+
+		i--; // necessary to draw next char
+
+		stream << endclr;
 	}
 
 	// draws a cursor if currentPos equals to cursorPos.

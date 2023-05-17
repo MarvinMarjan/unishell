@@ -27,54 +27,33 @@ private:
 
 	// indentify expressions and generate a EXPRESSION type conataining
 	// the expression body
-	static TokenList generateExpressions(TokenList source) {
-		TokenList res;
+	TokenList generateExpressions(TokenList source);
 
-		size_t start = 0;
-		size_t end = 0;
+	inline void checkIndex(TokenList source, size_t& i, unsigned short aux) {
+		if (i + 1 >= source.size() && aux)
+			throw SystemException(InstreamScannerError, "Unterminated expression", ExceptionRef(src, source[i].getIndex()));
 
-		unsigned short aux = 0;
-
-		for (size_t i = 0; i < source.size(); i++)
-		{
-			if (source[i].getType() == LPAREN) {
-				aux++;
-
-				start = i;
-
-				while (aux) {
-					i++;
-
-					if (source[i].getType() == LPAREN) aux++;
-					if (source[i].getType() == RPAREN) aux--;
-				}
-
-				end = i;
-
-				res.push_back(Token(EXPRESSION, "", nullptr, TokenList(source.begin() + start + 1, source.begin() + end)));
-			}
-
-			else res.push_back(source[i]);
-		}
-
-		return res;
+		else
+			i++;
 	}
+
+	inline void checkParen(TokenList source, size_t& i, unsigned short& aux) {
+		if (source[i].getType() == LPAREN) aux++;
+		if (source[i].getType() == RPAREN) aux--;
+	}
+
 
 
 	inline void addToken(TokenEnum type) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}));
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1));
 	}
 
 	inline void addToken(TokenEnum type, const std::string& lex) noexcept {
-		tokens.push_back(Token(type, lex, nullptr, {}));
+		tokens.push_back(Token(type, lex, nullptr, {}, current - 1));
 	}
 
 	inline void addToken(TokenEnum type, LiteralValue* lit) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}));
-	}
-
-	inline void addExpression(TokenList exprBody) noexcept {
-		tokens.push_back(Token(EXPRESSION, "", nullptr, exprBody));
+		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1));
 	}
 
 	inline bool addBoolean(const std::string& boolStr) {
