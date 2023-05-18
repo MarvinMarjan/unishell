@@ -71,7 +71,13 @@ void InputScanner::scanToken()
 
 	default:
 		if (tokens.empty() && !ignoreCommand) word(COMMAND);
-		else if (StringUtil::isDigit(ch)) number();
+
+		else if (StringUtil::isDigit(ch)) {
+			if (ch == '.' && StringUtil::isDigit(peek())) number();
+			else if (ch != '.') number();
+			else throw SystemException(InstreamScannerError, "Unexpected token", ExceptionRef(src, current - 1));
+		}
+
 		else if (!keyword() && !boolean()) word(LITERAL, true);
 	}
 }

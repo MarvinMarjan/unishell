@@ -9,7 +9,7 @@
 
 enum SystemExceptionType
 {
-	ExprParserError,
+	ParserError,
 
 	InstreamScannerError,
 
@@ -23,8 +23,8 @@ public:
 	{
 		switch (type)
 		{
-		case ExprParserError:
-			typeMsg = "expression_parser";
+		case ParserError:
+			typeMsg = "parser";
 			break;
 
 		case InstreamScannerError:
