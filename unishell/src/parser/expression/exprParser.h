@@ -34,7 +34,7 @@ private:
 		}
 
 		if (match({ NUMBER, LITERAL, BOOLEANVAL, LPAREN }))
-			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
+			throw SystemException(ParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
 
 		return expr;
 	}
@@ -106,7 +106,9 @@ private:
 			return new Group(expr);
 		}
 
-		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
+		if (!tokens.size()) return new LiteralExpr(nullptr);
+
+		throw SystemException(ParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
 	}
 
 
@@ -125,7 +127,7 @@ private:
 	inline Token consume(TokenEnum type, const std::string& msg) {
 		if (check(type)) return advance();
 
-		throw SystemException(ExprParserError, msg);
+		throw SystemException(ParserError, msg);
 	}
 
 
@@ -144,6 +146,7 @@ private:
 	}
 
 	inline Token prev() const noexcept {
+		if (!current) return tokens[(size_t)current];
 		return tokens[(size_t)current - 1];
 	}
 
