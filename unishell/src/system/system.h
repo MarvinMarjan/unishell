@@ -23,16 +23,9 @@ public:
 		if (endLine) std::cout << std::endl;
 	}
 
+	// prints a error format message
 	static inline void error(const SystemException& exception) noexcept {
 		sysprintln(exception.toString());
-	}
-
-	static inline void warning(const std::string& warnMsg) noexcept {
-		std::cout << clr("Warning: ", wyellow) << warnMsg << std::endl;
-	}
-
-	static inline void message(const std::string& msg) noexcept {
-		std::cout << clr("Message: ", wcyan) << msg << std::endl;
 	}
 
 	constexpr static inline bool getAbort() noexcept {
@@ -56,6 +49,6 @@ public:
 private:
 	static bool abort;
 
-	static PathHandler* GLOBAL_workingPath; // global variable for storing the current working directory path
-	static std::string* GLOBAL_userInput;   // global variable for storing the last user input raw string
+	static PathHandler* GLOBAL_workingPath; // static variable for storing the current working directory path
+	static std::string* GLOBAL_userInput;   // static variable for storing the last user input raw string
 };
