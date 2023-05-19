@@ -29,18 +29,16 @@ private:
 	}
 
 	// path to system root "C:/"
-	inline void rootIndentifier() {
+	inline void rootIdentifier() {
 		if (src.size() >= 3 && FileUtil::exists(StringUtil::charToStr(peekPrev()) + peek() + peekNext())) {
 			current += 2;
 			addToken(PathToken::Root);
 		}
-
-		// TODO: else, throw a error
 	}
 
 	inline void indentifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
-		if (peek() == ':' && !tokens.size()) rootIndentifier();
+		if (peek() == ':' && !tokens.size()) rootIdentifier();
 		else addToken(PathToken::INDENTIFIER);
 	}
 

@@ -133,14 +133,18 @@
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
+    <ClCompile Include="src\system\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\scannerBase.h" />
+    <ClInclude Include="src\environment\environment.h" />
+    <ClInclude Include="src\environment\identifier.h" />
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />
     <ClInclude Include="src\instream\instreamRender.h" />
+    <ClInclude Include="src\outstream\colorStructure.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
     <ClInclude Include="src\parser\expression\expr.h" />

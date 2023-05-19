@@ -12,11 +12,11 @@ public:
 
 	inline void reset() noexcept {
 		ignoreCurrentIndexChange = true;
-		current = size() - 1;
+		current = (current > 0) ? size() - 1 : 0;
 	}
 
 	inline void add(const std::string& value) {
-		if (std::find(begin(), end(), value) != end()) return;
+		if (current > 0 && value == at(current)) return;
 
 		push_back(value);
 		current = size() - 1;

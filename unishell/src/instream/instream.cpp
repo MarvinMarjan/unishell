@@ -122,7 +122,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			break;
 
 		case '$':
-			INStreamRender::renderIndentifier(fText, text, current, i, cursorPos);
+			INStreamRender::renderIdentifier(fText, text, current, i, cursorPos);
 			break;
 
 		default:

@@ -1,29 +1,13 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include "../utilities/stringUtil.h"
+#include "../system/global.h"
+
+#include "colorStructure.h"
 
 #define tostr std::to_string
 #define endclr "\033[0m"
 
-enum Color {
-	null = 0,
-
-	red = 31, green, yellow, blue,
-	purple, cyan, white,
-
-	// bright colors
-	gray = 90, wred, wgreen, wyellow,
-	wblue, wpurple, wcyan
-};
-
-enum ColorMode {
-	normal    = 0,
-	dark      = 2,
-	italic    = 3,
-	underline = 4,
-	crossed   = 9
-};
 
 inline std::string colorToString(Color color, ColorMode mode) noexcept;
 inline std::string rgb(unsigned int red, unsigned int green, unsigned int blue, ColorMode mode = normal) noexcept;
@@ -45,10 +29,18 @@ inline std::string clr(const std::string& text, std::vector<unsigned int> rgbVec
 	return rgb(rgbVec[0], rgbVec[1], rgbVec[2], mode) + text + endclr;
 }
 
+// only id supported
+inline std::string clr(const std::string& text, ColorStructure color) {
+	return id(color.id, color.mode) + text + endclr;
+}
 
 // returns the color assigned to the id (0 - 255)
 inline std::string id(unsigned int i, ColorMode mode) noexcept {
 	return "\033[" + tostr((int) mode) + ";38;5;" + tostr(i) + 'm';
+}
+
+inline std::string id(ColorStructure color) noexcept {
+	return "\033[" + tostr((int)color.mode) + ";38;5;" + tostr(color.id) + 'm';
 }
 
 // returns rgb ANSI notation
@@ -58,4 +50,10 @@ inline std::string rgb(unsigned int red, unsigned int green, unsigned int blue, 
 
 inline std::string colorToString(Color color, ColorMode mode) noexcept {
 	return "\033[" + tostr((int) mode) + ';' + tostr((int) color) + 'm';
+}
+
+
+// put a string inside quotes
+inline std::string qtd(const std::string& text) {
+	return clr('\"' + text + '\"', __clr_quoted);
 }

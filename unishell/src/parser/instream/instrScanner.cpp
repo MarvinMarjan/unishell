@@ -1,17 +1,18 @@
 #include "instrScanner.h"
 
-TokenList InputScanner::scanTokens() {
+TokenList InstreamScanner::scanTokens() {
 	while (!isAtEnd()) {
 		start = current;
 		scanToken();
 	}
 
+	tokens = reviewTokens(tokens);
 	tokens = generateExpressions(tokens);
 
 	return tokens;
 }
 
-TokenList InputScanner::generateExpressions(TokenList source) {
+TokenList InstreamScanner::generateExpressions(TokenList source) {
 	TokenList res;
 
 	size_t start = 0, end = 0;
@@ -40,7 +41,7 @@ TokenList InputScanner::generateExpressions(TokenList source) {
 	return res;
 }
 
-void InputScanner::scanToken()
+void InstreamScanner::scanToken()
 {
 	char ch = advance();
 
@@ -73,7 +74,7 @@ void InputScanner::scanToken()
 		if (tokens.empty() && !ignoreCommand) word(COMMAND);
 
 		else if (StringUtil::isDigit(ch)) {
-			if (ch == '.' && StringUtil::isDigit(peek())) number();
+			if (ch == '.' && StringUtil::isDigit(peek()) && peek() != '.') number();
 			else if (ch != '.') number();
 			else throw SystemException(InstreamScannerError, "Unexpected token", ExceptionRef(src, current - 1));
 		}

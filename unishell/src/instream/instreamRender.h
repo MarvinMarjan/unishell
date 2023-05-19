@@ -16,30 +16,30 @@ private:
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static inline std::string cursor(char ch, std::string after = endclr) noexcept {
-		return clr(StringUtil::charToStr(ch), 75, underline) + after;
+		return clr(StringUtil::charToStr(ch), __clr_cursor) + after;
 	}
 
 	// command string
 	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordSize) {
 		if (i >= firstWordSize) return;
 
-		stream << id(141); // start color rendering
+		stream << id(__clr_command); // start color rendering
 
 		// draw command characters
 		for (i; i < firstWordSize; i++)
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(141));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_command));
 		
 		stream << endclr; // end color rendering
 	}
 
 	// quoted string: "hello, world"
 	static inline void renderQuoted(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		stream << id(106);
+		stream << id(__clr_quoted);
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(106)); // draw first quote
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_quoted)); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(106));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_quoted));
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last quote
 
@@ -47,11 +47,11 @@ private:
 	}
 
 	// indentifier: $indentifier
-	static inline void renderIndentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		renderWord(stream, text, current, i, cursorPos, 115, true);
+	static inline void renderIdentifier(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		renderWord(stream, text, current, i, cursorPos, __clr_identifier, true);
 	}
 	
-	// keywords that exists in GBL_keywords
+	// keywords that exists in __keywords
 	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
 		size_t aux = i;
 
@@ -59,8 +59,8 @@ private:
 
 		while (StringUtil::isAlpha(text[aux])) aux++;
 
-		if (std::find(GBL_keywords.begin(), GBL_keywords.end(), text.substr(i, aux - i)) != GBL_keywords.end()) {
-			renderWord(stream, text, current, i, cursorPos, 128);
+		if (std::find(__keywords.begin(), __keywords.end(), text.substr(i, aux - i)) != __keywords.end()) {
+			renderWord(stream, text, current, i, cursorPos, __clr_keyword);
 			return true;
 		}
 
@@ -75,8 +75,8 @@ private:
 
 		while (StringUtil::isAlpha(text[aux])) aux++;
 
-		if (std::find(GBL_boolean.begin(), GBL_boolean.end(), text.substr(i, aux - i)) != GBL_boolean.end()) {
-			renderWord(stream, text, current, i, cursorPos, 219);
+		if (std::find(__boolean.begin(), __boolean.end(), text.substr(i, aux - i)) != __boolean.end()) {
+			renderWord(stream, text, current, i, cursorPos, __clr_boolean);
 			return true;
 		}
 
@@ -84,16 +84,16 @@ private:
 	}
 
 	static inline void renderWord(std::stringstream& stream, const std::string& text, char current, size_t& i,
-		int cursorPos, int idclr, bool digit = false) noexcept
+		int cursorPos, ColorStructure color, bool digit = false) noexcept
 	{
 		// render color
-		stream << id(idclr);
+		stream << id(color);
 
 		// render first char
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(idclr));
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(color));
 
 		while (StringUtil::isAlpha(text[++i]) || (StringUtil::isDigit(text[i]) && digit))
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(idclr));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(color));
 
 		i--; // necessary to draw next char
 

@@ -33,6 +33,8 @@ enum TokenEnum
 class Token
 {
 public:
+	friend class InstreamScanner;
+
 	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub, size_t index) : 
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
 	{}

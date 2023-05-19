@@ -11,24 +11,29 @@ typedef std::vector<std::string> StringList;
 class StringUtil
 {
 public:
+	// is a letter or a number
 	constexpr static inline bool isAlphaNumeric(char ch) noexcept {
 		return isAlpha(ch) || isDigit(ch);
 	}
 
+	// is a letter
 	constexpr static inline bool isAlpha(char ch) noexcept {
 		return (ch >= 'a' && ch <= 'z') ||
 			   (ch >= 'A' && ch <= 'Z') ||
 			   (ch == '_');
 	}
 
+	// is a number
 	constexpr static inline bool isDigit(char ch) noexcept {
 		return (ch >= '0' && ch <= '9') || ch == '.';
 	}
 
+	// is math operators
 	constexpr static inline bool isMathOperator(char ch) noexcept {
 		return (ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '(' || ch == ')');
 	}
 
+	// is comparision operators
 	constexpr static inline bool isComparisonOperator(char ch) noexcept {
 		return (ch == '=' || ch == '!' || ch == '>' || ch == '<');
 	}
@@ -79,6 +84,7 @@ public:
 		return charStr;
 	}
 
+	// converts a char into a std::string
 	static inline std::string charToStr(char ch) noexcept {
 		return std::string(1, ch);
 	}

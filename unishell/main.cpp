@@ -17,6 +17,9 @@ int main(int argc, char** argv)
 
 	System sys;
 	PathHandler* sysPath = sys.path();
+	Environment* sysEnv = sys.env();
+
+	sysEnv->addId(Identifier("name", new LiteralValue(std::string("Marvin"))));
 
 	// main loop
 	while (!sys.getAbort()) {
@@ -24,7 +27,7 @@ int main(int argc, char** argv)
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 			*sys.input() = INStream::getLine(); // sets global user input
 			
-			TokenList input = InputScanner(*sys.input()).scanTokens();
+			TokenList input = InstreamScanner(*sys.input()).scanTokens();
 
 			if (input[0].getLexical() == "ast")
 				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub(), *sys.input()).parse())));
@@ -46,7 +49,7 @@ int main(int argc, char** argv)
 
 		// unhandled exception
 		catch (...) {
-			sys.error(SystemException(InternalSystem, "Unexpected error"));
+			sys.error(SystemException(InternalSystemError, "Unexpected error"));
 		}
 	}
 }

@@ -8,15 +8,15 @@
 #include "../../base/scannerBase.h"
 #include "token.h"
 
-enum InputScannerHints
+enum InstreamScannerHints
 {
 	IgnoreCommand = 1
 };
 
-class InputScanner : public ScannerBase<Token>
+class InstreamScanner : public ScannerBase<Token>
 {
 public:
-	InputScanner(const std::string& src, int hints = 0) : ScannerBase(src) {
+	InstreamScanner(const std::string& src, int hints = 0) : ScannerBase(src) {
 		ignoreCommand = ((hints & IgnoreCommand) == IgnoreCommand);
 	}
 
@@ -40,6 +40,34 @@ private:
 	inline void checkParen(TokenList source, size_t& i, unsigned short& aux) {
 		if (source[i].getType() == LPAREN) aux++;
 		if (source[i].getType() == RPAREN) aux--;
+	}
+
+
+
+	inline TokenList reviewTokens(TokenList source) {
+		TokenList res;
+
+		for (Token token : source) {
+			if (token.type == INDENTIFIER)
+				token = assignIdentifierToken(token);
+
+			res.push_back(token);
+		}
+
+		return res;
+	}
+
+	// receive a token that represents a symbol and return a new token
+	// containing the value inside that symbol
+	static inline Token assignIdentifierToken(Token token) {
+		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
+		LiteralValue idValue = respectiveId.getValue();
+
+		token.lexical = TypeUtil::literalValueToString(&idValue);
+		token.lit = new LiteralValue(idValue);
+		token.type = respectiveId.getTypeAsTokenEnum();
+
+		return token;
 	}
 
 
