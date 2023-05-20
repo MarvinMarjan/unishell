@@ -28,7 +28,6 @@ private:
 			return new LiteralValue(-asDbl(right));
 
 		case BANG:
-			checkLiteralType(right, Bool, "Bool");
 			return new LiteralValue(!isTruthy(right));
 		}
 
@@ -40,10 +39,27 @@ private:
 		LiteralValue* right = evaluate(expr->right);
 
 		switch (expr->op.getType()) {
-		case GREATER: return new LiteralValue(asDbl(left) > asDbl(right));
-		case LESS: return new LiteralValue(asDbl(left) < asDbl(right));
-		case GREATER_EQUAL: return new LiteralValue(asDbl(left) >= asDbl(right));
-		case LESS_EQUAL: return new LiteralValue(asDbl(left) <= asDbl(right));
+		case AND:
+			return new LiteralValue(isTruthy((left)) && isTruthy(right));
+
+		case OR:
+			return new LiteralValue(isTruthy(left) || isTruthy(right));
+
+		case GREATER:
+			checkLiteralType({ left, right }, Number, "Number");
+			return new LiteralValue(asDbl(left) > asDbl(right));
+
+		case LESS:
+			checkLiteralType({ left, right }, Number, "Number");
+			return new LiteralValue(asDbl(left) < asDbl(right));
+
+		case GREATER_EQUAL:
+			checkLiteralType({ left, right }, Number, "Number");
+			return new LiteralValue(asDbl(left) >= asDbl(right));
+
+		case LESS_EQUAL:
+			checkLiteralType({ left, right }, Number, "Number");
+			return new LiteralValue(asDbl(left) <= asDbl(right));
 
 		case BANG_EQUAL: return new LiteralValue(!isEqual(left, right));
 		case EQUAL_EQUAL: return new LiteralValue(isEqual(left, right));
@@ -52,8 +68,10 @@ private:
 			if (getValueActiveType(left) == Literal || getValueActiveType(right) == Literal)
 				return new LiteralValue(TypeUtil::literalValueToString(left) + TypeUtil::literalValueToString(right));
 
-			else
+			else {
+				checkLiteralType({ left, right }, Number, "Number");
 				return new LiteralValue(asDbl(left) + asDbl(right));
+			}
 
 		case MINUS:
 			checkLiteralType({ left, right }, Number, "Number");

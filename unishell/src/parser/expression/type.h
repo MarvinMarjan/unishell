@@ -11,11 +11,13 @@ enum IdValueType
 {
 	Literal,
 	Number,
-	Bool
+	Bool,
+	Null
 };
 
 typedef std::variant<std::string, double, bool> LiteralValue;
 
 inline IdValueType getValueActiveType(LiteralValue* value) {
+	if (!value) return Null;
 	return (IdValueType)value->index();
 }

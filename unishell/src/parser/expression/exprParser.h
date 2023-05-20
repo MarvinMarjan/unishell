@@ -99,6 +99,7 @@ private:
 
 	inline Expr* primary() {
 		if (match({ NUMBER, LITERAL, BOOLEANVAL })) return new LiteralExpr(prev().getLiteral());
+		if (match({ NULLVAL })) return new LiteralExpr(nullptr);
 
 		if (match({ LPAREN })) {
 			Expr* expr = expression();

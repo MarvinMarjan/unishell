@@ -11,7 +11,8 @@
 // right is the keywords token representation
 const StringList __keywords = {
 	"and",
-	"or"
+	"or",
+	"null"
 };
 
 const StringList __boolean = {

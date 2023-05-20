@@ -22,7 +22,9 @@ enum TokenEnum
 	// comparison operators
 	BANG, LESS, GREATER,
 	EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
-	AND, OR,
+	
+	// keywords
+	AND, OR, NULLVAL,
 
 	// others
 	COLON,	

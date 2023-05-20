@@ -70,6 +70,7 @@ TokenList TokenProcess::parseTokens(TokenList source) {
 		case EXPRESSION: {
 			Expr* parsed = ExprParser(token.getSub(), *System::input()).parse();
 			LiteralValue* interpreted = ExprInterpreter().interpret(parsed);
+			TypeUtil::checkNull(interpreted);
 			res.push_back(Token(TypeUtil::getTypeAsTokenEnum(getValueActiveType(interpreted)),
 				TypeUtil::literalValueToString(interpreted), interpreted, {}, token.getIndex()));
 			break;

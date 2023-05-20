@@ -7,6 +7,7 @@ class ExceptionRef
 {
 public:
 	ExceptionRef(const std::string& src, int index = -1) : src(src), index(index) {}
+	ExceptionRef(const std::string& src, size_t index) : src(src), index((int)index) {}
 
 	// return a string containing error location information
 	inline std::string getString() const {
@@ -29,5 +30,5 @@ public:
 
 private:
 	std::string src;
-	size_t index;
+	int index;
 };

@@ -54,6 +54,7 @@ public:
 		case Literal: return LITERAL;
 		case Number: return NUMBER;
 		case Bool: return BOOLEANVAL;
+		case Null: return NULLVAL;
 		}
 
 		return LITERAL;
@@ -61,5 +62,10 @@ public:
 
 	static inline bool isTypeof(LiteralValue* value, IdValueType type) {
 		return (getValueActiveType(value) == type);
+	}
+
+	static inline void checkNull(LiteralValue* value) {
+		if (!value)
+			value = new LiteralValue("null");
 	}
 };
