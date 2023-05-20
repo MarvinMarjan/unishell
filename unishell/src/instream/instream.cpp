@@ -135,7 +135,8 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			}
 
 			else if (!INStreamRender::renderKeyword(fText, text, current, i, cursorPos) &&
-				     !INStreamRender::renderBoolean(fText, text, current, i, cursorPos))
+				     !INStreamRender::renderBoolean(fText, text, current, i, cursorPos) &&
+					 !INStreamRender::renderColor(fText, text, current, i, cursorPos))
 			{
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 			}

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "instreamBuffer.h"
-#include "../outstream/outputColor.h"
 
+#include "../outstream/outputColor.h"
+#include "../parser/instream/instrScanner.h"
+#include "../parser/color/colorParser.h"
 #include "../system/global.h"
 
 #define INSCursor INStreamRender::cursor
@@ -83,6 +85,32 @@ private:
 		return false;
 	}
 
+	// render a color syntax with the color that the syntax represents.
+	// i.e: id:205;underline: | clr:red: | rgb:100;100;100;italic:
+	static inline bool renderColor(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
+		size_t start = i, end = 0, aux = i;
+
+		while (text[aux] != ':')
+			if (!StringUtil::isAlpha(text[aux++])) return false;
+
+		if (!VectorUtil::exists(__color_formats, std::string(text.begin() + start, text.begin() + aux))) return false;
+		if (++aux >= text.size()) return false;
+		
+		while (text[aux] != ':')
+			if (++aux >= text.size()) return false;
+
+		end = aux;
+
+		TokenList tokens = InstreamScanner(std::string(text.begin() + start, text.begin() + end + 1), IgnoreCommand).scanTokens();
+		BaseColorStructure* color = ColorParser(tokens, true).parse();
+
+		// if color is valid
+		if (color)
+			renderUntil(stream, text, current, i, cursorPos, color, end + 1);
+		
+		return (color) ? true : false;
+	}
+
 	static inline void renderWord(std::stringstream& stream, const std::string& text, char current, size_t& i,
 		int cursorPos, BaseColorStructure* color, bool digit = false) noexcept
 	{
@@ -96,6 +124,19 @@ private:
 			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
 
 		i--; // necessary to draw next char
+
+		stream << endclr;
+	}
+
+	static inline void renderUntil(std::stringstream& stream, const std::string& text, char current, size_t& i,
+		int cursorPos, BaseColorStructure* color, size_t until) 
+	{
+		stream << color->toString();
+
+		for (i; i < until; i++)
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
+
+		i--;
 
 		stream << endclr;
 	}

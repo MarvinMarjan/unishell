@@ -44,6 +44,12 @@ const StringList __color = {
 	"wcyan"
 };
 
+const StringList __color_formats = {
+	"id",
+	"rgb",
+	"clr"
+};
+
 // --> global color variables
 extern BaseColorStructure* __clr_quoted;
 extern BaseColorStructure* __clr_identifier;

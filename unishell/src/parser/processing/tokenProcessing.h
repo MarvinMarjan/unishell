@@ -9,6 +9,7 @@
 class TokenProcess
 {
 public:
+	// process all tokens
 	static inline TokenList process(TokenList source) {
 		source = expandTokens(source);
 		source = reduceTokens(source);
