@@ -2,9 +2,10 @@
 
 #include "../instream/token.h"
 #include "../../system/system.h"
-#include "../../utilities/typeUtil.h"
 
 #include "../color/colorParser.h"
+#include "../expression/exprParser.h"
+#include "../expression/exprInterpreter.h"
 
 class TokenProcess
 {
@@ -19,21 +20,9 @@ public:
 	}
 
 private:
-	// parse tokens that can be parsed
-	static inline TokenList parseTokens(TokenList source) {
-		TokenList res;
-
-		for (Token token : source) {
-			if (token.getType() == COLOR) {
-				std::string parsed = ColorParser(token.getSub()).parse()->toString();
-				res.push_back(Token(LITERAL, parsed, new LiteralValue(parsed), {}, token.getIndex()));
-			}
-
-			else res.push_back(token);
-		}
-
-		return res;
-	}
+	// parse tokens that can be parsed. if token
+	// can be interpreted, interpret it
+	static TokenList parseTokens(TokenList source);
 
 
 	// reduce tokens that can be reduced into a 
@@ -87,7 +76,7 @@ private:
 
 		token.lexical = TypeUtil::literalValueToString(&idValue);
 		token.lit = new LiteralValue(idValue);
-		token.type = respectiveId.getTypeAsTokenEnum();
+		token.type = TypeUtil::getTypeAsTokenEnum(respectiveId.getType());
 
 		return token;
 	}

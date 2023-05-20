@@ -8,10 +8,6 @@
 
 #include "../parser/expression/type.h"
 
-#define asStr(pLit)  std::get<std::string>(*pLit)
-#define asDbl(pLit)  std::get<double>(*pLit)
-#define asBool(pLit) std::get<bool>(*pLit)
-
 class TypeUtil
 {
 public:
@@ -51,5 +47,19 @@ public:
 		else if (val->index() == 2) return boolToString(asBool(val));
 
 		return std::string();
+	}
+
+	static inline TokenEnum getTypeAsTokenEnum(IdValueType type) noexcept {
+		switch (type) {
+		case Literal: return LITERAL;
+		case Number: return NUMBER;
+		case Bool: return BOOLEANVAL;
+		}
+
+		return LITERAL;
+	}
+
+	static inline bool isTypeof(LiteralValue* value, IdValueType type) {
+		return (getValueActiveType(value) == type);
 	}
 };

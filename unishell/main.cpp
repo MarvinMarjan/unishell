@@ -33,14 +33,7 @@ int main(int argc, char** argv)
 			
 			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
 
-			if (input[0].getLexical() == "ast")
-				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub(), *sys.input()).parse())));
-
-			else if (input[0].getLexical() == "tokens")
-				for (size_t i = 1; i < input.size(); i++)
-					sysprintln(input[i].getLexical() + " - " + std::to_string((int)input[i].getType()));
-
-			else if (input[0].getLexical() == "print" && input.size() > 1) {
+			if (input[0].getLexical() == "print" && input.size() > 1) {
 				for (size_t i = 1; i < input.size(); i++)
 					sysprint(TypeUtil::literalValueToString(input[i].getLiteral()));
 

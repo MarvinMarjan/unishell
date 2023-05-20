@@ -9,6 +9,7 @@
 
 enum SystemExceptionType
 {
+	ExprInterpreterError,
 	ExprParserError,
 	ColorParserError,
 	InstreamScannerError,
@@ -24,6 +25,10 @@ public:
 	{
 		switch (type)
 		{
+		case ExprInterpreterError:
+			typeMsg = "expression_interpreter";
+			break;
+
 		case ExprParserError:
 			typeMsg = "parser";
 			break;

@@ -3,10 +3,12 @@
 #include "../utilities/stringUtil.h"
 #include "../outstream/colorStructure.h"
 
-#include <map>
+#include "../parser/instream/token.h"
 
 // global variables
 
+// a map of keywords. left is the keyword name,
+// right is the keywords token representation
 const StringList __keywords = {
 	"and",
 	"or"

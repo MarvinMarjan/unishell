@@ -9,7 +9,7 @@
 class ExprParser
 {
 public:
-	ExprParser(TokenList tokens, const std::string& rawSource) : 
+	ExprParser(TokenList tokens, const std::string& rawSource) :
 		tokens(tokens), rawSource(rawSource)
 	{
 		current = 0;
