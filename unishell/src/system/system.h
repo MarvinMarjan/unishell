@@ -55,7 +55,7 @@ public:
 		Identifier* identifier = GLOBAL_environment->getId(idName);
 
 		if (!identifier)
-			throw SystemException(EnvironmentError, "Unknown indentifier: " + clr(idName, __clr_identifier), 
+			throw SystemException(EnvironmentError, "Unknown indentifier: " + clr(idName, __clr_identifier->toString()), 
 				(index != -1) ? ExceptionRef(*GLOBAL_userInput, index) : ExceptionRef(""));
 		
 		return identifier;

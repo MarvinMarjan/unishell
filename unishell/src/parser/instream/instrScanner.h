@@ -25,52 +25,6 @@ public:
 private:
 	void scanToken() override;
 
-	// indentify expressions and generate a EXPRESSION type conataining
-	// the expression body
-	TokenList generateExpressions(TokenList source);
-
-	inline void checkIndex(TokenList source, size_t& i, unsigned short aux) {
-		if (i + 1 >= source.size() && aux)
-			throw SystemException(InstreamScannerError, "Unterminated expression", ExceptionRef(src, source[i].getIndex()));
-
-		else
-			i++;
-	}
-
-	inline void checkParen(TokenList source, size_t& i, unsigned short& aux) {
-		if (source[i].getType() == LPAREN) aux++;
-		if (source[i].getType() == RPAREN) aux--;
-	}
-
-
-
-	inline TokenList reviewTokens(TokenList source) {
-		TokenList res;
-
-		for (Token token : source) {
-			if (token.type == INDENTIFIER)
-				token = assignIdentifierToken(token);
-
-			res.push_back(token);
-		}
-
-		return res;
-	}
-
-	// receive a token that represents a symbol and return a new token
-	// containing the value inside that symbol
-	static inline Token assignIdentifierToken(Token token) {
-		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
-		LiteralValue idValue = respectiveId.getValue();
-
-		token.lexical = TypeUtil::literalValueToString(&idValue);
-		token.lit = new LiteralValue(idValue);
-		token.type = respectiveId.getTypeAsTokenEnum();
-
-		return token;
-	}
-
-
 
 	inline void addToken(TokenEnum type) noexcept {
 		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1));

@@ -10,10 +10,11 @@ typedef std::vector<Token> TokenList;
 
 enum TokenEnum
 {
-	COMMAND, INDENTIFIER, 
+	// word tokens
+	COMMAND, IDENTIFIER, 
 	
 	// sub tokens
-	EXPRESSION,
+	EXPRESSION, COLOR,
 
 	// math operators
 	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
@@ -22,6 +23,9 @@ enum TokenEnum
 	BANG, LESS, GREATER,
 	EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
 	AND, OR,
+
+	// others
+	COLON,	
 
 	// atribuition
 	EQUAL,
@@ -33,7 +37,7 @@ enum TokenEnum
 class Token
 {
 public:
-	friend class InstreamScanner;
+	friend class TokenProcess;
 
 	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub, size_t index) : 
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index)

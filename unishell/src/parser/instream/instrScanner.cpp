@@ -6,40 +6,10 @@ TokenList InstreamScanner::scanTokens() {
 		scanToken();
 	}
 
-	tokens = reviewTokens(tokens);
-	tokens = generateExpressions(tokens);
-
 	return tokens;
 }
 
-TokenList InstreamScanner::generateExpressions(TokenList source) {
-	TokenList res;
 
-	size_t start = 0, end = 0;
-	unsigned short aux = 0;
-
-	for (size_t i = 0; i < source.size(); i++)
-	{
-		if (source[i].getType() == LPAREN) {
-			aux++;
-
-			start = i;
-
-			while (aux) {
-				checkIndex(source, i, aux);
-				checkParen(source, i, aux);
-			}
-
-			end = i;
-
-			res.push_back(Token(EXPRESSION, "", nullptr, TokenList(source.begin() + start + 1, source.begin() + end), res.size() - 1));
-		}
-
-		else res.push_back(source[i]);
-	}
-
-	return res;
-}
 
 void InstreamScanner::scanToken()
 {
@@ -48,6 +18,7 @@ void InstreamScanner::scanToken()
 	switch (ch)
 	{
 	case ' ':
+	case ';':
 	case '\r':
 	case '\t':
 		break;
@@ -68,7 +39,9 @@ void InstreamScanner::scanToken()
 	case ')': addToken(RPAREN); break;
 
 	case '\"': string(); break;
-	case '$': word(INDENTIFIER); break;
+	case '$': word(IDENTIFIER); break;
+
+	case ':': addToken(COLON); break;
 
 	default:
 		if (tokens.empty() && !ignoreCommand) word(COMMAND);

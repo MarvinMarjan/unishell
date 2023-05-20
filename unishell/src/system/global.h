@@ -17,14 +17,41 @@ const StringList __boolean = {
 	"false"
 };
 
+const StringList __colormode = {
+	"normal",
+	"dark",
+	"italic",
+	"underline",
+	"crossed"
+};
+
+const StringList __color = {
+	"null",
+	"red",
+	"green",
+	"yellow",
+	"blue",
+	"purple",
+	"cyan",
+	"white",
+
+	"gray",
+	"wred",
+	"wgreen",
+	"wyellow",
+	"wblue",
+	"wpurple",
+	"wcyan"
+};
+
 // --> global color variables
-extern ColorStructure __clr_quoted;
-extern ColorStructure __clr_identifier;
-extern ColorStructure __clr_command;
-extern ColorStructure __clr_numbers;
-extern ColorStructure __clr_operators;
-extern ColorStructure __clr_parens;
-extern ColorStructure __clr_cursor;
-extern ColorStructure __clr_keyword;
-extern ColorStructure __clr_boolean;
+extern BaseColorStructure* __clr_quoted;
+extern BaseColorStructure* __clr_identifier;
+extern BaseColorStructure* __clr_command;
+extern BaseColorStructure* __clr_numbers;
+extern BaseColorStructure* __clr_operators;
+extern BaseColorStructure* __clr_parens;
+extern BaseColorStructure* __clr_cursor;
+extern BaseColorStructure* __clr_keyword;
+extern BaseColorStructure* __clr_boolean;
 // <--

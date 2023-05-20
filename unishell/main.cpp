@@ -5,6 +5,8 @@
 
 #include "src/parser/instream/instrScanner.h"
 
+#include "src/parser/processing/tokenProcessing.h"
+
 #include "src/parser/expression/exprASTPrinter.h"
 #include "src/parser/expression/exprParser.h"
 
@@ -27,7 +29,7 @@ int main(int argc, char** argv)
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 			*sys.input() = INStream::getLine(); // sets global user input
 			
-			TokenList input = InstreamScanner(*sys.input()).scanTokens();
+			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
 
 			if (input[0].getLexical() == "ast")
 				sysprintln(asStr(ExprASTPrinter().print(ExprParser(input[1].getSub(), *sys.input()).parse())));
@@ -36,8 +38,12 @@ int main(int argc, char** argv)
 				for (size_t i = 1; i < input.size(); i++)
 					sysprintln(input[i].getLexical() + " - " + std::to_string((int)input[i].getType()));
 
-			else if (input[0].getLexical() == "print" && input[1].getLiteral())
-				sysprintln(TypeUtil::literalValueToString(input[1].getLiteral()));
+			else if (input[0].getLexical() == "print" && input.size() > 1) {
+				for (size_t i = 1; i < input.size(); i++)
+					sysprint(TypeUtil::literalValueToString(input[i].getLiteral()));
+
+				sysprintln("");
+			}
 
 			else if (input[0].getLexical() == "exit") sys.exit();
 		}

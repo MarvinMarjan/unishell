@@ -9,8 +9,10 @@
 
 enum SystemExceptionType
 {
-	ParserError,
+	ExprParserError,
+	ColorParserError,
 	InstreamScannerError,
+	TokenProcessingError,
 	EnvironmentError,
 	InternalSystemError
 };
@@ -22,12 +24,20 @@ public:
 	{
 		switch (type)
 		{
-		case ParserError:
+		case ExprParserError:
 			typeMsg = "parser";
+			break;
+
+		case ColorParserError:
+			typeMsg = "color_parser";
 			break;
 
 		case InstreamScannerError:
 			typeMsg = "instream_scanner";
+			break;
+
+		case TokenProcessingError:
+			typeMsg = "token_processing";
 			break;
 
 		case EnvironmentError:

@@ -27,7 +27,7 @@ void PathHandler::manip(PathTokenList instructions) {
 			canManip = false;
 			break;
 
-		case PathToken::INDENTIFIER:
+		case PathToken::IDENTIFIER:
 			if (!canManip) break;
 
 			into(token.getLexical());

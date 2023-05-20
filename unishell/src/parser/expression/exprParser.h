@@ -34,7 +34,7 @@ private:
 		}
 
 		if (match({ NUMBER, LITERAL, BOOLEANVAL, LPAREN }))
-			throw SystemException(ParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
+			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
 
 		return expr;
 	}
@@ -108,7 +108,7 @@ private:
 
 		if (!tokens.size()) return new LiteralExpr(nullptr);
 
-		throw SystemException(ParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
+		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
 	}
 
 
@@ -127,7 +127,7 @@ private:
 	inline Token consume(TokenEnum type, const std::string& msg) {
 		if (check(type)) return advance();
 
-		throw SystemException(ParserError, msg);
+		throw SystemException(ExprParserError, msg);
 	}
 
 

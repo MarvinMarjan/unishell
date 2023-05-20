@@ -131,6 +131,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
+    <ClCompile Include="src\parser\processing\tokenProcessing.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
     <ClCompile Include="src\system\global.cpp" />
@@ -147,12 +148,14 @@
     <ClInclude Include="src\outstream\colorStructure.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />
+    <ClInclude Include="src\parser\color\colorParser.h" />
     <ClInclude Include="src\parser\expression\expr.h" />
     <ClInclude Include="src\parser\expression\exprASTPrinter.h" />
     <ClInclude Include="src\parser\expression\exprParser.h" />
     <ClInclude Include="src\parser\expression\type.h" />
     <ClInclude Include="src\parser\instream\instrScanner.h" />
     <ClInclude Include="src\parser\instream\token.h" />
+    <ClInclude Include="src\parser\processing\tokenProcessing.h" />
     <ClInclude Include="src\path\pathHandler.h" />
     <ClInclude Include="src\path\pathScanner.h" />
     <ClInclude Include="src\path\pathToken.h" />
@@ -164,6 +167,7 @@
     <ClInclude Include="src\utilities\fileUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />
     <ClInclude Include="src\utilities\typeUtil.h" />
+    <ClInclude Include="src\utilities\vectorUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

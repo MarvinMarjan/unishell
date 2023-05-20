@@ -16,30 +16,30 @@ private:
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static inline std::string cursor(char ch, std::string after = endclr) noexcept {
-		return clr(StringUtil::charToStr(ch), __clr_cursor) + after;
+		return clr(StringUtil::charToStr(ch), __clr_cursor->toString()) + after;
 	}
 
 	// command string
 	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordSize) {
 		if (i >= firstWordSize) return;
 
-		stream << id(__clr_command); // start color rendering
+		stream << __clr_command->toString(); // start color rendering
 
 		// draw command characters
 		for (i; i < firstWordSize; i++)
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_command));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_command->toString());
 		
 		stream << endclr; // end color rendering
 	}
 
 	// quoted string: "hello, world"
 	static inline void renderQuoted(std::stringstream& stream, const std::string& text, char current, size_t& i, int cursorPos) {
-		stream << id(__clr_quoted);
+		stream << __clr_quoted->toString();
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_quoted)); // draw first quote
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString()); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size())
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(__clr_quoted));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString());
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last quote
 
@@ -84,16 +84,16 @@ private:
 	}
 
 	static inline void renderWord(std::stringstream& stream, const std::string& text, char current, size_t& i,
-		int cursorPos, ColorStructure color, bool digit = false) noexcept
+		int cursorPos, BaseColorStructure* color, bool digit = false) noexcept
 	{
 		// render color
-		stream << id(color);
+		stream << color->toString();
 
 		// render first char
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(color));
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
 
 		while (StringUtil::isAlpha(text[++i]) || (StringUtil::isDigit(text[i]) && digit))
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), id(color));
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
 
 		i--; // necessary to draw next char
 

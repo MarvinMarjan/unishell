@@ -44,7 +44,7 @@ public:
 	}
 
 	static inline std::string literalValueToString(LiteralValue* val) {
-		if (!val) return std::string();
+		if (!val) return std::string("null");
 
 		if (val->index() == 0) return asStr(val);
 		else if (val->index() == 1) return formatDouble(asDbl(val), 2);
