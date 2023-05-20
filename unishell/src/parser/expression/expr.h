@@ -26,6 +26,7 @@ class Binary : public Expr
 {
 public:
 	friend class ExprASTPrinter;
+	friend class ExprInterpreter;
 
 	Binary(Expr* left, Token op, Expr* right) : left(left), op(op), right(right) {}
 
@@ -43,6 +44,7 @@ class Unary : public Expr
 {
 public:
 	friend class ExprASTPrinter;
+	friend class ExprInterpreter;
 
 	Unary(Token op, Expr* expr) : op(op), expr(expr) {}
 
@@ -59,6 +61,7 @@ class Group : public Expr
 {
 public:
 	friend class ExprASTPrinter;
+	friend class ExprInterpreter;
 
 	Group(Expr* expression) : expression(expression) {}
 
@@ -74,6 +77,7 @@ class LiteralExpr : public Expr
 {
 public:
 	friend class ExprASTPrinter;
+	friend class ExprInterpreter;
 
 	LiteralExpr(LiteralValue* value) : value(value) {}
 

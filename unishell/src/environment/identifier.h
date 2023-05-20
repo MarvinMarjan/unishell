@@ -23,32 +23,19 @@ public:
 		return *value;
 	}
 
+	constexpr inline IdValueType getType() const noexcept {
+		return type;
+	}
+
 	inline void setValue(LiteralValue value) noexcept {
 		*this->value = value;
 		updateType();
  	}
 
-	inline TokenEnum getTypeAsTokenEnum() const noexcept {
-		switch (type) {
-		case Literal: return LITERAL;
-		case Number: return NUMBER;
-		case Bool: return BOOLEANVAL;
-		}
-
-		return LITERAL;
-	}
-
 private:
 	inline void updateType() {
 		type = (IdValueType)value->index();
 	}
-
-	enum IdValueType
-	{
-		Literal,
-		Number,
-		Bool
-	};
 
 	std::string name;
 	LiteralValue* value;

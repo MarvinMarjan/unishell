@@ -9,7 +9,7 @@
 class ExprParser
 {
 public:
-	ExprParser(TokenList tokens, const std::string& rawSource) : 
+	ExprParser(TokenList tokens, const std::string& rawSource) :
 		tokens(tokens), rawSource(rawSource)
 	{
 		current = 0;
@@ -99,6 +99,7 @@ private:
 
 	inline Expr* primary() {
 		if (match({ NUMBER, LITERAL, BOOLEANVAL })) return new LiteralExpr(prev().getLiteral());
+		if (match({ NULLVAL })) return new LiteralExpr(nullptr);
 
 		if (match({ LPAREN })) {
 			Expr* expr = expression();

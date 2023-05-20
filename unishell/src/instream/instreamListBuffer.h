@@ -17,7 +17,7 @@ public:
 
 	inline void add(const std::string& value) {
 		if (current > 0 && value == at(current)) return;
-
+		
 		push_back(value);
 		current = size() - 1;
 	}

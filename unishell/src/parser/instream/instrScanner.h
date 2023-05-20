@@ -8,6 +8,9 @@
 #include "../../base/scannerBase.h"
 #include "token.h"
 
+#include "../../system/global.h"
+#include "../../utilities/globalUtil.h"
+
 enum InstreamScannerHints
 {
 	IgnoreCommand = 1
@@ -48,13 +51,9 @@ private:
 	}
 
 	inline bool addKeyword(const std::string& keyword) {
-		if (keyword == "and") {
-			addToken(AND);
-			return true;
-		}
-
-		else if (keyword == "or") {
-			addToken(OR);
+		TokenEnum keyw = GlobalUtil::keywordToToken(keyword);
+		if (keyw != LITERAL) {
+			addToken(keyw);
 			return true;
 		}
 
@@ -62,28 +61,39 @@ private:
 	}
 
 
-
-	inline void string() noexcept {
-		while (peek() != '\"' && !isAtEnd()) advance();
+	// gets a string inside quotes like "hello, world"
+	inline void string() {
+		while (peek() != '\"') {
+			if (isAtEnd()) 
+				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(*System::input(), current - 1));
+			
+			advance();
+		}
 		addToken(LITERAL, new LiteralValue(src.substr(start + 1, current - 1 - start)));
 		advance(); // closing char
 	}
 
+	// gets a sequence of digits. dot ('.') included
 	inline void number() {
 		for (current; StringUtil::isDigit(peek()); current++) {}
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
 
+	// if is keyword, returns true and add it;
+	// else return false
 	inline bool keyword() {
 		for (current; StringUtil::isAlpha(peek()); current++) {}
 		return addKeyword(getCurrentSubstring());
 	}
 
+	// if is boolean value, returns true and add it;
+	// else return false
 	inline bool boolean() {
 		for (current; StringUtil::isAlpha(peek()); current++) {}
 		return addBoolean(getCurrentSubstring());
 	}
 
+	// gets a sequence of alpha / digits characters
 	inline void word(TokenEnum type, bool hasLiteral = false) {
 		while (StringUtil::isAlphaNumeric(peek())) advance();
 		if (!hasLiteral) addToken(type, getCurrentSubstring());
