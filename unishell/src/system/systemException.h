@@ -1,11 +1,6 @@
 #pragma once
 
-#include "../outstream/outputColor.h"
 #include "exceptionReference.h"
-
-#include <string>
-
-#define UNEXPECTED_TOKEN_MSG "Unexpected token"
 
 enum SystemExceptionType
 {
@@ -22,7 +17,7 @@ enum SystemExceptionType
 class SystemException
 {
 public:
-	SystemException(SystemExceptionType type, const std::string& msg, ExceptionRef ref = ExceptionRef("")) : msg(msg), type(type), ref(ref)
+	SystemException(SystemExceptionType type, const std::string& msg, ExceptionRef ref = ExceptionRef()) : msg(msg), type(type), ref(ref)
 	{
 		switch (type)
 		{

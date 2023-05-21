@@ -19,7 +19,7 @@
 class System
 {
 public:
-	System() {}
+	System();
 
 	static inline void print(const std::string& text, bool endLine = false) {
 		std::cout << text;
@@ -57,13 +57,24 @@ public:
 		Identifier* identifier = GLOBAL_environment->getId(idName);
 
 		if (!identifier)
-			throw SystemException(EnvironmentError, "Unknown indentifier: " + clr(idName, __clr_identifier->toString()), 
+			throw SystemException(EnvironmentError, "Unknown indentifier: " + idformat(idName), 
 				(index != -1) ? ExceptionRef(*GLOBAL_userInput, index) : ExceptionRef(""));
 		
 		return identifier;
 	}
 
+	static inline void delEnvId(const std::string& idName) {
+		if (GLOBAL_environment->exists(idName))
+			GLOBAL_environment->delId(idName);
+		else
+			throw SystemException(EnvironmentError, "Unknown identifier: " + idformat(idName));
+	}
+
 private:
+	static inline void addSysId(const std::string& name, LiteralValue* value) {
+		GLOBAL_environment->addId(Identifier(name, value, true));
+	}
+
 	static bool abort;
 
 	static Environment* GLOBAL_environment; // stores a Environment pointer

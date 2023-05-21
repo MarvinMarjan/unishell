@@ -11,7 +11,9 @@ typedef std::vector<Identifier> IdentifierList;
 class Identifier
 {
 public:
-	Identifier(const std::string& name, LiteralValue* value) : name(name), value(value) {
+	Identifier(const std::string& name, LiteralValue* value, bool sysId = false) : 
+		name(name), value(value), sysId(sysId)
+	{
 		updateType();
 	}
 
@@ -28,16 +30,23 @@ public:
 	}
 
 	inline void setValue(LiteralValue* value) noexcept {
+		if (sysId) return; // sys identifiers are const
 		this->value = value;
 		updateType();
  	}
 
+	constexpr inline bool isSysId() const noexcept {
+		return sysId;
+	}
+
 private:
 	inline void updateType() {
-		type = (IdValueType)value->index();
+		type = (value) ? (IdValueType)value->index() : Null;
 	}
 
 	std::string name;
 	LiteralValue* value;
 	IdValueType type;
+
+	bool sysId;
 };

@@ -15,6 +15,7 @@ public:
 		source = expandTokens(source);
 		source = reduceTokens(source);
 		source = parseTokens(source);
+		//source = reviewTokens(source);
 
 		source = generateLists(source); // must be the last stage
 
@@ -22,6 +23,19 @@ public:
 	}
 
 private:
+	/*static TokenList reviewTokens(TokenList source) {
+		TokenList res;
+
+		for (Token token : source) {
+			if (token.getType() == NULLVAL)
+				res.push_back(litToStr(token.getLiteral()));
+			else
+				res.push_back(token);
+		}
+
+		return res;
+	}*/
+
 	// parse tokens that can be parsed. if token
 	// can be interpreted, interpret it
 	static TokenList parseTokens(TokenList source);
@@ -58,7 +72,7 @@ private:
 		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
 		LiteralValue* idValue = respectiveId.getValue();
 
-		token.lexical = TypeUtil::literalValueToString(idValue);
+		token.lexical = litToStr(idValue);
 		token.lit = idValue;
 		token.type = TypeUtil::getTypeAsTokenEnum(respectiveId.getType());
 

@@ -28,7 +28,7 @@ private:
 
 	LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
 		if (!expr->value) return new LiteralValue(std::string("null"));
-		return new LiteralValue(TypeUtil::literalValueToString(expr->value));
+		return new LiteralValue(litToStr(expr->value));
 	}
 
 

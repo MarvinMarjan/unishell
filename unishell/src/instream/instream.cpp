@@ -86,11 +86,12 @@ std::string INStream::formatString(std::string text, int cursorPos)
 {
 	const std::string srcText = text;
 	std::stringstream fText;
-	size_t firstWordSize = StringUtil::split(text)[0].size();
+	size_t firstWordPos = INStreamRender::getWordEndPos(text);
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
-		INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordSize);
+		if (i <= firstWordPos)
+			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
 
 		char current = text[i];
 
@@ -102,7 +103,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			break;
 
 		case '\"':
-			INStreamRender::renderQuoted(fText, text, current, i, cursorPos);
+			INStreamRender::renderQuoted(fText, text, i, cursorPos);
 			break;
 
 		case '(':
@@ -126,7 +127,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			break;
 
 		case '$':
-			INStreamRender::renderIdentifier(fText, text, current, i, cursorPos);
+			INStreamRender::renderIdentifier(fText, text, i, cursorPos);
 			break;
 
 		default:
@@ -138,9 +139,9 @@ std::string INStream::formatString(std::string text, int cursorPos)
 				i--;
 			}
 
-			else if (!INStreamRender::renderKeyword(fText, text, current, i, cursorPos) &&
-				     !INStreamRender::renderBoolean(fText, text, current, i, cursorPos) &&
-					 !INStreamRender::renderColor(fText, text, current, i, cursorPos))
+			else if (!INStreamRender::renderKeyword(fText, text, i, cursorPos) &&
+				     !INStreamRender::renderBoolean(fText, text, i, cursorPos) &&
+					 !INStreamRender::renderColor(fText, text, i, cursorPos))
 			{
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 			}

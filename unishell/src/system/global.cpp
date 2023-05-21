@@ -20,7 +20,7 @@ const StringList __colormode = {
 };
 
 const StringList __color = {
-	"null",
+	"std",
 	"red",
 	"green",
 	"yellow",
@@ -44,11 +44,24 @@ const StringList __color_formats = {
 	"clr"
 };
 
+const StringList __commands = {
+	"print",
+	"var",
+	"del",
+	"exit"
+};
+
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|\\! ";
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
+
 BaseColorStructure* __clr_identifier = new IdColorStructure(115);
+BaseColorStructure* __clr_ex_identifier = new IdColorStructure(115, italic);
+BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
+
 BaseColorStructure* __clr_command = new IdColorStructure(141);
+BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
+
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
 BaseColorStructure* __clr_operators = new IdColorStructure(222);
 BaseColorStructure* __clr_encloses = new IdColorStructure(210);

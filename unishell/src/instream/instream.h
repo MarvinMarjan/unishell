@@ -29,6 +29,8 @@ public:
 	static std::string getLine();
 
 private:
+	friend class INStreamRender;
+
 	static INSListBuffer globalInputList; // global
 
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);

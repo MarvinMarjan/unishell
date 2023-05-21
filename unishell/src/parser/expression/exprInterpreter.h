@@ -66,7 +66,7 @@ private:
 
 		case PLUS:
 			if (getValueActiveType(left) == Literal || getValueActiveType(right) == Literal)
-				return new LiteralValue(TypeUtil::literalValueToString(left) + TypeUtil::literalValueToString(right));
+				return new LiteralValue(litToStr(left) + litToStr(right));
 
 			else {
 				checkLiteralType({ left, right }, Number, "Number");
@@ -104,12 +104,12 @@ private:
 		if (!a && !b) return true;
 		if (!a) return false;
 
-		return (TypeUtil::literalValueToString(a) == TypeUtil::literalValueToString(b));
+		return (litToStr(a) == litToStr(b));
 	}
 
 	inline void checkLiteralType(LiteralValue* value, IdValueType expectedType, const std::string& typeStr) {
 		if (!TypeUtil::isTypeof(value, expectedType))
-			throw SystemException(ExprInterpreterError, typeStr + " expected: " + qtd(TypeUtil::literalValueToString(value)), ExceptionRef(USER_INPUT));
+			throw SystemException(ExprInterpreterError, typeStr + " expected: " + qtd(litToStr(value)), ExceptionRef(USER_INPUT));
 	}
 
 	inline void checkLiteralType(std::vector<LiteralValue*> vals, IdValueType type, const std::string& typeStr) {

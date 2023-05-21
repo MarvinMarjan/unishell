@@ -23,8 +23,6 @@ int main(int argc, char** argv)
 	PathHandler* sysPath = sys.path();
 	Environment* sysEnv = sys.env();
 
-	sysEnv->addId(Identifier("name", new LiteralValue(std::string("Marvin"))));
-
 	// main loop
 	while (!sys.getAbort()) {
 		try {
@@ -33,9 +31,17 @@ int main(int argc, char** argv)
 			
 			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
 
+			// empty
+			if (!input.size()) continue;
+
 			ArgList args = getArgs(input);
 			CommandBase* command = getCommand(input[0].getLexical(), args);
 
+			// unknown command
+			if (!command)
+				throw SystemException(CommandError, "Unknown command: " + clr(input[0].getLexical(), __clr_command->toString()));
+
+			// execute command
 			command->exec();
 		}
 

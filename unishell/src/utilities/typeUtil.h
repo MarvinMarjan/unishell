@@ -3,10 +3,11 @@
 #include <iostream>
 #include <iomanip>
 
-
 #include "stringUtil.h"
 
 #include "../parser/expression/type.h"
+
+#define litToStr TypeUtil::literalValueToString
 
 class TypeUtil
 {

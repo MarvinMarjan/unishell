@@ -17,7 +17,7 @@ enum Color {
 };
 
 inline Color stringToColor(const std::string& strMode) {
-	if (strMode == "null") return null;
+	if (strMode == "std") return null;
 
 	if (strMode == "red") return red;
 	if (strMode == "green") return green;

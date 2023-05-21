@@ -134,6 +134,7 @@
     <ClCompile Include="src\parser\processing\tokenProcessing.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />
     <ClCompile Include="src\path\pathScanner.cpp" />
+    <ClCompile Include="src\system\exceptionRef.cpp" />
     <ClCompile Include="src\system\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="src\base\scannerBase.h" />
     <ClInclude Include="src\commands\argList.h" />
     <ClInclude Include="src\commands\cmdsDef.h" />
+    <ClInclude Include="src\commands\paramList.h" />
     <ClInclude Include="src\environment\environment.h" />
     <ClInclude Include="src\environment\identifier.h" />
     <ClInclude Include="src\instream\instream.h" />
