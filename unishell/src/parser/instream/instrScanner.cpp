@@ -19,6 +19,7 @@ void InstreamScanner::scanToken()
 	{
 	case ' ':
 	case ';':
+	case ',':
 	case '\r':
 	case '\t':
 		break;

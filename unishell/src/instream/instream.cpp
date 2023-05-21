@@ -107,7 +107,11 @@ std::string INStream::formatString(std::string text, int cursorPos)
 
 		case '(':
 		case ')':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 210));
+		case '{':
+		case '}':
+		case '[':
+		case ']':
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_encloses->toString()));
 			break;
 
 		case '!':
@@ -118,7 +122,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 		case '-':
 		case '*':
 		case '/':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 222));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_operators->toString()));
 			break;
 
 		case '$':
@@ -129,7 +133,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
 			{
 				for (i; StringUtil::isDigit(text[i]); i++)
-					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), 192));
+					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_numbers->toString()));
 
 				i--;
 			}

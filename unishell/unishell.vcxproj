@@ -138,7 +138,10 @@
     <ClCompile Include="src\system\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\base\commandBase.h" />
     <ClInclude Include="src\base\scannerBase.h" />
+    <ClInclude Include="src\commands\argList.h" />
+    <ClInclude Include="src\commands\cmdsDef.h" />
     <ClInclude Include="src\environment\environment.h" />
     <ClInclude Include="src\environment\identifier.h" />
     <ClInclude Include="src\instream\instream.h" />

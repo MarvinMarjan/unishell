@@ -16,6 +16,8 @@ public:
 		source = reduceTokens(source);
 		source = parseTokens(source);
 
+		source = generateLists(source); // must be the last stage
+
 		return source;
 	}
 
@@ -30,7 +32,6 @@ private:
 	static inline TokenList reduceTokens(TokenList source) {
 		source = generateExpressions(source);
 		source = generateColorTokens(source);
-		source = generateLists(source);
 
 		return source;
 	}
@@ -55,10 +56,10 @@ private:
 	// containing the value inside that symbol
 	static inline Token assignIdentifierToken(Token token) {
 		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
-		LiteralValue idValue = respectiveId.getValue();
+		LiteralValue* idValue = respectiveId.getValue();
 
-		token.lexical = TypeUtil::literalValueToString(&idValue);
-		token.lit = new LiteralValue(idValue);
+		token.lexical = TypeUtil::literalValueToString(idValue);
+		token.lit = idValue;
 		token.type = TypeUtil::getTypeAsTokenEnum(respectiveId.getType());
 
 		return token;
@@ -66,7 +67,7 @@ private:
 
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken) {
+	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg) {
 		size_t start = 0, end = 0;
 		unsigned short aux = 0;
 
@@ -77,8 +78,8 @@ private:
 				start = i;
 
 				while (aux) {
-					checkIndex(source, i, aux);
-					checkLRChar(source, i, aux);
+					checkIndex(source, i, aux, errMsg);
+					checkLRChar(source, i, aux, lchar, rchar);
 				}
 
 				end = i;
@@ -90,16 +91,16 @@ private:
 		}
 	}
 
-	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux) {
+	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
-			throw SystemException(TokenProcessingError, "Unterminated expression", ExceptionRef(*System::input(), source[i].getIndex()));
+			throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, source[i].getIndex()));
 		else
 			i++;
 	}
 
-	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux) {
-		if (source[i].getType() == LPAREN) aux++;
-		if (source[i].getType() == RPAREN) aux--;
+	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux, TokenEnum lchar, TokenEnum rchar) {
+		if (source[i].getType() == lchar) aux++;
+		if (source[i].getType() == rchar) aux--;
 	}
 
 
@@ -109,7 +110,7 @@ private:
 	static TokenList generateExpressions(TokenList source) {
 		TokenList res;
 
-		getInside(res, source, LPAREN, RPAREN, EXPRESSION);
+		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression");
 
 		return res;
 	}
@@ -119,7 +120,7 @@ private:
 	static TokenList generateLists(TokenList source) {
 		TokenList res;
 
-		getInside(res, source, LBRACE, RBRACE, LIST);
+		getInside(res, source, LBRACE, RBRACE, LIST, "Unterminated list");
 
 		return res;
 	}
@@ -131,7 +132,7 @@ private:
 	static inline void consume(TokenList source, TokenEnum delimiter, size_t& i, const std::string& errMsg) {
 		while (source[i].getType() != delimiter) {
 			if (i + 1 >= source.size())
-				throw SystemException(TokenProcessingError, errMsg, ExceptionRef(*System::input(), System::input()->size() - 1));
+				throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, System::input()->size() - 1));
 			else
 				i++;
 		}

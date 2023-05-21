@@ -8,6 +8,8 @@
 
 typedef std::vector<std::string> StringList;
 
+extern const std::string __word_separator;
+
 class StringUtil
 {
 public:
@@ -36,6 +38,18 @@ public:
 	// is comparision operators
 	constexpr static inline bool isComparisonOperator(char ch) noexcept {
 		return (ch == '=' || ch == '!' || ch == '>' || ch == '<');
+	}
+
+	constexpr static inline bool isEncloseChar(char ch) noexcept {
+		return (ch == '(' || ch == ')' || ch == '[' || ch == ']' || ch == '{' || ch == '}' || ch == ':');
+	}
+
+	constexpr static inline bool isSeparator(char ch) noexcept {
+		return (ch == ',' || ch == ';');
+	}
+
+	static inline bool isWordSeparator(char ch) noexcept {
+		return (std::find(__word_separator.begin(), __word_separator.end(), ch) != __word_separator.end());
 	}
 
 	static inline size_t findLast(const std::string& src, char ch) {

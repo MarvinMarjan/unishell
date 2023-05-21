@@ -15,7 +15,8 @@ enum SystemExceptionType
 	InstreamScannerError,
 	TokenProcessingError,
 	EnvironmentError,
-	InternalSystemError
+	InternalSystemError,
+	CommandError
 };
 
 class SystemException
@@ -51,6 +52,10 @@ public:
 
 		case InternalSystemError:
 			typeMsg = "internal_system";
+			break;
+
+		case CommandError:
+			typeMsg = "command";
 			break;
 
 		default:

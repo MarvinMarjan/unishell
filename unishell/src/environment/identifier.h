@@ -19,16 +19,16 @@ public:
 		return name;
 	}
 
-	inline LiteralValue getValue() const noexcept {
-		return *value;
+	inline LiteralValue* getValue() const noexcept {
+		return value;
 	}
 
 	constexpr inline IdValueType getType() const noexcept {
 		return type;
 	}
 
-	inline void setValue(LiteralValue value) noexcept {
-		*this->value = value;
+	inline void setValue(LiteralValue* value) noexcept {
+		this->value = value;
 		updateType();
  	}
 

@@ -16,7 +16,18 @@ public:
 	}
 
 	inline void addId(const Identifier& id) {
-		idList.push_back(id);
+		if (exists(id.getName()))
+			getId(id.getName())->setValue(id.getValue());
+		else
+			idList.push_back(id);
+	}
+
+	inline bool exists(const std::string& name) const {
+		for (const Identifier& id : idList)
+			if (id.getName() == name)
+				return true;
+
+		return false;
 	}
 
 private:

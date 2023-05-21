@@ -12,7 +12,7 @@
 
 #include "src/utilities/fileUtil.h"
 
-#include <time.h>
+#include "src/commands/cmdsDef.h"
 
 int main(int argc, char** argv)
 {
@@ -33,14 +33,10 @@ int main(int argc, char** argv)
 			
 			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
 
-			if (input[0].getLexical() == "print" && input.size() > 1) {
-				for (size_t i = 1; i < input.size(); i++)
-					sysprint(TypeUtil::literalValueToString(input[i].getLiteral()));
+			ArgList args = getArgs(input);
+			CommandBase* command = getCommand(input[0].getLexical(), args);
 
-				sysprintln("");
-			}
-
-			else if (input[0].getLexical() == "exit") sys.exit();
+			command->exec();
 		}
 
 		// system exception was thrown

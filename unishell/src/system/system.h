@@ -14,6 +14,8 @@
 #define sysprint        System::print
 #define sysprintln(msg) System::print(msg, true)
 
+#define USER_INPUT *System::input()
+
 class System
 {
 public:
