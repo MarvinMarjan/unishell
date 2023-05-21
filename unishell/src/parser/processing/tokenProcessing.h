@@ -30,27 +30,10 @@ private:
 	static inline TokenList reduceTokens(TokenList source) {
 		source = generateExpressions(source);
 		source = generateColorTokens(source);
+		source = generateLists(source);
 
 		return source;
 	}
-
-
-	// indentify expressions and generate a EXPRESSION type conataining
-	// the expression body
-	static TokenList generateExpressions(TokenList source);
-
-	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux) {
-		if (i + 1 >= source.size() && aux)
-			throw SystemException(TokenProcessingError, "Unterminated expression", ExceptionRef(*System::input(), source[i].getIndex()));
-		else
-			i++;
-	}
-
-	static inline void checkParen(TokenList source, size_t& i, unsigned short& aux) {
-		if (source[i].getType() == LPAREN) aux++;
-		if (source[i].getType() == RPAREN) aux--;
-	}
-
 
 
 	// expands (replace) tokens that can be expanded by they
@@ -81,8 +64,66 @@ private:
 		return token;
 	}
 
+	// get tokens inside lchar and rchar and add to res
+	// a token of resToken type
+	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken) {
+		size_t start = 0, end = 0;
+		unsigned short aux = 0;
+
+		for (size_t i = 0; i < source.size(); i++) {
+			if (source[i].getType() == lchar) {
+				aux++;
+
+				start = i;
+
+				while (aux) {
+					checkIndex(source, i, aux);
+					checkLRChar(source, i, aux);
+				}
+
+				end = i;
+
+				res.push_back(Token(resToken, "", nullptr, TokenList(source.begin() + start + 1, source.begin() + end), res.size() - 1));
+			}
+
+			else res.push_back(source[i]);
+		}
+	}
+
+	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux) {
+		if (i + 1 >= source.size() && aux)
+			throw SystemException(TokenProcessingError, "Unterminated expression", ExceptionRef(*System::input(), source[i].getIndex()));
+		else
+			i++;
+	}
+
+	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux) {
+		if (source[i].getType() == LPAREN) aux++;
+		if (source[i].getType() == RPAREN) aux--;
+	}
 
 
+	
+	// identify expressions and generate a EXPRESSION type conataining
+	// the expression body
+	static TokenList generateExpressions(TokenList source) {
+		TokenList res;
+
+		getInside(res, source, LPAREN, RPAREN, EXPRESSION);
+
+		return res;
+	}
+
+	// identify lists and generate a LIST type containing
+	// the list values
+	static TokenList generateLists(TokenList source) {
+		TokenList res;
+
+		getInside(res, source, LBRACE, RBRACE, LIST);
+
+		return res;
+	}
+	
 	// identify color syntax and generate a COLOR containing
 	// the color syntax
 	static TokenList generateColorTokens(TokenList source);

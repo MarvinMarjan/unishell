@@ -38,6 +38,9 @@ void InstreamScanner::scanToken()
 	case '(': addToken(LPAREN); break;
 	case ')': addToken(RPAREN); break;
 
+	case '{': addToken(LBRACE); break;
+	case '}': addToken(RBRACE); break;
+
 	case '\"': string(); break;
 	case '$': word(IDENTIFIER); break;
 
