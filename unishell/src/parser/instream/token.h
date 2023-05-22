@@ -2,7 +2,7 @@
 
 #include "../../utilities/stringUtil.h"
 
-#include "../expression/type.h"
+class LiteralValue;
 
 class Token;
 
@@ -11,7 +11,7 @@ typedef std::vector<Token> TokenList;
 enum TokenEnum
 {
 	// word tokens
-	COMMAND, IDENTIFIER, 
+	COMMAND, IDENTIFIER, RETCOMMAND,
 	
 	// sub tokens
 	EXPRESSION, COLOR, LIST,

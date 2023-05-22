@@ -7,6 +7,8 @@
 #include "../expression/exprParser.h"
 #include "../expression/exprInterpreter.h"
 
+#include "../../commands/cmdsDef.h"
+
 class TokenProcess
 {
 public:
@@ -15,26 +17,55 @@ public:
 		source = expandTokens(source);
 		source = reduceTokens(source);
 		source = parseTokens(source);
-		//source = reviewTokens(source);
-
-		source = generateLists(source); // must be the last stage
+		
+		source = generateLists(source);
+		source = listsToLiteral(source);
+		source = expandRetCommands(source);
 
 		return source;
 	}
 
 private:
-	/*static TokenList reviewTokens(TokenList source) {
+	// execute a RETCOMMAND and replace it by
+	// the returned value
+	static inline TokenList expandRetCommands(TokenList source) {
 		TokenList res;
+		
+		for (size_t i = 0; i < source.size(); i++) {
+			Token token = source[i];
 
-		for (Token token : source) {
-			if (token.getType() == NULLVAL)
-				res.push_back(litToStr(token.getLiteral()));
-			else
+			switch (token.getType()) {
+			case RETCOMMAND:
+				res.push_back(getRetCommandReturn(source, i));
+				break;
+
+			default:
 				res.push_back(token);
+			}
 		}
 
 		return res;
-	}*/
+	}
+
+	// transforms LIST tokens with sub tokens into
+	// LIST tokens with literals instead
+	static inline TokenList listsToLiteral(TokenList source) {
+		TokenList res;
+
+		for (Token token : source)
+			switch (token.getType()) {
+			case LIST: {
+				TokenList parsed = process(token.getSub());
+				res.push_back(Token(LIST, "", getFromTokenList(parsed), {}, token.getIndex()));
+				break;
+			}
+
+			default:
+				res.push_back(token);
+			}
+
+		return res;
+	}
 
 	// parse tokens that can be parsed. if token
 	// can be interpreted, interpret it
@@ -57,10 +88,14 @@ private:
 		TokenList res;
 
 		for (Token token : source) {
-			if (token.type == IDENTIFIER)
-				token = assignIdentifierToken(token);
+			switch (token.getType()) {
+			case IDENTIFIER:
+				res.push_back(assignIdentifierToken(token));
+				break;
 
-			res.push_back(token);
+			default:
+				res.push_back(token);
+			}
 		}
 
 		return res;
@@ -79,9 +114,23 @@ private:
 		return token;
 	}
 
+	// gets the return value of a RETCOMMAND
+	static inline Token getRetCommandReturn(TokenList source, size_t& i) {
+		LiteralValue* ret = nullptr;
+
+		// don't encapsulate args
+		RetCommandBase* retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(TokenList(source.begin() + i, source.begin() + i + 2), false));
+
+		if (retCmd)
+			ret = retCmd->exec();
+
+		i++;
+		return Token(TypeUtil::getTypeAsTokenEnum(getValueActiveType(ret)), litToStr(ret), ret, {}, source[i].getIndex());
+	}
+
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg) {
+	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) {
 		size_t start = 0, end = 0;
 		unsigned short aux = 0;
 
@@ -98,7 +147,10 @@ private:
 
 				end = i;
 
-				res.push_back(Token(resToken, "", nullptr, TokenList(source.begin() + start + 1, source.begin() + end), res.size() - 1));
+				TokenList sub = TokenList(source.begin() + start + 1, source.begin() + end);
+				if (processSub) sub = process(sub);
+
+				res.push_back(Token(resToken, "", nullptr, sub, res.size() - 1));
 			}
 
 			else res.push_back(source[i]);
@@ -124,7 +176,7 @@ private:
 	static TokenList generateExpressions(TokenList source) {
 		TokenList res;
 
-		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression");
+		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression", true);
 
 		return res;
 	}

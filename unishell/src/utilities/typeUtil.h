@@ -6,6 +6,7 @@
 #include "stringUtil.h"
 
 #include "../parser/expression/type.h"
+#include "../outstream/outputColor.h"
 
 #define litToStr TypeUtil::literalValueToString
 
@@ -17,7 +18,8 @@ public:
 	}
 
 	static inline std::string boolToString(bool boolean) {
-		return (boolean) ? "true" : "false";
+		if (color) return boolformat(((boolean) ? "true" : "false"));
+		else return ((boolean) ? "true" : "false");
 	}
 
 	static inline bool stringToBool(const std::string& boolStr) noexcept {
@@ -37,15 +39,33 @@ public:
 		else
 			text << std::fixed << std::setprecision(precision) << value;
 
-		return text.str();
+		return ((color) ? numformat(text.str()) : text.str());
 	}
 
-	static inline std::string literalValueToString(LiteralValue* val) {
+	static inline std::string formatList(LiteralValue* lit) {
+		std::stringstream str;
+
+		str << "List( ";
+
+		std::vector<LiteralValue*> list = asList(lit);
+
+		for (size_t i = 0; i < list.size(); i++)
+			str << litToStr(list[i], true) << ((i + 1 < list.size()) ? ", " : "");
+
+		str << " )";
+
+		return str.str();
+	}
+
+	static inline std::string literalValueToString(LiteralValue* val, bool color = false) {
 		if (!val) return std::string("null");
 
-		if (val->index() == 0) return asStr(val);
+		TypeUtil::color = color;
+
+		if (val->index() == 0) return ((color) ? qtd(asStr(val)) : asStr(val));
 		else if (val->index() == 1) return formatDouble(asDbl(val), 2);
 		else if (val->index() == 2) return boolToString(asBool(val));
+		else if (val->index() == 3) return formatList(val);
 
 		return std::string();
 	}
@@ -69,4 +89,7 @@ public:
 		if (!value)
 			value = new LiteralValue("null");
 	}
+
+private:
+	static bool color;
 };

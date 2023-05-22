@@ -31,3 +31,11 @@ inline std::string qtd(const std::string& text) {
 inline std::string idformat(const std::string& text) {
 	return clr(text, __clr_identifier->toString());
 }
+
+inline std::string boolformat(const std::string& text) {
+	return clr(text, __clr_boolean->toString());
+}
+
+inline std::string numformat(const std::string& text) {
+	return clr(text, __clr_numbers->toString());
+}

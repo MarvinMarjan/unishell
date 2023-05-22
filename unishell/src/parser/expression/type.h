@@ -1,11 +1,13 @@
 #pragma once
 
-#include <string>
+#include "../instream/token.h"
+#include "../../utilities/stringUtil.h"
 #include <variant>
 
 #define asStr(pLit)  std::get<std::string>(*pLit)
 #define asDbl(pLit)  std::get<double>(*pLit)
 #define asBool(pLit) std::get<bool>(*pLit)
+#define asList(pLit) std::get<std::vector<LiteralValue*>>(*pLit)
 
 enum IdValueType
 {
@@ -15,9 +17,26 @@ enum IdValueType
 	Null
 };
 
-typedef std::variant<std::string, double, bool> LiteralValue;
+class LiteralValue;
+
+typedef std::variant<std::string, double, bool, std::vector<LiteralValue*>> LiteralValuePtr;
+
+class LiteralValue : public LiteralValuePtr
+{
+public:
+	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
+};
 
 inline IdValueType getValueActiveType(LiteralValue* value) {
 	if (!value) return Null;
 	return (IdValueType)value->index();
+}
+
+inline LiteralValue* getFromTokenList(TokenList source) {
+	LiteralValue* lit = new LiteralValue(std::vector<LiteralValue*>());
+
+	for (Token token : source)
+		asList(lit).push_back(token.getLiteral());
+
+	return lit;
 }

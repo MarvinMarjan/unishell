@@ -38,6 +38,9 @@
     <ClCompile Include="src\system\exceptionRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\typeUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -146,6 +149,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\commands\paramList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base\retCommandBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

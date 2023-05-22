@@ -15,7 +15,7 @@ public:
 	}
 
 	ArgList(Token list) {
-		for (Token val : list.getSub())
-			push_back(val.getLiteral());
+		for (LiteralValue* val : asList(list.getLiteral()))
+			push_back(val);
 	}
 };

@@ -30,7 +30,7 @@ TokenList TokenProcess::generateColorTokens(TokenList source) {
 TokenList TokenProcess::parseTokens(TokenList source) {
 	TokenList res;
 
-	for (Token token : source) {
+	for (Token token : source)
 		switch (token.getType()) {
 		case COLOR: {
 			std::string parsed = ColorParser(token.getSub()).parse()->toString();
@@ -50,7 +50,6 @@ TokenList TokenProcess::parseTokens(TokenList source) {
 		default:
 			res.push_back(token);
 		}
-	}
 
 	return res;
 }
