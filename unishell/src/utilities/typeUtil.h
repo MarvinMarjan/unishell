@@ -30,16 +30,16 @@ public:
 		return (value == std::round(value));
 	}
 
-	static inline std::string formatDouble(double value, unsigned short precision) {
-		std::stringstream text;
+	static inline std::string formatDouble(double value) {
+		std::string strNum = tostr(value);
+		size_t pos = strNum.find_last_not_of('0');
 
-		if (isInteger(value))
-			text << std::to_string(static_cast<int>(value));
+		if (pos != std::string::npos && strNum[pos] == '.')
+			pos--;
 
-		else
-			text << std::fixed << std::setprecision(precision) << value;
+		strNum.erase(pos + 1);
 
-		return ((color) ? numformat(text.str()) : text.str());
+		return ((color) ? numformat(strNum) : strNum);
 	}
 
 	static inline std::string formatList(LiteralValue* lit) {
@@ -63,7 +63,7 @@ public:
 		TypeUtil::color = color;
 
 		if (val->index() == 0) return ((color) ? qtd(asStr(val)) : asStr(val));
-		else if (val->index() == 1) return formatDouble(asDbl(val), 2);
+		else if (val->index() == 1) return formatDouble(asDbl(val));
 		else if (val->index() == 2) return boolToString(asBool(val));
 		else if (val->index() == 3) return formatList(val);
 
