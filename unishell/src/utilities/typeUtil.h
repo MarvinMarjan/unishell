@@ -75,10 +75,23 @@ public:
 		case Literal: return LITERAL;
 		case Number: return NUMBER;
 		case Bool: return BOOLEANVAL;
+		case List: return LIST;
 		case Null: return NULLVAL;
 		}
 
 		return LITERAL;
+	}
+
+	static inline std::string getTypeAsString(IdValueType type) noexcept {
+		switch (type) {
+		case Literal: return "Literal";
+		case Number: return "Number";
+		case Bool: return "Bool";
+		case List: return "List";
+		case Null: return "null";
+		}
+
+		return "Unknown";
 	}
 
 	static inline bool isTypeof(LiteralValue* value, IdValueType type) {

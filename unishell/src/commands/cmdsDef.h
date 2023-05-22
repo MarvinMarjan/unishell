@@ -26,6 +26,9 @@
 	if (cmdName == symbol) return new cmd(args) \
 
 
+
+
+
 // print
 START_COMMAND(CmdPrint, { new LiteralValue(std::string("")) }, CommandBase)
 	void exec() override {
@@ -59,27 +62,36 @@ START_COMMAND(CmdExit, {}, CommandBase)
 	}
 END_COMMAND
 
-START_COMMAND(RetCmdPi, {}, RetCommandBase)
+
+
+// ***---------- RETCOMMANDS ----------***
+
+//TODO: add support to RETCOMMAND creation by user
+
+
+// typeof
+START_COMMAND(RetCmdTypeof, { nullptr }, RetCommandBase)
 	LiteralValue* exec() override {
-		return new LiteralValue(3.14159);
+		return new LiteralValue((std::string)TypeUtil::getTypeAsString(getValueActiveType(args[0])));
 	}
 END_COMMAND
 
-START_COMMAND(RetCmdPlus, ParamVec({nullptr, nullptr}), RetCommandBase)
+// sizeof
+START_COMMAND(RetCmdSizeof, { nullptr }, RetCommandBase)
 	LiteralValue* exec() override {
-		LiteralValue* sum = new LiteralValue(0.0);
-		for (LiteralValue* val : args)
-			sum = new LiteralValue(asDbl(sum) + asDbl(val));
+		IdValueType type = getValueActiveType(args[0]);
 
-		return sum;
+		if (type == Literal) return new LiteralValue((double)asStr(args[0]).size());
+		if (type == List) return new LiteralValue((double)asList(args[0]).size());
+
+		return nullptr;
 	}
 END_COMMAND
-
 
 
 
 inline ArgList getArgs(TokenList input, bool encapsulate = true) {
-	if (input.size() == 1) return ArgList(); // has no args
+	if (input.size() <= 1) return ArgList(); // has no args
 
 	if (encapsulate) {
 		size_t i = 1;
@@ -102,8 +114,8 @@ inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
 	return nullptr;
 }
 inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
-	CHECK_CMD(RetCmdPi, "pi");
-	CHECK_CMD(RetCmdPlus, "plus");
+	CHECK_CMD(RetCmdTypeof, "typeof");
+	CHECK_CMD(RetCmdSizeof, "sizeof");
 
 	return nullptr;
 }

@@ -130,6 +130,10 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			INStreamRender::renderIdentifier(fText, text, i, cursorPos);
 			break;
 
+		case '#':
+			INStreamRender::renderRetCommand(fText, text, i, cursorPos);
+			break;
+
 		default:
 			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
 			{

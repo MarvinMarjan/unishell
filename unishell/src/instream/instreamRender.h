@@ -28,10 +28,27 @@ private:
 		BaseColorStructure* commandClr = __clr_command;
 
 		// start color rendering
-		if (VectorUtil::exists(__commands, std::string(text.begin(), text.begin() + firstWordPos)))
+		if (VectorUtil::exists(__sys_commands, std::string(text.begin(), text.begin() + firstWordPos)))
 			commandClr = __clr_ex_command; // commands exists
 
 		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos, false);
+	}
+
+	static inline void renderRetCommand(std::stringstream& stream, const std::string& text, size_t& i, int cursorPos) {
+		BaseColorStructure* retCmdColor = __clr_ret_command;
+
+		if (i + 1 < text.size()) {
+			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1));
+			cmdName = cmdName.substr(1);
+
+			if (VectorUtil::exists(__sys_ret_commands, cmdName))
+				retCmdColor = __clr_ex_sys_ret_command;
+
+			// TODO: id cmdName isn't sys command, then
+			// retCmdColor = __clr_ex_ret_commands
+		}
+
+		renderWord(stream, text, i, cursorPos, retCmdColor, true);
 	}
 
 	// quoted string: "hello, world"

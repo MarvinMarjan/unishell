@@ -73,7 +73,7 @@ private:
 
 
 	// reduce tokens that can be reduced into a 
-	// high-level token like EXPRESSION
+	// higher-level token like EXPRESSION
 	static inline TokenList reduceTokens(TokenList source) {
 		source = generateExpressions(source);
 		source = generateColorTokens(source);
@@ -102,7 +102,8 @@ private:
 	}
 
 	// receive a token that represents a symbol and return a new token
-	// containing the value inside that symbol
+	// containing the value inside that symbol. if the identifier doesn't
+	// exists, throw a exception
 	static inline Token assignIdentifierToken(Token token) {
 		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
 		LiteralValue* idValue = respectiveId.getValue();
@@ -116,21 +117,29 @@ private:
 
 	// gets the return value of a RETCOMMAND
 	static inline Token getRetCommandReturn(TokenList source, size_t& i) {
+		RetCommandBase* retCmd = nullptr;
 		LiteralValue* ret = nullptr;
+		TokenList list;
 
-		// don't encapsulate args
-		RetCommandBase* retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(TokenList(source.begin() + i, source.begin() + i + 2), false));
+		if (i + 1 < source.size() && source[i + 1].getType() == LIST)
+			list = TokenList(source.begin() + i, source.begin() + i + 2);
 
-		if (retCmd)
-			ret = retCmd->exec();
+		// don't encapsulate args in RETCOMMANDS
+		retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(list, false));
 
-		i++;
+		if (!retCmd)
+			throw SystemException(CommandError, "Unknown command: " + qtd(source[i].getLexical()));
+
+		ret = retCmd->exec();
+
+		if (list.size()) i++;
+
 		return Token(TypeUtil::getTypeAsTokenEnum(getValueActiveType(ret)), litToStr(ret), ret, {}, source[i].getIndex());
 	}
 
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) {
+	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) noexcept {
 		size_t start = 0, end = 0;
 		unsigned short aux = 0;
 
@@ -164,7 +173,7 @@ private:
 			i++;
 	}
 
-	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux, TokenEnum lchar, TokenEnum rchar) {
+	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux, TokenEnum lchar, TokenEnum rchar) noexcept {
 		if (source[i].getType() == lchar) aux++;
 		if (source[i].getType() == rchar) aux--;
 	}

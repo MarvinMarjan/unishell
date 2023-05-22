@@ -14,6 +14,7 @@ enum IdValueType
 	Literal,
 	Number,
 	Bool,
+	List,
 	Null
 };
 

@@ -44,11 +44,16 @@ const StringList __color_formats = {
 	"clr"
 };
 
-const StringList __commands = {
+const StringList __sys_commands = {
 	"print",
 	"var",
 	"del",
 	"exit"
+};
+
+const StringList __sys_ret_commands = {
+	"typeof",
+	"sizeof"
 };
 
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|\\! ";
@@ -61,6 +66,10 @@ BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
 
 BaseColorStructure* __clr_command = new IdColorStructure(141);
 BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
+
+BaseColorStructure* __clr_ret_command = new IdColorStructure(162);
+BaseColorStructure* __clr_ex_ret_command = new IdColorStructure(162, italic);
+BaseColorStructure* __clr_ex_sys_ret_command = new IdColorStructure(203, italic);
 
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
 BaseColorStructure* __clr_operators = new IdColorStructure(222);
