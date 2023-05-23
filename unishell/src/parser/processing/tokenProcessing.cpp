@@ -1,6 +1,6 @@
 #include "tokenProcessing.h"
 
-void TokenProcess::getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub) noexcept {
+void TokenProcess::getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub) {
 	size_t start = 0, end = 0;
 	unsigned short aux = 0;
 
@@ -38,7 +38,7 @@ TokenList TokenProcess::generateColorTokens(TokenList source) {
 			i++;
 
 			if (i + 1 >= source.size())
-				throw SystemException(TokenProcessingError, "Unterminated color structure", ExceptionRef(*System::input(), System::input()->size() - 1));;
+				throw SystemException(TokenProcessingError, "Unterminated color structure", ExceptionRef(USER_INPUT, System::input()->size() - 1));
 
 			i++;
 			consume(source, COLON, i, "Unterminated color structure");

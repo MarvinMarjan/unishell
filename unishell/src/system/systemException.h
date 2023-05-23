@@ -11,7 +11,8 @@ enum SystemExceptionType
 	TokenProcessingError,
 	EnvironmentError,
 	InternalSystemError,
-	CommandError
+	CommandError,
+	CommandRuntimeError
 };
 
 class SystemException
@@ -51,6 +52,10 @@ public:
 
 		case CommandError:
 			typeMsg = "command";
+			break;
+
+		case CommandRuntimeError:
+			typeMsg = "command_runtime";
 			break;
 
 		default:
