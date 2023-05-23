@@ -73,14 +73,14 @@ END_COMMAND
 
 START_COMMAND(RetCmdType, { nullptr }, RetCommandBase, "type")
 	LiteralValue* exec() override {
-		return new LiteralValue((std::string)TypeUtil::getTypeAsString(getValueActiveType(args[0])));
+		return new LiteralValue((std::string)TypeUtil::getTypeAsString(getValueType(args[0])));
 	}
 END_COMMAND
 
 
 START_COMMAND(RetCmdSize, { nullptr }, RetCommandBase, "size")
 	LiteralValue* exec() override {
-		IdValueType type = getValueActiveType(args[0]);
+		IdValueType type = getValueType(args[0]);
 
 		if (type == Literal) return new LiteralValue((double)asStr(args[0]).size());
 		if (type == List) return new LiteralValue((double)asList(args[0]).size());

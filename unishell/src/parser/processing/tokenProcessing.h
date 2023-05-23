@@ -28,31 +28,25 @@ public:
 private:
 	// execute a RETCOMMAND and replace it by
 	// the returned value
-	static inline TokenList expandRetCommands(TokenList source) {
-		TokenList res;
-		
-		for (size_t i = 0; i < source.size(); i++) {
-			Token token = source[i];
+	static TokenList expandRetCommands(TokenList source);
 
-			switch (token.getType()) {
-			case RETCOMMAND:
-				res.push_back(getRetCommandReturn(source, i));
-				break;
+	// gets the return value of a RETCOMMAND
+	static Token getRetCommandReturn(TokenList source, size_t& i, bool integrate = false);
 
-			// syntactic sugar for RETCOMMAND
-			// "#cmd{arg}" same as "arg@cmd"
-			case INRETCOMMAND:
-				res.pop_back(); // remove previous literal if is INRETCOMMAND. it's used as first argument
-				res.push_back(getRetCommandReturn(source, i, true));
-				break;
-
-			default:
-				res.push_back(token);
-			}
-		}
-
-		return res;
+	// if the Token after a RETCOMMAND is a LIST, then
+	// interpret it as arguments and return a list containing
+	// the RETCOMMAND and LIST, respectively
+	static inline void argsFromList(const TokenList& source, size_t i, TokenList& list) {
+		if (i + 1 < source.size() && source[i + 1].getType() == LIST)
+			for (size_t o = i; o < i + 2; o++)
+				list.push_back(source[o]);
 	}
+
+	static inline void insertIntegrate(ArgList& args, LiteralValue* integrateLiteral) {
+		args.insert(args.begin() + 0, integrateLiteral);
+	}
+
+
 
 	// transforms LIST tokens with sub tokens into
 	// LIST tokens with literals instead
@@ -122,68 +116,9 @@ private:
 		return token;
 	}
 
-	// gets the return value of a RETCOMMAND
-	static inline Token getRetCommandReturn(TokenList source, size_t& i, bool integrate = false) {
-		RetCommandBase* retCmd = nullptr;
-		LiteralValue* ret = nullptr;
-		TokenList list;
-
-		if (integrate) {
-			list.push_back(source[i - 1]);
-
-			argsFromList(source, i, list);
-		}
-
-		else argsFromList(source, i, list);
-
-		// don't encapsulate args in RETCOMMANDS, except INRETCOMMANDS
-		retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(list, integrate, false));
-
-		if (!retCmd)
-			throw SystemException(CommandError, "Unknown command: " + qtd(source[i].getLexical()));
-
-		ret = retCmd->exec();
-
-		if (list.size()) i++;
-		if (integrate) i--;
-
-		return Token(TypeUtil::getTypeAsTokenEnum(getValueActiveType(ret)), litToStr(ret), ret, {}, source[i].getIndex());
-	}
-
-	static inline void argsFromList(const TokenList& source, size_t i, TokenList& list) {
-		if (i + 1 < source.size() && source[i + 1].getType() == LIST)
-			for (i; i < i + 2; i++)
-				list.push_back(*(source.begin() + i));
-	}
-
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static inline void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) noexcept {
-		size_t start = 0, end = 0;
-		unsigned short aux = 0;
-
-		for (size_t i = 0; i < source.size(); i++) {
-			if (source[i].getType() == lchar) {
-				aux++;
-
-				start = i;
-
-				while (aux) {
-					checkIndex(source, i, aux, errMsg);
-					checkLRChar(source, i, aux, lchar, rchar);
-				}
-
-				end = i;
-
-				TokenList sub = TokenList(source.begin() + start + 1, source.begin() + end);
-				if (processSub) sub = process(sub);
-
-				res.push_back(Token(resToken, "", nullptr, sub, res.size() - 1));
-			}
-
-			else res.push_back(source[i]);
-		}
-	}
+	static void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) noexcept;
 
 	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
@@ -201,7 +136,7 @@ private:
 	
 	// identify expressions and generate a EXPRESSION type conataining
 	// the expression body
-	static TokenList generateExpressions(TokenList source) {
+	static inline TokenList generateExpressions(TokenList source) {
 		TokenList res;
 
 		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression", true);
@@ -211,7 +146,7 @@ private:
 
 	// identify lists and generate a LIST type containing
 	// the list values
-	static TokenList generateLists(TokenList source) {
+	static inline TokenList generateLists(TokenList source) {
 		TokenList res;
 
 		getInside(res, source, LBRACE, RBRACE, LIST, "Unterminated list");

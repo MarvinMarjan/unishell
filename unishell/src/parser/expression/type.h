@@ -28,7 +28,7 @@ public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
 };
 
-inline IdValueType getValueActiveType(LiteralValue* value) {
+inline IdValueType getValueType(LiteralValue* value) {
 	if (!value) return Null;
 	return (IdValueType)value->index();
 }

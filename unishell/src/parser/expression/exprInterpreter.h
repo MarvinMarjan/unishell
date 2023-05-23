@@ -65,7 +65,7 @@ private:
 		case EQUAL_EQUAL: return new LiteralValue(isEqual(left, right));
 
 		case PLUS:
-			if (getValueActiveType(left) == Literal || getValueActiveType(right) == Literal)
+			if (getValueType(left) == Literal || getValueType(right) == Literal)
 				return new LiteralValue(litToStr(left) + litToStr(right));
 
 			else {
@@ -96,7 +96,7 @@ private:
 
 	inline bool isTruthy(LiteralValue* value) {
 		if (!value) return false;
-		if (getValueActiveType(value) == Bool) return asBool(value);
+		if (getValueType(value) == Bool) return asBool(value);
 		return true;
 	}
 

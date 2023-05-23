@@ -70,7 +70,15 @@ public:
 		return std::string();
 	}
 
-	static inline TokenEnum getTypeAsTokenEnum(IdValueType type) noexcept {
+	static inline Token literalToToken(LiteralValue* val) {
+		return Token(getTypeAsTokenEnum(getValueType(val)), "", val, {}, 0);	
+	}
+
+	static inline TokenEnum getLitTokenEnum(LiteralValue* lit) {
+		return getTypeAsTokenEnum(getValueType(lit));
+	}
+
+	constexpr static inline TokenEnum getTypeAsTokenEnum(IdValueType type) noexcept {
 		switch (type) {
 		case Literal: return LITERAL;
 		case Number: return NUMBER;
@@ -95,7 +103,7 @@ public:
 	}
 
 	static inline bool isTypeof(LiteralValue* value, IdValueType type) {
-		return (getValueActiveType(value) == type);
+		return (getValueType(value) == type);
 	}
 
 	static inline void checkNull(LiteralValue* value) {
