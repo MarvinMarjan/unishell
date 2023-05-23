@@ -52,8 +52,8 @@ const StringList __sys_commands = {
 };
 
 const StringList __sys_ret_commands = {
-	"typeof",
-	"sizeof"
+	"type",
+	"size"
 };
 
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|\\! ";

@@ -39,7 +39,9 @@ private:
 
 		if (i + 1 < text.size()) {
 			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1));
-			cmdName = cmdName.substr(1);
+			
+			if (!StringUtil::isAlpha(cmdName[0]))
+				cmdName = cmdName.substr(1);
 
 			if (VectorUtil::exists(__sys_ret_commands, cmdName))
 				retCmdColor = __clr_ex_sys_ret_command;

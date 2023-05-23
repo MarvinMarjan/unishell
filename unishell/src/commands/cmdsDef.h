@@ -1,8 +1,7 @@
 #pragma once
 
 #include "../system/system.h"
-#include "../base/commandBase.h"
-#include "../base/retCommandBase.h"
+#include "../base/commandBaseCore.h"
 #include "../utilities/typeUtil.h"
 
 #include <cmath>
@@ -11,26 +10,28 @@
 
 // if params have more than one param, then
 // you need to explicit ParamVec
-#define START_COMMAND(name, params, base) \
+#define START_COMMAND(name, params, base, cmdSymbol) \
 	class name : public base \
 	{ \
 	public: \
 		name(ArgList args) : base({ params }, args) {} \
+		\
+		static inline const std::string symbol = cmdSymbol;
 
 
 #define END_COMMAND \
 	}; \
 
 
-#define CHECK_CMD(cmd, symbol) \
-	if (cmdName == symbol) return new cmd(args) \
+#define CHECK_CMD(cmd) \
+	if (cmdName == cmd::symbol) return new cmd(args) \
 
 
 
 
 
-// print
-START_COMMAND(CmdPrint, { new LiteralValue(std::string("")) }, CommandBase)
+
+START_COMMAND(CmdPrint, { new LiteralValue(std::string("")) }, CommandBase, "print")
 	void exec() override {
 		for (LiteralValue* value : args)
 			sysprint(litToStr(value));
@@ -40,23 +41,23 @@ START_COMMAND(CmdPrint, { new LiteralValue(std::string("")) }, CommandBase)
 END_COMMAND
 
 
-// var
-START_COMMAND(CmdVar, ParamVec({ nullptr, nullptr }), CommandBase)
+
+START_COMMAND(CmdVar, ParamVec({ nullptr, nullptr }), CommandBase, "var")
 	void exec() override {
 		System::env()->addId(Identifier(litToStr(args[0]), args[1]));
 	}
 END_COMMAND 
 
-// del
-START_COMMAND(CmdDel, { nullptr }, CommandBase)
+
+START_COMMAND(CmdDel, { nullptr }, CommandBase, "del")
 	void exec() override {
 		System::delEnvId(litToStr(args[0]));
 	}
 END_COMMAND
 
 
-// exit
-START_COMMAND(CmdExit, {}, CommandBase)
+
+START_COMMAND(CmdExit, {}, CommandBase, "exit")
 	void exec() override {
 		System::exit();
 	}
@@ -69,15 +70,15 @@ END_COMMAND
 //TODO: add support to RETCOMMAND creation by user
 
 
-// typeof
-START_COMMAND(RetCmdTypeof, { nullptr }, RetCommandBase)
+
+START_COMMAND(RetCmdType, { nullptr }, RetCommandBase, "type")
 	LiteralValue* exec() override {
 		return new LiteralValue((std::string)TypeUtil::getTypeAsString(getValueActiveType(args[0])));
 	}
 END_COMMAND
 
-// sizeof
-START_COMMAND(RetCmdSizeof, { nullptr }, RetCommandBase)
+
+START_COMMAND(RetCmdSize, { nullptr }, RetCommandBase, "size")
 	LiteralValue* exec() override {
 		IdValueType type = getValueActiveType(args[0]);
 
@@ -90,32 +91,34 @@ END_COMMAND
 
 
 
-inline ArgList getArgs(TokenList input, bool encapsulate = true) {
-	if (input.size() <= 1) return ArgList(); // has no args
+inline ArgList getArgs(TokenList input, bool encapsulate = true, bool firstIsCommand = true) {
+	size_t index = (firstIsCommand) ? 1 : 0;
+
+	if (input.size() <= index) return ArgList(); // has no args
 
 	if (encapsulate) {
-		size_t i = 1;
+		size_t i = index;
 		for (i; i < input.size(); i++) {}
-		return ArgList(TokenList(input.begin() + 1, input.begin() + i));
+		return ArgList(TokenList(input.begin() + index, input.begin() + i));
 	}
 
-	else if (input[1].getType() == LIST)
-		return ArgList(input[1]);
+	else if (input[index].getType() == LIST)
+		return ArgList(input[index]);
 
 	return ArgList();
 }
 
 inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
-	CHECK_CMD(CmdPrint, "print");
-	CHECK_CMD(CmdVar, "var");
-	CHECK_CMD(CmdDel, "del");
-	CHECK_CMD(CmdExit, "exit");
+	CHECK_CMD(CmdPrint);
+	CHECK_CMD(CmdVar);
+	CHECK_CMD(CmdDel);
+	CHECK_CMD(CmdExit);
 
 	return nullptr;
 }
 inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
-	CHECK_CMD(RetCmdTypeof, "typeof");
-	CHECK_CMD(RetCmdSizeof, "sizeof");
+	CHECK_CMD(RetCmdType);
+	CHECK_CMD(RetCmdSize);
 
 	return nullptr;
 }

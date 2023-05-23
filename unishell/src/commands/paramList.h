@@ -29,7 +29,7 @@ private:
 class ParamList : public ParamVec
 {
 public:
-	inline size_t getRequiredParams() {
+	inline size_t getRequiredParams() const {
 		size_t count = 0;
 
 		for (const Param& param : (*this))

@@ -45,6 +45,7 @@ void InstreamScanner::scanToken()
 	case '\"': string(); break;
 	case '$': word(IDENTIFIER); break;
 	case '#': word(RETCOMMAND); break;
+	case '@': word(INRETCOMMAND); break;
 
 	case ':': addToken(COLON); break;
 

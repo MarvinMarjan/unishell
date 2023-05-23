@@ -145,13 +145,10 @@
     <ClInclude Include="src\commands\argList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\base\commandBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\commands\paramList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\base\retCommandBase.h">
+    <ClInclude Include="src\base\commandBaseCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

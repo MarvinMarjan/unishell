@@ -82,9 +82,8 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 }
 
 // format string
-std::string INStream::formatString(std::string text, int cursorPos)
+std::string INStream::formatString(const std::string& text, int cursorPos)
 {
-	const std::string srcText = text;
 	std::stringstream fText;
 	size_t firstWordPos = INStreamRender::getWordEndPos(text);
 
@@ -130,6 +129,7 @@ std::string INStream::formatString(std::string text, int cursorPos)
 			INStreamRender::renderIdentifier(fText, text, i, cursorPos);
 			break;
 
+		case '@':
 		case '#':
 			INStreamRender::renderRetCommand(fText, text, i, cursorPos);
 			break;

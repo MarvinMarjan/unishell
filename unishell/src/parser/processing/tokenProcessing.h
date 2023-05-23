@@ -39,6 +39,13 @@ private:
 				res.push_back(getRetCommandReturn(source, i));
 				break;
 
+			// syntactic sugar for RETCOMMAND
+			// "#cmd{arg}" same as "arg@cmd"
+			case INRETCOMMAND:
+				res.pop_back(); // remove previous literal if is INRETCOMMAND. it's used as first argument
+				res.push_back(getRetCommandReturn(source, i, true));
+				break;
+
 			default:
 				res.push_back(token);
 			}
@@ -116,16 +123,21 @@ private:
 	}
 
 	// gets the return value of a RETCOMMAND
-	static inline Token getRetCommandReturn(TokenList source, size_t& i) {
+	static inline Token getRetCommandReturn(TokenList source, size_t& i, bool integrate = false) {
 		RetCommandBase* retCmd = nullptr;
 		LiteralValue* ret = nullptr;
 		TokenList list;
 
-		if (i + 1 < source.size() && source[i + 1].getType() == LIST)
-			list = TokenList(source.begin() + i, source.begin() + i + 2);
+		if (integrate) {
+			list.push_back(source[i - 1]);
 
-		// don't encapsulate args in RETCOMMANDS
-		retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(list, false));
+			argsFromList(source, i, list);
+		}
+
+		else argsFromList(source, i, list);
+
+		// don't encapsulate args in RETCOMMANDS, except INRETCOMMANDS
+		retCmd = getRetCommand(source[i].getLexical().substr(1), getArgs(list, integrate, false));
 
 		if (!retCmd)
 			throw SystemException(CommandError, "Unknown command: " + qtd(source[i].getLexical()));
@@ -133,8 +145,15 @@ private:
 		ret = retCmd->exec();
 
 		if (list.size()) i++;
+		if (integrate) i--;
 
 		return Token(TypeUtil::getTypeAsTokenEnum(getValueActiveType(ret)), litToStr(ret), ret, {}, source[i].getIndex());
+	}
+
+	static inline void argsFromList(const TokenList& source, size_t i, TokenList& list) {
+		if (i + 1 < source.size() && source[i + 1].getType() == LIST)
+			for (i; i < i + 2; i++)
+				list.push_back(*(source.begin() + i));
 	}
 
 	// get tokens inside lchar and rchar and add to res
