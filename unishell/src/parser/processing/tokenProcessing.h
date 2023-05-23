@@ -118,7 +118,7 @@ private:
 
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false) noexcept;
+	static void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false);
 
 	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)

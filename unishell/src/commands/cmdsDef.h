@@ -4,8 +4,6 @@
 #include "../base/commandBaseCore.h"
 #include "../utilities/typeUtil.h"
 
-#include <cmath>
-
 // boilerplate
 
 // if params have more than one param, then
@@ -26,6 +24,8 @@
 #define CHECK_CMD(cmd) \
 	if (cmdName == cmd::symbol) return new cmd(args) \
 
+
+#define THROW_RUNTIME_ERR(msg) throw SystemException(CommandRuntimeError, msg)
 
 
 
@@ -90,6 +90,20 @@ START_COMMAND(RetCmdSize, { nullptr }, RetCommandBase, "size")
 END_COMMAND
 
 
+START_COMMAND(RetCmdAt, ParamVec({ nullptr, nullptr }), RetCommandBase, "at")
+	LiteralValue* exec() override {
+		IdValueType type = getValueType(args[0]);
+
+		LiteralValue* src = args[0];
+		int index = (int)asDbl(args[1]);
+
+		if (type == Literal) return new LiteralValue(StringUtil::charToStr(asStr(src).at(index)));
+		if (type == List) return asList(src).at(index);
+
+		return nullptr;
+	}
+END_COMMAND
+
 
 inline ArgList getArgs(TokenList input, bool encapsulate = true, bool firstIsCommand = true) {
 	size_t index = (firstIsCommand) ? 1 : 0;
@@ -119,6 +133,7 @@ inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
 inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
 	CHECK_CMD(RetCmdType);
 	CHECK_CMD(RetCmdSize);
+	CHECK_CMD(RetCmdAt);
 
 	return nullptr;
 }
