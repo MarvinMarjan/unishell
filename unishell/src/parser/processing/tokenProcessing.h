@@ -56,6 +56,11 @@ private:
 		for (Token token : source)
 			switch (token.getType()) {
 			case LIST: {
+				if (token.getLiteral()) {
+					res.push_back(token);
+					break;
+				}
+
 				TokenList parsed = process(token.getSub());
 				res.push_back(Token(LIST, "", getFromTokenList(parsed), {}, token.getIndex()));
 				break;

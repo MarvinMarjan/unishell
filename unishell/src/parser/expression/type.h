@@ -28,6 +28,25 @@ public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
 };
 
+
+inline LiteralValue* litStr(const std::string& value) noexcept {
+	return new LiteralValue(value);
+}
+
+inline LiteralValue* litNum(double value) noexcept {
+	return new LiteralValue(value);
+}
+
+inline LiteralValue* litBool(bool value) noexcept {
+	return new LiteralValue(value);
+}
+
+inline LiteralValue* litList(std::vector<LiteralValue*> value) noexcept {
+	return new LiteralValue(value);
+}
+
+
+
 inline IdValueType getValueType(LiteralValue* value) {
 	if (!value) return Null;
 	return (IdValueType)value->index();

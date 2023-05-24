@@ -120,9 +120,7 @@ inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool
 	argsFromList(source, i, list); // 
 
 	// don't encapsulate in RETCOMMANDS
-	args = getArgs(list, false, true);
-
-	if (args.size()) hasExplicitList = true;
+	args = getArgs(list, false, true, &hasExplicitList);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());

@@ -13,16 +13,21 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	Param(LiteralValue* defaultValue = nullptr) :
-		defaultValue(defaultValue)
+	Param(LiteralValue* defaultValue = nullptr, std::vector<IdValueType> paramTypes = {}) :
+		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
 	inline LiteralValue* getDefaultValue() const noexcept {
 		return defaultValue;
 	}
 
+	inline std::vector<IdValueType> getParamTypes() const noexcept {
+		return paramTypes;
+	}
+
 private:
 	LiteralValue* defaultValue;
+	std::vector<IdValueType> paramTypes;
 };
 
 
