@@ -25,6 +25,15 @@ public:
 		return paramTypes;
 	}
 
+	inline StringList getParamTypesAsString() const noexcept {
+		StringList types;
+
+		for (IdValueType type : getParamTypes())
+			types.push_back(TypeUtil::getTypeAsString(type));
+
+		return types;
+	}
+
 private:
 	LiteralValue* defaultValue;
 	std::vector<IdValueType> paramTypes;
@@ -56,7 +65,8 @@ public:
 		int count = (int)(size() - args.size());
 		LiteralValue* defaultVal;
 
-		for (size_t i = 1; i <= count; i++)
+		// comparations with unsigned and signed can have trouble. use "(int)i"
+		for (size_t i = 1; (int)i <= count; i++)
 			if ((defaultVal = (*this)[args.size() - 1 + i].getDefaultValue()))
 				args.push_back(defaultVal);
 	}

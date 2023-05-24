@@ -171,6 +171,7 @@
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />
+    <ClInclude Include="src\utilities\cmdUtil.h" />
     <ClInclude Include="src\utilities\fileUtil.h" />
     <ClInclude Include="src\utilities\globalUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />

@@ -54,11 +54,17 @@ const StringList __sys_commands = {
 const StringList __sys_ret_commands = {
 	"type",
 	"size",
+
 	"at",
-	"split"
+	"split",
+	"join",
+
+	"literal",
+	"number",
+	"bool"
 };
 
-const std::string __word_separator = "=+-*/()[]{}<>?;:,|\\! ";
+const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$ ";
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
 

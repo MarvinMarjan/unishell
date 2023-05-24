@@ -58,7 +58,7 @@ public:
 	}
 
 	static inline std::string literalValueToString(LiteralValue* val, bool color = false) {
-		if (!val) return std::string("null");
+		if (!val) return ((color) ? nullformat("null") : "null");
 
 		TypeUtil::color = color;
 

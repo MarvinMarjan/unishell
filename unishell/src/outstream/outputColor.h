@@ -23,7 +23,8 @@ inline std::string clr(const std::string& text, const std::string& strColor) {
 	return strColor + text + endclr;
 }
 
-// put a string inside quotes
+
+
 inline std::string qtd(const std::string& text) {
 	return clr('\"' + text + '\"', __clr_quoted->toString());
 }
@@ -38,4 +39,8 @@ inline std::string boolformat(const std::string& text) {
 
 inline std::string numformat(const std::string& text) {
 	return clr(text, __clr_numbers->toString());
+}
+
+inline std::string nullformat(const std::string& text) {
+	return clr(text, __clr_keyword->toString());
 }

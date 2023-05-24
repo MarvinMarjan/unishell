@@ -63,6 +63,7 @@ private:
 
 		case BANG_EQUAL: return new LiteralValue(!isEqual(left, right));
 		case EQUAL_EQUAL: return new LiteralValue(isEqual(left, right));
+		case EQUAL_EQUAL_EQUAL: return new LiteralValue(isEqual(left, right, true));
 
 		case PLUS:
 			if (getValueType(left) == Literal || getValueType(right) == Literal)
@@ -100,10 +101,16 @@ private:
 		return true;
 	}
 
-	inline bool isEqual(LiteralValue* a, LiteralValue* b) {
+	inline bool isEqual(LiteralValue* a, LiteralValue* b, bool strict = false) {
 		if (!a && !b) return true;
 		if (!a) return false;
 
+		if (!strict)
+			return (litToStr(a) == litToStr(b));
+		
+		// strict equality
+		if (getValueType(a) != getValueType(b)) return false;
+		
 		return (litToStr(a) == litToStr(b));
 	}
 

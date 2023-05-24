@@ -42,7 +42,7 @@ private:
 	inline Expr* equality() {
 		Expr* expr = comparison();
 
-		while (match({ EQUAL_EQUAL, BANG_EQUAL })) {
+		while (match({ EQUAL_EQUAL_EQUAL, EQUAL_EQUAL, BANG_EQUAL })) {
 			Token op = prev();
 			Expr* right = comparison();
 			expr = new Binary(expr, op, right);

@@ -120,12 +120,12 @@ inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool
 	argsFromList(source, i, list); // 
 
 	// don't encapsulate in RETCOMMANDS
-	args = getArgs(list, false, true, &hasExplicitList);
+	args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());
 
-	retCmd = getRetCommand(source[i].getLexical().substr(1), args);
+	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args);
 
 	if (!retCmd)
 		throw SystemException(CommandError, "Unknown command: " + qtd(source[i].getLexical()));

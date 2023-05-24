@@ -12,7 +12,7 @@
 
 #include "src/utilities/fileUtil.h"
 
-#include "src/commands/cmdsDef.h"
+#include "src/utilities/cmdUtil.h"
 
 int main(int argc, char** argv)
 {
@@ -34,8 +34,8 @@ int main(int argc, char** argv)
 			// empty
 			if (!input.size()) continue;
 
-			ArgList args = getArgs(input);
-			CommandBase* command = getCommand(input[0].getLexical(), args);
+			ArgList args = CmdUtil::getArgs(input);
+			CommandBase* command = CmdUtil::getCommand(input[0].getLexical(), args);
 
 			// unknown command
 			if (!command)
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
 		}
 
 		// system exception was thrown
-		catch (SystemException sysErr) {
+		catch (const SystemException& sysErr) {
 			sys.error(sysErr);
 		}
 

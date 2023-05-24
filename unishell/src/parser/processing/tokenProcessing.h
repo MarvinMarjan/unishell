@@ -7,7 +7,7 @@
 #include "../expression/exprParser.h"
 #include "../expression/exprInterpreter.h"
 
-#include "../../commands/cmdsDef.h"
+#include "../../utilities/cmdUtil.h"
 
 class TokenProcess
 {

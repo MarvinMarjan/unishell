@@ -12,7 +12,7 @@
 	class name : public base \
 	{ \
 	public: \
-		name(ArgList args) : base({ params }, args) {} \
+		name(ArgList args) : base({ params }, args, cmdSymbol) {} \
 		\
 		static inline const std::string symbol = cmdSymbol;
 
@@ -25,7 +25,7 @@
 	if (cmdName == cmd::symbol) return new cmd(args) \
 
 
-#define THROW_RUNTIME_ERR(msg) throw SystemException(CommandRuntimeError, msg)
+#define THROW_RUNTIME_ERR(msg) throw SystemException(CommandRuntimeError, "(" + symbol + ") " + msg)
 
 
 
@@ -136,40 +136,49 @@ START_COMMAND(RetCmdSplit, ParamVec({ {nullptr, {Literal}}, {litStr(" "), {Liter
 	}
 END_COMMAND
 
-inline ArgList getArgs(TokenList input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
-	size_t index = (firstIsCommand) ? 1 : 0;
+// join
+START_COMMAND(RetCmdJoin, ParamVec({ {nullptr, {List}}, { litStr(" "), {Literal}} }), RetCommandBase, "join")
+	LiteralValue* exec() override {
+		for (LiteralValue* val : asList(args[0]))
+			if (getValueType(val) != Literal)
+				THROW_RUNTIME_ERR("Only Literal type values accepted: " + litToStr(val, true));
 
-	if (input.size() <= index) return ArgList(); // has no args
+		return litStr(VectorUtil::join(VectorUtil::map<LiteralValue*, std::string>(asList(args[0]), [] (LiteralValue* val) {
+			return asStr(val);
+		}), asStr(args[1])));
+	}
+END_COMMAND
 
-	if (encapsulate) {
-		size_t i = index;
-		for (i; i < input.size(); i++) {}
-		return ArgList(TokenList(input.begin() + index, input.begin() + i));
+
+// literal
+START_COMMAND(RetCmdLiteral, ParamVec({ {nullptr, {Literal, Number, Bool}} }), RetCommandBase, "literal")
+	LiteralValue* exec() override {
+		return litStr(litToStr(args[0]));
+	}
+END_COMMAND
+
+// number
+START_COMMAND(RetCmdNumber, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "number")
+LiteralValue* exec() override {
+	double res;
+	
+	try {
+		res = std::stod(litToStr(args[0]));
+	}
+	catch (const std::invalid_argument&) {
+		THROW_RUNTIME_ERR("Unable to convert: " + qtd(asStr(args[0])));
+	}
+	catch (const std::out_of_range&) {
+		THROW_RUNTIME_ERR("Value too large: " + qtd(asStr(args[0])));
 	}
 
-	else if (input[index].getType() == LIST) {
-		if (hasExplicitList != nullptr)
-			*hasExplicitList = true;
-
-		return ArgList(input[index]);
-	}
-
-	return ArgList();
+	return litNum(res);
 }
+END_COMMAND
 
-inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
-	CHECK_CMD(CmdPrint);
-	CHECK_CMD(CmdVar);
-	CHECK_CMD(CmdDel);
-	CHECK_CMD(CmdExit);
-
-	return nullptr;
+// bool
+START_COMMAND(RetCmdBool, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "bool")
+LiteralValue* exec() override {
+	return litBool(TypeUtil::stringToBool(asStr(args[0])));
 }
-inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
-	CHECK_CMD(RetCmdType);
-	CHECK_CMD(RetCmdSize);
-	CHECK_CMD(RetCmdAt);
-	CHECK_CMD(RetCmdSplit);
-
-	return nullptr;
-}
+END_COMMAND
