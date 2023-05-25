@@ -28,17 +28,23 @@ public:
 
 	static inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
 		CHECK_CMD(CmdPrint);
+		CHECK_CMD(CmdClear);
+
 		CHECK_CMD(CmdVar);
 		CHECK_CMD(CmdDel);
+		
 		CHECK_CMD(CmdExit);
 
 		return nullptr;
 	}
 	static inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
+		CHECK_CMD(RetCmdInput);
+		
 		CHECK_CMD(RetCmdType);
 		CHECK_CMD(RetCmdSize);
 
 		CHECK_CMD(RetCmdAt);
+		CHECK_CMD(RetCmdSub);
 		CHECK_CMD(RetCmdSplit);
 		CHECK_CMD(RetCmdJoin);
 

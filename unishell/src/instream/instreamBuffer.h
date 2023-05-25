@@ -32,18 +32,10 @@ public:
 		cursorIndex++;
 	}
 
-	inline void eraseAtIndex(int index) {
-		if (index < 0) return;
-
-		std::string buff = "";
-
-		for (size_t i = 0; i < size(); i++)
-			if ((int) i != index)
-				buff += (*this)[i];
-
-		assign(buff);
-
-		cursorIndex--;
+	inline void eraseAtIndex() {
+		if (getCursorIndex() - 1 < 0) return;
+		erase(getCursorIndex() - 1, 1);
+		cursorLeft();
 	}
 
 private:

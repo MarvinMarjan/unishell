@@ -3,6 +3,7 @@
 #include "../system/system.h"
 #include "../base/commandBaseCore.h"
 #include "../utilities/typeUtil.h"
+#include "../outstream/outputControl.h"
 
 // boilerplate
 
@@ -42,6 +43,14 @@ START_COMMAND(CmdPrint, { litStr(std::string("")) }, CommandBase, "print")
 END_COMMAND
 
 
+// clear
+START_COMMAND(CmdClear, {}, CommandBase, "clear")
+	void exec() override {
+		system("cls");
+	}
+END_COMMAND
+
+
 // var
 START_COMMAND(CmdVar, ParamVec({ nullptr, nullptr }), CommandBase, "var")
 	void exec() override {
@@ -67,6 +76,18 @@ END_COMMAND
 
 
 // ***---------- RETCOMMANDS ----------***
+
+
+
+// input
+START_COMMAND(RetCmdInput, {}, RetCommandBase, "input");
+	LiteralValue* exec() override {
+		std::string input;
+		std::getline(std::cin, input);
+
+		return litStr(input);
+	}
+END_COMMAND
 
 
 
@@ -120,6 +141,21 @@ START_COMMAND(RetCmdAt, ParamVec({ {nullptr, {Literal, List}}, {nullptr, {Number
 		}
 END_COMMAND
 
+// sub
+START_COMMAND(RetCmdSub, ParamVec({ {nullptr, {Literal}}, {nullptr, {Number}}, {litNum(-1.0), {Number}} }), RetCommandBase, "sub")
+	LiteralValue* exec() override {
+		std::string src = asStr(args[0]);
+		size_t begin = (size_t)asDbl(args[1]);
+		size_t end = (asDbl(args[2]) == -1.0) ? src.size() - 1 : (size_t)asDbl(args[2]);
+
+		if (begin < 0 || begin >= src.size())
+			THROW_RUNTIME_ERR("Begin out of range: " + litToStr(args[1], true));
+		else if (end < 0 || end < begin)
+			THROW_RUNTIME_ERR("End out of range: " + litToStr(args[2], true));
+
+		return litStr(src.substr(begin, end + 1 - begin));
+	}
+END_COMMAND
 
 // split
 START_COMMAND(RetCmdSplit, ParamVec({ {nullptr, {Literal}}, {litStr(" "), {Literal}} }), RetCommandBase, "split")

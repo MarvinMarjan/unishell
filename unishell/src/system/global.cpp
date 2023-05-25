@@ -46,16 +46,22 @@ const StringList __color_formats = {
 
 const StringList __sys_commands = {
 	"print",
+	"clear",
+
 	"var",
 	"del",
+	
 	"exit"
 };
 
 const StringList __sys_ret_commands = {
+	"input",
+
 	"type",
 	"size",
 
 	"at",
+	"sub",
 	"split",
 	"join",
 

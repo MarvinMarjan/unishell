@@ -6,6 +6,10 @@
 class WindowsSystem
 {
 public:
+	static inline bool VKIsPressed(int VK) {
+		return ((GetAsyncKeyState(VK) & 0x8000) != 0);
+	}
+
 	static inline void setCursorVisible(bool visible) {
 		CONSOLE_CURSOR_INFO info = { 1, visible };
 		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);

@@ -29,23 +29,22 @@ std::string INStream::getLine()
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
-	// reset input list current index
+	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)
 		globalInputList.reset();
 
 	switch ((int)charInput)
 	{
 	case CarriageReturn:
-		updateConsoleInput(lineInput, false);
+		updateConsoleInput(lineInput, false); // disable cursor rendering
 		globalInputList.add(lineInput);
 		sysprintln(""); // new line
 		end = true;
 		break;
 
 	case Backspace:
-		lineInput.eraseAtIndex(lineInput.getCursorIndex() - 1); // erase the character before cursor
+		lineInput.eraseAtIndex(); // erase the character before cursor
 		updateConsoleInput(lineInput);
-		
 		break;
 
 	// special characters have two codes, 
