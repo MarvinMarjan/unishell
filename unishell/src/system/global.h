@@ -33,7 +33,12 @@ extern BaseColorStructure* __clr_ex_sys_ret_command;
 
 extern BaseColorStructure* __clr_numbers;
 extern BaseColorStructure* __clr_operators;
-extern BaseColorStructure* __clr_encloses;
+
+extern BaseColorStructure* __clr_encloses_s1;
+extern BaseColorStructure* __clr_encloses_s2;
+extern BaseColorStructure* __clr_encloses_s3;
+extern BaseColorStructure* __clr_encloses_s4;
+
 extern BaseColorStructure* __clr_cursor;
 extern BaseColorStructure* __clr_keyword;
 extern BaseColorStructure* __clr_boolean;

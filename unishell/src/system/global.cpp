@@ -87,7 +87,12 @@ BaseColorStructure* __clr_ex_sys_ret_command = new IdColorStructure(203, italic)
 
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
 BaseColorStructure* __clr_operators = new IdColorStructure(222);
-BaseColorStructure* __clr_encloses = new IdColorStructure(210);
+
+BaseColorStructure* __clr_encloses_s1 = new IdColorStructure(210);
+BaseColorStructure* __clr_encloses_s2 = new IdColorStructure(113);
+BaseColorStructure* __clr_encloses_s3 = new IdColorStructure(117);
+BaseColorStructure* __clr_encloses_s4 = new IdColorStructure(220);
+
 BaseColorStructure* __clr_cursor = new IdColorStructure(75, underline);
 BaseColorStructure* __clr_keyword = new IdColorStructure(170);
 BaseColorStructure* __clr_boolean = new IdColorStructure(219);

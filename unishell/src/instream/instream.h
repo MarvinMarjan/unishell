@@ -33,6 +33,13 @@ private:
 
 	static INSListBuffer globalInputList; // global
 
+	static inline BaseColorStructure* getEncloseColorByScope(int scope) {
+		if (scope == 1) return __clr_encloses_s1;
+		if (scope == 2) return __clr_encloses_s2;
+		if (scope == 3) return __clr_encloses_s3;
+		if (scope >= 4) return __clr_encloses_s4;
+	}
+
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);
 	static std::string formatString(const std::string& text, int cursorPos);	
 

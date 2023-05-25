@@ -85,6 +85,7 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 {
 	std::stringstream fText;
 	size_t firstWordPos = INStreamRender::getWordEndPos(text);
+	int scopeDepth = 1;
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
@@ -105,12 +106,25 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 			break;
 
 		case '(':
-		case ')':
 		case '{':
-		case '}':
 		case '[':
+			// render first
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
+
+			scopeDepth++;
+
+			break;
+
+		case ')':
+		case '}':
 		case ']':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_encloses->toString()));
+			// check first, then render
+			scopeDepth--;
+			if (scopeDepth < 1) scopeDepth = 1;
+			
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
+
+
 			break;
 
 		case '!':
