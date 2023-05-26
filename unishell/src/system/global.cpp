@@ -101,8 +101,11 @@ BaseColorStructure* __clr_boolean = new IdColorStructure(219);
 
 BaseColorStructure* __clr_fs_file_type_regular = new ColorStructure(null);
 BaseColorStructure* __clr_fs_file_type_symlink = new IdColorStructure(209);
-BaseColorStructure* __clr_fs_file_type_other = new IdColorStructure(107);
 BaseColorStructure* __clr_fs_file_type_dir = new IdColorStructure(120);
+BaseColorStructure* __clr_fs_file_type_hidden = new IdColorStructure(168);
+BaseColorStructure* __clr_fs_file_type_archive = new IdColorStructure(110);
+BaseColorStructure* __clr_fs_file_type_temporary = new IdColorStructure(98);
+BaseColorStructure* __clr_fs_file_type_other = new IdColorStructure(107);
 
 
 BaseColorStructure* __clr_fs_filesize1 = new IdColorStructure(77);

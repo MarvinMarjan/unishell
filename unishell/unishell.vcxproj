@@ -175,6 +175,7 @@
     <ClInclude Include="src\utilities\cmdUtil.h" />
     <ClInclude Include="src\utilities\fileUtil.h" />
     <ClInclude Include="src\utilities\globalUtil.h" />
+    <ClInclude Include="src\utilities\opUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />
     <ClInclude Include="src\utilities\typeUtil.h" />
     <ClInclude Include="src\utilities\vectorUtil.h" />

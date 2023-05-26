@@ -98,6 +98,14 @@ public:
 		return charStr;
 	}
 
+	static inline wchar_t* charToWchar(const char* ch) {
+		int len = MultiByteToWideChar(CP_UTF8, 0, ch, -1, NULL, 0);
+		wchar_t* wchar = new wchar_t[len];
+		MultiByteToWideChar(CP_UTF8, 0, ch, -1, wchar, len);
+
+		return wchar;
+	}
+
 	// converts a char into a std::string
 	static inline std::string charToStr(char ch) noexcept {
 		return std::string(1, ch);

@@ -38,6 +38,8 @@ private:
 		if (scope == 2) return __clr_encloses_s2;
 		if (scope == 3) return __clr_encloses_s3;
 		if (scope >= 4) return __clr_encloses_s4;
+
+		return __clr_encloses_s4;
 	}
 
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);

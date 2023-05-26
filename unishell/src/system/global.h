@@ -45,9 +45,11 @@ extern BaseColorStructure* __clr_boolean;
 
 extern BaseColorStructure* __clr_fs_file_type_regular;
 extern BaseColorStructure* __clr_fs_file_type_symlink;
-extern BaseColorStructure* __clr_fs_file_type_other;
 extern BaseColorStructure* __clr_fs_file_type_dir;
-
+extern BaseColorStructure* __clr_fs_file_type_hidden;
+extern BaseColorStructure* __clr_fs_file_type_archive;
+extern BaseColorStructure* __clr_fs_file_type_temporary;
+extern BaseColorStructure* __clr_fs_file_type_other;
 
 extern BaseColorStructure* __clr_fs_filesize1;
 extern BaseColorStructure* __clr_fs_filesize2;
