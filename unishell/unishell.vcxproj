@@ -137,6 +137,7 @@
     <ClCompile Include="src\system\exceptionRef.cpp" />
     <ClCompile Include="src\system\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
+    <ClCompile Include="src\utilities\fileUtil.cpp" />
     <ClCompile Include="src\utilities\typeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>

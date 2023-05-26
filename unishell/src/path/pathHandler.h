@@ -12,7 +12,7 @@ class PathHandler
 public:
 	PathHandler(const std::string& path);
 
-	void manip(PathTokenList instructions);
+	bool manip(PathTokenList instructions);
 
 
 	// returns false if dirName doesn't exists
@@ -48,11 +48,11 @@ public:
 	}
 
 
+private:
 	inline size_t dirCount() const noexcept {
 		return StringUtil::split(path, '/').size();
 	}
 
-private:
 	static constexpr inline bool isDirSeparator(char ch) noexcept {
 		return (ch == '/' || ch == '\\');
 	}

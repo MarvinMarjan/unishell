@@ -36,6 +36,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	switch ((int)charInput)
 	{
 	case CarriageReturn:
+		if (lineInput.empty()) break;
 		updateConsoleInput(lineInput, false); // disable cursor rendering
 		globalInputList.add(lineInput);
 		sysprintln(""); // new line

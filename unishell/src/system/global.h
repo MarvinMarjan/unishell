@@ -42,4 +42,15 @@ extern BaseColorStructure* __clr_encloses_s4;
 extern BaseColorStructure* __clr_cursor;
 extern BaseColorStructure* __clr_keyword;
 extern BaseColorStructure* __clr_boolean;
+
+extern BaseColorStructure* __clr_fs_file_type_regular;
+extern BaseColorStructure* __clr_fs_file_type_symlink;
+extern BaseColorStructure* __clr_fs_file_type_other;
+extern BaseColorStructure* __clr_fs_file_type_dir;
+
+
+extern BaseColorStructure* __clr_fs_filesize1;
+extern BaseColorStructure* __clr_fs_filesize2;
+extern BaseColorStructure* __clr_fs_filesize3;
+extern BaseColorStructure* __clr_fs_filesize4;
 // <--

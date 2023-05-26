@@ -47,6 +47,8 @@ const StringList __color_formats = {
 const StringList __sys_commands = {
 	"print",
 	"clear",
+	"cd",
+	"ls",
 
 	"var",
 	"del",
@@ -96,3 +98,14 @@ BaseColorStructure* __clr_encloses_s4 = new IdColorStructure(220);
 BaseColorStructure* __clr_cursor = new IdColorStructure(75, underline);
 BaseColorStructure* __clr_keyword = new IdColorStructure(170);
 BaseColorStructure* __clr_boolean = new IdColorStructure(219);
+
+BaseColorStructure* __clr_fs_file_type_regular = new ColorStructure(null);
+BaseColorStructure* __clr_fs_file_type_symlink = new IdColorStructure(209);
+BaseColorStructure* __clr_fs_file_type_other = new IdColorStructure(107);
+BaseColorStructure* __clr_fs_file_type_dir = new IdColorStructure(120);
+
+
+BaseColorStructure* __clr_fs_filesize1 = new IdColorStructure(77);
+BaseColorStructure* __clr_fs_filesize2 = new IdColorStructure(81);
+BaseColorStructure* __clr_fs_filesize3 = new IdColorStructure(215);
+BaseColorStructure* __clr_fs_filesize4 = new IdColorStructure(196);

@@ -29,6 +29,8 @@ public:
 	static inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
 		CHECK_CMD(CmdPrint);
 		CHECK_CMD(CmdClear);
+		CHECK_CMD(CmdCd);
+		CHECK_CMD(CmdLs);
 
 		CHECK_CMD(CmdVar);
 		CHECK_CMD(CmdDel);

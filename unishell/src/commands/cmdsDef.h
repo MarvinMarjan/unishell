@@ -51,6 +51,31 @@ START_COMMAND(CmdClear, {}, CommandBase, "clear")
 END_COMMAND
 
 
+// cd
+START_COMMAND(CmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd")
+	void exec() override {
+		PathHandler* sysp = System::path();
+		
+		const std::string path = asStr(args[0]);
+
+		if (!sysp->manip(PathScanner(path).scanTokens()))
+			THROW_RUNTIME_ERR("Invalid path: " + qtd(path));
+	}
+END_COMMAND
+
+
+// ls
+START_COMMAND(CmdLs, {}, CommandBase, "ls")
+	void exec() override {
+		FileList list = FileUtil::fileList(System::path()->getPath());
+
+		for (const FileEntry& file : list) {
+			sysprintln(FileUtil::formatFileEntryAsString(file));
+		}
+	}
+END_COMMAND
+
+
 // var
 START_COMMAND(CmdVar, ParamVec({ nullptr, nullptr }), CommandBase, "var")
 	void exec() override {
