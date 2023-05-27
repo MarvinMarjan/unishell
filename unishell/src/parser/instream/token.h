@@ -14,7 +14,7 @@ enum TokenEnum
 	COMMAND, IDENTIFIER, RETCOMMAND, INRETCOMMAND,
 	
 	// sub tokens
-	EXPRESSION, COLOR, LIST,
+	EXPRESSION, COLOR, LIST, OBJECT,
 
 	// math operators
 	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
@@ -27,7 +27,7 @@ enum TokenEnum
 	AND, OR, NULLVAL,
 
 	// others
-	COLON, LBRACE, RBRACE,
+	COLON, LBRACE, RBRACE, LBRACKET, RBRACKET,
 
 	// atribuition
 	EQUAL,

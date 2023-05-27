@@ -1,5 +1,15 @@
 #include "global.h"
 
+#include "../environment/environment.h"
+#include "../path/pathHandler.h"
+
+#include "system.h"
+
+Environment* __environment = new Environment();
+PathHandler* __workingPath = new PathHandler(StringUtil::wstringToString(WindowsSystem::getSystemDesktopPath()) + '/');
+std::string* __userInput = new std::string();
+
+
 const StringList __keywords = {
 	"and",
 	"or",

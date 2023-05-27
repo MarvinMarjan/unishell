@@ -19,7 +19,8 @@ public:
 		source = parseTokens(source);
 		
 		source = generateLists(source);
-		source = listsToLiteral(source);
+		source = generateObjects(source);
+		source = subToLiteral(source);
 		source = expandRetCommands(source);
 
 		return source;
@@ -50,7 +51,7 @@ private:
 
 	// transforms LIST tokens with sub tokens into
 	// LIST tokens with literals instead
-	static inline TokenList listsToLiteral(TokenList source) {
+	static inline TokenList subToLiteral(TokenList source) {
 		TokenList res;
 
 		for (Token token : source)
@@ -62,7 +63,18 @@ private:
 				}
 
 				TokenList parsed = process(token.getSub());
-				res.push_back(Token(LIST, "", getFromTokenList(parsed), {}, token.getIndex()));
+				res.push_back(Token(LIST, "", getListFromTokenList(parsed), {}, token.getIndex()));
+				break;
+			}
+
+			case OBJECT: {
+				if (token.getLiteral()) {
+					res.push_back(token);
+					break;
+				}
+
+				TokenList parsed = process(token.getSub());
+				res.push_back(Token(OBJECT, "", getObjFromTokenList(parsed), {}, token.getIndex()));
 				break;
 			}
 
@@ -154,7 +166,15 @@ private:
 	static inline TokenList generateLists(TokenList source) {
 		TokenList res;
 
-		getInside(res, source, LBRACE, RBRACE, LIST, "Unterminated list");
+		getInside(res, source, LBRACKET, RBRACKET, LIST, "Unterminated list");
+
+		return res;
+	}
+
+	static inline TokenList generateObjects(TokenList source) {
+		TokenList res;
+
+		getInside(res, source, LBRACE, RBRACE, OBJECT, "Unterminated object");
 
 		return res;
 	}

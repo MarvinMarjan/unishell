@@ -20,7 +20,7 @@ void TokenProcess::getInside(TokenList& res, TokenList source, TokenEnum lchar, 
 			TokenList sub = TokenList(source.begin() + start + 1, source.begin() + end);
 			if (processSub) sub = process(sub);
 
-			res.push_back(Token(resToken, "", nullptr, sub, res.size() - 1));
+			res.push_back(Token(resToken, "", nullptr, sub, source[end].getIndex()));
 		}
 
 		else res.push_back(source[i]);
@@ -45,7 +45,7 @@ TokenList TokenProcess::generateColorTokens(TokenList source) {
 
 			end = i;
 
-			res.push_back(Token(COLOR, "", nullptr, TokenList(source.begin() + start, source.begin() + end + 1), res.size() - 1));
+			res.push_back(Token(COLOR, "", nullptr, TokenList(source.begin() + start, source.begin() + end + 1), source[end].getIndex()));
 		}
 
 		else res.push_back(source[i]);

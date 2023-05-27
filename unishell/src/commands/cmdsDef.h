@@ -125,12 +125,13 @@ END_COMMAND
 
 
 // size
-START_COMMAND(RetCmdSize, ParamVec({ {nullptr, {Literal, List}} }), RetCommandBase, "size")
+START_COMMAND(RetCmdSize, ParamVec({ {nullptr, {Literal, List, Object}} }), RetCommandBase, "size")
 	LiteralValue* exec() override {
 		IdValueType type = getValueType(args[0]);
 
 		if (type == Literal) return litNum((double)asStr(args[0]).size());
 		if (type == List) return litNum((double)asList(args[0]).size());
+		if (type == Object) return litNum((double)asObj(args[0]).size());
 
 		return nullptr;
 	}
@@ -138,22 +139,43 @@ END_COMMAND
 
 
 // at
-START_COMMAND(RetCmdAt, ParamVec({ {nullptr, {Literal, List}}, {nullptr, {Number}} }), RetCommandBase, "at")
+START_COMMAND(RetCmdAt, ParamVec({ {nullptr, {Literal, List, Object}}, {nullptr, {Number, Literal}} }), RetCommandBase, "at")
 	LiteralValue* exec() override
 	{
-		IdValueType type = getValueType(args[0]);
+		IdValueType srcType = getValueType(args[0]);
+		IdValueType indexType = getValueType(args[1]);
+
+		if ((srcType == Literal || srcType == List) && indexType != Number)
+			THROW_RUNTIME_ERR("Number expected for Literal | List");
+
+		else if (srcType == Object && indexType != Literal)
+			THROW_RUNTIME_ERR("Literal expected for Object");
 
 		LiteralValue* src = args[0];
-		int index = (int)asDbl(args[1]);
+		std::string key = "";
+		int index = -1;
 
-		if (type == Literal) {
+		
+		if (srcType == Literal || srcType == List)
+			index = (int)asDbl(args[1]);
+
+		else if (srcType == Object)
+			key = asStr(args[1]);
+
+
+		if (srcType == Literal) {
 			checkIndex(index, asStr(src).size());
 			return litStr(StringUtil::charToStr(asStr(src).at(index)));
 		}
 
-		if (type == List) {
+		if (srcType == List) {
 			checkIndex(index, asList(src).size());
 			return asList(src).at(index);
+		}
+
+		if (srcType == Object) {
+			checkIndex(src, key);
+			return asObj(src).at(key);
 		}
 
 		return nullptr;
@@ -163,6 +185,11 @@ START_COMMAND(RetCmdAt, ParamVec({ {nullptr, {Literal, List}}, {nullptr, {Number
 		static inline void checkIndex(int index, size_t max) {
 			if (index >= max || index < 0)
 				THROW_RUNTIME_ERR("Invalid index: " + numformat(tostr(index)));
+		}
+
+		static inline void checkIndex(LiteralValue* obj, const std::string& key) {
+			if (asObj(obj).find(key) == asObj(obj).end())
+				THROW_RUNTIME_ERR("Invalid property: " + qtd(key));
 		}
 END_COMMAND
 

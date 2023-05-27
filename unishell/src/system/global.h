@@ -7,9 +7,16 @@
 
 #include <map>
 
+class Environment;
+class PathHandler;
+
 typedef std::map<StringList, std::string> FSExtension;
 
 // global variables
+
+extern Environment* __environment; // stores a Environment pointer
+extern PathHandler* __workingPath; // stores the current working directory path
+extern std::string* __userInput;   // stores the last user input raw string
 
 // --> string lists
 extern const StringList __keywords;

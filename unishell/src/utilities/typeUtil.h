@@ -57,6 +57,25 @@ public:
 		return str.str();
 	}
 
+	static inline std::string formatObject(LiteralValue* lit) {
+		std::stringstream str;
+
+		str << "Object( ";
+
+		std::map<std::string, LiteralValue*> obj = asObj(lit);
+
+		auto objEnd = obj.end();
+
+		if (obj.size() > 0) objEnd--;
+
+		for (auto it = obj.begin(); it != obj.end(); it++)
+			str << it->first << ": " << litToStr(it->second, true) << ((it != objEnd) ? ", " : "");
+
+		str << " )";
+
+		return str.str();
+	}
+
 	static inline std::string literalValueToString(LiteralValue* val, bool color = false) {
 		if (!val) return ((color) ? nullformat("null") : "null");
 
@@ -66,6 +85,7 @@ public:
 		else if (val->index() == 1) return formatDouble(asDbl(val));
 		else if (val->index() == 2) return boolToString(asBool(val));
 		else if (val->index() == 3) return formatList(val);
+		else if (val->index() == 4) return formatObject(val);
 
 		return std::string();
 	}
@@ -84,6 +104,7 @@ public:
 		case Number: return NUMBER;
 		case Bool: return BOOLEANVAL;
 		case List: return LIST;
+		case Object: return OBJECT;
 		case Null: return NULLVAL;
 		}
 
@@ -96,6 +117,7 @@ public:
 		case Number: return "Number";
 		case Bool: return "Bool";
 		case List: return "List";
+		case Object: return "Object";
 		case Null: return "null";
 		}
 

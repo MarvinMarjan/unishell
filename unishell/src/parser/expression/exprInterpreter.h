@@ -124,7 +124,7 @@ private:
 			if (TypeUtil::isTypeof(value, type))
 				return;
 		
-		throw SystemException(ExprInterpreterError, typeStr + " expected: " + qtd(litToStr(value)), ExceptionRef(USER_INPUT));
+		throw SystemException(ExprInterpreterError, typeStr + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
 	}
 
 	inline void checkLiteralType(std::vector<LiteralValue*> vals, std::vector<IdValueType> expectedTypes, const std::string& typeStr) {

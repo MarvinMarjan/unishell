@@ -42,42 +42,38 @@ public:
 
 
 	static inline PathHandler* path() noexcept {
-		return GLOBAL_workingPath;
+		return __workingPath;
 	}
 
 	static inline std::string* input() noexcept {
-		return GLOBAL_userInput;
+		return __userInput;
 	}
 
 	static inline Environment* env() noexcept {
-		return GLOBAL_environment;
+		return __environment;
 	}
 
 	static inline Identifier* getEnvId(const std::string& idName, int index = -1) {
-		Identifier* identifier = GLOBAL_environment->getId(idName);
+		Identifier* identifier = __environment->getId(idName);
 
 		if (!identifier)
 			throw SystemException(EnvironmentError, "Unknown indentifier: " + idformat(idName), 
-				(index != -1) ? ExceptionRef(*GLOBAL_userInput, index) : ExceptionRef(""));
+				(index != -1) ? ExceptionRef(*__userInput, index) : ExceptionRef(""));
 		
 		return identifier;
 	}
 
 	static inline void delEnvId(const std::string& idName) {
-		if (GLOBAL_environment->exists(idName))
-			GLOBAL_environment->delId(idName);
+		if (__environment->exists(idName))
+			__environment->delId(idName);
 		else
 			throw SystemException(EnvironmentError, "Unknown identifier: " + idformat(idName));
 	}
 
 private:
 	static inline void addSysId(const std::string& name, LiteralValue* value) {
-		GLOBAL_environment->addId(Identifier(name, value, true));
+		__environment->addId(Identifier(name, value, true));
 	}
 
 	static bool abort;
-
-	static Environment* GLOBAL_environment; // stores a Environment pointer
-	static PathHandler* GLOBAL_workingPath; // stores the current working directory path
-	static std::string* GLOBAL_userInput;   // stores the last user input raw string
 };

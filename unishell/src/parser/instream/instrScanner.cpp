@@ -39,6 +39,9 @@ void InstreamScanner::scanToken()
 	case '(': addToken(LPAREN); break;
 	case ')': addToken(RPAREN); break;
 
+	case '[': addToken(LBRACKET); break;
+	case ']': addToken(RBRACKET); break;
+
 	case '{': addToken(LBRACE); break;
 	case '}': addToken(RBRACE); break;
 

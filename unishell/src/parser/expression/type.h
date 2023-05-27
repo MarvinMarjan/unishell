@@ -2,12 +2,17 @@
 
 #include "../instream/token.h"
 #include "../../utilities/stringUtil.h"
+
+#include "../../system/systemException.h"
+
 #include <variant>
+#include <map>
 
 #define asStr(pLit)  std::get<std::string>(*pLit)
 #define asDbl(pLit)  std::get<double>(*pLit)
-#define asBool(pLit) std::get<bool>(*pLit)
-#define asList(pLit) std::get<std::vector<LiteralValue*>>(*pLit)
+#define asBool(pLit)  std::get<bool>(*pLit)
+#define asList(pLit)  std::get<std::vector<LiteralValue*>>(*pLit)
+#define asObj(pLit)  std::get<std::map<std::string, LiteralValue*>>(*pLit)
 
 enum IdValueType
 {
@@ -15,12 +20,13 @@ enum IdValueType
 	Number,
 	Bool,
 	List,
+	Object,
 	Null
 };
 
 class LiteralValue;
 
-typedef std::variant<std::string, double, bool, std::vector<LiteralValue*>> LiteralValuePtr;
+typedef std::variant<std::string, double, bool, std::vector<LiteralValue*>, std::map<std::string, LiteralValue*>> LiteralValuePtr;
 
 class LiteralValue : public LiteralValuePtr
 {
@@ -52,11 +58,31 @@ inline IdValueType getValueType(LiteralValue* value) {
 	return (IdValueType)value->index();
 }
 
-inline LiteralValue* getFromTokenList(TokenList source) {
+inline LiteralValue* getListFromTokenList(TokenList source) {
 	LiteralValue* lit = new LiteralValue(std::vector<LiteralValue*>());
 
 	for (Token token : source)
 		asList(lit).push_back(token.getLiteral());
+
+	return lit;
+}
+
+inline LiteralValue* getObjFromTokenList(TokenList source) {
+	LiteralValue* lit = new LiteralValue(std::map<std::string, LiteralValue*>());
+	LiteralValue* aux;
+
+	for (Token token : source) {
+		if (token.getType() != LIST) continue;
+		if (!token.getLiteral()) continue;
+		if (asList(token.getLiteral()).size() < 2) continue;
+
+		aux = token.getLiteral();
+
+		if (getValueType(asList(aux)[0]) != Literal)
+			throw SystemException(TokenProcessingError, "Literal type expected for property name", ExceptionRef(*__userInput, token.getIndex()));
+
+		asObj(lit).insert({ asStr(asList(aux)[0]), asList(aux)[1] });
+	}
 
 	return lit;
 }
