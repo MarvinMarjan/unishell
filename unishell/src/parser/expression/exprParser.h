@@ -25,16 +25,28 @@ private:
 	}
 
 	inline Expr* logicOperator() {
-		Expr* expr = equality();
+		Expr* expr = assignment();
 
 		while (match({ AND, OR })) {
 			Token op = prev();
-			Expr* right = equality();
+			Expr* right = assignment();
 			expr = new Binary(expr, op, right);
 		}
 
 		if (match({ NUMBER, LITERAL, BOOLEANVAL, LPAREN }))
 			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
+
+		return expr;
+	}
+
+	inline Expr* assignment() {
+		Expr* expr = equality();
+		
+		while (match({ EQUAL })) {
+			Token op = prev();
+			Expr* right = equality();
+			expr = new Binary(expr, op, right);
+		}
 
 		return expr;
 	}
