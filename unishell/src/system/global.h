@@ -5,8 +5,13 @@
 
 #include "../parser/instream/token.h"
 
+#include <map>
+
+typedef std::map<StringList, std::string> FSExtension;
+
 // global variables
 
+// --> string lists
 extern const StringList __keywords;
 extern const StringList __boolean;
 extern const StringList __colormode;
@@ -14,8 +19,20 @@ extern const StringList __color;
 extern const StringList __color_formats;
 extern const StringList __sys_commands;
 extern const StringList __sys_ret_commands;
+// <--
+
+
+// --> extension types
+extern const FSExtension __fs_file_extensions_text;
+extern const FSExtension __fs_file_extensions_image;
+extern const FSExtension __fs_file_extensions_video;
+extern const FSExtension __fs_file_extensions_audio;
+extern const FSExtension __fs_file_extensions_binary;
+// <--
+
 
 extern const std::string __word_separator;
+
 
 // --> global color variables
 extern BaseColorStructure* __clr_quoted;
@@ -55,4 +72,11 @@ extern BaseColorStructure* __clr_fs_filesize1;
 extern BaseColorStructure* __clr_fs_filesize2;
 extern BaseColorStructure* __clr_fs_filesize3;
 extern BaseColorStructure* __clr_fs_filesize4;
+
+extern BaseColorStructure* __clr_fs_file_extension_text;
+extern BaseColorStructure* __clr_fs_file_extension_image;
+extern BaseColorStructure* __clr_fs_file_extension_video;
+extern BaseColorStructure* __clr_fs_file_extension_audio;
+extern BaseColorStructure* __clr_fs_file_extension_binary;
+extern BaseColorStructure* __clr_fs_file_extension_other;
 // <--

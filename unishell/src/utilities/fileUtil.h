@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <fstream>
 
-#include "stringUtil.h"
+#include "vectorUtil.h"
 #include "opUtil.h"
 
 #include "../system/global.h"
@@ -13,6 +13,13 @@
 #define N_MEGA_BYTE 1000000000.0
 #define N_GIGA_BYTE 1000000000000.0
 
+// boilerplate
+#define CHECK_GLOBAL_EX(src, clr) \
+	for (const auto& it : src) { \
+		if (VectorUtil::exists(it.first, ex)) \
+			return newFormatedFileData(clr, it.second); \
+	} \
+
 namespace fs = std::filesystem;
 
 typedef std::vector<fs::directory_entry> FileList;
@@ -21,9 +28,11 @@ typedef fs::directory_entry FileEntry;
 class FileUtil
 {
 public:
+
+	// file data formating --->
 	struct FormatedFileData {
 		BaseColorStructure* cl = nullptr;
-		std::string type;
+		std::string raw;
 	};
 
 	struct FileAtts
@@ -52,18 +61,27 @@ public:
 		bool virt;
 	};
 
-	static inline FormatedFileData newFormatedFileData(BaseColorStructure* cl, std::string type) {
+	static inline FormatedFileData newFormatedFileData(BaseColorStructure* cl, std::string raw) {
 		FormatedFileData data;
 
 		data.cl = cl;
-		data.type = type;
+		data.raw = raw;
 
 		return data;
 	}
 
-	// file data formating
 	static std::string formatFileEntryAsString(const FileEntry& file);
 	static std::string formatFileSizeAsString(uintmax_t size);
+
+	static inline FormatedFileData formatFileExtensionAsString(const std::string& ex) {
+		CHECK_GLOBAL_EX(__fs_file_extensions_text, __clr_fs_file_extension_text)
+		CHECK_GLOBAL_EX(__fs_file_extensions_image, __clr_fs_file_extension_image)
+		CHECK_GLOBAL_EX(__fs_file_extensions_audio, __clr_fs_file_extension_audio)
+		CHECK_GLOBAL_EX(__fs_file_extensions_video, __clr_fs_file_extension_video)
+		CHECK_GLOBAL_EX(__fs_file_extensions_binary, __clr_fs_file_extension_binary)
+
+		return newFormatedFileData(__clr_fs_file_extension_other, StringUtil::toUpper(ex));
+	}
 
 	static FileAtts getFileAtts(const FileEntry& file);
 
@@ -81,6 +99,7 @@ public:
 
 		return data;
 	}
+	// <--- file data formating
 
 
 	static inline FileList fileList(const std::string& path) {

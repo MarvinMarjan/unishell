@@ -6,14 +6,22 @@
 std::string FileUtil::formatFileEntryAsString(const FileEntry& file) {
 	std::stringstream str;
 	std::string name = file.path().filename().string();
+	bool dir = file.is_directory();
 
-	FormatedFileData data = getFFDByFileAttribute(getFileAtts(file));
+	FileAtts atts = getFileAtts(file);
+
+	FormatedFileData ex = formatFileExtensionAsString(file.path().extension().string());
+	FormatedFileData data = getFFDByFileAttribute(atts);
 
 	// size
-	str << formatFileSizeAsString(file.file_size()) << "    ";
+	str << formatFileSizeAsString(file.file_size()) << "   ";
 
-	// type
-	str << std::setw(9) << std::left << data.type;
+	// raw
+	str << std::setw(9) << std::left << data.raw;
+
+	// extension
+	str << ex.cl->toString();
+	str << std::setw(11) << std::left << ((dir) ? "" : ex.raw);
 
 	// name
 	str << data.cl->toString();

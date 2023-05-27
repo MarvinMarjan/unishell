@@ -48,6 +48,24 @@ public:
 		return (ch == ',' || ch == ';');
 	}
 
+	static inline std::string toUpper(const std::string& src) {
+		std::string res = "";
+
+		for (char ch : src)
+			res += std::toupper(ch);
+
+		return res;
+	}
+
+	static inline std::string toLower(const std::string& src) {
+		std::string res = "";
+
+		for (char ch : src)
+			res += std::tolower(ch);
+
+		return res;
+	}
+
 	static inline bool isWordSeparator(char ch) noexcept {
 		return (std::find(__word_separator.begin(), __word_separator.end(), ch) != __word_separator.end());
 	}

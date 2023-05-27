@@ -72,6 +72,70 @@ const StringList __sys_ret_commands = {
 	"bool"
 };
 
+const FSExtension __fs_file_extensions_text = {
+	{{".txt"},						"Text"},
+	{{".asm", ".a51",
+	".inc", ".nasm"},				"Assembly"},
+	{{".bat", ".cmd"},				"Batch"},
+	{{".bf", ".b"},					"Brainfuck"},
+	{{".cpp", ".hpp", ".c", 
+	".h", ".c++", ".cc", ".cp", 
+	".cxx", ".h++", ".hh", ".hxx"}, "C/C++"},
+	{{".cs"},						"C#"},
+	{{".cmake"},					"CMake"},
+	{{".cob", ".cbl", 
+	".cobol", ".cpy"},				"Cobol"},
+	{{".css"},						"CSS"},
+	{{".lisp", ".asd", ".lsp", 
+	".l"},							"Lisp"},
+	{{".dart"},						"Dart"},
+	{{".f", ".f90"},				"Fortran"},
+	{{".go"}, "Go"},
+	{{".html", ".htm"},				"HTML"},
+	{{".hs"},						"Haskell"},
+	{{".json"},						"JSON"},
+	{{".java"},						"Java"},
+	{{".js"},						"JavaScript"},
+	{{".jl"},						"Julia"},
+	{{".kt", ".kts", ".ktm"},		"Kotlin"},
+	{{".lex"},						"Lex"},
+	{{".lua"},						"Lua"},
+	{{".mk"},						"Make"},
+	{{".md"},						"Markdown"},
+	{{".m"},						"Obj-C"},
+	{{".mm"},						"Obj-C++"},
+	{{".pas", ".pp"},				"Pascal"},
+	{{".py"},						"Python"},
+	{{".rb", ".ru", ".ruby"},		"Ruby"},
+	{{".rs"},						"Rust"},
+	{{".sql"},						"SQL"},
+	{{".scala"},					"Scala"},
+	{{".sh", ".bash"},				"Shell"},
+	{{".swift"},					"Swift"},
+	{{".tex"},						"TeX"},
+	{{".ts"},						"TypeScript"},
+	{{".vb", ".vbs"},				"Visual B"},
+	{{".xml"},						"XML"},
+	{{".yml", ".yaml"},				"YAML"}
+};
+
+const FSExtension __fs_file_extensions_image = {
+	{{".png", ".jpg", ".jpeg", ".ico", ".gif", ".bmp"}, "Image"}
+};
+
+const FSExtension __fs_file_extensions_video = {
+	{{".mp4", ".mov", ".wmv", ".mpg"}, "Video"}
+};
+
+const FSExtension __fs_file_extensions_audio = {
+	{{".mp3", ".wav", ".ogg", ".mp2",}, "Audio"}
+};
+
+const FSExtension __fs_file_extensions_binary = {
+	{{".exe", ".dll", ".sys", ".bin", ".dat", ".iso", ".jar", ".reg"}, "Binary"}
+};
+
+
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$ ";
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
@@ -112,3 +176,10 @@ BaseColorStructure* __clr_fs_filesize1 = new IdColorStructure(77);
 BaseColorStructure* __clr_fs_filesize2 = new IdColorStructure(81);
 BaseColorStructure* __clr_fs_filesize3 = new IdColorStructure(215);
 BaseColorStructure* __clr_fs_filesize4 = new IdColorStructure(196);
+
+BaseColorStructure* __clr_fs_file_extension_text = new IdColorStructure(216);
+BaseColorStructure* __clr_fs_file_extension_image = new IdColorStructure(220);
+BaseColorStructure* __clr_fs_file_extension_video = new IdColorStructure(183);
+BaseColorStructure* __clr_fs_file_extension_audio = new IdColorStructure(42);
+BaseColorStructure* __clr_fs_file_extension_binary = new IdColorStructure(242);
+BaseColorStructure* __clr_fs_file_extension_other = new ColorStructure(null);
