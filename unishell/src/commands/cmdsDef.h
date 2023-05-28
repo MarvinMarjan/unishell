@@ -312,6 +312,17 @@ START_COMMAND(RetCmdEraseAt, ParamVec({ {nullptr, {List, Object}}, {nullptr, {Nu
 	}
 END_COMMAND
 
+
+// getFileData
+START_COMMAND(RetCmdGetFileData, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getFileData")
+	LiteralValue* exec() override {
+		if (!FileUtil::exists((*__workingPath) + asStr(args[0])))
+			THROW_RUNTIME_ERR("Invalid path: " + qtd(asStr(args[0])));
+
+		return FileUtil::getFileDataObjFromFile((*__workingPath) + asStr(args[0]));
+	}
+END_COMMAND
+
 // literal
 START_COMMAND(RetCmdLiteral, ParamVec({ {nullptr, {Literal, Number, Bool}} }), RetCommandBase, "literal")
 	LiteralValue* exec() override {

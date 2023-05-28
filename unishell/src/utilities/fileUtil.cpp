@@ -1,5 +1,6 @@
 #include "fileUtil.h"
 
+#include "objUtil.h"
 #include "typeUtil.h"
 #include "../system/system.h"	
 
@@ -88,4 +89,15 @@ FileUtil::FileAtts FileUtil::getFileAtts(const FileEntry& file) {
 	atts.virt				= OPUtil::bwAnd(att, FILE_ATTRIBUTE_ARCHIVE);
 
 	return atts;
+}
+
+LiteralValue* FileUtil::getFileDataObjFromFile(const std::string& path) {
+	FileEntry file(path);
+
+	return ObjUtil::newFileDataObj(
+		file.path().filename().string(),
+		file.path().extension().string(),
+		(int)file.file_size(),
+		getFileAtts(file)
+	);
 }

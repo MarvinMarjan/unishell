@@ -57,10 +57,13 @@ inline LiteralValue* litBool(bool value) noexcept {
 	return new LiteralValue(value);
 }
 
-inline LiteralValue* litList(std::vector<LiteralValue*> value) noexcept {
+inline LiteralValue* litList(LiteralValueList value) noexcept {
 	return new LiteralValue(value);
 }
 
+inline LiteralValue* litObj(LiteralValueObj value) noexcept {
+	return new LiteralValue(value);
+}
 
 
 constexpr inline IdValueType getValueType(LiteralValue* value) noexcept {
@@ -69,7 +72,7 @@ constexpr inline IdValueType getValueType(LiteralValue* value) noexcept {
 }
 
 inline LiteralValue* getListFromTokenList(TokenList source) {
-	LiteralValue* lit = new LiteralValue(std::vector<LiteralValue*>());
+	LiteralValue* lit = new LiteralValue(LiteralValueList());
 
 	for (Token token : source)
 		asList(lit).push_back(token.getLiteral());

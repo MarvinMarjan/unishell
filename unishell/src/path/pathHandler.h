@@ -12,6 +12,10 @@ class PathHandler
 public:
 	PathHandler(const std::string& path);
 
+	inline std::string operator+(const std::string& path) const noexcept {
+		return this->path + ((this->path.back() == '/') ? "" : "/") + path;
+	}
+
 	bool manip(PathTokenList instructions);
 
 

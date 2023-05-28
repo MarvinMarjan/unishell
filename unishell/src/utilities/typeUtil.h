@@ -57,7 +57,7 @@ public:
 		return str.str();
 	}
 
-	static inline std::string formatObject(LiteralValue* lit) {
+	static inline std::string formatObject(LiteralValue* lit, bool indent = false) {
 		std::stringstream str;
 
 		str << "Object( ";

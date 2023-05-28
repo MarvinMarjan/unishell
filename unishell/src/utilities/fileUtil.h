@@ -110,7 +110,13 @@ public:
 
 		return list;
 	}
+	
+	static inline uintmax_t fileSize(const std::string& path) {
+		return fs::file_size(path);
+	}
 
+	static LiteralValue* getFileDataObjFromFile(const std::string& path);
+	
 	static inline bool exists(const std::string& name) {
 		return fs::exists(name);
 	}
