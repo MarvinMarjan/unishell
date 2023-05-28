@@ -14,6 +14,7 @@
 #define asList(pLit)  std::get<std::vector<LiteralValue*>>(*pLit)
 #define asObj(pLit)  std::get<std::map<std::string, LiteralValue*>>(*pLit)
 
+
 enum IdValueType
 {
 	Literal,
@@ -26,12 +27,21 @@ enum IdValueType
 
 class LiteralValue;
 
-typedef std::variant<std::string, double, bool, std::vector<LiteralValue*>, std::map<std::string, LiteralValue*>> LiteralValuePtr;
+typedef std::vector<LiteralValue*> LiteralValueList;
+typedef std::map<std::string, LiteralValue*> LiteralValueObj;
+
+typedef std::variant<std::string, double, bool, LiteralValueList, LiteralValueObj> LiteralValuePtr;
+
+constexpr inline IdValueType getValueType(LiteralValue* value) noexcept;
 
 class LiteralValue : public LiteralValuePtr
 {
 public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
+
+	inline IdValueType type() const noexcept {
+		return getValueType((LiteralValue*)this);
+	}
 };
 
 
@@ -53,7 +63,7 @@ inline LiteralValue* litList(std::vector<LiteralValue*> value) noexcept {
 
 
 
-inline IdValueType getValueType(LiteralValue* value) {
+constexpr inline IdValueType getValueType(LiteralValue* value) noexcept {
 	if (!value) return Null;
 	return (IdValueType)value->index();
 }

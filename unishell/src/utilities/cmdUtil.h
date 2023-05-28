@@ -50,11 +50,15 @@ public:
 		CHECK_CMD(RetCmdSplit);
 		CHECK_CMD(RetCmdJoin);
 
+		CHECK_CMD(RetCmdAppend);
+		CHECK_CMD(RetCmdInsert);
+		CHECK_CMD(RetCmdErase);
+		CHECK_CMD(RetCmdEraseAt);
+
 		CHECK_CMD(RetCmdLiteral);
 		CHECK_CMD(RetCmdNumber);
 		CHECK_CMD(RetCmdBool);
 
 		return nullptr;
 	}
-
 };

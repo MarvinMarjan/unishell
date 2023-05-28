@@ -77,6 +77,11 @@ const StringList __sys_ret_commands = {
 	"split",
 	"join",
 
+	"append",
+	"insert",
+	"erase",
+	"eraseAt",
+
 	"literal",
 	"number",
 	"bool"
