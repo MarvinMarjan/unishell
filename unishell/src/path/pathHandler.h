@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../utilities/stringUtil.h"
-#include "../utilities/fileUtil.h"
+#include "../filesystem/file.h"
 
 #include "pathScanner.h"
 
@@ -10,10 +10,18 @@
 class PathHandler
 {
 public:
+	struct PathOperationData {
+		bool success;
+		std::string path;
+	};
+
 	PathHandler(const std::string& path);
 
-	inline std::string operator+(const std::string& path) const noexcept {
-		return this->path + ((this->path.back() == '/') ? "" : "/") + path;
+	inline PathOperationData operator+(const std::string& path) const noexcept {
+	 	PathTokenList tokens = PathScanner(path).scanTokens();
+		PathHandler copy(*this);
+
+		return { copy.manip(tokens), copy.getPath() };
 	}
 
 	bool manip(PathTokenList instructions);
@@ -21,8 +29,8 @@ public:
 
 	// returns false if dirName doesn't exists
 	inline bool into(const std::string& dirName, bool root = false) {
-		if (!root && !FileUtil::exists(path + '/' + dirName)) return false;
-		if (root && !FileUtil::exists(dirName)) return false;
+		if (!root && !fsys::File::exists(path + '/' + dirName)) return false;
+		if (root && !fsys::File::exists(dirName)) return false;
 
 		if (root) setPath(dirName, true);
 		else setPath(path += ((path.back() != '/') ? '/' + dirName : dirName)); // don't add another '/' if path ends with '/'

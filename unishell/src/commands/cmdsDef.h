@@ -5,6 +5,8 @@
 #include "../utilities/typeUtil.h"
 #include "../outstream/outputControl.h"
 
+#include "../filesystem/fileFormatting.h"
+
 // boilerplate
 
 // if params have more than one param, then
@@ -29,17 +31,35 @@
 #define THROW_RUNTIME_ERR(msg) throw SystemException(CommandRuntimeError, "(" + symbol + ") " + msg)
 
 
-static inline void checkIndex(int index, size_t max, const std::string& symbol) {
+enum ExpFileType {
+	ExpFile,
+	ExpDir
+};
+
+
+// check if the index of a list exists
+inline void checkIndex(int index, size_t max, const std::string& symbol) {
 	if (index >= max || index < 0)
 		THROW_RUNTIME_ERR("Invalid index: " + numformat(tostr(index)));
 }
 
-static inline void checkIndex(LiteralValue * obj, const std::string& key, const std::string& symbol) {
+// check if the key of an object exists
+inline void checkIndex(LiteralValue* obj, const std::string& key, const std::string& symbol) {
 	if (asObj(obj).find(key) == asObj(obj).end())
 		THROW_RUNTIME_ERR("Invalid property: " + qtd(key));
 }
 
+// check if path exists
+inline void checkPath(PathHandler::PathOperationData data, const std::string& argPath, const std::string& symbol) {
+	if (!data.success)
+		THROW_RUNTIME_ERR("Invalid path: " + qtd(argPath));
+}
 
+// checks if the file in the path is of the expected type
+inline void checkPathType(const std::string& path, ExpFileType expected, const std::string& symbol) {
+	if ((fs::is_directory(path) && expected == ExpFile) || (!fs::is_directory(path) && expected == ExpDir))
+		THROW_RUNTIME_ERR(((expected == ExpFile) ? "fsys::File" : "Directory") + " expected at: " + qtd(path));
+}
 
 // print
 START_COMMAND(CmdPrint, { litStr(std::string("")) }, CommandBase, "print")
@@ -51,13 +71,15 @@ START_COMMAND(CmdPrint, { litStr(std::string("")) }, CommandBase, "print")
 	}
 END_COMMAND
 
-
 // clear
 START_COMMAND(CmdClear, {}, CommandBase, "clear")
 	void exec() override {
 		system("cls");
 	}
 END_COMMAND
+
+
+
 
 
 // cd
@@ -73,16 +95,22 @@ START_COMMAND(CmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd")
 END_COMMAND
 
 
+
+
+
 // ls
 START_COMMAND(CmdLs, {}, CommandBase, "ls")
 	void exec() override {
-		FileList list = FileUtil::fileList(System::path()->getPath());
+		FileList list = fsys::File::fileList(System::path()->getPath());
 
 		for (const FileEntry& file : list) {
-			sysprintln(FileUtil::formatFileEntryAsString(file));
+			sysprintln(fsys::FileF::formatFileEntryAsString(file));
 		}
 	}
 END_COMMAND
+
+
+
 
 
 // var
@@ -98,6 +126,9 @@ START_COMMAND(CmdDel, { nullptr }, CommandBase, "del")
 		System::delEnvId(litToStr(args[0]));
 	}
 END_COMMAND
+
+
+
 
 
 // exit
@@ -125,12 +156,17 @@ END_COMMAND
 
 
 
+
+
 // type
 START_COMMAND(RetCmdType, { nullptr }, RetCommandBase, "type")
 	LiteralValue* exec() override {
 		return litStr(TypeUtil::getTypeAsString(getValueType(args[0])));
 	}
 END_COMMAND
+
+
+
 
 
 // size
@@ -145,6 +181,9 @@ START_COMMAND(RetCmdSize, ParamVec({ {nullptr, {Literal, List, Object}} }), RetC
 		return nullptr;
 	}
 END_COMMAND
+
+
+
 
 
 // at
@@ -282,7 +321,7 @@ END_COMMAND
 
 // eraseAt
 START_COMMAND(RetCmdEraseAt, ParamVec({ {nullptr, {List, Object}}, {nullptr, {Number, Literal}} }), RetCommandBase, "eraseAt")
-	LiteralValue* exec() override {
+	LiteralValue* exec() override  {
 		LiteralValue* src = args[0];
 		LiteralValue* at = args[1];
 
@@ -313,15 +352,70 @@ START_COMMAND(RetCmdEraseAt, ParamVec({ {nullptr, {List, Object}}, {nullptr, {Nu
 END_COMMAND
 
 
+
+
+
 // getFileData
 START_COMMAND(RetCmdGetFileData, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getFileData")
 	LiteralValue* exec() override {
-		if (!FileUtil::exists((*__workingPath) + asStr(args[0])))
-			THROW_RUNTIME_ERR("Invalid path: " + qtd(asStr(args[0])));
+		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
-		return FileUtil::getFileDataObjFromFile((*__workingPath) + asStr(args[0]));
+		checkPath(res, asStr(args[0]), symbol); 
+		checkPathType(res.path, ExpFile, symbol);
+
+		return fsys::File::getFileDataObjFromFile(res.path);
 	}
 END_COMMAND
+
+// getDirEntryName
+START_COMMAND(RetCmdGetDirEntryName, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getDirEntryName")
+	LiteralValue* exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+		checkPath(res, asStr(args[0]), symbol);
+		checkPathType(res.path, ExpDir, symbol);
+
+		return litList(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [] (FileEntry file) {
+			return litStr(file.path().filename().string());
+		}));
+	}
+END_COMMAND
+
+// getDirEntryData
+START_COMMAND(RetCmdGetDirEntryData, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getDirEntryData")
+	LiteralValue* exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+		checkPath(res, asStr(args[0]), symbol);
+		checkPathType(res.path, ExpDir, symbol);
+
+		return litList(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
+			return fsys::File::getFileDataObjFromFile(file.path().string());
+		}));
+	}
+END_COMMAND
+
+
+// readFile 
+START_COMMAND(RetCmdReadFile, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "readFile")
+	LiteralValue* exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+		checkPath(res, asStr(args[0]), symbol);
+		checkPathType(res.path, ExpFile, symbol);
+
+		try {
+			return litStr(fsys::File::readFileAsString(res.path));
+		}
+		catch (const fsys::FileException& err) {
+			THROW_RUNTIME_ERR("Couldn't open file: " + qtd(err.path));
+		}
+	}
+END_COMMAND
+
+
+
+
 
 // literal
 START_COMMAND(RetCmdLiteral, ParamVec({ {nullptr, {Literal, Number, Bool}} }), RetCommandBase, "literal")

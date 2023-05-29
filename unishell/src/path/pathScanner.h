@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../utilities/fileUtil.h"
+#include "../filesystem/file.h"
 #include "../utilities/stringUtil.h"
 
 #include "../base/scannerBase.h"
@@ -30,7 +30,7 @@ private:
 
 	// path to system root "C:/"
 	inline void rootIdentifier() {
-		if (src.size() >= 3 && FileUtil::exists(StringUtil::charToStr(peekPrev()) + peek() + peekNext())) {
+		if (src.size() >= 3 && fsys::File::exists(StringUtil::charToStr(peekPrev()) + peek() + peekNext())) {
 			current += 2;
 			addToken(PathToken::Root);
 		}

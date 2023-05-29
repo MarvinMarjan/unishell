@@ -56,6 +56,9 @@ public:
 		CHECK_CMD(RetCmdEraseAt);
 
 		CHECK_CMD(RetCmdGetFileData);
+		CHECK_CMD(RetCmdGetDirEntryName);
+		CHECK_CMD(RetCmdGetDirEntryData);
+		CHECK_CMD(RetCmdReadFile);
 
 		CHECK_CMD(RetCmdLiteral);
 		CHECK_CMD(RetCmdNumber);

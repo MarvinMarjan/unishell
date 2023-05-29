@@ -83,6 +83,9 @@ const StringList __sys_ret_commands = {
 	"eraseAt",
 
 	"getFileData",
+	"getDirEntryName",
+	"getDirEntryData",
+	"readFile",
 
 	"literal",
 	"number",

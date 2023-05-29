@@ -41,7 +41,10 @@
     <ClCompile Include="src\utilities\typeUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utilities\fileUtil.cpp">
+    <ClCompile Include="src\filesystem\file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filesystem\fileFormating.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,7 +76,7 @@
     <ClInclude Include="src\utilities\stringUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utilities\fileUtil.h">
+    <ClInclude Include="src\filesystem\file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\path\pathHandler.h">
@@ -161,6 +164,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utilities\objUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filesystem\fileFormatting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

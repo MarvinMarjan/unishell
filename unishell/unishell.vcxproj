@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\filesystem\fileFormating.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
     <ClCompile Include="src\parser\processing\tokenProcessing.cpp" />
@@ -137,7 +138,7 @@
     <ClCompile Include="src\system\exceptionRef.cpp" />
     <ClCompile Include="src\system\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
-    <ClCompile Include="src\utilities\fileUtil.cpp" />
+    <ClCompile Include="src\filesystem\file.cpp" />
     <ClCompile Include="src\utilities\typeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="src\commands\paramList.h" />
     <ClInclude Include="src\environment\environment.h" />
     <ClInclude Include="src\environment\identifier.h" />
+    <ClInclude Include="src\filesystem\fileFormatting.h" />
     <ClInclude Include="src\instream\instream.h" />
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />
@@ -173,7 +175,7 @@
     <ClInclude Include="src\system\systemException.h" />
     <ClInclude Include="src\system\windowsSystem.h" />
     <ClInclude Include="src\utilities\cmdUtil.h" />
-    <ClInclude Include="src\utilities\fileUtil.h" />
+    <ClInclude Include="src\filesystem\file.h" />
     <ClInclude Include="src\utilities\globalUtil.h" />
     <ClInclude Include="src\utilities\objUtil.h" />
     <ClInclude Include="src\utilities\opUtil.h" />

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../parser/expression/type.h"
-#include "fileUtil.h"
+#include "../filesystem/fileFormatting.h"
 
 class ObjUtil
 {
 public:
 	static inline LiteralValue* newFileDataObj(
-		const std::string& fileName, const std::string& fileEx, int size, FileUtil::FileAtts atts) noexcept 
+		const std::string& fileName, const std::string& fileEx, int size, fsys::FileF::FileAtts atts) noexcept 
 	{
 		return litObj({
 			{"name", litStr(fileName)},

@@ -10,7 +10,7 @@
 #include "src/parser/expression/exprASTPrinter.h"
 #include "src/parser/expression/exprParser.h"
 
-#include "src/utilities/fileUtil.h"
+#include "src/filesystem/file.h"
 
 #include "src/utilities/cmdUtil.h"
 
