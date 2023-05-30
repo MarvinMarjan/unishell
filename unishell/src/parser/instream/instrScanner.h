@@ -65,12 +65,38 @@ private:
 	inline void string() {
 		while (peek() != '\"') {
 			if (isAtEnd()) 
-				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(*System::input(), current - 1));
-			
-			advance();
+				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
+
+			if (advance() != '\\') continue;
+
+			// escape character processing
+			addEscapeChar();
 		}
+
 		addToken(LITERAL, new LiteralValue(src.substr(start + 1, current - 1 - start)));
 		advance(); // closing char
+	}
+
+	constexpr inline char checkEscapeChar(char ch) const noexcept {
+		switch (ch)
+		{
+		case 'n':  return '\n';
+		case 't':  return '\t';
+		case '\\': return '\\';
+		case '\"': return '\"';
+		}
+
+		return '\0';
+	}
+
+	inline void addEscapeChar() {
+		char aux;
+
+		if ((aux = checkEscapeChar(peek())) == '\0')
+			throw SystemException(InstreamScannerError, "Unknown escape character", ExceptionRef(USER_INPUT, current));
+
+		src.erase(src.begin() + current);
+		src[current - 1] = aux;
 	}
 
 	// gets a sequence of digits. dot ('.') included
@@ -79,7 +105,7 @@ private:
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
 
-	// if is keyword, returns true and add it;
+	// if is keyword, returns true and add it
 	// else return false
 	inline bool keyword() {
 		for (current; StringUtil::isAlpha(peek()); current++) {}

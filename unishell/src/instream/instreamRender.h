@@ -45,9 +45,6 @@ private:
 
 			if (VectorUtil::exists(__sys_ret_commands, cmdName))
 				retCmdColor = __clr_ex_sys_ret_command;
-
-			// TODO: id cmdName isn't sys command, then
-			// retCmdColor = __clr_ex_ret_commands
 		}
 
 		renderWord(stream, text, i, cursorPos, retCmdColor, true);
@@ -59,8 +56,16 @@ private:
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString()); // draw first quote
 
-		while (text[++i] != '\"' && i < text.size())
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString());
+		while (text[++i] != '\"' && i < text.size()) {
+			if (text[i] == '\\' && i + 1 < text.size()) {
+				renderChar(i, cursorPos, text[i], stream, __clr_escape_char->toString() + StringUtil::charToStr(text[i]) , __clr_escape_char->toString());
+				i++;
+				renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_escape_char->toString());
+				stream << __clr_quoted->toString();
+			}
+			else
+				renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString());
+		}
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last quote
 
