@@ -85,7 +85,8 @@ const StringList __sys_ret_commands = {
 	"getFileData",
 	"getDirEntryName",
 	"getDirEntryData",
-	"readFile",
+	"read",
+	"write",
 
 	"literal",
 	"number",

@@ -262,9 +262,8 @@ END_COMMAND
 // join
 START_COMMAND(RetCmdJoin, ParamVec({ {nullptr, {List}}, { litStr(" "), {Literal}} }), RetCommandBase, "join")
 	LiteralValue* exec() override {
-		for (LiteralValue* val : asList(args[0]))
-			if (getValueType(val) != Literal)
-				THROW_RUNTIME_ERR("Only Literal type values accepted: " + litToStr(val, true));
+		if (!TypeUtil::isListOf(args[0], Literal))
+			THROW_RUNTIME_ERR("Only Literal type List accepted: " + litToStr(args[0], true));
 
 		return litStr(VectorUtil::join(VectorUtil::map<LiteralValue*, std::string>(asList(args[0]), [] (LiteralValue* val) {
 			return asStr(val);
@@ -396,8 +395,8 @@ START_COMMAND(RetCmdGetDirEntryData, ParamVec({ {nullptr, {Literal}} }), RetComm
 END_COMMAND
 
 
-// readFile 
-START_COMMAND(RetCmdReadFile, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "readFile")
+// read
+START_COMMAND(RetCmdRead, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "read")
 	LiteralValue* exec() override {
 		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
@@ -405,11 +404,26 @@ START_COMMAND(RetCmdReadFile, ParamVec({ {nullptr, {Literal}} }), RetCommandBase
 		checkPathType(res.path, ExpFile, symbol);
 
 		try {
-			return litStr(fsys::File::readFileAsString(res.path));
+			return litStr(fsys::File::readAsString(res.path));
 		}
 		catch (const fsys::FileException& err) {
 			THROW_RUNTIME_ERR("Couldn't open file: " + qtd(err.path));
 		}
+	}
+END_COMMAND
+
+// write
+START_COMMAND(RetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {litBool(false), {Bool}} }), RetCommandBase, "write")
+	LiteralValue* exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+		bool appendMode = asBool(args[2]);
+
+		checkPath(res, asStr(args[0]), symbol);
+		checkPathType(res.path, ExpFile, symbol);
+
+		fsys::File::write(res.path, asStr(args[1]), (appendMode) ? std::ios::app : std::ios::out);
+
+		return litStr(fsys::File::readAsString(res.path));
 	}
 END_COMMAND
 

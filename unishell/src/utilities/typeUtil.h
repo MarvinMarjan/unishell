@@ -128,6 +128,16 @@ public:
 		return (getValueType(value) == type);
 	}
 
+	static inline bool isListOf(LiteralValue* list, IdValueType type) {
+		if (getValueType(list) != List) return false;
+
+		for (LiteralValue* val : asList(list))
+			if (getValueType(val) != type)
+				return false;
+
+		return true;
+	}
+
 	static inline void checkNull(LiteralValue* value) {
 		if (!value)
 			value = new LiteralValue("null");

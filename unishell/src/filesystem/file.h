@@ -24,13 +24,22 @@ namespace fsys
 	class File
 	{
 	public:
-		static inline std::string readFileAsString(const std::string& path) {
-			StringList content = readFileAsList(path);
+		static inline void write(const std::string& path, std::string data, std::ios_base::openmode mode = std::ios::out) {
+			std::ofstream file(path.c_str(), mode);
 
-			return VectorUtil::join(content, "\n");
+			if (file.fail())
+				throw FileException {path};
+
+			file << data;
+
+			file.close();
 		}
 
-		static inline StringList readFileAsList(const std::string& path) {
+		static inline std::string readAsString(const std::string& path) {
+			return VectorUtil::join(readAsList(path), "\n");
+		}
+
+		static inline StringList readAsList(const std::string& path) {
 			std::ifstream file(path.c_str());
 			StringList content;
 			std::string buff;
@@ -41,6 +50,7 @@ namespace fsys
 			while (std::getline(file, buff))
 				content.push_back(buff);
 
+			file.close();
 			return content;
 		}
 
@@ -59,7 +69,7 @@ namespace fsys
 
 		static LiteralValue* getFileDataObjFromFile(const std::string& path);
 
-		static inline bool exists(const std::string& name) {
+		static inline bool exists(const std::string& name) noexcept {
 			return fs::exists(name);
 		}
 	};
