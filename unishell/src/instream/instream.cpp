@@ -7,6 +7,8 @@ INSSearchList INStream::searchList = INSSearchList();
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
+	searchList.set(__sys_commands);
+
 	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)
 		inputList.reset();
@@ -29,8 +31,15 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		updateConsoleInput(lineInput);
 		break;
 
-	case Tab:
+	case Tab: {
+		int begin = INStreamRender::getWordBeginPos(lineInput, lineInput.getCursorIndex());
+		int end = INStreamRender::getWordEndPos(lineInput, lineInput.getCursorIndex());
+
+		StringList sorted = VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin));
+
+
 		break;
+	}
 
 	// special characters have two codes, 
 	// one to identify the character as special and another to be the code of the character itself
