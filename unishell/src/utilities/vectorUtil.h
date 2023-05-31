@@ -28,4 +28,16 @@ public:
 	static inline bool exists(std::vector<T> src, T value) {
 		return (std::find(src.begin(), src.end(), value) != src.end());
 	}
+
+	static inline StringList sortByCharacters(StringList src, std::string sortener) {
+		if (sortener.empty()) return src;
+
+		StringList res;
+
+		for (std::string item : src)
+			if (StringUtil::startsWith(item, sortener))
+				res.push_back(item);
+
+		return res;
+	}
 };

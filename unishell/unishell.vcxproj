@@ -154,6 +154,7 @@
     <ClInclude Include="src\instream\instreamBuffer.h" />
     <ClInclude Include="src\instream\instreamListBuffer.h" />
     <ClInclude Include="src\instream\instreamRender.h" />
+    <ClInclude Include="src\instream\instreamSearchList.h" />
     <ClInclude Include="src\outstream\colorStructure.h" />
     <ClInclude Include="src\outstream\outputColor.h" />
     <ClInclude Include="src\outstream\outputControl.h" />

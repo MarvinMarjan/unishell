@@ -201,7 +201,11 @@ private:
 
 	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0) {
 		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos++) {}
+		return pos;
+	}
 
+	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0) {
+		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos--) {}
 		return pos;
 	}
 

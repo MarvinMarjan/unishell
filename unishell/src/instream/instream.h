@@ -8,12 +8,14 @@
 
 #include "instreamRender.h"
 #include "instreamListBuffer.h"
+#include "instreamSearchList.h"
 
 
 enum ASCIICode
 {
 	CarriageReturn =  13,
 	Backspace      =   8,
+	Tab            =   9,
 
 	SpecialChar    = -32,
 
@@ -26,13 +28,32 @@ enum ASCIICode
 class INStream
 {
 public:
-	static std::string getLine();
+	static inline std::string getLine() {
+		INStreamBuffer lineInput;
+		char charInput;
+
+		bool end = false;
+
+		sysprint(saveCursor());
+
+		while (!end) {
+			sysprint(loadCursor());
+
+			charInput = _getch();
+
+			controlKeyHandler(charInput, lineInput, end);
+		}
+
+		return lineInput;
+	}
 
 private:
 	friend class INStreamRender;
 
-	static INSListBuffer globalInputList; // global
+	static INSListBuffer inputList;
+	static INSSearchList searchList;
 
+	// gets the color of enclose characters based on scope
 	static inline BaseColorStructure* getEncloseColorByScope(int scope) {
 		if (scope == 1) return __clr_encloses_s1;
 		if (scope == 2) return __clr_encloses_s2;

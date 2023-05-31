@@ -70,6 +70,15 @@ public:
 		return (std::find(__word_separator.begin(), __word_separator.end(), ch) != __word_separator.end());
 	}
 
+	static inline bool startsWith(const std::string& src, const std::string& sub) {
+		if (src.size() < sub.size()) return false;
+
+		if (src.substr(0, sub.size()) == sub)
+			return true;
+
+		return false;
+	}
+
 	static inline size_t findLast(const std::string& src, char ch) {
 		size_t index = 0;
 

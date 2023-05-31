@@ -169,5 +169,8 @@
     <ClInclude Include="src\filesystem\fileFormatting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\instream\instreamSearchList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

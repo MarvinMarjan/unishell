@@ -1,44 +1,25 @@
 #include "instream.h"
 
 
-
-INSListBuffer INStream::globalInputList = INSListBuffer();
-
-// user input
-std::string INStream::getLine()
-{
-	INStreamBuffer lineInput;
-	char charInput;
-
-	bool end = false;
-
-	sysprint(saveCursor());
-
-	while (!end)
-	{
-		sysprint(loadCursor());
-
-		charInput = _getch();
-
-		controlKeyHandler(charInput, lineInput, end);
-	}
-
-	return lineInput;
-}
+INSListBuffer INStream::inputList = INSListBuffer();
+INSSearchList INStream::searchList = INSSearchList();
 
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
 	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)
-		globalInputList.reset();
+		inputList.reset();
+
+	if ((int)charInput != Tab)
+		searchList.sequence = false;
 
 	switch ((int)charInput)
 	{
 	case CarriageReturn:
 		if (lineInput.empty()) break;
 		updateConsoleInput(lineInput, false); // disable cursor rendering
-		globalInputList.add(lineInput);
+		inputList.add(lineInput);
 		sysprintln(""); // new line
 		end = true;
 		break;
@@ -48,21 +29,45 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		updateConsoleInput(lineInput);
 		break;
 
+	case Tab: {
+		int begin = INStreamRender::getWordBeginPos(lineInput, lineInput.getCursorIndex() - 1);
+		int end = INStreamRender::getWordEndPos(lineInput, lineInput.getCursorIndex() - 1);
+
+		if (begin + 1 < lineInput.size()) begin++;
+
+		if (!searchList.sequence)
+			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin + 1)));
+
+		std::string str = searchList.get();
+
+		lineInput.erase(lineInput.begin() + begin, lineInput.begin() + end + 1);
+		lineInput.insert(begin, str);
+
+		lineInput.setCursorIndex((int)lineInput.size());
+
+		searchList.next();
+
+		searchList.sequence = true;
+
+		updateConsoleInput(lineInput);
+		break;
+	}
+
 	// special characters have two codes, 
 	// one to identify the character as special and another to be the code of the character itself
 	case SpecialChar:
 		charInput = _getch(); // each code is consumed individually, so you need to consume twice
 
 		if (charInput == UpArrow) {
-			globalInputList.up();
-			lineInput.assign(globalInputList.get());
+			inputList.up();
+			lineInput.assign(inputList.get());
 			lineInput.setCursorIndex((int) lineInput.size());
 		}
 		
 		// don't allow DownArrow processing if ignoreCurrenIndexChange is true
-		else if (charInput == DownArrow && !globalInputList.ignoreCurrentIndexChange) {
-			globalInputList.down();
-			lineInput.assign(globalInputList.get());
+		else if (charInput == DownArrow && !inputList.ignoreCurrentIndexChange) {
+			inputList.down();
+			lineInput.assign(inputList.get());
 			lineInput.setCursorIndex((int) lineInput.size());
 		}
 
@@ -90,8 +95,10 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
-		if (i <= firstWordPos)
+		if (i <= firstWordPos) {
 			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
+			searchList.set(__sys_commands);
+		}
 
 		char current = text[i];
 
