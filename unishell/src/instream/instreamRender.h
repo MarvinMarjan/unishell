@@ -23,22 +23,20 @@ private:
 
 	// command string
 	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordPos) {
-		if (i >= firstWordPos) return;
-
 		BaseColorStructure* commandClr = __clr_command;
 
 		// start color rendering
-		if (VectorUtil::exists(__sys_commands, std::string(text.begin(), text.begin() + firstWordPos)))
+		if (VectorUtil::exists(__sys_commands, std::string(text.begin(), text.begin() + firstWordPos + 1)))
 			commandClr = __clr_ex_command; // commands exists
 
-		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos, false);
+		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos);
 	}
 
 	static inline void renderRetCommand(std::stringstream& stream, const std::string& text, size_t& i, int cursorPos) {
 		BaseColorStructure* retCmdColor = __clr_ret_command;
 
 		if (i + 1 < text.size()) {
-			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1));
+			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1) + 1);
 			
 			if (!StringUtil::isAlpha(cmdName[0]))
 				cmdName = cmdName.substr(1);
@@ -77,7 +75,7 @@ private:
 		BaseColorStructure* idColor = __clr_identifier;
 
 		if (i + 1 < text.size()) {
-			std::string idName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1));
+			std::string idName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1) + 1);
 			Identifier* id = System::env()->getId(idName);
 
 			if (id) idColor = __clr_ex_identifier;
@@ -141,7 +139,7 @@ private:
 
 		// if color is valid
 		if (color)
-			renderUntil(stream, text, i, cursorPos, color, end + 1);
+			renderUntil(stream, text, i, cursorPos, color, end);
 		
 		return (color) ? true : false;
 	}
@@ -168,7 +166,7 @@ private:
 	{
 		stream << color->toString();
 
-		for (i; i < until; i++)
+		for (i; i <= until; i++)
 			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
 
 		if (decrement) i--;
@@ -201,11 +199,13 @@ private:
 
 	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0) {
 		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos++) {}
+		if (pos > 0) pos--;
 		return pos;
 	}
 
 	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0) {
 		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos--) {}
+		if (pos + 1 < text.size()) pos++;
 		return pos;
 	}
 

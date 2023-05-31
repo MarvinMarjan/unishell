@@ -29,29 +29,8 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		updateConsoleInput(lineInput);
 		break;
 
-	case Tab: {
-		int begin = INStreamRender::getWordBeginPos(lineInput, lineInput.getCursorIndex() - 1);
-		int end = INStreamRender::getWordEndPos(lineInput, lineInput.getCursorIndex() - 1);
-
-		if (begin + 1 < lineInput.size()) begin++;
-
-		if (!searchList.sequence)
-			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin + 1)));
-
-		std::string str = searchList.get();
-
-		lineInput.erase(lineInput.begin() + begin, lineInput.begin() + end + 1);
-		lineInput.insert(begin, str);
-
-		lineInput.setCursorIndex((int)lineInput.size());
-
-		searchList.next();
-
-		searchList.sequence = true;
-
-		updateConsoleInput(lineInput);
+	case Tab:
 		break;
-	}
 
 	// special characters have two codes, 
 	// one to identify the character as special and another to be the code of the character itself
@@ -97,7 +76,7 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 	{
 		if (i <= firstWordPos) {
 			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
-			searchList.set(__sys_commands);
+			continue;
 		}
 
 		char current = text[i];
