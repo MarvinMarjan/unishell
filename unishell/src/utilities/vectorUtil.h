@@ -30,13 +30,13 @@ public:
 	}
 
 	static inline StringList sortByCharacters(StringList src, std::string sortener) {
-		if (sortener.empty()) return src;
-
 		StringList res;
 
 		for (std::string item : src)
 			if (StringUtil::startsWith(item, sortener))
 				res.push_back(item);
+
+		if (res.empty() || sortener.empty()) return src;
 
 		return res;
 	}

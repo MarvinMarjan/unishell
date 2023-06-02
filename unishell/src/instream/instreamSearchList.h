@@ -13,6 +13,7 @@ public:
 	inline void set(const StringList& other) {
 		if (sequence) return;
 		*((StringList*)this) = other;
+		index = 0;
 	}
 
 	inline void next() noexcept {

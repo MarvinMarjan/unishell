@@ -198,13 +198,25 @@ private:
 	}
 
 	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0) {
-		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos++) {}
+		do {
+			if (pos >= text.size() - 1)
+				return pos;
+		}
+		while (StringUtil::isAlphaNumeric(text[pos++]));
+		pos--;
+
 		if (pos > 0) pos--;
 		return pos;
 	}
 
 	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0) {
-		for (pos; StringUtil::isAlphaNumeric(text[pos]); pos--) {}
+		do {
+			if (pos <= 0)
+				return pos;
+		}
+		while (StringUtil::isAlphaNumeric(text[pos--]));
+		pos++;
+
 		if (pos + 1 < text.size()) pos++;
 		return pos;
 	}

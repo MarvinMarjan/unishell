@@ -32,12 +32,22 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	case Tab: {
-		int begin = INStreamRender::getWordBeginPos(lineInput, lineInput.getCursorIndex());
-		int end = INStreamRender::getWordEndPos(lineInput, lineInput.getCursorIndex());
+		int cIndex = lineInput.getCursorIndex();
 
-		//StringList sorted = VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin));
+		int begin = INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1));
+		int end = INStreamRender::getWordEndPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1));
 
+		if (!searchList.sequence)
+			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin + 1)));
 
+		lineInput.erase(begin, end - begin + 1);
+		lineInput.insert(begin, searchList.get());
+		lineInput.setCursorIndex(lineInput.size());
+
+		searchList.next();
+		searchList.sequence = true;
+
+		updateConsoleInput(lineInput);
 		break;
 	}
 
