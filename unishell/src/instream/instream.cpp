@@ -1,5 +1,5 @@
 #include "instream.h"
-
+#include "instreamRender.h"
 
 INSListBuffer INStream::inputList = INSListBuffer();
 INSSearchList INStream::searchList = INSSearchList();
@@ -95,6 +95,7 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 	{
 		if (i <= firstWordPos) {
 			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
+			INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 			continue;
 		}
 
@@ -169,6 +170,8 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 			}
 		}
+
+		INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 	}
 
 	// cursor is at end of the text

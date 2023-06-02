@@ -6,9 +6,9 @@
 #include "../outstream/outputControl.h"
 #include "../system/system.h"
 
-#include "instreamRender.h"
 #include "instreamListBuffer.h"
 #include "instreamSearchList.h"
+#include "instreamBuffer.h"
 
 
 enum ASCIICode

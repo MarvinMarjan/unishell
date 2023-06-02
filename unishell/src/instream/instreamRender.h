@@ -1,6 +1,7 @@
 #pragma once
 
 #include "instreamBuffer.h"
+#include "instream.h"
 
 #include "../outstream/outputColor.h"
 #include "../parser/instream/instrScanner.h"
@@ -19,6 +20,19 @@ private:
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static inline std::string cursor(char ch, std::string after = endclr) noexcept {
 		return clr(StringUtil::charToStr(ch), __clr_cursor->toString()) + after;
+	}
+
+	static inline void renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, int cursorPos, size_t i) {
+		if (cursorPos != -1 && cursorPos > text.size() - 1 && i + 1 >= text.size()) {
+			int begin = INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1));
+
+			std::string lastWord = text.substr(begin, cursorPos - begin);
+
+			StringList tempSearchList = VectorUtil::sortByCharacters(INStream::searchList.getList(), lastWord);
+
+			if (tempSearchList.size() == 1)
+				stream << clr(tempSearchList[0].substr(lastWord.size()), __clr_autocomplete_suggestion->toString());
+		}
 	}
 
 	// command string

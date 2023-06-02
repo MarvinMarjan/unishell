@@ -159,6 +159,8 @@ const FSExtension __fs_file_extensions_binary = {
 
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$ ";
 
+ BaseColorStructure* __clr_autocomplete_suggestion = new IdColorStructure(240);
+
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
 BaseColorStructure* __clr_escape_char = new IdColorStructure(209);
 

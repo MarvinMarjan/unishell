@@ -42,6 +42,8 @@ extern const std::string __word_separator;
 
 
 // --> global color variables
+extern BaseColorStructure* __clr_autocomplete_suggestion;
+
 extern BaseColorStructure* __clr_quoted;
 extern BaseColorStructure* __clr_escape_char;
 
