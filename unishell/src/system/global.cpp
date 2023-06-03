@@ -57,8 +57,11 @@ const StringList __color_formats = {
 const StringList __sys_commands = {
 	"print",
 	"clear",
+	
 	"cd",
 	"ls",
+	"createFile",
+	"removeFile",
 
 	"var",
 	"del",

@@ -6,7 +6,7 @@ PathHandler::PathHandler(const std::string& path) {
 	canManip = true;
 }
 
-bool PathHandler::manip(PathTokenList instructions) {
+bool PathHandler::manip(PathTokenList instructions, bool ignoreExcp) {
 	canManip = true;
 
 	for (PathToken token : instructions)
@@ -30,14 +30,14 @@ bool PathHandler::manip(PathTokenList instructions) {
 		case PathToken::IDENTIFIER:
 			if (!canManip) break;
 
-			if (!into(token.getLexical())) return false;
+			if (!into(token.getLexical(), false, ignoreExcp)) return false;
 			canManip = false;
 			break;
 
 		case PathToken::Root:
 			if (!canManip) break;
 
-			if (!into(token.getLexical(), true)) return false;
+			if (!into(token.getLexical(), true, ignoreExcp)) return false;
 			break;
 		}
 

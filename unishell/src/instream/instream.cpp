@@ -34,18 +34,15 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	case Tab: {
 		searchList.setFromType();
 		
-		if (searchList.getList().empty()) 
-			break;
-
 		int cIndex = lineInput.getCursorIndex();
 
+		if (searchList.getList().empty()) break;
 		if (cIndex < lineInput.size()) break;
 
 		int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1), false);
 		int end = (int)INStreamRender::getWordEndPos(lineInput, begin, false);
 
-		updateSearchList(lineInput, begin, end);
-		
+		updateSearchList(lineInput, begin, end);		
 		insertAtINStreamBuffer(lineInput, searchList.get(), begin, end);
 
 		searchList.next();

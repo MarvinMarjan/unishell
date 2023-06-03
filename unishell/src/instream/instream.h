@@ -57,7 +57,7 @@ private:
 		if (!searchList.sequence) {
 			int _begin = begin, _end = end;
 
-			if (searchList.getType() == SearchListType::Files)
+			if (searchList.getType() == SearchListType::Files && buffer[begin] == '\"' && buffer[end] == '\"')
 				_begin++, _end--;
 
 			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), buffer.substr(_begin, _end - _begin + 1)));

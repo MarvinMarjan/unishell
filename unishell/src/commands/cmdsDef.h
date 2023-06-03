@@ -94,19 +94,43 @@ START_COMMAND(CmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd")
 	}
 END_COMMAND
 
-
-
-
-
 // ls
 START_COMMAND(CmdLs, {}, CommandBase, "ls")
-	void exec() override {
-		FileList list = fsys::File::fileList(System::path()->getPath());
+void exec() override {
+	FileList list = fsys::File::fileList(System::path()->getPath());
 
-		for (const FileEntry& file : list) {
-			sysprintln(fsys::FileF::formatFileEntryAsString(file));
+	for (const FileEntry& file : list) {
+		sysprintln(fsys::FileF::formatFileEntryAsString(file));
+	}
+}
+END_COMMAND
+
+// createFile
+START_COMMAND(CmdCreateFile, ParamVec({ {nullptr, {Literal}} }), CommandBase, "createFile")
+	void exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+
+		std::ofstream file(res.path.c_str(), std::ios::out);
+
+		if (file.fail()) {
+			StringList pathVec = StringUtil::split(res.path, '/');
+			pathVec.erase(pathVec.end() - 1);
+
+			THROW_RUNTIME_ERR("Couldn't create file at: " + qtd(VectorUtil::join(pathVec, "/")));
 		}
 	}
+END_COMMAND
+
+// removeFile
+START_COMMAND(CmdRemoveFile, ParamVec({ {nullptr, {Literal}} }), CommandBase, "removeFile")
+void exec() override {
+	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+	checkPath(res, asStr(args[0]), symbol);
+	checkPathType(res.path, ExpFile, symbol);
+
+	std::remove(res.path.c_str());
+}
 END_COMMAND
 
 

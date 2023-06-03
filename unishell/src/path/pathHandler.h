@@ -24,13 +24,21 @@ public:
 		return { copy.manip(tokens), copy.getPath() };
 	}
 
-	bool manip(PathTokenList instructions);
+	inline PathOperationData operator<<(const std::string& path) const noexcept {
+		PathTokenList tokens = PathScanner(path).scanTokens();
+		PathHandler copy(*this);
+
+		return { copy.manip(tokens, true), copy.getPath() };
+	}
+
+
+	bool manip(PathTokenList instructions, bool ignoreExcp = false);
 
 
 	// returns false if dirName doesn't exists
-	inline bool into(const std::string& dirName, bool root = false) {
-		if (!root && !fsys::File::exists(path + '/' + dirName)) return false;
-		if (root && !fsys::File::exists(dirName)) return false;
+	inline bool into(const std::string& dirName, bool root = false, bool ignoreExcp = false) {
+		if (!ignoreExcp && !root && !fsys::File::exists(path + '/' + dirName)) return false;
+		if (!ignoreExcp && root && !fsys::File::exists(dirName)) return false;
 
 		if (root) setPath(dirName, true);
 		else setPath(path += ((path.back() != '/') ? '/' + dirName : dirName)); // don't add another '/' if path ends with '/'
