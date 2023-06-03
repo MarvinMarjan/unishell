@@ -63,6 +63,15 @@ namespace fsys
 			return list;
 		}
 
+		static inline StringList fileListAsString(const std::string& path) {
+			StringList list;
+
+			for (const FileEntry& it : fs::directory_iterator(path))
+				list.push_back(it.path().filename().string());
+
+			return list;
+		}
+
 		static inline uintmax_t fileSize(const std::string& path) {
 			return fs::file_size(path);
 		}

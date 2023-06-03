@@ -32,17 +32,21 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	case Tab: {
+		searchList.setFromType();
+		
+		if (searchList.getList().empty()) 
+			break;
+
 		int cIndex = lineInput.getCursorIndex();
 
-		int begin = INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1));
-		int end = INStreamRender::getWordEndPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1));
+		if (cIndex < lineInput.size()) break;
 
-		if (!searchList.sequence)
-			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), lineInput.substr(begin, end - begin + 1)));
+		int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1), false);
+		int end = (int)INStreamRender::getWordEndPos(lineInput, begin, false);
 
-		lineInput.erase(begin, end - begin + 1);
-		lineInput.insert(begin, searchList.get());
-		lineInput.setCursorIndex(lineInput.size());
+		updateSearchList(lineInput, begin, end);
+		
+		insertAtINStreamBuffer(lineInput, searchList.get(), begin, end);
 
 		searchList.next();
 		searchList.sequence = true;
@@ -93,8 +97,11 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
+		searchList.setType(SearchListType::Files);
+
 		if (i <= firstWordPos) {
-			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
+			searchList.setType(SearchListType::Command);
+ 			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
 			INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 			continue;
 		}
@@ -106,7 +113,7 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 		case ' ':
 		case '\t':
 			INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
-			break;
+			continue;
 
 		case '\"':
 			INStreamRender::renderQuoted(fText, text, i, cursorPos);
@@ -145,15 +152,20 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_operators->toString()));
 			break;
 
+		// identifier rendering
 		case '$':
+			searchList.setType(SearchListType::Identifier);
 			INStreamRender::renderIdentifier(fText, text, i, cursorPos);
 			break;
 
+		// RetCommand rendering
 		case '@':
 		case '#':
+			searchList.setType(SearchListType::RetCommand);
 			INStreamRender::renderRetCommand(fText, text, i, cursorPos);
 			break;
 
+		// other
 		default:
 			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
 			{
@@ -170,6 +182,9 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
 			}
 		}
+
+		if (i + 1 >= text.size())
+			searchList.setFromType();
 
 		INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 	}

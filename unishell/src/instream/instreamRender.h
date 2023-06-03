@@ -24,13 +24,13 @@ private:
 
 	static inline void renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, int cursorPos, size_t i) {
 		if (cursorPos != -1 && cursorPos > text.size() - 1 && i + 1 >= text.size()) {
-			int begin = INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1));
+			int begin = (int)INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1));
 
 			std::string lastWord = text.substr(begin, cursorPos - begin);
 
 			StringList tempSearchList = VectorUtil::sortByCharacters(INStream::searchList.getList(), lastWord);
 
-			if (tempSearchList.size() == 1)
+			if (tempSearchList.size() == 1 && lastWord.size() <= tempSearchList[0].size())
 				stream << clr(tempSearchList[0].substr(lastWord.size()), __clr_autocomplete_suggestion->toString());
 		}
 	}
@@ -211,9 +211,14 @@ private:
 			*renderStream << defaultValue;
 	}
 
-	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0) {
+	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
+		if (text[pos] == '\"' && !ignoreQuote) {
+			while (text[++pos] != '\"') {}
+			return pos;
+		}
+
 		do {
-			if (pos >= text.size() - 1)
+			if (pos >= text.size() - 1 && StringUtil::isAlphaNumeric(text[pos]))
 				return pos;
 		}
 		while (StringUtil::isAlphaNumeric(text[pos++]));
@@ -223,9 +228,14 @@ private:
 		return pos;
 	}
 
-	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0) {
+	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
+		if (text[pos] == '\"' && !ignoreQuote) {
+			while (text[--pos] != '\"') {}
+			return pos;
+		}
+
 		do {
-			if (pos <= 0)
+			if (pos <= 0 && StringUtil::isAlphaNumeric(text[pos]))
 				return pos;
 		}
 		while (StringUtil::isAlphaNumeric(text[pos--]));

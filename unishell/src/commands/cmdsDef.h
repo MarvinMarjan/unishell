@@ -58,7 +58,7 @@ inline void checkPath(PathHandler::PathOperationData data, const std::string& ar
 // checks if the file in the path is of the expected type
 inline void checkPathType(const std::string& path, ExpFileType expected, const std::string& symbol) {
 	if ((fs::is_directory(path) && expected == ExpFile) || (!fs::is_directory(path) && expected == ExpDir))
-		THROW_RUNTIME_ERR(((expected == ExpFile) ? "fsys::File" : "Directory") + " expected at: " + qtd(path));
+		THROW_RUNTIME_ERR(((expected == ExpFile) ? "File" : "Directory") + " expected at: " + qtd(path));
 }
 
 // print

@@ -32,6 +32,10 @@ public:
 	static inline StringList sortByCharacters(StringList src, std::string sortener) {
 		StringList res;
 
+		for (char ch : sortener)
+			if (!StringUtil::isAlphaNumeric(ch))
+				return {};
+
 		for (std::string item : src)
 			if (StringUtil::startsWith(item, sortener))
 				res.push_back(item);

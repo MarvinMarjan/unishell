@@ -48,6 +48,10 @@ public:
 		return (ch == ',' || ch == ';');
 	}
 
+	constexpr static inline bool isIgnoredChar(char ch) noexcept {
+		return (ch == ' ' || ch == '\t');
+	}
+
 	static inline std::string toUpper(const std::string& src) {
 		std::string res = "";
 

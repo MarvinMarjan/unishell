@@ -53,6 +53,23 @@ private:
 	static INSListBuffer inputList;
 	static INSSearchList searchList;
 
+	static inline void updateSearchList(const INStreamBuffer& buffer, int begin, int end) noexcept {
+		if (!searchList.sequence) {
+			int _begin = begin, _end = end;
+
+			if (searchList.getType() == SearchListType::Files)
+				_begin++, _end--;
+
+			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), buffer.substr(_begin, _end - _begin + 1)));
+		}
+	}
+
+	static inline void insertAtINStreamBuffer(INStreamBuffer& buffer, const std::string& item, int begin, int end) {
+		buffer.erase(begin, end - begin + 1);
+		buffer.insert(begin + ((!begin || begin + 1 > buffer.size()) ? 0 : 1), item);
+		buffer.setCursorIndex((int)buffer.size());
+	}
+
 	// gets the color of enclose characters based on scope
 	static inline BaseColorStructure* getEncloseColorByScope(int scope) {
 		if (scope == 1) return __clr_encloses_s1;

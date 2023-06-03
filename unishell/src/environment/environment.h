@@ -6,6 +6,15 @@ class Environment
 {
 public:
 	Environment() {}
+
+	inline StringList getIdNameList() const noexcept{
+		StringList nameList;
+
+		for (const Identifier& id : idList)
+			nameList.push_back(id.getName());
+
+		return nameList;
+	}
 	
 	inline Identifier* getId(std::string idName) noexcept {
 		checkIdName(idName);
