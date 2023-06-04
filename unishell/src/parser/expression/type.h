@@ -22,8 +22,12 @@ enum IdValueType
 	Bool,
 	List,
 	Object,
-	Null
+	
+	Null,
+	Any
 };
+
+typedef std::vector<IdValueType> IdValueTypeList;
 
 class LiteralValue;
 

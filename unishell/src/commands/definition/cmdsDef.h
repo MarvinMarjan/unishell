@@ -1,11 +1,14 @@
 #pragma once
 
-#include "../system/system.h"
-#include "../base/commandBaseCore.h"
-#include "../utilities/typeUtil.h"
-#include "../outstream/outputControl.h"
+#include "../../system/system.h"
+#include "../../base/commandBaseCore.h"
+#include "../../utilities/typeUtil.h"
+#include "../../outstream/outputControl.h"
+#include "../../utilities/cmdUtil.h"
 
-#include "../filesystem/fileFormatting.h"
+#include "../../filesystem/fileFormatting.h"
+
+#include "../helpData.h"
 
 // boilerplate
 
@@ -17,7 +20,9 @@
 	public: \
 		name(ArgList args) : base({ params }, args, cmdSymbol) {} \
 		\
-		static inline const std::string symbol = cmdSymbol;
+		static inline const std::string symbol = cmdSymbol; \
+		static CommandHelpData help(); \
+		
 
 
 #define END_COMMAND \
@@ -110,13 +115,11 @@ START_COMMAND(CmdCreateFile, ParamVec({ {nullptr, {Literal}} }), CommandBase, "c
 	void exec() override {
 		PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
 
-		std::ofstream file(res.path.c_str(), std::ios::out);
-
-		if (file.fail()) {
-			StringList pathVec = StringUtil::split(res.path, '/');
-			pathVec.erase(pathVec.end() - 1);
-
-			THROW_RUNTIME_ERR("Couldn't create file at: " + qtd(VectorUtil::join(pathVec, "/")));
+		try {
+			fsys::File::createFile(res.path);
+		}
+		catch (const fsys::FileException& err) {
+			THROW_RUNTIME_ERR("Couldn't create file at: " + qtd(err.path));
 		}
 	}
 END_COMMAND
@@ -129,7 +132,33 @@ void exec() override {
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpFile, symbol);
 
-	std::remove(res.path.c_str());
+	fsys::File::removeFile(res.path);
+}
+END_COMMAND
+
+// createDir
+START_COMMAND(CmdCreateDir, ParamVec({ {nullptr, {Literal}} }), CommandBase, "createDir")
+	void exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+
+		try {
+			fsys::File::createDir(res.path);
+		}
+		catch (const fsys::FileException& err) {
+			THROW_RUNTIME_ERR("Couldn't create dir at: " + err.path);
+		}
+	}
+END_COMMAND
+
+// removeDir
+START_COMMAND(CmdRemoveDir, ParamVec({ {nullptr, {Literal}} }), CommandBase, "removeDir")
+void exec() override {
+	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+	checkPath(res, asStr(args[0]), symbol);
+	checkPathType(res.path, ExpDir, symbol);
+
+	fsys::File::removeDir(res.path);
 }
 END_COMMAND
 
@@ -138,7 +167,7 @@ END_COMMAND
 
 
 // var
-START_COMMAND(CmdVar, ParamVec({ nullptr, nullptr }), CommandBase, "var")
+START_COMMAND(CmdVar, ParamVec({ {nullptr, {Literal}},	nullptr }), CommandBase, "var")
 	void exec() override {
 		System::env()->addId(Identifier(litToStr(args[0]), args[1]));
 	}
@@ -155,6 +184,36 @@ END_COMMAND
 
 
 
+// help
+START_COMMAND(CmdHelp, {}, CommandBase, "help")
+	void exec() override {
+		std::stringstream str;
+
+		str << "Enter " << clr("cmdHelp", __clr_command->toString()) << " to get a list of commands." << std::endl;
+		str << "Enter " << clr("retCmdHelp", __clr_command->toString()) << " to get a list of return commands.";
+
+		sysprintln(str.str());
+	}
+END_COMMAND
+
+// cmdHelp
+START_COMMAND(CmdCmdHelp, {}, CommandBase, "cmdHelp")
+	void exec() override {
+		sysprintln(CmdUtil::getAllCmdHelpMessage());
+	}
+END_COMMAND
+
+// retCmdHelp
+START_COMMAND(CmdRetCmdHelp, {}, CommandBase, "retCmdHelp")
+	void exec() override {
+		sysprintln(CmdUtil::getAllRetCmdHelpMessage());
+	}
+END_COMMAND
+
+
+
+
+
 // exit
 START_COMMAND(CmdExit, {}, CommandBase, "exit")
 	void exec() override {
@@ -164,7 +223,11 @@ END_COMMAND
 
 
 
-// ***---------- RETCOMMANDS ----------***
+
+
+// ***----------                RETCOMMANDS                ----------***
+
+
 
 
 
@@ -264,7 +327,7 @@ START_COMMAND(RetCmdSub, ParamVec({ {nullptr, {Literal}}, {nullptr, {Number}}, {
 		checkIndex(begin, src.size(), symbol);
 		checkIndex(end, src.size(), symbol);
 
-		return litStr(src.substr(begin, end + 1 - begin));
+		return litStr(src.substr(begin, (size_t)end + 1 - begin));
 	}
 END_COMMAND
 
@@ -272,7 +335,7 @@ END_COMMAND
 START_COMMAND(RetCmdSplit, ParamVec({ {nullptr, {Literal}}, {litStr(" "), {Literal}} }), RetCommandBase, "split")
 	LiteralValue* exec() override {
 		if (asStr(args[1]).size() > 1)
-			THROW_RUNTIME_ERR("Single character literal expected: " + qtd(asStr(args[1])));
+			THROW_RUNTIME_ERR("Single character Literal expected: " + qtd(asStr(args[1])));
 
 		LiteralValue* list = litList({});
 		
@@ -418,6 +481,14 @@ START_COMMAND(RetCmdGetDirEntryData, ParamVec({ {nullptr, {Literal}} }), RetComm
 	}
 END_COMMAND
 
+// exists
+START_COMMAND(RetCmdExists, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "exists")
+	LiteralValue* exec() override {
+		PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+
+		return litBool(fsys::File::exists(res.path));
+	}
+END_COMMAND
 
 // read
 START_COMMAND(RetCmdRead, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "read")

@@ -2,6 +2,7 @@
 
 #include "../parser/expression/type.h"
 #include "../utilities/stringUtil.h"
+#include "../utilities/typeUtil.h"
 #include "../system/system.h"
 
 #include "argList.h"
@@ -13,7 +14,7 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	Param(LiteralValue* defaultValue = nullptr, std::vector<IdValueType> paramTypes = {}) :
+	Param(LiteralValue* defaultValue = nullptr, std::vector<IdValueType> paramTypes = {Any}) :
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
@@ -72,3 +73,22 @@ public:
 	}
 };
 
+inline bool checkParamType(IdValueTypeList types, IdValueType type) {
+	if (VectorUtil::exists(types, Any)) return true;
+	else if (VectorUtil::exists(types, type)) return true;
+
+	return false;
+}
+
+inline std::string stringifyParamTypes(IdValueTypeList types, bool colorize = false) {
+	std::string str = "";
+	
+	for (size_t i = 0; i < types.size(); i++) {
+		std::string stype = TypeUtil::getTypeAsString(types[i]);
+
+		str += ((colorize) ? TypeUtil::colorizeStrType(stype) : stype)
+			+ ((i + 1 >= types.size()) ? "" : " | ");
+	}
+
+	return str;
+}

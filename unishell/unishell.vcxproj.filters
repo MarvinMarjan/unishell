@@ -47,6 +47,12 @@
     <ClCompile Include="src\filesystem\fileFormating.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\cmdUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands\definition\cmdsHelpDef.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -145,7 +151,7 @@
     <ClInclude Include="src\utilities\globalUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\commands\cmdsDef.h">
+    <ClInclude Include="src\commands\definition\cmdsDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\commands\argList.h">
@@ -170,6 +176,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\instream\instreamSearchList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\helpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -111,17 +111,33 @@ public:
 		return LITERAL;
 	}
 
-	static inline std::string getTypeAsString(IdValueType type) noexcept {
+	static inline std::string getTypeAsString(IdValueType type, bool colorize = false) noexcept {
+		std::string ret;
+		
 		switch (type) {
-		case Literal: return "Literal";
-		case Number: return "Number";
-		case Bool: return "Bool";
-		case List: return "List";
-		case Object: return "Object";
-		case Null: return "null";
+		case Literal: ret = "Literal"; break;
+		case Number: ret = "Number"; break;
+		case Bool: ret = "Bool"; break;
+		case List: ret = "List"; break;
+		case Object: ret = "Object"; break;
+		case Null: ret = "Null"; break;
+		case Any: ret = "Any"; break;
+
+		default: ret = "Unknown";
 		}
 
-		return "Unknown";
+		return ret;
+	}
+
+	static inline std::string colorizeStrType(const std::string& type) {
+		if (type == "Literal") return clr(type, __clr_type_literal->toString());
+		else if (type == "Number") return clr(type, __clr_type_number->toString());
+		else if (type == "Bool") return clr(type, __clr_type_bool->toString());
+		else if (type == "List") return clr(type, __clr_type_list->toString());
+		else if (type == "Object") return clr(type, __clr_type_object->toString());
+		else if (type == "Any") return clr(type, __clr_type_any->toString());
+
+		else return type;
 	}
 
 	static inline bool isTypeof(LiteralValue* value, IdValueType type) {

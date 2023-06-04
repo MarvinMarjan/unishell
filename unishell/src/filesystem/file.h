@@ -15,15 +15,39 @@ typedef fs::directory_entry FileEntry;
 
 namespace fsys
 {
-	class FileException 
-	{
-	public:
+	struct FileException {
 		std::string path;
 	};
-
+	
 	class File
 	{
 	public:
+		static inline void createFile(const std::string& path) {
+			std::ofstream file(path.c_str(), std::ios::out);
+
+			if (file.fail())
+				throw FileException {path};
+		}
+
+		static inline void removeFile(const std::string& path) {
+			if (!exists(path))
+				throw FileException {path};
+
+			std::remove(path.c_str());
+		}
+
+		static inline void createDir(const std::string& path) {
+			if (!fs::create_directory(path))
+				throw FileException {path};
+		}
+
+		static inline void removeDir(const std::string& path, bool removeAll = false) {
+			if (removeAll && fs::remove_all(path)) return;
+			else if (fs::remove(path)) return;
+			
+			throw FileException {path};
+		}
+
 		static inline void write(const std::string& path, std::string data, std::ios_base::openmode mode = std::ios::out) {
 			std::ofstream file(path.c_str(), mode);
 

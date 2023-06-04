@@ -61,10 +61,16 @@ const StringList __sys_commands = {
 	"cd",
 	"ls",
 	"createFile",
+	"createDir",
 	"removeFile",
+	"removeDir",
 
 	"var",
 	"del",
+
+	"help",
+	"cmdHelp",
+	"retCmdHelp",
 	
 	"exit"
 };
@@ -88,6 +94,7 @@ const StringList __sys_ret_commands = {
 	"getFileData",
 	"getDirEntryName",
 	"getDirEntryData",
+	"exists",
 	"read",
 	"write",
 
@@ -176,6 +183,7 @@ BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
 
 BaseColorStructure* __clr_ret_command = new IdColorStructure(162);
 BaseColorStructure* __clr_ex_ret_command = new IdColorStructure(162, italic);
+BaseColorStructure* __clr_sys_ret_command = new IdColorStructure(203);
 BaseColorStructure* __clr_ex_sys_ret_command = new IdColorStructure(203, italic);
 
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
@@ -210,3 +218,14 @@ BaseColorStructure* __clr_fs_file_extension_video = new IdColorStructure(183);
 BaseColorStructure* __clr_fs_file_extension_audio = new IdColorStructure(42);
 BaseColorStructure* __clr_fs_file_extension_binary = new IdColorStructure(242);
 BaseColorStructure* __clr_fs_file_extension_other = new ColorStructure(null);
+
+BaseColorStructure* __clr_help_param_name = new IdColorStructure(228);
+BaseColorStructure* __clr_help_optional = new IdColorStructure(169);
+BaseColorStructure* __clr_help_undefined_param_size = new IdColorStructure(208);
+
+BaseColorStructure* __clr_type_literal = new IdColorStructure(113);
+BaseColorStructure* __clr_type_number = new IdColorStructure(192);
+BaseColorStructure* __clr_type_bool = new IdColorStructure(219);
+BaseColorStructure* __clr_type_list = new IdColorStructure(38);
+BaseColorStructure* __clr_type_object = new IdColorStructure(215);
+BaseColorStructure* __clr_type_any = new IdColorStructure(198);

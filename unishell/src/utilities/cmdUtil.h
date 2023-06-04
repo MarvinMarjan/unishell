@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../commands/cmdsDef.h"
+#include "../commands/argList.h"
+#include "../base/commandBaseCore.h"
 
 class CmdUtil
 {
@@ -26,48 +27,9 @@ public:
 		return ArgList();
 	}
 
-	static inline CommandBase* getCommand(const std::string& cmdName, ArgList args) {
-		CHECK_CMD(CmdPrint);
-		CHECK_CMD(CmdClear);
+	static std::string getAllCmdHelpMessage();
+	static std::string getAllRetCmdHelpMessage();
 
-		CHECK_CMD(CmdCd);
-		CHECK_CMD(CmdLs);
-		CHECK_CMD(CmdCreateFile);
-		CHECK_CMD(CmdRemoveFile);
-
-		CHECK_CMD(CmdVar);
-		CHECK_CMD(CmdDel);
-		
-		CHECK_CMD(CmdExit);
-
-		return nullptr;
-	}
-	static inline RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args) {
-		CHECK_CMD(RetCmdInput);
-		
-		CHECK_CMD(RetCmdType);
-		CHECK_CMD(RetCmdSize);
-
-		CHECK_CMD(RetCmdAt);
-		CHECK_CMD(RetCmdSub);
-		CHECK_CMD(RetCmdSplit);
-		CHECK_CMD(RetCmdJoin);
-
-		CHECK_CMD(RetCmdAppend);
-		CHECK_CMD(RetCmdInsert);
-		CHECK_CMD(RetCmdErase);
-		CHECK_CMD(RetCmdEraseAt);
-
-		CHECK_CMD(RetCmdGetFileData);
-		CHECK_CMD(RetCmdGetDirEntryName);
-		CHECK_CMD(RetCmdGetDirEntryData);
-		CHECK_CMD(RetCmdRead);
-		CHECK_CMD(RetCmdWrite);
-
-		CHECK_CMD(RetCmdLiteral);
-		CHECK_CMD(RetCmdNumber);
-		CHECK_CMD(RetCmdBool);
-
-		return nullptr;
-	}
+	static CommandBase* getCommand(const std::string& cmdName, ArgList args);
+	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args);
 };

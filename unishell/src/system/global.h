@@ -56,6 +56,7 @@ extern BaseColorStructure* __clr_ex_command;
 
 extern BaseColorStructure* __clr_ret_command;
 extern BaseColorStructure* __clr_ex_ret_command;
+extern BaseColorStructure* __clr_sys_ret_command;
 extern BaseColorStructure* __clr_ex_sys_ret_command;
 
 extern BaseColorStructure* __clr_numbers;
@@ -89,4 +90,16 @@ extern BaseColorStructure* __clr_fs_file_extension_video;
 extern BaseColorStructure* __clr_fs_file_extension_audio;
 extern BaseColorStructure* __clr_fs_file_extension_binary;
 extern BaseColorStructure* __clr_fs_file_extension_other;
+
+extern BaseColorStructure* __clr_help_param_name;
+extern BaseColorStructure* __clr_help_param_type;
+extern BaseColorStructure* __clr_help_optional;
+extern BaseColorStructure* __clr_help_undefined_param_size;
+
+extern BaseColorStructure* __clr_type_literal;
+extern BaseColorStructure* __clr_type_number;
+extern BaseColorStructure* __clr_type_bool;
+extern BaseColorStructure* __clr_type_list;
+extern BaseColorStructure* __clr_type_object;
+extern BaseColorStructure* __clr_type_any;
 // <--

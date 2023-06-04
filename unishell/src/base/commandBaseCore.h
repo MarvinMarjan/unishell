@@ -21,10 +21,10 @@ public:
 
 		// check if the type of argument is acceptable
 		for (size_t i = 0; i < params.size(); i++)
-			if (!VectorUtil::exists(params[i].getParamTypes(), getValueType(args[i])) && params[i].getParamTypes().size())
+			if (!checkParamType(params[i].getParamTypes(), getValueType(args[i])) && params[i].getParamTypes().size())
 				THROW_COMMAND_ERR("Type of argument " + tostr(i + 1) + 
 					" unacceptable: " + litToStr(args[i], true) + "\n     Acceptable types: " + 
-					VectorUtil::join(params[i].getParamTypesAsString(), " | "));
+					stringifyParamTypes(params[i].getParamTypes(), true));
 		
 		this->args = args;
 	}

@@ -139,13 +139,16 @@
     <ClCompile Include="src\system\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
     <ClCompile Include="src\filesystem\file.cpp" />
+    <ClCompile Include="src\utilities\cmdUtil.cpp" />
     <ClCompile Include="src\utilities\typeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base\commandBaseCore.h" />
     <ClInclude Include="src\base\scannerBase.h" />
     <ClInclude Include="src\commands\argList.h" />
-    <ClInclude Include="src\commands\cmdsDef.h" />
+    <ClInclude Include="src\commands\definition\cmdsDef.h" />
+    <ClCompile Include="src\commands\definition\cmdsHelpDef.cpp" />
+    <ClInclude Include="src\commands\helpData.h" />
     <ClInclude Include="src\commands\paramList.h" />
     <ClInclude Include="src\environment\environment.h" />
     <ClInclude Include="src\environment\identifier.h" />
