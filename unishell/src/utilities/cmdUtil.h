@@ -1,12 +1,13 @@
 #pragma once
 
 #include "../commands/argList.h"
+#include "../commands/flagList.h"
 #include "../base/commandBaseCore.h"
 
 class CmdUtil
 {
 public:
-	static inline ArgList getArgs(TokenList input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
+	static inline ArgList getArgs(const TokenList& input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
 		size_t index = (firstIsCommand) ? 1 : 0;
 
 		if (input.size() <= index) return ArgList(); // has no args
@@ -27,9 +28,29 @@ public:
 		return ArgList();
 	}
 
-	static std::string getAllCmdHelpMessage();
-	static std::string getAllRetCmdHelpMessage();
+	static inline FlagList getFlags(const TokenList& input) {
+		FlagList flags;
 
-	static CommandBase* getCommand(const std::string& cmdName, ArgList args);
-	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args);
+		for (const Token& token : input)
+			if (token.getType() == FLAG)
+				flags.push_back(Flag{ token.getLexical().substr(1) });
+
+		return flags;
+	}
+
+	static inline TokenList removeFlags(const TokenList& input) {
+		TokenList rmvdFlags;
+
+		for (const Token& token : input)
+			if (token.getType() != FLAG)
+				rmvdFlags.push_back(token);
+
+		return rmvdFlags;
+	}
+
+	static std::string getAllCmdHelpMessage(bool nameOnly = false);
+	static std::string getAllRetCmdHelpMessage(bool nameOnly = false);
+
+	static CommandBase* getCommand(const std::string& cmdName, ArgList args, FlagList flags);
+	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args, FlagList flags);
 };

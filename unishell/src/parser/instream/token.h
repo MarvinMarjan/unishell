@@ -11,7 +11,7 @@ typedef std::vector<Token> TokenList;
 enum TokenEnum
 {
 	// word tokens
-	COMMAND, IDENTIFIER, RETCOMMAND, INRETCOMMAND,
+	COMMAND, RETCOMMAND, INRETCOMMAND, IDENTIFIER, FLAG,
 	
 	// sub tokens
 	EXPRESSION, COLOR, LIST, OBJECT,

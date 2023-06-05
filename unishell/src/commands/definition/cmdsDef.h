@@ -18,7 +18,7 @@
 	class name : public base \
 	{ \
 	public: \
-		name(ArgList args) : base({ params }, args, cmdSymbol) {} \
+		name(ArgList args, FlagList flags) : base({ params }, args, flags, cmdSymbol) {} \
 		\
 		static inline const std::string symbol = cmdSymbol; \
 		static CommandHelpData help(); \
@@ -30,10 +30,11 @@
 
 
 #define CHECK_CMD(cmd) \
-	if (cmdName == cmd::symbol) return new cmd(args) \
+	if (cmdName == cmd::symbol) return new cmd(args, flags) \
 
 
-#define THROW_RUNTIME_ERR(msg) throw SystemException(CommandRuntimeError, "(" + symbol + ") " + msg)
+#define THROW_RUNTIME_ERR(msg) \
+	throw SystemException(CommandRuntimeError, "(" + symbol + ") " + msg) \
 
 
 enum ExpFileType {
@@ -199,14 +200,14 @@ END_COMMAND
 // cmdHelp
 START_COMMAND(CmdCmdHelp, {}, CommandBase, "cmdHelp")
 	void exec() override {
-		sysprintln(CmdUtil::getAllCmdHelpMessage());
+		sysprintln(CmdUtil::getAllCmdHelpMessage(flags.hasFlag("nm")));
 	}
 END_COMMAND
 
 // retCmdHelp
 START_COMMAND(CmdRetCmdHelp, {}, CommandBase, "retCmdHelp")
 	void exec() override {
-		sysprintln(CmdUtil::getAllRetCmdHelpMessage());
+		sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 	}
 END_COMMAND
 

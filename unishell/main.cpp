@@ -34,8 +34,11 @@ int main(int argc, char** argv)
 			// empty
 			if (!input.size()) continue;
 
+			FlagList flags = CmdUtil::getFlags(input);
+			input = CmdUtil::removeFlags(input);
+
 			ArgList args = CmdUtil::getArgs(input);
-			CommandBase* command = CmdUtil::getCommand(input[0].getLexical(), args);
+			CommandBase* command = CmdUtil::getCommand(input[0].getLexical(), args, flags);
 
 			// unknown command
 			if (!command)

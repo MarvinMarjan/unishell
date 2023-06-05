@@ -178,6 +178,8 @@ BaseColorStructure* __clr_identifier = new IdColorStructure(115);
 BaseColorStructure* __clr_ex_identifier = new IdColorStructure(115, italic);
 BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
 
+BaseColorStructure* __clr_flag = new IdColorStructure(157);
+
 BaseColorStructure* __clr_command = new IdColorStructure(141);
 BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
 

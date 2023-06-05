@@ -95,7 +95,7 @@ TokenList TokenProcess::expandRetCommands(TokenList source) {
 			break;
 
 			// syntactic sugar for RETCOMMAND
-			// "#cmd{arg}" same as "arg@cmd"
+			// "#cmd [arg]" same as "arg@cmd"
 		case INRETCOMMAND:
 			res.pop_back(); // remove previous literal if is INRETCOMMAND. it's used as first argument
 			res.push_back(getRetCommandReturn(source, i, true));
@@ -115,17 +115,19 @@ inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool
 	LiteralValue* ret = nullptr;
 	TokenList list;
 	ArgList args;
+	FlagList flags;
 	bool hasExplicitList = false;
 
-	argsFromList(source, i, list); // 
+	argsFromList(source, i, list);
 
 	// don't encapsulate in RETCOMMANDS
 	args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
+	flags = CmdUtil::getFlags(list);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());
 
-	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args);
+	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args, flags);
 
 	if (!retCmd)
 		throw SystemException(CommandError, "Unknown command: " + qtd(source[i].getLexical()));

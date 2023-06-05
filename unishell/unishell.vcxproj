@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +148,7 @@
     <ClInclude Include="src\commands\argList.h" />
     <ClInclude Include="src\commands\definition\cmdsDef.h" />
     <ClCompile Include="src\commands\definition\cmdsHelpDef.cpp" />
+    <ClInclude Include="src\commands\flagList.h" />
     <ClInclude Include="src\commands\helpData.h" />
     <ClInclude Include="src\commands\paramList.h" />
     <ClInclude Include="src\environment\environment.h" />

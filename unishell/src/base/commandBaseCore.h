@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../commands/paramList.h"
+#include "../commands/flagList.h"
 
 #define THROW_COMMAND_ERR(msg) throw SystemException(CommandError, "(" + cmdSymbol + ") " + msg)
 
@@ -9,8 +10,8 @@ template <typename T>
 class CommandBaseCore
 {
 public:
-	CommandBaseCore(ParamList params, ArgList args, const std::string cmdSymbol) :
-		params(params)
+	CommandBaseCore(ParamList params, ArgList args, FlagList flags, const std::string cmdSymbol) :
+		params(params), flags(flags)
 	{
 		// default value assignment, if possible
 		params.match(args);
@@ -33,6 +34,7 @@ public:
 
 protected:
 	ArgList args;
+	FlagList flags;
 	ParamList params;
 };
 
@@ -40,14 +42,14 @@ protected:
 class CommandBase : public CommandBaseCore<void> 
 {
 public:
-	CommandBase(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) : 
-		CommandBaseCore(params, args, cmdSymbol) {}
+	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol) : 
+		CommandBaseCore(params, args, flags, cmdSymbol) {}
 };
 
 // return command bases
 class RetCommandBase : public CommandBaseCore<LiteralValue*> 
 {
 public:
-	RetCommandBase(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) :
-		CommandBaseCore(params, args, cmdSymbol) {}
+	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol) :
+		CommandBaseCore(params, args, flags, cmdSymbol) {}
 };

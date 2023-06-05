@@ -181,5 +181,8 @@
     <ClInclude Include="src\commands\helpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\commands\flagList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

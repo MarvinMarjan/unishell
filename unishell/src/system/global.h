@@ -51,6 +51,8 @@ extern BaseColorStructure* __clr_identifier;
 extern BaseColorStructure* __clr_ex_identifier;
 extern BaseColorStructure* __clr_ex_sys_identifier;
 
+extern BaseColorStructure* __clr_flag;
+
 extern BaseColorStructure* __clr_command;
 extern BaseColorStructure* __clr_ex_command;
 
