@@ -162,6 +162,11 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 			INStreamRender::renderRetCommand(fText, text, i, cursorPos);
 			break;
 
+		// flag rendering
+		case '%':
+			INStreamRender::renderWord(fText, text, i, cursorPos, __clr_flag, true);
+			break;
+
 		// other
 		default:
 			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))

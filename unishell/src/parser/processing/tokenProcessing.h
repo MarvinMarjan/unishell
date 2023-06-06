@@ -121,7 +121,7 @@ private:
 
 	// receive a token that represents a symbol and return a new token
 	// containing the value inside that symbol. if the identifier doesn't
-	// exists, throw a exception
+	// exists, a exception
 	static inline Token assignIdentifierToken(Token token) {
 		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
 		LiteralValue* idValue = respectiveId.getValue();

@@ -2,61 +2,60 @@
 
 #include "../commands/definition/cmdsDef.h"
 
-std::string CmdUtil::getAllCmdHelpMessage(bool nameOnly)
+CommandBase* CmdUtil::getCommandPointer(const std::string& cmdName)
 {
-	std::string msg = "";
+	CHECK_CMD_P(CmdPrint);
+	CHECK_CMD_P(CmdClear);
+			 
+	CHECK_CMD_P(CmdCd);
+	CHECK_CMD_P(CmdLs);
+	CHECK_CMD_P(CmdCreateFile);
+	CHECK_CMD_P(CmdCreateDir);
+	CHECK_CMD_P(CmdRemoveFile);
+	CHECK_CMD_P(CmdRemoveDir);
+			 
+	CHECK_CMD_P(CmdVar);
+	CHECK_CMD_P(CmdDel);
+			 
+	CHECK_CMD_P(CmdHelp);
+	CHECK_CMD_P(CmdCmdHelp);
+	CHECK_CMD_P(CmdRetCmdHelp);
+			 
+	CHECK_CMD_P(CmdExit);
 
-	msg += stringifyHelpData(CmdPrint::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdClear::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-
-	msg += stringifyHelpData(CmdCd::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdLs::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdCreateFile::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdRemoveFile::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdCreateDir::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdRemoveDir::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-
-	msg += stringifyHelpData(CmdVar::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdDel::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-
-	msg += stringifyHelpData(CmdHelp::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdCmdHelp::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(CmdRetCmdHelp::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-
-	msg += stringifyHelpData(CmdExit::help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-
-	return msg;
+	return nullptr;
 }
 
-std::string CmdUtil::getAllRetCmdHelpMessage(bool nameOnly)
+RetCommandBase* CmdUtil::getRetCommandPointer(const std::string& cmdName)
 {
-	std::string msg = "";
+	CHECK_CMD_P(RetCmdInput);
 
-	msg += stringifyHelpData(RetCmdInput::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdType::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdSize::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdAt::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdSub::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdSplit::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdJoin::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdAppend::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdInsert::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdErase::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdEraseAt::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdGetFileData::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdGetDirEntryName::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdGetDirEntryData::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdExists::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdRead::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdWrite::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdLiteral::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdNumber::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
-	msg += stringifyHelpData(RetCmdBool::help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
+	CHECK_CMD_P(RetCmdType);
+	CHECK_CMD_P(RetCmdSize);
 
-	return msg;
+	CHECK_CMD_P(RetCmdAt);
+	CHECK_CMD_P(RetCmdSub);
+	CHECK_CMD_P(RetCmdSplit);
+	CHECK_CMD_P(RetCmdJoin);
+
+	CHECK_CMD_P(RetCmdAppend);
+	CHECK_CMD_P(RetCmdInsert);
+	CHECK_CMD_P(RetCmdErase);
+	CHECK_CMD_P(RetCmdEraseAt);
+
+	CHECK_CMD_P(RetCmdGetFileData);
+	CHECK_CMD_P(RetCmdGetDirEntryName);
+	CHECK_CMD_P(RetCmdGetDirEntryData);
+	CHECK_CMD_P(RetCmdExists);
+	CHECK_CMD_P(RetCmdRead);
+	CHECK_CMD_P(RetCmdWrite);
+
+	CHECK_CMD_P(RetCmdLiteral);
+	CHECK_CMD_P(RetCmdNumber);
+	CHECK_CMD_P(RetCmdBool);
+
+	return nullptr;
 }
-
-
 
 CommandBase* CmdUtil::getCommand(const std::string& cmdName, ArgList args, FlagList flags)
 {

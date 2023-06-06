@@ -18,10 +18,11 @@
 	class name : public base \
 	{ \
 	public: \
+		name() : base() {} \
 		name(ArgList args, FlagList flags) : base({ params }, args, flags, cmdSymbol) {} \
 		\
 		static inline const std::string symbol = cmdSymbol; \
-		static CommandHelpData help(); \
+		CommandHelpData help() override; \
 		
 
 
@@ -31,6 +32,9 @@
 
 #define CHECK_CMD(cmd) \
 	if (cmdName == cmd::symbol) return new cmd(args, flags) \
+
+#define CHECK_CMD_P(cmd) \
+	if (cmdName == cmd::symbol) return new cmd() \
 
 
 #define THROW_RUNTIME_ERR(msg) \
@@ -198,16 +202,40 @@ START_COMMAND(CmdHelp, {}, CommandBase, "help")
 END_COMMAND
 
 // cmdHelp
-START_COMMAND(CmdCmdHelp, {}, CommandBase, "cmdHelp")
+START_COMMAND(CmdCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase, "cmdHelp")
 	void exec() override {
-		sysprintln(CmdUtil::getAllCmdHelpMessage(flags.hasFlag("nm")));
+		std::string cmdName = asStr(args[0]);
+
+		if (!cmdName.empty()) {
+			CommandBase* pCmd = CmdUtil::getCommandPointer(cmdName);
+
+			if (!pCmd)
+				THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
+
+			std::string msg = stringifyHelpData(pCmd->help());
+			sysprintln(msg);
+		}
+
+		else sysprintln(CmdUtil::getAllCmdHelpMessage(flags.hasFlag("nm")));
 	}
 END_COMMAND
 
 // retCmdHelp
-START_COMMAND(CmdRetCmdHelp, {}, CommandBase, "retCmdHelp")
+START_COMMAND(CmdRetCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase, "retCmdHelp")
 	void exec() override {
-		sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
+		std::string cmdName = asStr(args[0]);
+
+		if (!cmdName.empty()) {
+			RetCommandBase* pCmd = CmdUtil::getRetCommandPointer(cmdName);
+
+			if (!pCmd)
+				THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_sys_ret_command->toString()));
+
+			std::string msg = stringifyHelpData(pCmd->help());
+			sysprintln(msg);
+		}
+
+		else sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 	}
 END_COMMAND
 
