@@ -115,19 +115,18 @@ inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool
 	LiteralValue* ret = nullptr;
 	TokenList list;
 	ArgList args;
-	FlagList flags;
 	bool hasExplicitList = false;
 
 	argsFromList(source, i, list);
 
 	// don't encapsulate in RETCOMMANDS
 	args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
-	flags = CmdUtil::getFlags(list);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());
 
-	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args, flags);
+	// no flags support in RETCOMMANDS
+	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
 		throw SystemException(CommandError, "Unknown command: " + clr(source[i].getLexical(), __clr_ret_command->toString()));

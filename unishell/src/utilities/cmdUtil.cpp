@@ -54,6 +54,9 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName)
 	CHECK_CMD_P(RetCmdRead);
 	CHECK_CMD_P(RetCmdWrite);
 
+	CHECK_CMD_P(RetCmdMatch);
+	CHECK_CMD_P(RetCmdReplace);
+
 	CHECK_CMD_P(RetCmdLiteral);
 	CHECK_CMD_P(RetCmdNumber);
 	CHECK_CMD_P(RetCmdBool);
@@ -112,6 +115,9 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args,
 	CHECK_CMD(RetCmdExists);
 	CHECK_CMD(RetCmdRead);
 	CHECK_CMD(RetCmdWrite);
+
+	CHECK_CMD(RetCmdMatch);
+	CHECK_CMD(RetCmdReplace);
 
 	CHECK_CMD(RetCmdLiteral);
 	CHECK_CMD(RetCmdNumber);

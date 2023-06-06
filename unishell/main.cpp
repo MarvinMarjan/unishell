@@ -13,6 +13,8 @@
 #include "src/filesystem/file.h"
 
 #include "src/utilities/cmdUtil.h"
+#include "src/utilities/regexUtil.h"
+#include "src/utilities/objUtil.h"
 
 int main(int argc, char** argv)
 {

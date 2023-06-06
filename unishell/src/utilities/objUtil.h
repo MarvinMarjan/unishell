@@ -3,6 +3,8 @@
 #include "../parser/expression/type.h"
 #include "../filesystem/fileFormatting.h"
 
+#include "regexUtil.h"
+
 class ObjUtil
 {
 public:
@@ -38,5 +40,19 @@ public:
 				{"virt", litBool(atts.virt)},
 			})}
 		});
+	}
+
+	static inline LiteralValue* newRegexResult(std::smatch& match) {
+		LiteralValue* list = litObj({});
+
+		if (match.size() > 0)
+			asObj(list).insert({ "full", litStr(match[0])});
+
+		asObj(list).insert({ "group", litList({}) });
+
+		for (size_t i = 1; i < match.size(); i++)
+			asList(asObj(list).at("group")).push_back(litStr(match[i].str()));
+
+		return list;
 	}
 };

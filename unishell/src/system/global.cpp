@@ -104,6 +104,9 @@ const StringList __sys_ret_commands = {
 	RetCmdRead::symbol,
 	RetCmdWrite::symbol,
 
+	RetCmdMatch::symbol,
+	RetCmdReplace::symbol,
+
 	RetCmdLiteral::symbol,
 	RetCmdNumber::symbol,
 	RetCmdBool::symbol

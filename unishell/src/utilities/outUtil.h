@@ -17,7 +17,7 @@ public:
 
 		int clrSize = 0;
 
-		for (const std::string& item : RegexUtil::getMatches(src, std::regex(__regex_color_escape_char_pattern)))
+		for (const std::string& item : RegexUtil::getMatchesAsStringList(src, std::regex(__regex_color_escape_char_pattern)))
 			clrSize += (int)item.size();
 
 		return { .rawStr = copy, .raw = (int)copy.size(), .clr = clrSize };

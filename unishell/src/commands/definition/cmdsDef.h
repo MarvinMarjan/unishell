@@ -7,6 +7,7 @@
 #include "../../utilities/cmdUtil.h"
 #include "../../utilities/clrUtil.h"
 #include "../../utilities/envUtil.h"
+#include "../../utilities/objUtil.h"
 #include "../../filesystem/fileFormatting.h"
 
 #include "../helpData.h"
@@ -582,6 +583,42 @@ START_COMMAND(RetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}
 		fsys::File::write(res.path, asStr(args[1]), (appendMode) ? std::ios::app : std::ios::out);
 
 		return litStr(fsys::File::readAsString(res.path));
+	}
+END_COMMAND
+
+
+
+
+
+// match
+START_COMMAND(RetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match")
+	LiteralValue* exec() override {
+		LiteralValue* list = litList({});
+
+		std::string src = asStr(args[0]);
+		std::regex pattern(asStr(args[1]));
+
+		std::smatch matches;
+		std::string::const_iterator searchStart(src.cbegin());
+		while (std::regex_search(searchStart, src.cend(), matches, pattern)) {
+			asList(list).push_back(ObjUtil::newRegexResult(matches));
+			searchStart = matches.suffix().first;
+		}
+
+		return list;
+	}
+END_COMMAND
+
+// replace
+START_COMMAND(RetCmdReplace, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "replace")
+	LiteralValue* exec() override {
+		std::string src = asStr(args[0]);
+		std::string repStr = asStr(args[2]);
+		std::regex pattern(asStr(args[1]));
+
+		src = std::regex_replace(src, pattern, repStr);
+
+		return litStr(src);
 	}
 END_COMMAND
 

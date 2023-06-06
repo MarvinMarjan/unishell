@@ -221,6 +221,22 @@ END_HELP
 
 
 
+// match
+START_HELP(RetCmdMatch)
+return { .name = RetCmdMatch::symbol, .params = {{"Source", {Literal}}, {"Regex", {Literal}}},
+			.description = "applies the ^1 regular expression to ^0 and returns a List\n"
+						   "\tcontaining each occurrence of the pattern in ^0." };
+END_HELP
+
+// replace
+START_HELP(RetCmdReplace)
+return { .name = RetCmdReplace::symbol, .params = {{"Source", {Literal}}, {"Regex", {Literal}}, {"Replacement", {Literal}}},
+			.description = "applies the ^1 regular expression to ^0 and replaces every occurrence\n"
+						   "\tby ^2." };
+END_HELP
+
+
+
 // literal
 START_HELP(RetCmdLiteral)
 return { .name = RetCmdLiteral::symbol, .params = {{"Value", {Literal, Number, Bool}}}, .description = "converts ^0 into a Literal type." };
