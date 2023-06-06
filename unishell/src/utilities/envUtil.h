@@ -27,14 +27,15 @@ public:
 	static inline std::string formatFIDIntoString(const FormatedIdentifierData& data) {
 		std::stringstream str;
 
-		RegexUtil::ColorizedStringSize strSizes = OutUtil::getColorizedStringSize(data.name);
+		OutUtil::ColorizedStringSize strSizes = OutUtil::getColorizedStringSize(data.name);
 		str << std::setw(strSizes.clr + 17) << std::left << OutUtil::truncateString(data.name, 12);
 
 		strSizes = OutUtil::getColorizedStringSize(data.type);
 		str << std::setw(strSizes.clr + 10) << std::left << data.type;
 		str << "  ";
 		
-		str << data.value;
+		strSizes = OutUtil::getColorizedStringSize(data.value);
+		str << ((strSizes.rawStr.size() > 60) ? "..." : data.value);
 
 		return str.str();
 	}

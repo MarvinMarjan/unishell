@@ -8,11 +8,6 @@
 class RegexUtil
 {
 public:
-	struct ColorizedStringSize {
-		int raw;
-		int clr;
-	};
-
 	static inline StringList getMatches(const std::string& src, std::regex pattern) {
 		std::sregex_iterator it(src.begin(), src.end(), pattern);
 		std::sregex_iterator end;
