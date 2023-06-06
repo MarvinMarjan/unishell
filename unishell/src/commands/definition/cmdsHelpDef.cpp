@@ -60,6 +60,11 @@ START_HELP(CmdDel)
 return { .name = CmdDel::symbol, .params = {{"Name", {Literal}}}, .description = "deletes a variable called ^0." };
 END_HELP
 
+// env
+START_HELP(CmdEnv)
+return { .name = CmdEnv::symbol, .description = "show a list of all system identifiers." };
+END_HELP
+
 
 
 // help

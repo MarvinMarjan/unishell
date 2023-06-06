@@ -69,6 +69,7 @@ const StringList __sys_commands = {
 
 	CmdVar::symbol,
 	CmdDel::symbol,
+	CmdEnv::symbol,
 
 	CmdHelp::symbol,
 	CmdCmdHelp::symbol,
@@ -174,13 +175,20 @@ const FSExtension __fs_file_extensions_binary = {
 
 const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$ ";
 
- BaseColorStructure* __clr_autocomplete_suggestion = new IdColorStructure(240);
+
+
+const std::string __regex_color_escape_char_pattern = "\033\\[[0-9;]*m";
+
+
+
+BaseColorStructure* __clr_autocomplete_suggestion = new IdColorStructure(240);
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
 BaseColorStructure* __clr_escape_char = new IdColorStructure(209);
 
 BaseColorStructure* __clr_identifier = new IdColorStructure(115);
 BaseColorStructure* __clr_ex_identifier = new IdColorStructure(115, italic);
+BaseColorStructure* __clr_sys_identifier = new IdColorStructure(178);
 BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
 
 BaseColorStructure* __clr_flag = new IdColorStructure(157);

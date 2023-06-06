@@ -16,6 +16,7 @@ CommandBase* CmdUtil::getCommand(const std::string& cmdName)
 			 
 	CHECK_CMD_P(CmdVar);
 	CHECK_CMD_P(CmdDel);
+	CHECK_CMD_P(CmdEnv);
 			 
 	CHECK_CMD_P(CmdHelp);
 	CHECK_CMD_P(CmdCmdHelp);
@@ -74,6 +75,7 @@ CommandBase* CmdUtil::getCommand(const std::string& cmdName, ArgList args, FlagL
 
 	CHECK_CMD(CmdVar);
 	CHECK_CMD(CmdDel);
+	CHECK_CMD(CmdEnv);
 
 	CHECK_CMD(CmdHelp);
 	CHECK_CMD(CmdCmdHelp);

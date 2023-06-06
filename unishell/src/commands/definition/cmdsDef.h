@@ -6,6 +6,7 @@
 #include "../../utilities/typeUtil.h"
 #include "../../utilities/cmdUtil.h"
 #include "../../utilities/clrUtil.h"
+#include "../../utilities/envUtil.h"
 #include "../../filesystem/fileFormatting.h"
 
 #include "../helpData.h"
@@ -185,6 +186,16 @@ START_COMMAND(CmdDel, { nullptr }, CommandBase, "del")
 	}
 END_COMMAND
 
+// env
+START_COMMAND(CmdEnv, {}, CommandBase, "env")
+	void exec() override {
+		for (const Identifier& identifier : __environment->getIdList()) {
+			EnvUtil::FormatedIdentifierData data = EnvUtil::formatIdentifier(identifier);
+
+			sysprintln(EnvUtil::formatFIDIntoString(data));
+		}
+	}
+END_COMMAND
 
 
 

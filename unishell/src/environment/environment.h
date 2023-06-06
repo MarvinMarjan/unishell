@@ -7,6 +7,10 @@ class Environment
 public:
 	Environment() {}
 
+	inline IdentifierList getIdList() const noexcept {
+		return idList;
+	}
+
 	inline StringList getIdNameList() const noexcept{
 		StringList nameList;
 

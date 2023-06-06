@@ -41,6 +41,10 @@ extern const FSExtension __fs_file_extensions_binary;
 extern const std::string __word_separator;
 
 
+
+extern const std::string __regex_color_escape_char_pattern;
+
+
 // --> global color variables
 extern BaseColorStructure* __clr_autocomplete_suggestion;
 
@@ -49,6 +53,7 @@ extern BaseColorStructure* __clr_escape_char;
 
 extern BaseColorStructure* __clr_identifier;
 extern BaseColorStructure* __clr_ex_identifier;
+extern BaseColorStructure* __clr_sys_identifier;
 extern BaseColorStructure* __clr_ex_sys_identifier;
 
 extern BaseColorStructure* __clr_flag;

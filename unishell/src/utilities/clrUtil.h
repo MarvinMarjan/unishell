@@ -2,6 +2,8 @@
 
 #include "../outstream/outputColor.h"
 
+#include <regex>
+
 class ClrUtil
 {
 public:

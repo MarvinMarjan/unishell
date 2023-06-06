@@ -126,6 +126,9 @@ public:
 		default: ret = "Unknown";
 		}
 
+		if (colorize)
+			ret = colorizeStrType(ret);
+
 		return ret;
 	}
 

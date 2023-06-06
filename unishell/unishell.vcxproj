@@ -182,9 +182,12 @@
     <ClInclude Include="src\utilities\clrUtil.h" />
     <ClInclude Include="src\utilities\cmdUtil.h" />
     <ClInclude Include="src\filesystem\file.h" />
+    <ClInclude Include="src\utilities\envUtil.h" />
     <ClInclude Include="src\utilities\globalUtil.h" />
     <ClInclude Include="src\utilities\objUtil.h" />
     <ClInclude Include="src\utilities\opUtil.h" />
+    <ClInclude Include="src\utilities\outUtil.h" />
+    <ClInclude Include="src\utilities\regexUtil.h" />
     <ClInclude Include="src\utilities\stringUtil.h" />
     <ClInclude Include="src\utilities\typeUtil.h" />
     <ClInclude Include="src\utilities\vectorUtil.h" />
