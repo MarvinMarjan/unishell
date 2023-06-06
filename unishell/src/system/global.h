@@ -94,7 +94,7 @@ extern BaseColorStructure* __clr_fs_file_extension_binary;
 extern BaseColorStructure* __clr_fs_file_extension_other;
 
 extern BaseColorStructure* __clr_help_param_name;
-extern BaseColorStructure* __clr_help_param_type;
+extern BaseColorStructure* __clr_help_flag_meaning;
 extern BaseColorStructure* __clr_help_optional;
 extern BaseColorStructure* __clr_help_undefined_param_size;
 

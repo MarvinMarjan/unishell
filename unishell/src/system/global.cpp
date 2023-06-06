@@ -222,6 +222,7 @@ BaseColorStructure* __clr_fs_file_extension_binary = new IdColorStructure(242);
 BaseColorStructure* __clr_fs_file_extension_other = new ColorStructure(null);
 
 BaseColorStructure* __clr_help_param_name = new IdColorStructure(228);
+BaseColorStructure* __clr_help_flag_meaning = new IdColorStructure(115);
 BaseColorStructure* __clr_help_optional = new IdColorStructure(169);
 BaseColorStructure* __clr_help_undefined_param_size = new IdColorStructure(208);
 
