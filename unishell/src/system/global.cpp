@@ -2,6 +2,7 @@
 
 #include "../environment/environment.h"
 #include "../path/pathHandler.h"
+#include "../commands/definition/cmdsDef.h"
 
 #include "system.h"
 
@@ -31,6 +32,7 @@ const StringList __colormode = {
 
 const StringList __color = {
 	"std",
+
 	"red",
 	"green",
 	"yellow",
@@ -55,55 +57,55 @@ const StringList __color_formats = {
 };
 
 const StringList __sys_commands = {
-	"print",
-	"clear",
+	CmdPrint::symbol,
+	CmdClear::symbol,
 	
-	"cd",
-	"ls",
-	"createFile",
-	"createDir",
-	"removeFile",
-	"removeDir",
+	CmdCd::symbol,
+	CmdLs::symbol,
+	CmdCreateFile::symbol,
+	CmdCreateDir::symbol,
+	CmdRemoveFile::symbol,
+	CmdRemoveDir::symbol,
 
-	"var",
-	"del",
+	CmdVar::symbol,
+	CmdDel::symbol,
 
-	"help",
-	"cmdHelp",
-	"retCmdHelp",
-	"clrHelp",
-	"idClrHelp",
-	"clrModeHelp",
+	CmdHelp::symbol,
+	CmdCmdHelp::symbol,
+	CmdRetCmdHelp::symbol,
+	CmdClrHelp::symbol,
+	CmdIdColorHelp::symbol,
+	CmdClrModeHelp::symbol,
 	
-	"exit"
+	CmdExit::symbol
 };
 
 const StringList __sys_ret_commands = {
-	"input",
+	RetCmdInput::symbol,
 
-	"type",
-	"size",
+	RetCmdType::symbol,
+	RetCmdSize::symbol,
 
-	"at",
-	"sub",
-	"split",
-	"join",
+	RetCmdAt::symbol,
+	RetCmdSub::symbol,
+	RetCmdSplit::symbol,
+	RetCmdJoin::symbol,
 
-	"append",
-	"insert",
-	"erase",
-	"eraseAt",
+	RetCmdAppend::symbol,
+	RetCmdInsert::symbol,
+	RetCmdErase::symbol,
+	RetCmdEraseAt::symbol,
 
-	"getFileData",
-	"getDirEntryName",
-	"getDirEntryData",
-	"exists",
-	"read",
-	"write",
+	RetCmdGetFileData::symbol,
+	RetCmdGetDirEntryName::symbol,
+	RetCmdGetDirEntryData::symbol,
+	RetCmdExists::symbol,
+	RetCmdRead::symbol,
+	RetCmdWrite::symbol,
 
-	"literal",
-	"number",
-	"bool"
+	RetCmdLiteral::symbol,
+	RetCmdNumber::symbol,
+	RetCmdBool::symbol
 };
 
 const FSExtension __fs_file_extensions_text = {

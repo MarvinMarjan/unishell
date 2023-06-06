@@ -209,7 +209,7 @@ START_COMMAND(CmdCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase, "c
 		std::string cmdName = asStr(args[0]);
 
 		if (!cmdName.empty()) {
-			CommandBase* pCmd = CmdUtil::getCommandPointer(cmdName);
+			CommandBase* pCmd = CmdUtil::getCommand(cmdName);
 
 			if (!pCmd)
 				THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
@@ -228,7 +228,7 @@ START_COMMAND(CmdRetCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase,
 		std::string cmdName = asStr(args[0]);
 
 		if (!cmdName.empty()) {
-			RetCommandBase* pCmd = CmdUtil::getRetCommandPointer(cmdName);
+			RetCommandBase* pCmd = CmdUtil::getRetCommand(cmdName);
 
 			if (!pCmd)
 				THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_sys_ret_command->toString()));

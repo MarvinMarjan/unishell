@@ -53,7 +53,7 @@ public:
 		std::string msg = "";
 
 		for (const std::string& cmdName : __sys_commands)
-			msg += stringifyHelpData(getCommandPointer(cmdName)->help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
+			msg += stringifyHelpData(getCommand(cmdName)->help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
 
 		return msg;
 	}
@@ -62,14 +62,14 @@ public:
 		std::string msg = "";
 
 		for (const std::string& cmdName : __sys_ret_commands)
-			msg += stringifyHelpData(getRetCommandPointer(cmdName)->help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
+			msg += stringifyHelpData(getRetCommand(cmdName)->help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
 
 		return msg;
 	}
 
-	static CommandBase* getCommandPointer(const std::string& cmdName);
-	static RetCommandBase* getRetCommandPointer(const std::string& cmdName);
 
+	static CommandBase* getCommand(const std::string& cmdName);
 	static CommandBase* getCommand(const std::string& cmdName, ArgList args, FlagList flags);
 	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args, FlagList flags);
+	static RetCommandBase* getRetCommand(const std::string& cmdName);
 };

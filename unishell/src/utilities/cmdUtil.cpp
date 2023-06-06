@@ -2,7 +2,7 @@
 
 #include "../commands/definition/cmdsDef.h"
 
-CommandBase* CmdUtil::getCommandPointer(const std::string& cmdName)
+CommandBase* CmdUtil::getCommand(const std::string& cmdName)
 {
 	CHECK_CMD_P(CmdPrint);
 	CHECK_CMD_P(CmdClear);
@@ -29,7 +29,7 @@ CommandBase* CmdUtil::getCommandPointer(const std::string& cmdName)
 	return nullptr;
 }
 
-RetCommandBase* CmdUtil::getRetCommandPointer(const std::string& cmdName)
+RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName)
 {
 	CHECK_CMD_P(RetCmdInput);
 
