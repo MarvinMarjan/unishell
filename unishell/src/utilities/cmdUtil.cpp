@@ -20,6 +20,9 @@ CommandBase* CmdUtil::getCommandPointer(const std::string& cmdName)
 	CHECK_CMD_P(CmdHelp);
 	CHECK_CMD_P(CmdCmdHelp);
 	CHECK_CMD_P(CmdRetCmdHelp);
+	CHECK_CMD_P(CmdClrHelp);
+	CHECK_CMD_P(CmdIdColorHelp);
+	CHECK_CMD_P(CmdClrModeHelp);
 			 
 	CHECK_CMD_P(CmdExit);
 
@@ -75,6 +78,9 @@ CommandBase* CmdUtil::getCommand(const std::string& cmdName, ArgList args, FlagL
 	CHECK_CMD(CmdHelp);
 	CHECK_CMD(CmdCmdHelp);
 	CHECK_CMD(CmdRetCmdHelp);
+	CHECK_CMD(CmdClrHelp);
+	CHECK_CMD(CmdIdColorHelp);
+	CHECK_CMD(CmdClrModeHelp);
 
 	CHECK_CMD(CmdExit);
 

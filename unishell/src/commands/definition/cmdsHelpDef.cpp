@@ -77,6 +77,21 @@ START_HELP(CmdRetCmdHelp)
 return { .name = CmdRetCmdHelp::symbol, .description = "displays a help message describing every return command.", .flags = {{"nm", "name"}} };
 END_HELP
 
+// colorHelp
+START_HELP(CmdClrHelp)
+return { .name = CmdClrHelp::symbol, .description = "displays a help message that shows all predefined colors." };
+END_HELP
+
+// idClrHelp
+START_HELP(CmdIdColorHelp)
+return { .name = CmdIdColorHelp::symbol, .description = "displays a help message that shows all valid color ids." };
+END_HELP
+
+// clrModeHelp
+START_HELP(CmdClrModeHelp)
+return { .name = CmdClrModeHelp::symbol, .description = "displays a help message that shows all valid color modes." };
+END_HELP
+
 
 
 // exit

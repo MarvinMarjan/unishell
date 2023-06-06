@@ -2,10 +2,10 @@
 
 #include "../../system/system.h"
 #include "../../base/commandBaseCore.h"
-#include "../../utilities/typeUtil.h"
 #include "../../outstream/outputControl.h"
+#include "../../utilities/typeUtil.h"
 #include "../../utilities/cmdUtil.h"
-
+#include "../../utilities/clrUtil.h"
 #include "../../filesystem/fileFormatting.h"
 
 #include "../helpData.h"
@@ -195,7 +195,9 @@ START_COMMAND(CmdHelp, {}, CommandBase, "help")
 		std::stringstream str;
 
 		str << "Enter " << clr("cmdHelp", __clr_command->toString()) << " to get a list of commands." << std::endl;
-		str << "Enter " << clr("retCmdHelp", __clr_command->toString()) << " to get a list of return commands.";
+		str << "Enter " << clr("retCmdHelp", __clr_command->toString()) << " to get a list of return commands." << std::endl;
+		str << "Enter " << clr("colorHelp", __clr_command->toString()) << " to get a list of predefined colors." << std::endl;
+		str << "Enter " << clr("idClrHelp", __clr_command->toString()) << " to get a list of valid color id.";
 
 		sysprintln(str.str());
 	}
@@ -237,6 +239,27 @@ START_COMMAND(CmdRetCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase,
 
 		else sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 	}
+END_COMMAND
+
+// clrHelp
+START_COMMAND(CmdClrHelp, {}, CommandBase, "clrHelp")
+	void exec() override {
+		sysprintln(ClrUtil::getColoredColorList());
+	}
+END_COMMAND
+
+// idClrHelp
+START_COMMAND(CmdIdColorHelp, {}, CommandBase, "idClrHelp")
+void exec() override {
+	sysprintln(ClrUtil::getColoredIdColorList());
+}
+END_COMMAND
+
+// clrModeHelp
+START_COMMAND(CmdClrModeHelp, {}, CommandBase, "clrModeHelp")
+void exec() override {
+	sysprintln(ClrUtil::getColoredColorModeList());
+}
 END_COMMAND
 
 

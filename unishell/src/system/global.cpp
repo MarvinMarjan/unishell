@@ -71,6 +71,9 @@ const StringList __sys_commands = {
 	"help",
 	"cmdHelp",
 	"retCmdHelp",
+	"clrHelp",
+	"idClrHelp",
+	"clrModeHelp",
 	
 	"exit"
 };

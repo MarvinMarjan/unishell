@@ -184,5 +184,8 @@
     <ClInclude Include="src\commands\flagList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utilities\clrUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

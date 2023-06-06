@@ -16,6 +16,15 @@ enum Color {
 	wblue, wpurple, wcyan
 };
 
+enum ColorMode {
+	normal = 0,
+	dark = 2,
+	italic = 3,
+	underline = 4,
+	crossed = 9
+};
+
+
 inline Color stringToColor(const std::string& strMode) {
 	if (strMode == "std") return null;
 
@@ -37,14 +46,6 @@ inline Color stringToColor(const std::string& strMode) {
 
 	return null;
 }
-
-enum ColorMode {
-	normal = 0,
-	dark = 2,
-	italic = 3,
-	underline = 4,
-	crossed = 9
-};
 
 inline ColorMode stringToColorMode(const std::string& strMode) {
 	if (strMode == "normal") return normal;
