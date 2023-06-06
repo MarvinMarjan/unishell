@@ -187,6 +187,7 @@ const std::string __regex_color_escape_char_pattern = "\033\\[[0-9;]*m";
 BaseColorStructure* __clr_autocomplete_suggestion = new IdColorStructure(240);
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
+BaseColorStructure* __clr_raw_string = new IdColorStructure(107);
 BaseColorStructure* __clr_escape_char = new IdColorStructure(209);
 
 BaseColorStructure* __clr_identifier = new IdColorStructure(115);

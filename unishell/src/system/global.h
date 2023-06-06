@@ -49,6 +49,7 @@ extern const std::string __regex_color_escape_char_pattern;
 extern BaseColorStructure* __clr_autocomplete_suggestion;
 
 extern BaseColorStructure* __clr_quoted;
+extern BaseColorStructure* __clr_raw_string;
 extern BaseColorStructure* __clr_escape_char;
 
 extern BaseColorStructure* __clr_identifier;

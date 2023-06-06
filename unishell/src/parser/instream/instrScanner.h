@@ -62,12 +62,12 @@ private:
 
 
 	// gets a string inside quotes like "hello, world"
-	inline void string() {
-		while (peek() != '\"') {
+	inline void string(char delimiter, bool raw = false) {
+		while (peek() != delimiter) {
 			if (isAtEnd()) 
 				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
 
-			if (advance() != '\\') continue;
+			if (advance() != '\\' || raw) continue;
 
 			// escape character processing
 			addEscapeChar();

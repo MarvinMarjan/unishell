@@ -84,6 +84,19 @@ private:
 		stream << endclr;
 	}
 
+	static inline void renderRawString(std::stringstream& stream, const std::string& text, size_t& i, int cursorPos) {
+		stream << __clr_raw_string->toString();
+
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_raw_string->toString()); // draw first char
+
+		while (text[++i] != '`' && i < text.size())
+			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_raw_string->toString());
+
+		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last char
+
+		stream << endclr;
+	}
+
 	// indentifier: $indentifier
 	static inline void renderIdentifier(std::stringstream& stream, const std::string& text, size_t& i, int cursorPos) {
 		BaseColorStructure* idColor = __clr_identifier;

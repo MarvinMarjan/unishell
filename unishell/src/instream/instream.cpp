@@ -116,6 +116,10 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 			INStreamRender::renderQuoted(fText, text, i, cursorPos);
 			break;
 
+		case '`':
+			INStreamRender::renderRawString(fText, text, i, cursorPos);
+			break;
+
 		case '(':
 		case '{':
 		case '[':
