@@ -212,6 +212,12 @@ return { .name = RetCmdRead::symbol, .params = {{"File", {Literal}}},
 			.description = "returns the content of ^0." };
 END_HELP
 
+// readAsList
+START_HELP(RetCmdReadAsList)
+return { .name = RetCmdReadAsList::symbol, .params = {{"File", {Literal}}},
+			.description = "returns the content of ^0 as a List." };
+END_HELP
+
 // write
 START_HELP(RetCmdWrite)
 return { .name = RetCmdWrite::symbol, .params = {{"File", {Literal}}, {"Text", {Literal}}, {"AppendMode", {Bool}, true}},
@@ -245,6 +251,16 @@ END_HELP
 // number
 START_HELP(RetCmdNumber)
 return { .name = RetCmdNumber::symbol, .params = {{"Value", {Literal}}}, .description = "try to convert ^0 into a Number type." };
+END_HELP
+
+// round
+START_HELP(RetCmdRound)
+return { .name = RetCmdRound::symbol, .params = {{"Value", {Number}}}, .description = "rounds ^0." };
+END_HELP
+
+// isDecimal
+START_HELP(RetCmdIsDecimal)
+return { .name = RetCmdIsDecimal::symbol, .params = {{"Value", {Number}}}, .description = "returns true if ^0 has decimal numbers." };
 END_HELP
 
 // bool

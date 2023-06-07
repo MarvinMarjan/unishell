@@ -52,6 +52,7 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName)
 	CHECK_CMD_P(RetCmdGetDirEntryData);
 	CHECK_CMD_P(RetCmdExists);
 	CHECK_CMD_P(RetCmdRead);
+	CHECK_CMD_P(RetCmdReadAsList);
 	CHECK_CMD_P(RetCmdWrite);
 
 	CHECK_CMD_P(RetCmdMatch);
@@ -59,6 +60,8 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName)
 
 	CHECK_CMD_P(RetCmdLiteral);
 	CHECK_CMD_P(RetCmdNumber);
+	CHECK_CMD_P(RetCmdRound);
+	CHECK_CMD_P(RetCmdIsDecimal);
 	CHECK_CMD_P(RetCmdBool);
 
 	return nullptr;
@@ -114,6 +117,7 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args,
 	CHECK_CMD(RetCmdGetDirEntryData);
 	CHECK_CMD(RetCmdExists);
 	CHECK_CMD(RetCmdRead);
+	CHECK_CMD(RetCmdReadAsList);
 	CHECK_CMD(RetCmdWrite);
 
 	CHECK_CMD(RetCmdMatch);
@@ -121,6 +125,8 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args,
 
 	CHECK_CMD(RetCmdLiteral);
 	CHECK_CMD(RetCmdNumber);
+	CHECK_CMD(RetCmdRound);
+	CHECK_CMD(RetCmdIsDecimal);
 	CHECK_CMD(RetCmdBool);
 
 	return nullptr;

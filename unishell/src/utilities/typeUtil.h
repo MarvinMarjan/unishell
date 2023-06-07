@@ -157,6 +157,15 @@ public:
 		return true;
 	}
 
+	static inline LiteralValueList stringListToLiteralList(StringList list) {
+		LiteralValueList res;
+
+		for (const std::string& item : list)
+			res.push_back(litStr(item));
+
+		return res;
+	}
+
 	static inline void checkNull(LiteralValue* value) {
 		if (!value)
 			value = new LiteralValue("null");

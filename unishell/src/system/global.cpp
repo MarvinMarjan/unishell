@@ -102,6 +102,7 @@ const StringList __sys_ret_commands = {
 	RetCmdGetDirEntryData::symbol,
 	RetCmdExists::symbol,
 	RetCmdRead::symbol,
+	RetCmdReadAsList::symbol,
 	RetCmdWrite::symbol,
 
 	RetCmdMatch::symbol,
@@ -109,6 +110,8 @@ const StringList __sys_ret_commands = {
 
 	RetCmdLiteral::symbol,
 	RetCmdNumber::symbol,
+	RetCmdRound::symbol,
+	RetCmdIsDecimal::symbol,
 	RetCmdBool::symbol
 };
 

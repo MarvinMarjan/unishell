@@ -571,6 +571,23 @@ START_COMMAND(RetCmdRead, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "r
 	}
 END_COMMAND
 
+// readAsList
+START_COMMAND(RetCmdReadAsList, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "readAsList")
+LiteralValue* exec() override {
+	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+
+	checkPath(res, asStr(args[0]), symbol);
+	checkPathType(res.path, ExpFile, symbol);
+
+	try {
+		return litList(TypeUtil::stringListToLiteralList(fsys::File::readAsList(res.path)));
+	}
+	catch (const fsys::FileException& err) {
+		THROW_RUNTIME_ERR("Couldn't open file: " + qtd(err.path));
+	}
+}
+END_COMMAND
+
 // write
 START_COMMAND(RetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {litBool(false), {Bool}} }), RetCommandBase, "write")
 	LiteralValue* exec() override {
@@ -635,22 +652,37 @@ END_COMMAND
 
 // number
 START_COMMAND(RetCmdNumber, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "number")
-LiteralValue* exec() override {
-	double res;
+	LiteralValue* exec() override {
+		double res;
 	
-	try {
-		res = std::stod(litToStr(args[0]));
-	}
-	catch (const std::invalid_argument&) {
-		THROW_RUNTIME_ERR("Unable to convert: " + qtd(asStr(args[0])));
-	}
-	catch (const std::out_of_range&) {
-		THROW_RUNTIME_ERR("Value too large: " + qtd(asStr(args[0])));
-	}
+		try {
+			res = std::stod(litToStr(args[0]));
+		}
+		catch (const std::invalid_argument&) {
+			THROW_RUNTIME_ERR("Unable to convert: " + qtd(asStr(args[0])));
+		}
+		catch (const std::out_of_range&) {
+			THROW_RUNTIME_ERR("Value too large: " + qtd(asStr(args[0])));
+		}
 
-	return litNum(res);
-}
+		return litNum(res);
+	}
 END_COMMAND
+
+// round
+START_COMMAND(RetCmdRound, ParamVec({ {nullptr, {Number}} }), RetCommandBase, "round")
+	LiteralValue* exec() override {
+		return litNum(std::round(asDbl(args[0])));
+	}
+END_COMMAND
+
+// isDecimal
+START_COMMAND(RetCmdIsDecimal, ParamVec({ {nullptr, {Number}} }), RetCommandBase, "isDecimal")
+	LiteralValue* exec() override {
+		return litBool(!TypeUtil::isInteger(asDbl(args[0])));
+	}
+END_COMMAND
+
 
 // bool
 START_COMMAND(RetCmdBool, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "bool")
