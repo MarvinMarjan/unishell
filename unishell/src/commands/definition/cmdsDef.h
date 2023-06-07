@@ -612,6 +612,9 @@ START_COMMAND(RetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}
 	LiteralValue* exec() override {
 		LiteralValue* list = litList({});
 
+		if (asStr(args[1]).empty())
+			THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
+
 		std::string src = asStr(args[0]);
 		std::regex pattern(asStr(args[1]));
 
@@ -631,6 +634,10 @@ START_COMMAND(RetCmdReplace, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal
 	LiteralValue* exec() override {
 		std::string src = asStr(args[0]);
 		std::string repStr = asStr(args[2]);
+
+		if (asStr(args[1]).empty())
+			THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
+
 		std::regex pattern(asStr(args[1]));
 
 		src = std::regex_replace(src, pattern, repStr);
