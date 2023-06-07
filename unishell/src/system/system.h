@@ -64,10 +64,12 @@ public:
 	}
 
 	static inline void delEnvId(const std::string& idName) {
-		if (__environment->exists(idName))
+		if (__environment->exists(idName) && !__environment->isSysId(idName))
 			__environment->delId(idName);
-		else
+		else if (!__environment->isSysId(idName))
 			throw SystemException(EnvironmentError, "Unknown identifier: " + idformat(idName));
+		else
+			throw SystemException(EnvironmentError, "Can't delete system identifiers.");
 	}
 
 private:
