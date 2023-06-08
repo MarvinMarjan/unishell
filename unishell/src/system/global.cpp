@@ -2,7 +2,7 @@
 
 #include "../environment/environment.h"
 #include "../path/pathHandler.h"
-#include "../commands/definition/cmdsDef.h"
+#include "../commands/definition/cmds.h"
 
 #include "system.h"
 
@@ -56,63 +56,69 @@ const StringList __color_formats = {
 	"clr"
 };
 
-const StringList __sys_commands = {
-	CmdPrint::symbol,
-	CmdClear::symbol,
+const std::vector<CommandBase*> __sys_commands = {
+	new SysCmdPrint(),
+	new SysCmdClear(),
 	
-	CmdCd::symbol,
-	CmdLs::symbol,
-	CmdCreateFile::symbol,
-	CmdCreateDir::symbol,
-	CmdRemoveFile::symbol,
-	CmdRemoveDir::symbol,
+	new SysCmdCd(),
+	new SysCmdLs(),
+	new FSysCmdCreateFile(),
+	new FSysCmdCreateDir(),
+	new FSysCmdRemoveFile(),
+	new FSysCmdRemoveDir(),
 
-	CmdVar::symbol,
-	CmdDel::symbol,
-	CmdEnv::symbol,
+	new SysCmdVar(),
+	new SysCmdDel(),
+	new SysCmdEnv(),
 
-	CmdHelp::symbol,
-	CmdCmdHelp::symbol,
-	CmdRetCmdHelp::symbol,
-	CmdClrHelp::symbol,
-	CmdIdColorHelp::symbol,
-	CmdClrModeHelp::symbol,
+	new SysCmdHelp(),
+	new SysCmdCmdHelp(),
+	new SysCmdRetCmdHelp(),
+	new SysCmdClrHelp(),
+	new SysCmdIdColorHelp(),
+	new SysCmdClrModeHelp(),
 	
-	CmdExit::symbol
+	new SysCmdExit()
 };
 
-const StringList __sys_ret_commands = {
-	RetCmdInput::symbol,
+const std::vector<RetCommandBase*> __sys_ret_commands = {
+	new SysRetCmdInput(),
+ 
+	new SysRetCmdType(),
+	new ListRetCmdSize(),
 
-	RetCmdType::symbol,
-	RetCmdSize::symbol,
+	new LiteralRetCmdAt(),
+	new LiteralRetCmdSize(),
+	new LiteralRetCmdErase(),
+	new LiteralRetCmdSub(),
+	new LiteralRetCmdSplit(),
+	new LiteralRetCmdJoin(),
 
-	RetCmdAt::symbol,
-	RetCmdSub::symbol,
-	RetCmdSplit::symbol,
-	RetCmdJoin::symbol,
+	new ListRetCmdAppend(),
+	new ListRetCmdAt(),
+	new ListRetCmdErase(),
 
-	RetCmdAppend::symbol,
-	RetCmdInsert::symbol,
-	RetCmdErase::symbol,
-	RetCmdEraseAt::symbol,
+	new ObjectRetCmdSize(),
+	new ObjectRetCmdAt(),
+	new ObjectRetCmdInsert(),
+	new ObjectRetCmdEraseAt(),
 
-	RetCmdGetFileData::symbol,
-	RetCmdGetDirEntryName::symbol,
-	RetCmdGetDirEntryData::symbol,
-	RetCmdExists::symbol,
-	RetCmdRead::symbol,
-	RetCmdReadAsList::symbol,
-	RetCmdWrite::symbol,
+	new FSysRetCmdGetFileData(),
+	new FSysRetCmdGetDirEntryName(),
+	new FSysRetCmdGetDirEntryData(),
+	new FSysRetCmdExists(),
+	new FSysRetCmdRead(),
+	new FSysRetCmdReadAsList(),
+	new FSysRetCmdWrite(),
 
-	RetCmdMatch::symbol,
-	RetCmdReplace::symbol,
+	new RegexRetCmdMatch(),
+	new RegexRetCmdReplace(),
 
-	RetCmdLiteral::symbol,
-	RetCmdNumber::symbol,
-	RetCmdRound::symbol,
-	RetCmdIsDecimal::symbol,
-	RetCmdBool::symbol
+	new TypeRetCmdLiteral(),
+	new TypeRetCmdNumber(),
+	new NumberRetCmdRound(),
+	new NumberRetCmdIsDecimal(),
+	new TypeRetCmdBool()
 };
 
 const FSExtension __fs_file_extensions_text = {

@@ -56,6 +56,8 @@ inline std::string formatDescription(const std::string& description, const HDPar
 inline std::string stringifyHelpData(const CommandHelpData& data, BaseColorStructure* cmdClr = __clr_command, bool nameOnly = false) noexcept {
 	std::stringstream str;
 
+	
+
 	str << clr(data.name, cmdClr->toString());
 	
 	if (nameOnly) return str.str();

@@ -70,6 +70,33 @@ public:
 
 	static CommandBase* getCommand(const std::string& cmdName);
 	static CommandBase* getCommand(const std::string& cmdName, ArgList args, FlagList flags);
-	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args, FlagList flags);
 	static RetCommandBase* getRetCommand(const std::string& cmdName);
+	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args, FlagList flags);
+
+
+
+	template <typename T>
+	static inline RetCommandBase* checkArgOverloadImpl(RetCommandBase* cmd, ArgList args, FlagList flags) {
+		if (cmd)
+			return cmd;
+
+		try {
+			cmd = new T(args, flags);
+		}
+		catch (...) {
+			return nullptr;
+		}
+
+		return cmd;
+	}
+
+	template <typename... Ts>
+	static inline RetCommandBase* checkArgOverload(ArgList args, FlagList flags) {
+		RetCommandBase* cmd = nullptr;
+
+		// fold expression
+		cmd = (..., (cmd = checkArgOverloadImpl<Ts>(cmd, args, flags)));
+
+		return cmd;
+	}
 };

@@ -7,6 +7,18 @@
 
 struct CommandHelpData;
 
+enum class CmdFunc
+{
+	Type,
+	Literal,
+	Number,
+	List,
+	Object,
+
+	System,
+	Filesystem
+};
+
 // exec return type
 template <typename T>
 class CommandBaseCore
@@ -48,7 +60,7 @@ private:
 
 	inline void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		if (args.size() < params.getRequiredParams())
-			throw SystemException(CommandError, "(" + cmdSymbol + ") " + "Insufficient arguments");
+			THROW_COMMAND_ERR("(" + cmdSymbol + ") " + "Insufficient arguments");
 	}
 };
 

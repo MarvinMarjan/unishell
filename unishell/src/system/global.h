@@ -24,9 +24,10 @@ extern const StringList __boolean;
 extern const StringList __colormode;
 extern const StringList __color;
 extern const StringList __color_formats;
-extern const StringList __sys_commands;
-extern const StringList __sys_ret_commands;
 // <--
+
+extern const std::vector<CommandBase*> __sys_commands;
+extern const std::vector<RetCommandBase*> __sys_ret_commands;
 
 
 // --> extension types
