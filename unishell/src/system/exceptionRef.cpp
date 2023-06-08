@@ -15,7 +15,7 @@ ExceptionRef::ExceptionRef(const std::string& src, size_t index) :
 
 std::string ExceptionRef::getString() const {
 	std::string str = "", space = "\n";
-	std::string atLoc = "  at " + clr('\"' + src + '\"', 113) + "\n\n";
+	const std::string atLoc = "  at " + clr('\"' + src + '\"', 113) + "\n\n";
 
 	if (index != -1) {
 		for (size_t i = 0; i < src.size(); i++)

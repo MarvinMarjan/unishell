@@ -4,7 +4,7 @@
 #include "../utilities/objUtil.h"
 
 LiteralValue* fsys::File::getFileDataObjFromFile(const std::string& path) {
-	FileEntry file(path);
+	const FileEntry file(path);
 
 	return ObjUtil::newFileDataObj(
 		file.path().filename().string(),

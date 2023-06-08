@@ -1,6 +1,6 @@
 #include "tokenProcessing.h"
 
-void TokenProcess::getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub) {
+void TokenProcess::getInside(TokenList& res, const TokenList& source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub) {
 	size_t start = 0, end = 0;
 	unsigned short aux = 0;
 
@@ -27,7 +27,7 @@ void TokenProcess::getInside(TokenList& res, TokenList source, TokenEnum lchar, 
 	}
 }
 
-TokenList TokenProcess::generateColorTokens(TokenList source) {
+TokenList TokenProcess::generateColorTokens(const TokenList& source) {
 	TokenList res;
 
 	size_t start = 0, end = 0;
@@ -55,7 +55,7 @@ TokenList TokenProcess::generateColorTokens(TokenList source) {
 }
 
 
-TokenList TokenProcess::parseTokens(TokenList source) {
+TokenList TokenProcess::parseTokens(const TokenList& source) {
 	TokenList res;
 
 	for (Token token : source)
@@ -83,7 +83,7 @@ TokenList TokenProcess::parseTokens(TokenList source) {
 }
 
 
-TokenList TokenProcess::expandRetCommands(TokenList source) {
+TokenList TokenProcess::expandRetCommands(const TokenList& source) {
 	TokenList res;
 
 	for (size_t i = 0; i < source.size(); i++) {
@@ -110,17 +110,16 @@ TokenList TokenProcess::expandRetCommands(TokenList source) {
 }
 
 
-inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool integrate) {
+inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool integrate) {
 	RetCommandBase* retCmd = nullptr;
 	LiteralValue* ret = nullptr;
 	TokenList list;
-	ArgList args;
 	bool hasExplicitList = false;
 
 	argsFromList(source, i, list);
 
 	// don't encapsulate in RETCOMMANDS
-	args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
+	ArgList args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());

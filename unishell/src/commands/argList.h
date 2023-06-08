@@ -9,12 +9,12 @@ class ArgList : public std::vector<LiteralValue*>
 public:
 	ArgList() {}
 
-	ArgList(TokenList tokens) {
+	explicit ArgList(const TokenList& tokens) {
 		for (Token val : tokens)
 			push_back(val.getLiteral());
 	}
 
-	ArgList(Token list) {
+	explicit ArgList(const Token& list) {
 		for (LiteralValue* val : asList(list.getLiteral()))
 			push_back(val);
 	}

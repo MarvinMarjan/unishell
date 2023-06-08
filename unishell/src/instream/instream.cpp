@@ -33,14 +33,14 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 
 	case Tab: {
 		searchList.setFromType();
-		
-		int cIndex = lineInput.getCursorIndex();
+
+		const int cIndex = lineInput.getCursorIndex();
 
 		if (searchList.getList().empty()) break;
 		if (cIndex < lineInput.size()) break;
 
-		int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1), false);
-		int end = (int)INStreamRender::getWordEndPos(lineInput, begin, false);
+		const int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1), false);
+		const int end = (int)INStreamRender::getWordEndPos(lineInput, begin, false);
 
 		updateSearchList(lineInput, begin, end);		
 		insertAtINStreamBuffer(lineInput, searchList.get(), begin, end);
@@ -63,7 +63,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 			lineInput.setCursorIndex((int) lineInput.size());
 		}
 		
-		// don't allow DownArrow processing if ignoreCurrenIndexChange is true
+		// don't allow DownArrow processing if ignoreCurrentIndexChange is true
 		else if (charInput == DownArrow && !inputList.ignoreCurrentIndexChange) {
 			inputList.down();
 			lineInput.assign(inputList.get());
@@ -89,7 +89,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 std::string INStream::formatString(const std::string& text, int cursorPos)
 {
 	std::stringstream fText;
-	size_t firstWordPos = INStreamRender::getWordEndPos(text);
+	const size_t firstWordPos = INStreamRender::getWordEndPos(text);
 	int scopeDepth = 1;
 
 	for (size_t i = 0; i < text.size(); i++)
@@ -103,7 +103,7 @@ std::string INStream::formatString(const std::string& text, int cursorPos)
 			continue;
 		}
 
-		char current = text[i];
+		const char current = text[i];
 
 		switch (current)
 		{

@@ -7,13 +7,13 @@
 
 std::string fsys::FileF::formatFileEntryAsString(const FileEntry& file) {
 	std::stringstream str;
-	std::string name = file.path().filename().string();
-	bool dir = file.is_directory();
+	const std::string name = file.path().filename().string();
+	const bool dir = file.is_directory();
 
-	FileAtts atts = getFileAtts(file);
+	const FileAtts atts = getFileAtts(file);
 
-	FormatedFileData ex = formatFileExtensionAsString(file.path().extension().string());
-	FormatedFileData data = getFFDByFileAttribute(atts);
+	const FormatedFileData ex = formatFileExtensionAsString(file.path().extension().string());
+	const FormatedFileData data = getFFDByFileAttribute(atts);
 
 	// size
 	str << formatFileSizeAsString(file.file_size()) << "   ";
@@ -63,8 +63,8 @@ std::string fsys::FileF::formatFileSizeAsString(uintmax_t size) {
 
 
 fsys::FileF::FileAtts fsys::FileF::getFileAtts(const FileEntry& file) {
-	FileAtts atts;
-	DWORD att = GetFileAttributes(StringUtil::charToWchar(file.path().string().c_str()));
+	FileAtts atts{};
+	const DWORD att = GetFileAttributes(StringUtil::charToWchar(file.path().string().c_str()));
 
 	atts.archive = OPUtil::bwAnd(att, FILE_ATTRIBUTE_ARCHIVE);
 	atts.compressed = OPUtil::bwAnd(att, FILE_ATTRIBUTE_COMPRESSED);
