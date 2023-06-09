@@ -68,7 +68,7 @@ inline void checkIndex(int index, size_t max, const std::string& symbol) {
 }
 
 // check if the key of an object exists
-inline void checkIndex(LiteralValueObj obj, const std::string& key, const std::string& symbol) {
+inline void checkIndex(LitObj obj, const std::string& key, const std::string& symbol) {
 	if (obj.find(key) == obj.end())
 		THROW_RUNTIME_ERR("Invalid property: " + qtd(key));
 }

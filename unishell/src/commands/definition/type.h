@@ -5,14 +5,14 @@
 // type
 START_COMMAND(TypeRetCmdType, { nullptr }, RetCommandBase, "type", CmdFunc::Type)
 LiteralValue* exec() override {
-	return litStr(TypeUtil::getTypeAsString(getValueType(args[0])));
+	return lit(TypeUtil::getTypeAsString(getValueType(args[0])));
 }
 END_COMMAND
 
 // literal
 START_COMMAND(TypeRetCmdLiteral, ParamVec({ {nullptr, {Literal, Number, Bool}} }), RetCommandBase, "literal", CmdFunc::Type)
 LiteralValue* exec() override {
-	return litStr(litToStr(args[0]));
+	return lit(litToStr(args[0]));
 }
 END_COMMAND
 
@@ -31,13 +31,13 @@ LiteralValue* exec() override {
 		THROW_RUNTIME_ERR("Value too large: " + qtd(asStr(args[0])));
 	}
 
-	return litNum(res);
+	return lit(res);
 }
 END_COMMAND
 
 // bool
 START_COMMAND(TypeRetCmdBool, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "bool", CmdFunc::Type)
 LiteralValue* exec() override {
-	return litBool(TypeUtil::stringToBool(asStr(args[0])));
+	return lit(TypeUtil::stringToBool(asStr(args[0])));
 }
 END_COMMAND

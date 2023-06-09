@@ -41,7 +41,7 @@ class Token
 public:
 	friend class TokenProcess;
 
-	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, TokenList sub, size_t index) : 
+	Token(TokenEnum type, const std::string& lexical, LiteralValue* lit, const TokenList& sub, size_t index) : 
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
 	{}
 
@@ -53,7 +53,7 @@ public:
 		return lexical;
 	}
 
-	inline LiteralValue* getLiteral() const noexcept {
+	constexpr inline LiteralValue* getLiteral() const noexcept {
 		return lit;
 	}
 

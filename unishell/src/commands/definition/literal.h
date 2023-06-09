@@ -5,7 +5,7 @@
 // size
 START_COMMAND(LiteralRetCmdSize, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "size", CmdFunc::Literal)
 LiteralValue* exec() override {
-	return litNum((double)asStr(args[0]).size());
+	return lit((double)asStr(args[0]).size());
 }
 END_COMMAND
 
@@ -19,7 +19,7 @@ LiteralValue* exec() override
 	int index = (int)asDbl(args[1]);
 
 	checkIndex(index, src.size(), symbol);
-	return litStr(StringUtil::charToStr(src.at(index)));
+	return lit(StringUtil::charToStr(src.at(index)));
 }
 END_COMMAND
 
@@ -33,7 +33,7 @@ LiteralValue* exec() override {
 	checkIndex(begin, src.size(), symbol);
 	checkIndex(end, src.size(), symbol);
 
-	return litStr(src.substr(begin, (size_t)end + 1 - begin));
+	return lit(src.substr(begin, (size_t)end + 1 - begin));
 }
 END_COMMAND
 
@@ -57,27 +57,27 @@ END_COMMAND
 
 
 // split
-START_COMMAND(LiteralRetCmdSplit, ParamVec({ {nullptr, {Literal}}, {litStr(" "), {Literal}} }), RetCommandBase, "split", CmdFunc::Literal)
+START_COMMAND(LiteralRetCmdSplit, ParamVec({ {nullptr, {Literal}}, {lit(" "), {Literal}} }), RetCommandBase, "split", CmdFunc::Literal)
 LiteralValue* exec() override {
 	if (asStr(args[1]).size() > 1)
 		THROW_RUNTIME_ERR("Single character Literal expected: " + qtd(asStr(args[1])));
 
-	LiteralValue* list = litList({});
+	LiteralValue* list = lit(LitList());
 
 	for (const std::string& item : StringUtil::split(asStr(args[0]), asStr(args[1])[0]))
-		asList(list).push_back(litStr(item));
+		asList(list).push_back(lit(item));
 
 	return list;
 }
 END_COMMAND
 
 // join
-START_COMMAND(LiteralRetCmdJoin, ParamVec({ {nullptr, {List}}, { litStr(" "), {Literal}} }), RetCommandBase, "join", CmdFunc::Literal)
+START_COMMAND(LiteralRetCmdJoin, ParamVec({ {nullptr, {List}}, { lit(" "), {Literal}} }), RetCommandBase, "join", CmdFunc::Literal)
 LiteralValue* exec() override {
 	if (!TypeUtil::isListOf(args[0], Literal))
 		THROW_RUNTIME_ERR("Only Literal type List accepted: " + litToStr(args[0], true));
 
-	return litStr(VectorUtil::join(VectorUtil::map<LiteralValue*, std::string>(asList(args[0]), [](LiteralValue* val) {
+	return lit(VectorUtil::join(VectorUtil::map<LiteralValue*, std::string>(asList(args[0]), [](LiteralValue* val) {
 		return asStr(val);
 		}), asStr(args[1])));
 }

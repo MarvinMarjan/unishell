@@ -11,8 +11,7 @@
 #include "../../system/global.h"
 #include "../../utilities/globalUtil.h"
 
-enum InstreamScannerHints
-{
+enum InstreamScannerHints {
 	IgnoreCommand = 1
 };
 
@@ -20,7 +19,7 @@ class InstreamScanner : public ScannerBase<Token>
 {
 public:
 	InstreamScanner(const std::string& src, int hints = 0) : ScannerBase(src) {
-		ignoreCommand = ((hints & IgnoreCommand) == IgnoreCommand);
+		ignoreCommand = OPUtil::bwAnd(hints, IgnoreCommand);
 	}
 
 	TokenList scanTokens() override;
@@ -104,7 +103,7 @@ private:
 		for (current; StringUtil::isDigit(peek()); current++) {}
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
-
+	
 	// if is keyword, returns true and add it
 	// else return false
 	inline bool keyword() {

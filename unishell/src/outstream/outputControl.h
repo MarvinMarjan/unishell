@@ -19,34 +19,34 @@ inline std::string delWindow(DelHint hint = CursorToEnd) noexcept {
 	return "\033[" + std::to_string(hint) + "J";
 }
 
-inline std::string saveCursor() {
+inline std::string saveCursor() noexcept {
 	return "\033[s";
 }
 
-inline std::string loadCursor() {
+constexpr inline std::string loadCursor() noexcept {
 	return "\033[u";
 }
 
-inline std::string cursorUp() {
+constexpr inline std::string cursorUp() noexcept {
 	return "\033[A";
 }
 
-inline std::string cursorDown() {
+constexpr inline std::string cursorDown() noexcept {
 	return "\033[B";
 }
 
-inline std::string cursorRight() {
+constexpr inline std::string cursorRight() noexcept {
 	return "\033[C";
 }
 
-inline std::string cursorLeft() {
+constexpr inline std::string cursorLeft() noexcept {
 	return "\033[D";
 }
 
-inline std::string scrollUp() {
+constexpr inline std::string scrollUp() noexcept {
 	return "\033[S";
 }
 
-inline std::string scrollDown() {
+constexpr inline std::string scrollDown() noexcept {
 	return "\033[T";
 }

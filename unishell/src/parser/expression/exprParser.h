@@ -9,7 +9,7 @@
 class ExprParser
 {
 public:
-	ExprParser(TokenList tokens, const std::string& rawSource) :
+	ExprParser(const TokenList& tokens, const std::string& rawSource) :
 		tokens(tokens), rawSource(rawSource)
 	{
 		current = 0;
@@ -28,12 +28,12 @@ private:
 		Expr* expr = assignment();
 
 		while (match({ AND, OR })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = assignment();
 			expr = new Binary(expr, op, right);
 		}
 
-		if (match({ NUMBER, LITERAL, BOOLEANVAL, LPAREN }))
+		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT, LPAREN }))
 			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
 
 		return expr;
@@ -43,7 +43,7 @@ private:
 		Expr* expr = equality();
 		
 		while (match({ EQUAL })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = equality();
 			expr = new Binary(expr, op, right);
 		}
@@ -55,7 +55,7 @@ private:
 		Expr* expr = comparison();
 
 		while (match({ EQUAL_EQUAL_EQUAL, EQUAL_EQUAL, BANG_EQUAL })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = comparison();
 			expr = new Binary(expr, op, right);
 		}
@@ -67,7 +67,7 @@ private:
 		Expr* expr = term();
 
 		while (match({ GREATER, LESS, GREATER_EQUAL, LESS_EQUAL })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = term();
 			expr = new Binary(expr, op, right);
 		}
@@ -79,7 +79,7 @@ private:
 		Expr* expr = factor();
 
 		while (match({ PLUS, MINUS })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = factor();
 			expr = new Binary(expr, op, right);
 		}
@@ -91,7 +91,7 @@ private:
 		Expr* expr = unary();
 
 		while (match({ STAR, SLASH })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* right = unary();
 			expr = new Binary(expr, op, right);
 		}
@@ -101,7 +101,7 @@ private:
 
 	inline Expr* unary() {
 		if (match({ BANG, MINUS })) {
-			Token op = prev();
+			const Token op = prev();
 			Expr* expr = unary();
 			return new Unary(op, expr);
 		}
@@ -110,8 +110,11 @@ private:
 	}
 
 	inline Expr* primary() {
-		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT })) return new LiteralExpr(prev().getLiteral());
-		if (match({ NULLVAL })) return new LiteralExpr(nullptr);
+		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT }))
+			return new LiteralExpr(prev().getLiteral());
+
+		if (match({ NULLVAL }))
+			return new LiteralExpr(nullptr);
 
 		if (match({ LPAREN })) {
 			Expr* expr = expression();
@@ -119,13 +122,14 @@ private:
 			return new Group(expr);
 		}
 
-		if (!tokens.size()) return new LiteralExpr(nullptr);
+		if (!tokens.size())
+			return new LiteralExpr(nullptr);
 
 		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
 	}
 
 
-	inline bool match(std::vector<TokenEnum> tokenTypes) {
+	inline bool match(const std::vector<TokenEnum>& tokenTypes) {
 		for (TokenEnum type : tokenTypes) {
 			if (check(type)) {
 				advance();
@@ -138,19 +142,24 @@ private:
 
 
 	inline Token consume(TokenEnum type, const std::string& msg) {
-		if (check(type)) return advance();
+		if (check(type))
+			return advance();
 
 		throw SystemException(ExprParserError, msg);
 	}
 
 
 	inline bool check(TokenEnum type) {
-		if (isAtEnd()) return false;
+		if (isAtEnd())
+			return false;
+
 		return (peek().getType() == type);
 	}
 
 	inline Token advance() noexcept {
-		if (!isAtEnd()) current++;
+		if (!isAtEnd())
+			current++;
+
 		return prev();
 	}
 
@@ -159,11 +168,13 @@ private:
 	}
 
 	inline Token prev() const noexcept {
-		if (!current) return tokens[(size_t)current];
+		if (!current) 
+			return tokens[(size_t)current];
+
 		return tokens[(size_t)current - 1];
 	}
 
-	inline bool isAtEnd() const noexcept {
+	constexpr inline bool isAtEnd() const noexcept {
 		return ((size_t)current >= tokens.size());
 	}
 

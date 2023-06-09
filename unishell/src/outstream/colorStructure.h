@@ -113,7 +113,7 @@ public:
 	unsigned int green;
 	unsigned int blue;
 
-	static const size_t argSize = 3;
+	static constexpr size_t argSize = 3;
 };
 
 class ColorStructure : public BaseColorStructure
@@ -128,5 +128,5 @@ public:
 
 	Color color;
 
-	static const size_t argSize = 1;
+	static constexpr size_t argSize = 1;
 };

@@ -5,7 +5,6 @@
 #include "expr.h"
 
 
-
 class ExprASTPrinter : public ExprVisitor
 {
 public:
@@ -32,7 +31,7 @@ private:
 	}
 
 
-	inline LiteralValue* parenthesize(const std::string& name, std::vector<Expr*> exprs) {
+	inline LiteralValue* parenthesize(const std::string& name, const std::vector<Expr*>& exprs) {
 		std::stringstream builder;
 
 		builder << "(" << name;

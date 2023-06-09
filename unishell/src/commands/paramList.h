@@ -14,7 +14,7 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	Param(LiteralValue* defaultValue = nullptr, std::vector<IdValueType> paramTypes = {Any}) :
+	Param(LiteralValue* defaultValue = nullptr, std::vector<LiteralValueType> paramTypes = {Any}) :
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
@@ -22,14 +22,14 @@ public:
 		return defaultValue;
 	}
 
-	inline std::vector<IdValueType> getParamTypes() const noexcept {
+	inline std::vector<LiteralValueType> getParamTypes() const noexcept {
 		return paramTypes;
 	}
 
 	inline StringList getParamTypesAsString() const noexcept {
 		StringList types;
 
-		for (IdValueType type : getParamTypes())
+		for (LiteralValueType type : getParamTypes())
 			types.push_back(TypeUtil::getTypeAsString(type));
 
 		return types;
@@ -37,7 +37,7 @@ public:
 
 private:
 	LiteralValue* defaultValue;
-	std::vector<IdValueType> paramTypes;
+	std::vector<LiteralValueType> paramTypes;
 };
 
 
@@ -73,14 +73,14 @@ public:
 	}
 };
 
-inline bool checkParamType(IdValueTypeList types, IdValueType type) {
+inline bool checkParamType(LiteralValueTypeList types, LiteralValueType type) {
 	if (VectorUtil::exists(types, Any)) return true;
 	else if (VectorUtil::exists(types, type)) return true;
 
 	return false;
 }
 
-inline std::string stringifyParamTypes(IdValueTypeList types, bool colorize = false) {
+inline std::string stringifyParamTypes(LiteralValueTypeList types, bool colorize = false) {
 	std::string str = "";
 	
 	for (size_t i = 0; i < types.size(); i++) {

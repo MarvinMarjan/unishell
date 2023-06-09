@@ -5,7 +5,7 @@
 struct HDParam
 {
 	std::string name;
-	IdValueTypeList types;
+	LiteralValueTypeList types;
 	bool optional = false;
 };
 

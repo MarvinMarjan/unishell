@@ -25,7 +25,7 @@ public:
 		return value;
 	}
 
-	constexpr inline IdValueType getType() const noexcept {
+	constexpr inline LiteralValueType getType() const noexcept {
 		return type;
 	}
 
@@ -41,12 +41,12 @@ public:
 
 private:
 	inline void updateType() {
-		type = (value) ? (IdValueType)value->index() : Null;
+		type = (value) ? (LiteralValueType)value->index() : Null;
 	}
 
 	std::string name;
 	LiteralValue* value;
-	IdValueType type;
+	LiteralValueType type;
 
 	bool sysId;
 };

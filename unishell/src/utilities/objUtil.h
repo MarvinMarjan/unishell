@@ -12,47 +12,47 @@ public:
 		const std::string& fileName, const std::string& fileEx, int size, const fsys::FileF::FileAtts& atts
 	) noexcept 
 	{
-		return litObj({
-			{"name", litStr(fileName)},
-			{"ex", litStr(fileEx)},
-			{"size", litNum(size)},
-			{"att", litObj({
-				{"archive", litBool(atts.archive)},
-				{"compressed", litBool(atts.compressed)},
-				{"device", litBool(atts.device)},
-				{"directory", litBool(atts.directory)},
-				{"ea", litBool(atts.ea)},
-				{"encrypted", litBool(atts.encrypted)},
-				{"hidden", litBool(atts.hidden)},
-				{"integrityStream", litBool(atts.integrityStream)},
-				{"normal", litBool(atts.normal)},
-				{"notContentIndexed", litBool(atts.notContentIndexed)},
-				{"noScrubData", litBool(atts.noScrubData)},
-				{"offline", litBool(atts.offline)},
-				{"pinned", litBool(atts.pinned)},
-				{"readOnly", litBool(atts.readOnly)},
-				{"recallOnDataAccess", litBool(atts.recallOnDataAccess)},
-				{"recallOnOpen", litBool(atts.recallOnOpen)},
-				{"reparsePoint", litBool(atts.reparsePoint)},
-				{"sparseFile", litBool(atts.sparseFile)},
-				{"system", litBool(atts.system)},
-				{"strictlySequential", litBool(atts.strictlySequential)},
-				{"temporary", litBool(atts.temporary)},
-				{"virt", litBool(atts.virt)},
-			})}
-		});
+		return lit(LitObj({
+			{"name", lit(fileName)},
+			{"ex", lit(fileEx)},
+			{"size", lit(size)},
+			{"att", lit(LitObj({
+				{"archive", lit(atts.archive)},
+				{"compressed", lit(atts.compressed)},
+				{"device", lit(atts.device)},
+				{"directory", lit(atts.directory)},
+				{"ea", lit(atts.ea)},
+				{"encrypted", lit(atts.encrypted)},
+				{"hidden", lit(atts.hidden)},
+				{"integrityStream", lit(atts.integrityStream)},
+				{"normal", lit(atts.normal)},
+				{"notContentIndexed", lit(atts.notContentIndexed)},
+				{"noScrubData", lit(atts.noScrubData)},
+				{"offline", lit(atts.offline)},
+				{"pinned", lit(atts.pinned)},
+				{"readOnly", lit(atts.readOnly)},
+				{"recallOnDataAccess", lit(atts.recallOnDataAccess)},
+				{"recallOnOpen", lit(atts.recallOnOpen)},
+				{"reparsePoint", lit(atts.reparsePoint)},
+				{"sparseFile", lit(atts.sparseFile)},
+				{"system", lit(atts.system)},
+				{"strictlySequential", lit(atts.strictlySequential)},
+				{"temporary", lit(atts.temporary)},
+				{"virt", lit(atts.virt)},
+			}))}
+		}));
 	}
 
 	static inline LiteralValue* newRegexResult(std::smatch& match) {
-		LiteralValue* list = litObj({});
+		LiteralValue* list = lit(LitList());
 
 		if (match.size() > 0)
-			asObj(list).insert({ "full", litStr(match[0])});
+			asObj(list).insert({ "full", lit(match[0])});
 
-		asObj(list).insert({ "group", litList({}) });
+		asObj(list).insert({ "group", lit(LitList()) });
 
 		for (size_t i = 1; i < match.size(); i++)
-			asList(asObj(list).at("group")).push_back(litStr(match[i].str()));
+			asList(asObj(list).at("group")).push_back(lit(match[i].str()));
 
 		return list;
 	}

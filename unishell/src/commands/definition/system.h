@@ -3,7 +3,7 @@
 #include "defBase.h"
 
 // print
-START_COMMAND(SysCmdPrint, { litStr(std::string("")) }, CommandBase, "print", CmdFunc::System)
+START_COMMAND(SysCmdPrint, { lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
 void exec() override {
 	for (LiteralValue* value : args)
 		sysprint(litToStr(value));
@@ -89,7 +89,7 @@ void exec() override {
 END_COMMAND
 
 // cmdHelp
-START_COMMAND(SysCmdCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
@@ -108,7 +108,7 @@ void exec() override {
 END_COMMAND
 
 // retCmdHelp
-START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {litStr(""), {Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
@@ -171,6 +171,6 @@ LiteralValue* exec() override {
 	std::string input;
 	std::getline(std::cin, input);
 
-	return litStr(input);
+	return lit(input);
 }
 END_COMMAND

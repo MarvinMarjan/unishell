@@ -35,7 +35,6 @@ void InstreamScanner::scanToken()
 	case '<': addToken((match('=') ? LESS_EQUAL : LESS)); break;
 	case '>': addToken((match('=') ? GREATER_EQUAL : GREATER)); break;
 
-	// TODO: make the scanner interpret these as expressions
 	case '(': addToken(LPAREN); break;
 	case ')': addToken(RPAREN); break;
 

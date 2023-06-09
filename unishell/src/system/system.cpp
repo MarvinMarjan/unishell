@@ -6,6 +6,6 @@ bool System::abort = false;
 
 System::System()
 {
-	addSysId("NAME",	litStr("unishell"));
-	addSysId("OS",		litStr("Windows"));
+	addSysId("NAME",	lit("unishell"));
+	addSysId("OS",		lit("Windows"));
 }

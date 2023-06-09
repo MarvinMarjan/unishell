@@ -6,7 +6,7 @@
 START_COMMAND(ObjectRetCmdAt, ParamVec({ {nullptr, {Object}}, {nullptr, {Literal} } }), RetCommandBase, "at", CmdFunc::Object)
 LiteralValue* exec() override
 {
-	LiteralValueObj src = asObj(args[0]);
+	LitObj src = asObj(args[0]);
 	std::string key = asStr(args[1]);
 
 	checkIndex(src, key, symbol);
@@ -17,7 +17,7 @@ END_COMMAND
 // size
 START_COMMAND(ObjectRetCmdSize, ParamVec({ {nullptr, {Object}} }), RetCommandBase, "size", CmdFunc::Object)
 LiteralValue* exec() override {
- return litNum((double)asObj(args[0]).size());
+ return lit((double)asObj(args[0]).size());
 }
 END_COMMAND
 
@@ -33,7 +33,7 @@ END_COMMAND;
 // eraseAt
 START_COMMAND(ObjectRetCmdEraseAt, ParamVec({ {nullptr, {Object}}, {nullptr, {Literal}} }), RetCommandBase, "eraseAt", CmdFunc::Object)
 LiteralValue* exec() override {
-	LiteralValueObj* src = &asObj(args[0]);
+	LitObj* src = &asObj(args[0]);
 	LiteralValue* at = args[1];
 
 	std::string key = asStr(at);

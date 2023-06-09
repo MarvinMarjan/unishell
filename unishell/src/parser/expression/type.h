@@ -8,14 +8,14 @@
 #include <variant>
 #include <map>
 
-#define asStr(pLit)  std::get<std::string>(*pLit)
-#define asDbl(pLit)  std::get<double>(*pLit)
-#define asBool(pLit)  std::get<bool>(*pLit)
-#define asList(pLit)  std::get<std::vector<LiteralValue*>>(*pLit)
-#define asObj(pLit)  std::get<std::map<std::string, LiteralValue*>>(*pLit)
+#define asStr(pLit)		std::get<std::string>(*pLit)
+#define asDbl(pLit)		std::get<double>(*pLit)
+#define asBool(pLit)	std::get<bool>(*pLit)
+#define asList(pLit)	std::get<std::vector<LiteralValue*>>(*pLit)
+#define asObj(pLit)		std::get<std::map<std::string, LiteralValue*>>(*pLit)
 
 
-enum IdValueType
+enum LiteralValueType
 {
 	Literal,
 	Number,
@@ -27,65 +27,57 @@ enum IdValueType
 	Any
 };
 
-typedef std::vector<IdValueType> IdValueTypeList;
+typedef std::vector<LiteralValueType> LiteralValueTypeList;
 
 class LiteralValue;
 
 typedef std::vector<LiteralValue*> LiteralValueList;
-typedef std::map<std::string, LiteralValue*> LiteralValueObj;
+typedef LiteralValueList LitList;
 
-typedef std::variant<std::string, double, bool, LiteralValueList, LiteralValueObj> LiteralValuePtr;
+typedef std::map<std::string, LiteralValue*> LiteralValueObject;
+typedef LiteralValueObject LitObj;
 
-constexpr inline IdValueType getValueType(LiteralValue* value) noexcept;
+typedef std::variant<std::string, double, bool, LitList, LitObj> LiteralValuePtr;
+
+constexpr inline LiteralValueType getValueType(LiteralValue* value) noexcept;
 
 class LiteralValue : public LiteralValuePtr
 {
 public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
 
-	constexpr inline IdValueType type() const noexcept {
+	constexpr inline LiteralValueType type() const noexcept {
 		return getValueType((LiteralValue*)this);
 	}
 };
 
-
-inline LiteralValue* litStr(const std::string& value) noexcept {
-	return new LiteralValue(value);
+template <typename T>
+inline LiteralValue* lit(T value) noexcept {
+	return new LiteralValue(LiteralValuePtr(value));
 }
 
-inline LiteralValue* litNum(double value) noexcept {
-	return new LiteralValue(value);
-}
-
-inline LiteralValue* litBool(bool value) noexcept {
-	return new LiteralValue(value);
-}
-
-inline LiteralValue* litList(LiteralValueList value) noexcept {
-	return new LiteralValue(value);
-}
-
-inline LiteralValue* litObj(LiteralValueObj value) noexcept {
-	return new LiteralValue(value);
+inline LiteralValue* lit(int value) noexcept {
+	return new LiteralValue(LiteralValuePtr((double)value));
 }
 
 
-constexpr inline IdValueType getValueType(LiteralValue* value) noexcept {
+
+constexpr inline LiteralValueType getValueType(LiteralValue* value) noexcept {
 	if (!value) return Null;
-	return (IdValueType)value->index();
+	return (LiteralValueType)value->index();
 }
 
-inline LiteralValue* getListFromTokenList(TokenList source) {
-	LiteralValue* lit = new LiteralValue(LiteralValueList());
+inline LiteralValue* getListFromTokenList(const TokenList& source) {
+	LiteralValue* const lit = new LiteralValue(LitList());
 
-	for (Token token : source)
+	for (const Token& token : source)
 		asList(lit).push_back(token.getLiteral());
 
 	return lit;
 }
 
 inline LiteralValue* getObjFromTokenList(TokenList source) {
-	LiteralValue* lit = new LiteralValue(std::map<std::string, LiteralValue*>());
+	LiteralValue* const lit = new LiteralValue(std::map<std::string, LiteralValue*>());
 	LiteralValue* aux;
 
 	for (Token token : source) {

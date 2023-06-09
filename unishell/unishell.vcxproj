@@ -139,6 +139,7 @@
     <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
     <ClCompile Include="src\filesystem\fileFormating.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
+    <ClCompile Include="src\parser\color\colorParser.cpp" />
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
     <ClCompile Include="src\parser\processing\tokenProcessing.cpp" />
     <ClCompile Include="src\path\pathHandler.cpp" />

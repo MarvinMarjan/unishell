@@ -81,8 +81,8 @@ LiteralValue* exec() override {
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
 
-	return litList(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
-		return litStr(file.path().filename().string());
+	return lit(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
+		return lit(file.path().filename().string());
 		}));
 }
 END_COMMAND
@@ -95,7 +95,7 @@ LiteralValue* exec() override {
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
 
-	return litList(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
+	return lit(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
 		return fsys::File::getFileDataObjFromFile(file.path().string());
 	}));
 }
@@ -106,7 +106,7 @@ START_COMMAND(FSysRetCmdExists, ParamVec({ {nullptr, {Literal}} }), RetCommandBa
 LiteralValue* exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
 
-	return litBool(fsys::File::exists(res.path));
+	return lit(fsys::File::exists(res.path));
 }
 END_COMMAND
 
@@ -121,7 +121,7 @@ LiteralValue* exec() override {
 	checkPathType(res.path, ExpFile, symbol);
 
 	try {
-		return litStr(fsys::File::readAsString(res.path));
+		return lit(fsys::File::readAsString(res.path));
 	}
 	catch (const fsys::FileException& err) {
 		THROW_RUNTIME_ERR("Couldn't open file: " + qtd(err.path));
@@ -138,7 +138,7 @@ LiteralValue* exec() override {
 	checkPathType(res.path, ExpFile, symbol);
 
 	try {
-		return litList(TypeUtil::stringListToLiteralList(fsys::File::readAsList(res.path)));
+		return lit(TypeUtil::stringListToLiteralList(fsys::File::readAsList(res.path)));
 	}
 	catch (const fsys::FileException& err) {
 		THROW_RUNTIME_ERR("Couldn't open file: " + qtd(err.path));
@@ -147,7 +147,7 @@ LiteralValue* exec() override {
 END_COMMAND
 
 // write
-START_COMMAND(FSysRetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {litBool(false), {Bool}} }), RetCommandBase, "write", CmdFunc::Filesystem)
+START_COMMAND(FSysRetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {lit(false), {Bool}} }), RetCommandBase, "write", CmdFunc::Filesystem)
 LiteralValue* exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 	bool appendMode = asBool(args[2]);
@@ -157,6 +157,6 @@ LiteralValue* exec() override {
 
 	fsys::File::write(res.path, asStr(args[1]), (appendMode) ? std::ios::app : std::ios::out);
 
-	return litStr(fsys::File::readAsString(res.path));
+	return lit(fsys::File::readAsString(res.path));
 }
 END_COMMAND

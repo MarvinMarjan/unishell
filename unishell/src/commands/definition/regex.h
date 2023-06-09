@@ -5,7 +5,7 @@
 // match
 START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
 LiteralValue* exec() override {
-	LiteralValue* list = litList({});
+	LiteralValue* list = lit(LitList());
 
 	if (asStr(args[1]).empty())
 		THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
@@ -37,6 +37,6 @@ LiteralValue* exec() override {
 
 	src = std::regex_replace(src, pattern, repStr);
 
-	return litStr(src);
+	return lit(src);
 }
 END_COMMAND

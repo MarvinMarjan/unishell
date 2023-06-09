@@ -99,11 +99,11 @@ public:
 		return std::string();
 	}
 
-	static inline LiteralValueList stringListToLiteralList(const StringList& list) noexcept {
-		LiteralValueList res;
+	static inline LitList stringListToLiteralList(const StringList& list) noexcept {
+		LitList res;
 
 		for (const std::string& item : list)
-			res.push_back(litStr(item));
+			res.push_back(lit(item));
 
 		return res;
 	}
@@ -116,7 +116,7 @@ public:
 		return typeToTokenEnum(lit->type());
 	}
 
-	constexpr static inline TokenEnum typeToTokenEnum(IdValueType type) noexcept {
+	constexpr static inline TokenEnum typeToTokenEnum(LiteralValueType type) noexcept {
 		switch (type) {
 		case Literal:	return LITERAL;
 		case Number:	return NUMBER;
@@ -129,7 +129,7 @@ public:
 		return LITERAL;
 	}
 
-	static inline std::string getTypeAsString(IdValueType type, bool colorize = false) noexcept {
+	static inline std::string getTypeAsString(LiteralValueType type, bool colorize = false) noexcept {
 		std::string ret;
 		
 		switch (type) {
@@ -150,7 +150,7 @@ public:
 		return ret;
 	}
 
-	static inline std::string getTypeAsString(const std::vector<IdValueType>& types, bool colorize = false) noexcept {
+	static inline std::string getTypeAsString(const std::vector<LiteralValueType>& types, bool colorize = false) noexcept {
 		std::string str = "";
 
 		for (size_t i = 0; i < types.size(); i++)
@@ -170,12 +170,12 @@ public:
 		else return type;
 	}
 	
-	constexpr static inline bool isTypeof(LiteralValue* value, IdValueType type) noexcept {
+	constexpr static inline bool isTypeof(LiteralValue* value, LiteralValueType type) noexcept {
 		return (value->type() == type);
 	}
 
 	// return true if all values inside "list" has type "type"
-	static inline bool isListOf(LiteralValue* list, IdValueType type) {
+	static inline bool isListOf(LiteralValue* list, LiteralValueType type) {
 		if (list->type() != List) return false;
 
 		for (LiteralValue* val : asList(list))

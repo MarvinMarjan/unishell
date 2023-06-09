@@ -11,7 +11,7 @@ public:
 	}
 
 private:
-	LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
+	constexpr LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
 		return expr->value;
 	}
 
@@ -40,56 +40,56 @@ private:
 
 		switch (expr->op.getType()) {
 		case AND:
-			return new LiteralValue(isTruthy((left)) && isTruthy(right));
+			return lit(isTruthy((left)) && isTruthy(right));
 
 		case OR:
-			return new LiteralValue(isTruthy(left) || isTruthy(right));
+			return lit(isTruthy(left) || isTruthy(right));
 
 		case GREATER:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) > asDbl(right));
+			return lit(asDbl(left) > asDbl(right));
 
 		case LESS:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) < asDbl(right));
+			return lit(asDbl(left) < asDbl(right));
 
 		case GREATER_EQUAL:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) >= asDbl(right));
+			return lit(asDbl(left) >= asDbl(right));
 
 		case LESS_EQUAL:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) <= asDbl(right));
+			return lit(asDbl(left) <= asDbl(right));
 
-		case BANG_EQUAL: return new LiteralValue(!isEqual(left, right));
+		case BANG_EQUAL: return lit(!isEqual(left, right));
 		case EQUAL:
 			checkLiteralType({ left, right }, { Number, Literal, Bool, List, Object });
 			*left = *right; // assignment using pointers
 			return left;
 
-		case EQUAL_EQUAL: return new LiteralValue(isEqual(left, right));
-		case EQUAL_EQUAL_EQUAL: return new LiteralValue(isEqual(left, right, true));
+		case EQUAL_EQUAL: return lit(isEqual(left, right));
+		case EQUAL_EQUAL_EQUAL: return lit(isEqual(left, right, true));
 
 		case PLUS:
 			if (getValueType(left) == Literal || getValueType(right) == Literal)
-				return new LiteralValue(litToStr(left) + litToStr(right));
+				return lit(litToStr(left) + litToStr(right));
 
 			else {
 				checkLiteralType({ left, right }, { Number });
-				return new LiteralValue(asDbl(left) + asDbl(right));
+				return lit(asDbl(left) + asDbl(right));
 			}
 
 		case MINUS:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) - asDbl(right));
+			return lit(asDbl(left) - asDbl(right));
 
 		case STAR:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) * asDbl(right));
+			return lit(asDbl(left) * asDbl(right));
 
 		case SLASH:
 			checkLiteralType({ left, right }, { Number });
-			return new LiteralValue(asDbl(left) / asDbl(right));
+			return lit(asDbl(left) / asDbl(right));
 		}
 
 		return nullptr;
@@ -102,7 +102,8 @@ private:
 
 	inline bool isTruthy(LiteralValue* value) {
 		if (!value) return false;
-		if (getValueType(value) == Bool) return asBool(value);
+		if (value->type() == Bool) return asBool(value);
+
 		return true;
 	}
 
@@ -114,20 +115,20 @@ private:
 			return (litToStr(a) == litToStr(b));
 		
 		// strict equality
-		if (getValueType(a) != getValueType(b)) return false;
+		if (a->type() != b->type()) return false;
 		
 		return (litToStr(a) == litToStr(b));
 	}
 
-	inline void checkLiteralType(LiteralValue* value, std::vector<IdValueType> expectedTypes) {
-		for (IdValueType type : expectedTypes)
+	inline void checkLiteralType(LiteralValue* value, const std::vector<LiteralValueType>& expectedTypes) {
+		for (LiteralValueType type : expectedTypes)
 			if (TypeUtil::isTypeof(value, type))
 				return;
 		
 		throw SystemException(ExprInterpreterError, TypeUtil::getTypeAsString(expectedTypes) + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
 	}
 
-	inline void checkLiteralType(std::vector<LiteralValue*> vals, std::vector<IdValueType> expectedTypes) {
+	inline void checkLiteralType(const std::vector<LiteralValue*>& vals, const std::vector<LiteralValueType>& expectedTypes) {
 		for (LiteralValue* value : vals)
 			checkLiteralType(value, expectedTypes);
 	}

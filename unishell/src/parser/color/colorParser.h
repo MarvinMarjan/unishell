@@ -17,32 +17,7 @@ public:
 	}
 
 	// returns a string representation of the source color
-	BaseColorStructure* parse() {
-		const std::string fMode = advance().getLexical();
-		TokenList args;
-
-		advance();
-
-		args = getArgs();
-
-		if (!args.size()) {
-			if (!ignoreExceptions) throw SystemException(ColorParserError, "Argument expected", ExceptionRef(*System::input(), peek().getIndex()));
-			return nullptr;
-		}
-
-		// color formats
-		if (fMode == "id") return getIdClrStructure(args);
-		if (fMode == "rgb") return getRGBClrStructure(args);
-		if (fMode == "clr") return getClrStructure(args);
-
-		else {
-			if (ignoreExceptions) return nullptr;
-			throw SystemException(ColorParserError, "Unknown color format", ExceptionRef(*System::input(), src[0].getIndex()));
-		}
-		
-		// for safety
-		return nullptr;
-	}
+	BaseColorStructure* parse();
 
 private:
 	// Failure for exceptions, but ignoreExceptions is true
@@ -108,38 +83,18 @@ private:
 
 	// throws a exception if args size is greater or lower 
 	// than the expected or if color mode doesn't exists
-	OperationResult checkArgsSize(const TokenList& args, size_t minArgSize, Token& optionalMode) const
-	{
-		if (args.size() > minArgSize + 1) {
-			if (ignoreExceptions) return Failure;
-			throw SystemException(ColorParserError, "Number of arguments exceeded", ExceptionRef(*System::input(), args[args.size() - 1].getIndex()));
-		}
-
-		if (args.size() > minArgSize)
-			optionalMode = args[args.size() - 1];
-
-		else if (args.size() < minArgSize) {
-			if (ignoreExceptions) return Failure;
-			throw SystemException(ColorParserError, "Insufficient arguments", ExceptionRef(*System::input(), args[args.size() - 1].getIndex()));
-		}
-
-		if (!VectorUtil::exists(__colormode, optionalMode.getLexical())) {
-			if (ignoreExceptions) return Failure;
-			throw SystemException(ColorParserError, "Unknown color mode", ExceptionRef(*System::input(), args[args.size() - 1].getIndex()));
-		}
-
-		return Success;
-	}
+	OperationResult checkArgsSize(const TokenList& args, size_t minArgSize, Token& optionalMode) const;
+	
 
 	// throws a exception if the type of a token in args is
 	// not the expected
-	OperationResult checkTokenType(const TokenList& args, TokenEnum expectedType, const std::string& expectedTypeStr) const
-	{
-		for (Token token : args)
+	OperationResult checkTokenType(const TokenList& args, TokenEnum expectedType, const std::string& expectedTypeStr) const {
+		for (const Token& token : args) {
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
 				throw SystemException(ColorParserError, expectedTypeStr + " expected", ExceptionRef(*System::input(), token.getIndex()));
 			}
+		}
 
 		return Success;
 	}
@@ -159,8 +114,7 @@ private:
 		return src[(size_t)current - 1];
 	}
 
-	bool isAtEnd() const
-	{
+	constexpr bool isAtEnd() const {
 		return ((size_t)current >= src.size());
 	}
 
