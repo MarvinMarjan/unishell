@@ -81,7 +81,8 @@ void exec() override {
 	str << "Enter " << clr("cmdHelp", __clr_system_command->toString()) << " to get a list of commands." << std::endl;
 	str << "Enter " << clr("retCmdHelp", __clr_system_command->toString()) << " to get a list of return commands." << std::endl;
 	str << "Enter " << clr("colorHelp", __clr_system_command->toString()) << " to get a list of predefined colors." << std::endl;
-	str << "Enter " << clr("idClrHelp", __clr_system_command->toString()) << " to get a list of valid color id.";
+	str << "Enter " << clr("idClrHelp", __clr_system_command->toString()) << " to get a list of valid color id." << std::endl;
+	str << "Enter " << clr("clrModeHelp", __clr_system_command->toString()) << " to get a list of valid color modes.";
 
 	sysprintln(str.str());
 }
@@ -124,6 +125,8 @@ void exec() override {
 	else sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 }
 END_COMMAND
+
+
 
 // clrHelp
 START_COMMAND(SysCmdClrHelp, {}, CommandBase, "clrHelp", CmdFunc::System)

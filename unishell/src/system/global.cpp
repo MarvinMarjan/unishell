@@ -62,10 +62,6 @@ const std::vector<CommandBase*> __sys_commands = {
 	
 	new SysCmdCd(),
 	new SysCmdLs(),
-	new FSysCmdCreateFile(),
-	new FSysCmdCreateDir(),
-	new FSysCmdRemoveFile(),
-	new FSysCmdRemoveDir(),
 
 	new SysCmdVar(),
 	new SysCmdDel(),
@@ -78,14 +74,16 @@ const std::vector<CommandBase*> __sys_commands = {
 	new SysCmdIdColorHelp(),
 	new SysCmdClrModeHelp(),
 	
-	new SysCmdExit()
+	new SysCmdExit(),
+
+	new FSysCmdCreateFile(),
+	new FSysCmdCreateDir(),
+	new FSysCmdRemoveFile(),
+	new FSysCmdRemoveDir(),
 };
 
 const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new SysRetCmdInput(),
- 
-	new TypeRetCmdType(),
-	new ListRetCmdSize(),
 
 	new LiteralRetCmdAt(),
 	new LiteralRetCmdSize(),
@@ -94,6 +92,10 @@ const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new LiteralRetCmdSplit(),
 	new LiteralRetCmdJoin(),
 
+	new NumberRetCmdRound(),
+	new NumberRetCmdIsDecimal(),
+
+	new ListRetCmdSize(),
 	new ListRetCmdAppend(),
 	new ListRetCmdAt(),
 	new ListRetCmdErase(),
@@ -114,11 +116,11 @@ const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new RegexRetCmdMatch(),
 	new RegexRetCmdReplace(),
 
+	new TypeRetCmdType(),
 	new TypeRetCmdLiteral(),
 	new TypeRetCmdNumber(),
-	new NumberRetCmdRound(),
-	new NumberRetCmdIsDecimal(),
 	new TypeRetCmdBool()
+	
 };
 
 const FSExtension __fs_file_extensions_text = {
@@ -211,7 +213,7 @@ BaseColorStructure* __clr_multi_command = new IdColorStructure(231);
 
 BaseColorStructure* __clr_type_command = new IdColorStructure(203);
 BaseColorStructure* __clr_literal_command = new IdColorStructure(72);
-BaseColorStructure* __clr_number_command = new IdColorStructure(109);
+BaseColorStructure* __clr_number_command = new IdColorStructure(110);
 BaseColorStructure* __clr_list_command = new IdColorStructure(131);
 BaseColorStructure* __clr_object_command = new IdColorStructure(216);
 BaseColorStructure* __clr_system_command = new IdColorStructure(140);
