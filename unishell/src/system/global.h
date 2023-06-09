@@ -64,12 +64,16 @@ extern BaseColorStructure* __clr_ex_sys_identifier;
 extern BaseColorStructure* __clr_flag;
 
 extern BaseColorStructure* __clr_command;
-extern BaseColorStructure* __clr_ex_command;
+extern BaseColorStructure* __clr_multi_command;
 
-extern BaseColorStructure* __clr_ret_command;
-extern BaseColorStructure* __clr_ex_ret_command;
-extern BaseColorStructure* __clr_sys_ret_command;
-extern BaseColorStructure* __clr_ex_sys_ret_command;
+extern BaseColorStructure* __clr_type_command;
+extern BaseColorStructure* __clr_literal_command;
+extern BaseColorStructure* __clr_number_command;
+extern BaseColorStructure* __clr_list_command;
+extern BaseColorStructure* __clr_object_command;
+extern BaseColorStructure* __clr_system_command;
+extern BaseColorStructure* __clr_filesystem_command;
+extern BaseColorStructure* __clr_regex_command;
 
 extern BaseColorStructure* __clr_numbers;
 extern BaseColorStructure* __clr_operators;

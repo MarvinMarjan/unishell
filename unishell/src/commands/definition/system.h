@@ -78,10 +78,10 @@ START_COMMAND(SysCmdHelp, {}, CommandBase, "help", CmdFunc::System)
 void exec() override {
 	std::stringstream str;
 
-	str << "Enter " << clr("cmdHelp", __clr_command->toString()) << " to get a list of commands." << std::endl;
-	str << "Enter " << clr("retCmdHelp", __clr_command->toString()) << " to get a list of return commands." << std::endl;
-	str << "Enter " << clr("colorHelp", __clr_command->toString()) << " to get a list of predefined colors." << std::endl;
-	str << "Enter " << clr("idClrHelp", __clr_command->toString()) << " to get a list of valid color id.";
+	str << "Enter " << clr("cmdHelp", __clr_system_command->toString()) << " to get a list of commands." << std::endl;
+	str << "Enter " << clr("retCmdHelp", __clr_system_command->toString()) << " to get a list of return commands." << std::endl;
+	str << "Enter " << clr("colorHelp", __clr_system_command->toString()) << " to get a list of predefined colors." << std::endl;
+	str << "Enter " << clr("idClrHelp", __clr_system_command->toString()) << " to get a list of valid color id.";
 
 	sysprintln(str.str());
 }
@@ -115,7 +115,7 @@ void exec() override {
 		RetCommandBase* pCmd = CmdUtil::getRetCommand(cmdName);
 
 		if (!pCmd)
-			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_sys_ret_command->toString()));
+			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
 
 		std::string msg = stringifyHelpData(pCmd->help());
 		sysprintln(msg);
@@ -174,9 +174,3 @@ END_COMMAND
 
 
 
-// type
-START_COMMAND(SysRetCmdType, { nullptr }, RetCommandBase, "type", CmdFunc::System)
-LiteralValue* exec() override {
-	return litStr(TypeUtil::getTypeAsString(getValueType(args[0])));
-}
-END_COMMAND

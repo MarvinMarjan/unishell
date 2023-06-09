@@ -16,7 +16,8 @@ enum class CmdFunc
 	Object,
 
 	System,
-	Filesystem
+	Filesystem,
+	Regex
 };
 
 // exec return type

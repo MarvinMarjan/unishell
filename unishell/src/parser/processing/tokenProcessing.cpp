@@ -129,7 +129,7 @@ inline Token TokenProcess::getRetCommandReturn(TokenList source, size_t& i, bool
 	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
-		throw SystemException(CommandError, "Unknown command: " + clr(source[i].getLexical(), __clr_ret_command->toString()));
+		throw SystemException(CommandError, "Unknown command: " + clr(source[i].getLexical(), __clr_command->toString()));
 
 	ret = retCmd->exec();
 

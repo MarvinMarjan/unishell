@@ -132,6 +132,15 @@ public:
 		return ret;
 	}
 
+	static inline std::string getTypeAsString(std::vector<IdValueType> types, bool colorize = false) noexcept {
+		std::string str = "";
+
+		for (size_t i = 0; i < types.size(); i++)
+			str += getTypeAsString(types[i], colorize) + ((i + 1 >= types.size()) ? "" : " | ");
+
+		return str;
+	}
+
 	static inline std::string colorizeStrType(const std::string& type) {
 		if (type == "Literal") return clr(type, __clr_type_literal->toString());
 		else if (type == "Number") return clr(type, __clr_type_number->toString());

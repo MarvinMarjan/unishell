@@ -84,7 +84,7 @@ const std::vector<CommandBase*> __sys_commands = {
 const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new SysRetCmdInput(),
  
-	new SysRetCmdType(),
+	new TypeRetCmdType(),
 	new ListRetCmdSize(),
 
 	new LiteralRetCmdAt(),
@@ -206,13 +206,17 @@ BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
 
 BaseColorStructure* __clr_flag = new IdColorStructure(157);
 
-BaseColorStructure* __clr_command = new IdColorStructure(141);
-BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
+BaseColorStructure* __clr_command = new IdColorStructure(218);
+BaseColorStructure* __clr_multi_command = new IdColorStructure(231);
 
-BaseColorStructure* __clr_ret_command = new IdColorStructure(162);
-BaseColorStructure* __clr_ex_ret_command = new IdColorStructure(162, italic);
-BaseColorStructure* __clr_sys_ret_command = new IdColorStructure(203);
-BaseColorStructure* __clr_ex_sys_ret_command = new IdColorStructure(203, italic);
+BaseColorStructure* __clr_type_command = new IdColorStructure(203);
+BaseColorStructure* __clr_literal_command = new IdColorStructure(72);
+BaseColorStructure* __clr_number_command = new IdColorStructure(109);
+BaseColorStructure* __clr_list_command = new IdColorStructure(131);
+BaseColorStructure* __clr_object_command = new IdColorStructure(216);
+BaseColorStructure* __clr_system_command = new IdColorStructure(140);
+BaseColorStructure* __clr_filesystem_command = new IdColorStructure(184);
+BaseColorStructure* __clr_regex_command = new IdColorStructure(163);
 
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
 BaseColorStructure* __clr_operators = new IdColorStructure(222);

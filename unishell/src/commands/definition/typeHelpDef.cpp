@@ -1,5 +1,10 @@
 #include "type.h"
 
+// type
+START_HELP(TypeRetCmdType)
+return { .name = TypeRetCmdType().symbol, .params = {{"Value", {Any}}}, .description = "returns the type of ^0." };
+END_HELP
+
 // literal
 START_HELP(TypeRetCmdLiteral)
 return { .name = TypeRetCmdLiteral().symbol, .params = {{"Value", {Literal, Number, Bool}}}, .description = "converts ^0 into a Literal type." };

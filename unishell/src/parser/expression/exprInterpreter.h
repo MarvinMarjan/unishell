@@ -24,7 +24,7 @@ private:
 
 		switch (expr->op.getType()) {
 		case MINUS:
-			checkLiteralType(right, { Number }, "Number");
+			checkLiteralType(right, { Number });
 			return new LiteralValue(-asDbl(right));
 
 		case BANG:
@@ -46,24 +46,24 @@ private:
 			return new LiteralValue(isTruthy(left) || isTruthy(right));
 
 		case GREATER:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) > asDbl(right));
 
 		case LESS:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) < asDbl(right));
 
 		case GREATER_EQUAL:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) >= asDbl(right));
 
 		case LESS_EQUAL:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) <= asDbl(right));
 
 		case BANG_EQUAL: return new LiteralValue(!isEqual(left, right));
 		case EQUAL:
-			checkLiteralType({ left, right }, { Number, Literal, Bool }, "Number | Literal | Bool");
+			checkLiteralType({ left, right }, { Number, Literal, Bool, List, Object });
 			*left = *right; // assignment using pointers
 			return left;
 
@@ -75,20 +75,20 @@ private:
 				return new LiteralValue(litToStr(left) + litToStr(right));
 
 			else {
-				checkLiteralType({ left, right }, { Number }, "Number");
+				checkLiteralType({ left, right }, { Number });
 				return new LiteralValue(asDbl(left) + asDbl(right));
 			}
 
 		case MINUS:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) - asDbl(right));
 
 		case STAR:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) * asDbl(right));
 
 		case SLASH:
-			checkLiteralType({ left, right }, { Number }, "Number");
+			checkLiteralType({ left, right }, { Number });
 			return new LiteralValue(asDbl(left) / asDbl(right));
 		}
 
@@ -119,16 +119,16 @@ private:
 		return (litToStr(a) == litToStr(b));
 	}
 
-	inline void checkLiteralType(LiteralValue* value, std::vector<IdValueType> expectedTypes, const std::string& typeStr) {
+	inline void checkLiteralType(LiteralValue* value, std::vector<IdValueType> expectedTypes) {
 		for (IdValueType type : expectedTypes)
 			if (TypeUtil::isTypeof(value, type))
 				return;
 		
-		throw SystemException(ExprInterpreterError, typeStr + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
+		throw SystemException(ExprInterpreterError, TypeUtil::getTypeAsString(expectedTypes) + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
 	}
 
-	inline void checkLiteralType(std::vector<LiteralValue*> vals, std::vector<IdValueType> expectedTypes, const std::string& typeStr) {
+	inline void checkLiteralType(std::vector<LiteralValue*> vals, std::vector<IdValueType> expectedTypes) {
 		for (LiteralValue* value : vals)
-			checkLiteralType(value, expectedTypes, typeStr);
+			checkLiteralType(value, expectedTypes);
 	}
 };

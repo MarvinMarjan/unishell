@@ -113,7 +113,7 @@ END_COMMAND
 
 
 // read
-START_COMMAND(FSysRetCmdRead, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "read", CmdFunc::System)
+START_COMMAND(FSysRetCmdRead, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "read", CmdFunc::Filesystem)
 LiteralValue* exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
@@ -130,7 +130,7 @@ LiteralValue* exec() override {
 END_COMMAND
 
 // readAsList
-START_COMMAND(FSysRetCmdReadAsList, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "readAsList", CmdFunc::System)
+START_COMMAND(FSysRetCmdReadAsList, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "readAsList", CmdFunc::Filesystem)
 LiteralValue* exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
@@ -147,7 +147,7 @@ LiteralValue* exec() override {
 END_COMMAND
 
 // write
-START_COMMAND(FSysRetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {litBool(false), {Bool}} }), RetCommandBase, "write", CmdFunc::System)
+START_COMMAND(FSysRetCmdWrite, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {litBool(false), {Bool}} }), RetCommandBase, "write", CmdFunc::Filesystem)
 LiteralValue* exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 	bool appendMode = asBool(args[2]);

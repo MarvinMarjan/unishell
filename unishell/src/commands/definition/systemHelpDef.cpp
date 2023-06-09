@@ -91,10 +91,3 @@ END_HELP
 START_HELP(SysRetCmdInput)
 return { .name = SysRetCmdInput().symbol, .description = "returns the user input." };
 END_HELP
-
-
-
-// type
-START_HELP(SysRetCmdType)
-return { .name = SysRetCmdType().symbol, .params = {{"Value", {Any}}}, .description = "returns the type of ^0." };
-END_HELP

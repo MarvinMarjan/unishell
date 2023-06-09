@@ -48,7 +48,7 @@ public:
 				return {};
 
 		for (std::string item : src)
-			if (StringUtil::startsWith(item, sortener))
+			if (StringUtil::startsWith(item, sortener) && !VectorUtil::exists(res, item))
 				res.push_back(item);
 
 		if (res.empty() || sortener.empty()) return src;

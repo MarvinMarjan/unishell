@@ -34,7 +34,6 @@ CommandBase* CmdUtil::getCommand(const std::string& cmdName, ArgList args, FlagL
 RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args, FlagList flags)
 {
 	CHECK_CMD(SysRetCmdInput);
-	CHECK_CMD(SysRetCmdType);
 
 	CHECK_CMD(LiteralRetCmdSub);
 	CHECK_CMD(LiteralRetCmdSplit);
@@ -55,6 +54,7 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args,
 	CHECK_CMD(RegexRetCmdMatch);
 	CHECK_CMD(RegexRetCmdReplace);
 
+	CHECK_CMD(TypeRetCmdType);
 	CHECK_CMD(TypeRetCmdLiteral);
 	CHECK_CMD(TypeRetCmdNumber);
 	CHECK_CMD(TypeRetCmdBool);
@@ -64,6 +64,7 @@ RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, ArgList args,
 
 
 
+	// overload
 	CHECK_CMD_OL("at", LiteralRetCmdAt, ListRetCmdAt, ObjectRetCmdAt);
 	CHECK_CMD_OL("erase", LiteralRetCmdErase, ListRetCmdErase);
 	CHECK_CMD_OL("eraseAt", ListRetCmdEraseAt, ObjectRetCmdEraseAt);

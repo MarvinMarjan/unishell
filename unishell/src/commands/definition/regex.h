@@ -3,7 +3,7 @@
 #include "defBase.h"
 
 // match
-START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match", CmdFunc::System)
+START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
 LiteralValue* exec() override {
 	LiteralValue* list = litList({});
 
@@ -25,7 +25,7 @@ LiteralValue* exec() override {
 END_COMMAND
 
 // replace
-START_COMMAND(RegexRetCmdReplace, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "replace", CmdFunc::System)
+START_COMMAND(RegexRetCmdReplace, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "replace", CmdFunc::Regex)
 LiteralValue* exec() override {
 	std::string src = asStr(args[0]);
 	std::string repStr = asStr(args[2]);
