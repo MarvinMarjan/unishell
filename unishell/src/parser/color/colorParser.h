@@ -10,7 +10,7 @@
 class ColorParser
 {
 public:
-	ColorParser(TokenList src, bool ignoreExceptions = false) : 
+	explicit ColorParser(const TokenList& src, bool ignoreExceptions = false) : 
 		src(src), ignoreExceptions(ignoreExceptions)
 	{
 		current = 0;
@@ -18,7 +18,7 @@ public:
 
 	// returns a string representation of the source color
 	BaseColorStructure* parse() {
-		std::string fMode = advance().getLexical();
+		const std::string fMode = advance().getLexical();
 		TokenList args;
 
 		advance();
@@ -50,7 +50,7 @@ private:
 	enum OperationResult { Success, Failure };
 
 
-	inline TokenList getArgs() {
+	TokenList getArgs() {
 		TokenList args;
 
 		// gets all tokens before a COLON
@@ -64,7 +64,8 @@ private:
 
 
 	// id color format
-	inline IdColorStructure* getIdClrStructure(TokenList args) {
+	IdColorStructure* getIdClrStructure(TokenList args) const
+	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
 		if (checkArgsSize(args, IdColorStructure::argSize, optionalMode) == Failure) return nullptr;
@@ -75,7 +76,8 @@ private:
 
 
 	// rgb color format
-	inline RGBColorStructure* getRGBClrStructure(TokenList args) {
+	RGBColorStructure* getRGBClrStructure(TokenList args) const
+	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
 		if (checkArgsSize(args, RGBColorStructure::argSize, optionalMode) == Failure) return nullptr;
@@ -89,7 +91,8 @@ private:
 
 
 	// predefined color format
-	inline ColorStructure* getClrStructure(TokenList args) {
+	ColorStructure* getClrStructure(TokenList args) const
+	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
 		if (checkArgsSize(args, ColorStructure::argSize, optionalMode) == Failure) return nullptr;
@@ -105,7 +108,8 @@ private:
 
 	// throws a exception if args size is greater or lower 
 	// than the expected or if color mode doesn't exists
-	inline OperationResult checkArgsSize(TokenList args, size_t minArgSize, Token& optionalMode) {
+	OperationResult checkArgsSize(const TokenList& args, size_t minArgSize, Token& optionalMode) const
+	{
 		if (args.size() > minArgSize + 1) {
 			if (ignoreExceptions) return Failure;
 			throw SystemException(ColorParserError, "Number of arguments exceeded", ExceptionRef(*System::input(), args[args.size() - 1].getIndex()));
@@ -129,7 +133,8 @@ private:
 
 	// throws a exception if the type of a token in args is
 	// not the expected
-	inline OperationResult checkTokenType(TokenList args, TokenEnum expectedType, const std::string& expectedTypeStr) {
+	OperationResult checkTokenType(const TokenList& args, TokenEnum expectedType, const std::string& expectedTypeStr) const
+	{
 		for (Token token : args)
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
@@ -140,21 +145,22 @@ private:
 	}
 
 
-	inline Token advance() {
+	Token advance() {
 		if (!isAtEnd()) current++;
 		return prev();
 	}
 
-	inline Token peek() {
+	Token peek() {
 		return src[current];
 	}
 
-	inline Token prev() {
+	Token prev() {
 		if (!current) return src[current];
 		return src[(size_t)current - 1];
 	}
 
-	inline bool isAtEnd() {
+	bool isAtEnd() const
+	{
 		return ((size_t)current >= src.size());
 	}
 

@@ -6,7 +6,7 @@ PathHandler::PathHandler(const std::string& path) {
 	canManip = true;
 }
 
-bool PathHandler::manip(PathTokenList instructions, bool ignoreExcp) {
+bool PathHandler::manip(const PathTokenList& instructions, bool ignoreExcp) {
 	canManip = true;
 
 	for (PathToken token : instructions)

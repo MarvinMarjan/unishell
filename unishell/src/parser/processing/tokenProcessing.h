@@ -29,10 +29,10 @@ public:
 private:
 	// execute a RETCOMMAND and replace it by
 	// the returned value
-	static TokenList expandRetCommands(TokenList source);
+	static TokenList expandRetCommands(const TokenList& source);
 
 	// gets the return value of a RETCOMMAND
-	static Token getRetCommandReturn(TokenList source, size_t& i, bool integrate = false);
+	static Token getRetCommandReturn(const TokenList& source, size_t& i, bool integrate = false);
 
 	// if the Token after a RETCOMMAND is a LIST, then
 	// interpret it as arguments and return a list containing
@@ -87,7 +87,7 @@ private:
 
 	// parse tokens that can be parsed. if token
 	// can be interpreted, interpret it
-	static TokenList parseTokens(TokenList source);
+	static TokenList parseTokens(const TokenList& source);
 
 
 	// reduce tokens that can be reduced into a 
@@ -135,7 +135,7 @@ private:
 
 	// get tokens inside lchar and rchar and add to res
 	// a token of resToken type
-	static void getInside(TokenList& res, TokenList source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false);
+	static void getInside(TokenList& res, const TokenList& source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false);
 
 	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
@@ -181,7 +181,7 @@ private:
 	
 	// identify color syntax and generate a COLOR containing
 	// the color syntax
-	static TokenList generateColorTokens(TokenList source);
+	static TokenList generateColorTokens(const TokenList& source);
 
 	static inline void consume(TokenList source, TokenEnum delimiter, size_t& i, const std::string& errMsg) {
 		while (source[i].getType() != delimiter) {
