@@ -12,6 +12,7 @@
 #include "../environment/environment.h"
 
 #define sysprint        System::print
+#define sysprintv		System::printv
 #define sysprintln(msg) System::print(msg, true)
 
 #define USER_INPUT *System::input()
@@ -21,7 +22,12 @@ class System
 public:
 	System();
 
-	static inline void print(const std::string& text, bool endLine = false) {
+	template <typename... Args>
+	static inline void printv(const Args&... args) noexcept {
+		(std::cout << ... << args);
+	}
+
+	static inline void print(const std::string& text, bool endLine = false) noexcept {
 		std::cout << text;
 		if (endLine) std::cout << std::endl;
 	}
@@ -41,17 +47,19 @@ public:
 
 
 
-	static inline PathHandler* path() noexcept {
+	constexpr static inline PathHandler* path() noexcept {
 		return __workingPath;
 	}
 
-	static inline std::string* input() noexcept {
+	constexpr static inline std::string* input() noexcept {
 		return __userInput;
 	}
 
-	static inline Environment* env() noexcept {
+	constexpr static inline Environment* env() noexcept {
 		return __environment;
 	}
+
+
 
 	static inline Identifier* getEnvId(const std::string& idName, int index = -1) {
 		Identifier* identifier = __environment->getId(idName);

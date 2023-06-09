@@ -9,7 +9,8 @@ class ObjUtil
 {
 public:
 	static inline LiteralValue* newFileDataObj(
-		const std::string& fileName, const std::string& fileEx, int size, fsys::FileF::FileAtts atts) noexcept 
+		const std::string& fileName, const std::string& fileEx, int size, const fsys::FileF::FileAtts& atts
+	) noexcept 
 	{
 		return litObj({
 			{"name", litStr(fileName)},

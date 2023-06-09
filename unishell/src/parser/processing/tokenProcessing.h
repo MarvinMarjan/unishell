@@ -51,10 +51,10 @@ private:
 
 	// transforms LIST tokens with sub tokens into
 	// LIST tokens with literals instead
-	static inline TokenList subToLiteral(TokenList source) {
+	static inline TokenList subToLiteral(const TokenList& source) {
 		TokenList res;
 
-		for (Token token : source)
+		for (const Token& token : source)
 			switch (token.getType()) {
 			case LIST: {
 				if (token.getLiteral()) {
@@ -62,7 +62,7 @@ private:
 					break;
 				}
 
-				TokenList parsed = process(token.getSub());
+				const TokenList parsed = process(token.getSub());
 				res.push_back(Token(LIST, "", getListFromTokenList(parsed), {}, token.getIndex()));
 				break;
 			}
@@ -73,7 +73,7 @@ private:
 					break;
 				}
 
-				TokenList parsed = process(token.getSub());
+				const TokenList parsed = process(token.getSub());
 				res.push_back(Token(OBJECT, "", getObjFromTokenList(parsed), {}, token.getIndex()));
 				break;
 			}
@@ -102,10 +102,10 @@ private:
 
 	// expands (replace) tokens that can be expanded by they
 	// corresponding value like IDENTIFIER
-	static inline TokenList expandTokens(TokenList source) {
+	static inline TokenList expandTokens(const TokenList& source) {
 		TokenList res;
 
-		for (Token token : source) {
+		for (const Token& token : source) {
 			switch (token.getType()) {
 			case IDENTIFIER:
 				res.push_back(assignIdentifierToken(token));
@@ -123,12 +123,12 @@ private:
 	// containing the value inside that symbol. if the identifier doesn't
 	// exists, a exception
 	static inline Token assignIdentifierToken(Token token) {
-		Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
+		const Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
 		LiteralValue* idValue = respectiveId.getValue();
 
 		token.lexical = litToStr(idValue);
 		token.lit = idValue;
-		token.type = TypeUtil::getTypeAsTokenEnum(respectiveId.getType());
+		token.type = TypeUtil::typeToTokenEnum(respectiveId.getType());
 
 		return token;
 	}
@@ -137,14 +137,14 @@ private:
 	// a token of resToken type
 	static void getInside(TokenList& res, const TokenList& source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub = false);
 
-	static inline void checkIndex(TokenList source, size_t& i, unsigned short aux, const std::string& errMsg) {
+	static inline void checkIndex(const TokenList& source, size_t& i, unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
 			throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, source[i].getIndex()));
 		else
 			i++;
 	}
 
-	static inline void checkLRChar(TokenList source, size_t& i, unsigned short& aux, TokenEnum lchar, TokenEnum rchar) noexcept {
+	static inline void checkLRChar(const TokenList& source, size_t& i, unsigned short& aux, TokenEnum lchar, TokenEnum rchar) noexcept {
 		if (source[i].getType() == lchar) aux++;
 		if (source[i].getType() == rchar) aux--;
 	}
@@ -153,7 +153,7 @@ private:
 	
 	// identify expressions and generate a EXPRESSION type conataining
 	// the expression body
-	static inline TokenList generateExpressions(TokenList source) {
+	static inline TokenList generateExpressions(const TokenList& source) {
 		TokenList res;
 
 		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression", true);
@@ -163,7 +163,7 @@ private:
 
 	// identify lists and generate a LIST type containing
 	// the list values
-	static inline TokenList generateLists(TokenList source) {
+	static inline TokenList generateLists(const TokenList& source) {
 		TokenList res;
 
 		getInside(res, source, LBRACKET, RBRACKET, LIST, "Unterminated list");
@@ -171,7 +171,9 @@ private:
 		return res;
 	}
 
-	static inline TokenList generateObjects(TokenList source) {
+	// identify objects and generate a OBJECT type containing
+	// the pairs inside it
+	static inline TokenList generateObjects(const TokenList& source) {
 		TokenList res;
 
 		getInside(res, source, LBRACE, RBRACE, OBJECT, "Unterminated object");
@@ -183,7 +185,7 @@ private:
 	// the color syntax
 	static TokenList generateColorTokens(const TokenList& source);
 
-	static inline void consume(TokenList source, TokenEnum delimiter, size_t& i, const std::string& errMsg) {
+	static inline void consume(const TokenList& source, TokenEnum delimiter, size_t& i, const std::string& errMsg) {
 		while (source[i].getType() != delimiter) {
 			if (i + 1 >= source.size())
 				throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, System::input()->size() - 1));

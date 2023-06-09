@@ -43,7 +43,7 @@ class LiteralValue : public LiteralValuePtr
 public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
 
-	inline IdValueType type() const noexcept {
+	constexpr inline IdValueType type() const noexcept {
 		return getValueType((LiteralValue*)this);
 	}
 };

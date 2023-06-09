@@ -52,7 +52,7 @@ public:
 		return (ch == ' ' || ch == '\t');
 	}
 
-	static inline std::string toUpper(const std::string& src) {
+	static inline std::string toUpper(const std::string& src) noexcept {
 		std::string res = "";
 
 		for (char ch : src)
@@ -61,7 +61,7 @@ public:
 		return res;
 	}
 
-	static inline std::string toLower(const std::string& src) {
+	static inline std::string toLower(const std::string& src) noexcept {
 		std::string res = "";
 
 		for (char ch : src)
@@ -74,7 +74,7 @@ public:
 		return (std::find(__word_separator.begin(), __word_separator.end(), ch) != __word_separator.end());
 	}
 
-	static inline bool startsWith(const std::string& src, const std::string& sub) {
+	static inline bool startsWith(const std::string& src, const std::string& sub) noexcept {
 		if (src.size() < sub.size()) return false;
 
 		if (src.substr(0, sub.size()) == sub)
@@ -83,7 +83,7 @@ public:
 		return false;
 	}
 
-	static inline size_t findLast(const std::string& src, char ch) {
+	static inline size_t findLast(const std::string& src, char ch) noexcept {
 		size_t index = 0;
 
 		for (size_t i = 0; i < src.size(); i++)
@@ -93,7 +93,8 @@ public:
 		return index;
 	}
 
-	static inline std::string eraseLast(const std::string& src) {
+	static inline std::string eraseLast(const std::string& src) noexcept {
+		if (!src.size()) return src;
 		return src.substr(0, src.size() - 1);
 	}
 
@@ -122,7 +123,7 @@ public:
 
 	// using Windows API for conversion. wstring_convert is deprecated since C++17
 	static inline char* wcharToChar(const wchar_t* wchar) {
-		int len = WideCharToMultiByte(CP_UTF8, 0, wchar, -1, nullptr, 0, nullptr, nullptr);
+		const int len = WideCharToMultiByte(CP_UTF8, 0, wchar, -1, nullptr, 0, nullptr, nullptr);
 		char* charStr = new char[len];
 		WideCharToMultiByte(CP_UTF8, 0, wchar, -1, charStr, len, nullptr, nullptr);
 		
@@ -130,7 +131,7 @@ public:
 	}
 
 	static inline wchar_t* charToWchar(const char* ch) {
-		int len = MultiByteToWideChar(CP_UTF8, 0, ch, -1, NULL, 0);
+		const int len = MultiByteToWideChar(CP_UTF8, 0, ch, -1, NULL, 0);
 		wchar_t* wchar = new wchar_t[len];
 		MultiByteToWideChar(CP_UTF8, 0, ch, -1, wchar, len);
 

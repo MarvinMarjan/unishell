@@ -2,11 +2,10 @@
 
 #include "../outstream/outputColor.h"
 
-#include <regex>
-
 class ClrUtil
 {
 public:
+	// returns a string containing every color in __color
 	static inline std::string getColoredColorList() noexcept {
 		std::string str = "";
 
@@ -16,11 +15,12 @@ public:
 		return str;
 	}
 
+	// returns a string containing a table of 255 ANSI colors
 	static inline std::string getColoredIdColorList() noexcept {
 		std::stringstream str;
 
-		for (unsigned int i = 0, col = 1; i <= 255; i++) {
-			str << id(i, normal) << std::setw(3) << std::left << tostr(i) << endclr << ((i + 1 <= 255) ? " " : "");
+		for (size_t i = 0, col = 1; i <= 255; i++) {
+			str << id((unsigned int)i, normal) << std::setw(3) << std::left << tostr(i) << endclr << ((i + 1 <= 255) ? " " : "");
 
 			if (++col > 21) {
 				str << "\n";
@@ -31,6 +31,7 @@ public:
 		return str.str();
 	}
 
+	// returns a string containing every color mode in __colormode
 	static inline std::string getColoredColorModeList() noexcept {
 		std::string str = "";
 

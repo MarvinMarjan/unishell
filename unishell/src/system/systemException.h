@@ -18,7 +18,7 @@ enum SystemExceptionType
 class SystemException
 {
 public:
-	SystemException(SystemExceptionType type, const std::string& msg, ExceptionRef ref = ExceptionRef()) : msg(msg), type(type), ref(ref)
+	SystemException(SystemExceptionType type, const std::string& msg, const ExceptionRef& ref = ExceptionRef()) : msg(msg), type(type), ref(ref)
 	{
 		switch (type)
 		{

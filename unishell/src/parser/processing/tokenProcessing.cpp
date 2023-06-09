@@ -17,6 +17,7 @@ void TokenProcess::getInside(TokenList& res, const TokenList& source, TokenEnum 
 
 			end = i;
 
+			// recursive processing
 			TokenList sub = TokenList(source.begin() + start + 1, source.begin() + end);
 			if (processSub) sub = process(sub);
 
@@ -58,17 +59,17 @@ TokenList TokenProcess::generateColorTokens(const TokenList& source) {
 TokenList TokenProcess::parseTokens(const TokenList& source) {
 	TokenList res;
 
-	for (Token token : source)
+	for (const Token& token : source)
 		switch (token.getType()) {
 		case COLOR: {
-			std::string parsed = ColorParser(token.getSub()).parse()->toString();
+			const std::string parsed = ColorParser(token.getSub()).parse()->toString();
 			res.push_back(Token(LITERAL, parsed, new LiteralValue(parsed), {}, token.getIndex()));
 			break;
 		}
 
 		case EXPRESSION: {
-			Expr* parsed = ExprParser(token.getSub(), *System::input()).parse();
-			LiteralValue* interpreted = ExprInterpreter().interpret(parsed);
+			Expr* const parsed = ExprParser(token.getSub(), *System::input()).parse();
+			LiteralValue* const interpreted = ExprInterpreter().interpret(parsed);
 			TypeUtil::checkNull(interpreted);
 			res.push_back(Token(TypeUtil::getLitTokenEnum(interpreted),
 				litToStr(interpreted), interpreted, {}, token.getIndex()));
@@ -87,7 +88,7 @@ TokenList TokenProcess::expandRetCommands(const TokenList& source) {
 	TokenList res;
 
 	for (size_t i = 0; i < source.size(); i++) {
-		Token token = source[i];
+		const Token token = source[i];
 
 		switch (token.getType()) {
 		case RETCOMMAND:

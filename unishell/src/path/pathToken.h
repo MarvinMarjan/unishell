@@ -10,9 +10,12 @@ typedef std::vector<PathToken> PathTokenList;
 class PathToken
 {
 public:
-	enum PathTokenType
-	{
-		Dot, TwoDots, DirSeparator, IDENTIFIER, Root
+	enum PathTokenType {
+		Dot,
+		TwoDots,
+		DirSeparator,
+		IDENTIFIER,
+		Root
 	};
 
 	PathToken(PathTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}

@@ -17,20 +17,24 @@ public:
 		return (strBool == "true" || strBool == "false");
 	}
 
-	static inline std::string boolToString(bool boolean) {
-		if (color) return boolformat(((boolean) ? "true" : "false"));
-		else return ((boolean) ? "true" : "false");
+	static inline std::string boolToString(bool boolean) noexcept {
+		const std::string strBool = ((boolean) ? "true" : "false");
+		return (color) ? boolformat(strBool) : strBool;
 	}
 
 	static inline bool stringToBool(const std::string& boolStr) noexcept {
 		return (boolStr == "true") ? true : false;
 	}
 
-	static inline bool isInteger(double value) {
+	// returns true if a double value can be
+	// represented as a integer (1.0, 3.0, ...)
+	static inline bool isInteger(double value) noexcept {
 		return (value == std::round(value));
 	}
 
-	static inline std::string formatDouble(double value) {
+	// returns a string that represents a double value.
+	// returns a integer string if the value canbe simplified
+	static inline std::string formatDouble(double value) noexcept {
 		std::string strNum = tostr(value);
 		size_t pos = strNum.find_last_not_of('0');
 
@@ -42,7 +46,9 @@ public:
 		return ((color) ? numformat(strNum) : strNum);
 	}
 
-	static inline std::string formatList(LiteralValue* lit) {
+	// returns a string that represents the value of a List.
+	// List( item1, item2, ... )
+	static inline std::string formatList(LiteralValue* lit) noexcept {
 		std::stringstream str;
 
 		str << "List( ";
@@ -57,7 +63,9 @@ public:
 		return str.str();
 	}
 
-	static inline std::string formatObject(LiteralValue* lit, bool indent = false) {
+	// returns a string that represents the value of a Object.
+	// Object( key: value )
+	static inline std::string formatObject(LiteralValue* lit, bool indent = false) noexcept {
 		std::stringstream str;
 
 		str << "Object( ";
@@ -76,7 +84,8 @@ public:
 		return str.str();
 	}
 
-	static inline std::string literalValueToString(LiteralValue* val, bool color = false) {
+	// returns a string that represents a LiteralValue.
+	static inline std::string literalValueToString(LiteralValue* val, bool color = false) noexcept {
 		if (!val) return ((color) ? nullformat("null") : "null");
 
 		TypeUtil::color = color;
@@ -90,22 +99,31 @@ public:
 		return std::string();
 	}
 
-	static inline Token literalToToken(LiteralValue* val) {
-		return Token(getTypeAsTokenEnum(getValueType(val)), "", val, {}, 0);	
+	static inline LiteralValueList stringListToLiteralList(const StringList& list) noexcept {
+		LiteralValueList res;
+
+		for (const std::string& item : list)
+			res.push_back(litStr(item));
+
+		return res;
 	}
 
-	static inline TokenEnum getLitTokenEnum(LiteralValue* lit) {
-		return getTypeAsTokenEnum(getValueType(lit));
+	static inline Token literalToToken(LiteralValue* lit) noexcept {
+		return Token(typeToTokenEnum(lit->type()), "", lit, {}, 0);
 	}
 
-	constexpr static inline TokenEnum getTypeAsTokenEnum(IdValueType type) noexcept {
+	static inline TokenEnum getLitTokenEnum(LiteralValue* lit) noexcept {
+		return typeToTokenEnum(lit->type());
+	}
+
+	constexpr static inline TokenEnum typeToTokenEnum(IdValueType type) noexcept {
 		switch (type) {
-		case Literal: return LITERAL;
-		case Number: return NUMBER;
-		case Bool: return BOOLEANVAL;
-		case List: return LIST;
-		case Object: return OBJECT;
-		case Null: return NULLVAL;
+		case Literal:	return LITERAL;
+		case Number:	return NUMBER;
+		case Bool:		return BOOLEANVAL;
+		case List:		return LIST;
+		case Object:	return OBJECT;
+		case Null:		return NULLVAL;
 		}
 
 		return LITERAL;
@@ -115,13 +133,13 @@ public:
 		std::string ret;
 		
 		switch (type) {
-		case Literal: ret = "Literal"; break;
-		case Number: ret = "Number"; break;
-		case Bool: ret = "Bool"; break;
-		case List: ret = "List"; break;
-		case Object: ret = "Object"; break;
-		case Null: ret = "Null"; break;
-		case Any: ret = "Any"; break;
+		case Literal:	ret = "Literal"; break;
+		case Number:	ret = "Number"; break;
+		case Bool:		ret = "Bool"; break;
+		case List:		ret = "List"; break;
+		case Object:	ret = "Object"; break;
+		case Null:		ret = "Null"; break;
+		case Any:		ret = "Any"; break;
 
 		default: ret = "Unknown";
 		}
@@ -132,7 +150,7 @@ public:
 		return ret;
 	}
 
-	static inline std::string getTypeAsString(std::vector<IdValueType> types, bool colorize = false) noexcept {
+	static inline std::string getTypeAsString(const std::vector<IdValueType>& types, bool colorize = false) noexcept {
 		std::string str = "";
 
 		for (size_t i = 0; i < types.size(); i++)
@@ -141,43 +159,35 @@ public:
 		return str;
 	}
 
-	static inline std::string colorizeStrType(const std::string& type) {
-		if (type == "Literal") return clr(type, __clr_type_literal->toString());
-		else if (type == "Number") return clr(type, __clr_type_number->toString());
-		else if (type == "Bool") return clr(type, __clr_type_bool->toString());
-		else if (type == "List") return clr(type, __clr_type_list->toString());
-		else if (type == "Object") return clr(type, __clr_type_object->toString());
-		else if (type == "Any") return clr(type, __clr_type_any->toString());
+	static inline std::string colorizeStrType(const std::string& type) noexcept {
+		if (type == "Literal")		return clr(type, __clr_type_literal->toString());
+		else if (type == "Number")	return clr(type, __clr_type_number->toString());
+		else if (type == "Bool")	return clr(type, __clr_type_bool->toString());
+		else if (type == "List")	return clr(type, __clr_type_list->toString());
+		else if (type == "Object")	return clr(type, __clr_type_object->toString());
+		else if (type == "Any")		return clr(type, __clr_type_any->toString());
 
 		else return type;
 	}
-
-	static inline bool isTypeof(LiteralValue* value, IdValueType type) {
-		return (getValueType(value) == type);
+	
+	constexpr static inline bool isTypeof(LiteralValue* value, IdValueType type) noexcept {
+		return (value->type() == type);
 	}
 
+	// return true if all values inside "list" has type "type"
 	static inline bool isListOf(LiteralValue* list, IdValueType type) {
-		if (getValueType(list) != List) return false;
+		if (list->type() != List) return false;
 
 		for (LiteralValue* val : asList(list))
-			if (getValueType(val) != type)
+			if (val->type() != type)
 				return false;
 
 		return true;
 	}
 
-	static inline LiteralValueList stringListToLiteralList(StringList list) {
-		LiteralValueList res;
-
-		for (const std::string& item : list)
-			res.push_back(litStr(item));
-
-		return res;
-	}
-
-	static inline void checkNull(LiteralValue* value) {
+	constexpr static inline void checkNull(LiteralValue* value) noexcept {
 		if (!value)
-			value = new LiteralValue("null");
+			*value = LiteralValue("null");
 	}
 
 private:

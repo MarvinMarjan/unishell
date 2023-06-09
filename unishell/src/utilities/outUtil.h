@@ -6,14 +6,18 @@
 class OutUtil
 {
 public:
+	
+	// raw: the size of the rawStr
+	// clr: the size of the color escape chars
 	struct ColorizedStringSize {
 		std::string rawStr;
 		int raw;
 		int clr;
 	};
 
-	static inline ColorizedStringSize getColorizedStringSize(const std::string& src) {
-		std::string copy = std::regex_replace(src, std::regex(__regex_color_escape_char_pattern), "", std::regex_constants::format_default | std::regex_constants::match_any);
+	// returns a ColorizedStringSize based on "src"
+	static inline ColorizedStringSize getColorizedStringSize(const std::string& src) noexcept {
+		const std::string copy = std::regex_replace(src, std::regex(__regex_color_escape_char_pattern), "", std::regex_constants::format_default | std::regex_constants::match_any);
 
 		int clrSize = 0;
 
@@ -23,8 +27,10 @@ public:
 		return { .rawStr = copy, .raw = (int)copy.size(), .clr = clrSize };
 	}
 
+	// if "src.size" is greater than "maxLen", then
+	// get a substring of 0 and "maxLen" and completes it with "..."
 	static inline std::string truncateString(const std::string& src, size_t maxLen, bool endClr = true) {
-		ColorizedStringSize srcSizes = getColorizedStringSize(src);
+		const ColorizedStringSize srcSizes = getColorizedStringSize(src);
 		
 		if (srcSizes.rawStr.size() <= maxLen)
 			return src;

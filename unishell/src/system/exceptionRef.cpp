@@ -21,7 +21,8 @@ std::string ExceptionRef::getString() const {
 		for (size_t i = 0; i < src.size(); i++)
 			str += ((i == index) ? clr(StringUtil::charToStr(src[i]), 196) : StringUtil::charToStr(src[i]));
 
-		for (size_t i = 0; i < index; i++) space += ' ';
+		for (size_t i = 0; i < index; i++)
+			space += ' ';
 
 		space += clr("^", 196);
 	}

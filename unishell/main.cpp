@@ -35,7 +35,8 @@ int main(int argc, char** argv)
 			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
 
 			// empty
-			if (!input.size()) continue;
+			if (!input.size())
+				continue;
 
 			FlagList flags = CmdUtil::getFlags(input);
 			input = CmdUtil::removeFlags(input);

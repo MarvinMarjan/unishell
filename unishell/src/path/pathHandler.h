@@ -7,25 +7,27 @@
 
 #include <algorithm>
 
+#define MIN_DIR_COUNT 1
+
 class PathHandler
 {
 public:
 	struct PathOperationData {
-		bool success;
-		std::string path;
+		const bool success;
+		const std::string path;
 	};
 
 	PathHandler(const std::string& path);
 
 	inline PathOperationData operator+(const std::string& path) const noexcept {
-	 	PathTokenList tokens = PathScanner(path).scanTokens();
+	 	const PathTokenList tokens = PathScanner(path).scanTokens();
 		PathHandler copy(*this);
 
 		return { copy.manip(tokens), copy.getPath() };
 	}
 
 	inline PathOperationData operator<<(const std::string& path) const noexcept {
-		PathTokenList tokens = PathScanner(path).scanTokens();
+		const PathTokenList tokens = PathScanner(path).scanTokens();
 		PathHandler copy(*this);
 
 		return { copy.manip(tokens, true), copy.getPath() };
@@ -48,11 +50,11 @@ public:
 
 	// back to the previous directory
 	inline void back() noexcept {
-		if (dirCount() <= 1) return;
+		if (dirCount() <= MIN_DIR_COUNT) return;
 
 		path = path.substr(0, StringUtil::findLast(path, '/'));
 
-		if (dirCount() == 1)
+		if (dirCount() == MIN_DIR_COUNT)
 			path += '/';
 	}
 
@@ -67,17 +69,16 @@ public:
 		std::replace(this->path.begin(), this->path.end(), '\\', '/');
 	}
 
-
+	
 private:
 	inline size_t dirCount() const noexcept {
 		return StringUtil::split(path, '/').size();
 	}
 
-	static constexpr inline bool isDirSeparator(char ch) noexcept {
+	constexpr static inline bool isDirSeparator(char ch) noexcept {
 		return (ch == '/' || ch == '\\');
 	}
 
 	std::string path;
-	
 	bool canManip;
 };

@@ -9,7 +9,7 @@ PathHandler::PathHandler(const std::string& path) {
 bool PathHandler::manip(const PathTokenList& instructions, bool ignoreExcp) {
 	canManip = true;
 
-	for (PathToken token : instructions)
+	for (const PathToken& token : instructions)
 		switch (token.getType())
 		{
 		case PathToken::Dot:

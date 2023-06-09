@@ -66,7 +66,7 @@ void exec() override {
 	for (const Identifier& identifier : __environment->getIdList()) {
 		EnvUtil::FormatedIdentifierData data = EnvUtil::formatIdentifier(identifier);
 
-		sysprintln(EnvUtil::formatFIDIntoString(data));
+		sysprintln(EnvUtil::formatFIDToString(data));
 	}
 }
 END_COMMAND
