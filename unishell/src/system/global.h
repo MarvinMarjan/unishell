@@ -7,6 +7,9 @@
 
 #include <map>
 
+class CommandBase;
+class RetCommandBase;
+
 class Environment;
 class PathHandler;
 

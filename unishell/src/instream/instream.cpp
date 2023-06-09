@@ -7,7 +7,7 @@ INSSearchList INStream::searchList = INSSearchList();
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
-	searchList.set(__sys_commands);
+	searchList.set(CmdUtil::cmdListToStr(__sys_commands));
 
 	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)

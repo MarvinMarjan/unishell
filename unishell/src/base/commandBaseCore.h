@@ -24,9 +24,10 @@ template <typename T>
 class CommandBaseCore
 {
 public:
-	CommandBaseCore() {}
-	CommandBaseCore(ParamList params, ArgList args, FlagList flags, const std::string cmdSymbol) :
-		params(params), flags(flags)
+	CommandBaseCore() : function(CmdFunc::System) {}
+	CommandBaseCore(const std::string& cmdSymbol, CmdFunc func) : symbol(cmdSymbol), function(func) {}
+	CommandBaseCore(ParamList params, ArgList args, FlagList flags, const std::string cmdSymbol, CmdFunc func) :
+		params(params), flags(flags), symbol(cmdSymbol), function(func)
 	{
 		// default value assignment, if possible
 		params.match(args);
@@ -43,6 +44,9 @@ public:
 	virtual T exec() = 0;
 
 	virtual CommandHelpData help() = 0;
+
+	const std::string symbol;
+	const CmdFunc function;
 
 protected:
 	ArgList args;
@@ -69,8 +73,9 @@ class CommandBase : public CommandBaseCore<void>
 {
 public:
 	CommandBase() : CommandBaseCore() {}
-	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol) : 
-		CommandBaseCore(params, args, flags, cmdSymbol) {}
+	CommandBase(const std::string& cmdSymbol, CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
+	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, CmdFunc func) : 
+		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
 };
 
 // return command bases
@@ -78,6 +83,7 @@ class RetCommandBase : public CommandBaseCore<LiteralValue*>
 {
 public:
 	RetCommandBase() : CommandBaseCore() {}
-	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol) :
-		CommandBaseCore(params, args, flags, cmdSymbol) {}
+	RetCommandBase(const std::string& cmdSymbol, CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
+	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, CmdFunc func) :
+		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
 };

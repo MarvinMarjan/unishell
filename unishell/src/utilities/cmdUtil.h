@@ -8,6 +8,20 @@
 class CmdUtil
 {
 public:
+	static inline std::string funcToString(CmdFunc func) {
+		switch (func) {
+		case CmdFunc::Type: return "Type";
+		case CmdFunc::Literal: return "Literal";
+		case CmdFunc::Number: return "Number";
+		case CmdFunc::List: return "List";
+		case CmdFunc::Object: return "Object";
+		case CmdFunc::System: return "System";
+		case CmdFunc::Filesystem: return "Filesystem";
+
+		default: return "unknown";
+		}
+	}
+	
 	static inline ArgList getArgs(const TokenList& input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
 		size_t index = (firstIsCommand) ? 1 : 0;
 
@@ -52,8 +66,8 @@ public:
 	static inline std::string getAllCmdHelpMessage(bool nameOnly = false) {
 		std::string msg = "";
 
-		for (const std::string& cmdName : __sys_commands)
-			msg += stringifyHelpData(getCommand(cmdName)->help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
+		for (CommandBase* cmd : __sys_commands)
+			msg += stringifyHelpData(cmd->help(), __clr_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
 
 		return msg;
 	}
@@ -61,17 +75,42 @@ public:
 	static inline std::string getAllRetCmdHelpMessage(bool nameOnly = false) {
 		std::string msg = "";
 
-		for (const std::string& cmdName : __sys_ret_commands)
-			msg += stringifyHelpData(getRetCommand(cmdName)->help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
+		for (RetCommandBase* cmd : __sys_ret_commands)
+			msg += stringifyHelpData(cmd->help(), __clr_sys_ret_command, nameOnly) + ((!nameOnly) ? "\n\n\n" : "\n");
 
 		return msg;
 	}
 
+	template <typename T>
+	static inline StringList cmdListToStr(std::vector<T*> list) {
+		StringList strList;
 
-	static CommandBase* getCommand(const std::string& cmdName);
+		for (T* item : list)
+			strList.push_back(item->symbol);
+
+		return strList;
+	}
+
+
 	static CommandBase* getCommand(const std::string& cmdName, ArgList args, FlagList flags);
-	static RetCommandBase* getRetCommand(const std::string& cmdName);
+
+	static inline CommandBase* getCommand(const std::string& cmdName) {
+		for (CommandBase* cmd : __sys_commands)
+			if (cmdName == cmd->symbol)
+				return cmd;
+
+		return nullptr;
+	}
+
 	static RetCommandBase* getRetCommand(const std::string& cmdName, ArgList args, FlagList flags);
+
+	static inline RetCommandBase* getRetCommand(const std::string& cmdName) {
+		for (RetCommandBase* cmd : __sys_ret_commands)
+			if (cmdName == cmd->symbol)
+				return cmd;
+
+		return nullptr;
+	}
 
 
 

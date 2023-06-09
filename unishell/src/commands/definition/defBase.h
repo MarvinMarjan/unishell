@@ -26,11 +26,8 @@
 	class name : public base \
 	{ \
 	public: \
-		name() : base() {} \
-		name(ArgList args, FlagList flags) : base({ params }, args, flags, cmdSymbol) {} \
-		\
-		static inline const std::string symbol = cmdSymbol; \
-		static const CmdFunc function = cmdFunc; \
+		name() : base(cmdSymbol, cmdFunc) {} \
+		name(ArgList args, FlagList flags) : base({ params }, args, flags, cmdSymbol, cmdFunc) {} \
 		\
 		CommandHelpData help() override; \
 		
@@ -41,7 +38,7 @@
 
 
 #define CHECK_CMD(cmd) \
-	if (cmdName == cmd::symbol) return new cmd(args, flags) \
+	if (cmdName == cmd().symbol) return new cmd(args, flags) \
 
 
 
@@ -51,7 +48,7 @@
 
 
 #define CHECK_CMD_P(cmd) \
-	if (cmdName == cmd::symbol) return new cmd() \
+	if (cmdName == cmd().symbol) return new cmd() \
 
 
 #define THROW_RUNTIME_ERR(msg) \

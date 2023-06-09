@@ -40,7 +40,7 @@ private:
 		BaseColorStructure* commandClr = __clr_command;
 
 		// start color rendering
-		if (VectorUtil::exists(__sys_commands, std::string(text.begin(), text.begin() + firstWordPos + 1)))
+		if (VectorUtil::exists(CmdUtil::cmdListToStr(__sys_commands), std::string(text.begin(), text.begin() + firstWordPos + 1)))
 			commandClr = __clr_ex_command; // commands exists
 
 		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos);
@@ -55,7 +55,7 @@ private:
 			if (!StringUtil::isAlpha(cmdName[0]))
 				cmdName = cmdName.substr(1);
 
-			if (VectorUtil::exists(__sys_ret_commands, cmdName))
+			if (VectorUtil::exists(CmdUtil::cmdListToStr(__sys_ret_commands), cmdName))
 				retCmdColor = __clr_ex_sys_ret_command;
 		}
 

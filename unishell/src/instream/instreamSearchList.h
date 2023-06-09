@@ -2,6 +2,7 @@
 
 #include "../utilities/stringUtil.h"
 #include "../filesystem/file.h"
+#include "../utilities/cmdUtil.h"
 
 enum class SearchListType
 {
@@ -45,11 +46,11 @@ public:
 			break;
 
 		case SearchListType::Command:
-			set(__sys_commands);
+			set(CmdUtil::cmdListToStr(__sys_commands));
 			break;
 
 		case SearchListType::RetCommand:
-			set(__sys_ret_commands);
+			set(CmdUtil::cmdListToStr(__sys_ret_commands));
 			break;
 
 		case SearchListType::Identifier:
