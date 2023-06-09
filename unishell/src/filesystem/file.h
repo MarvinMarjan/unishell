@@ -48,7 +48,7 @@ namespace fsys
 			throw FileException {path};
 		}
 
-		static inline void write(const std::string& path, std::string data, std::ios_base::openmode mode = std::ios::out) {
+		static inline void write(const std::string& path, const std::string& data, const std::ios_base::openmode mode = std::ios::out) {
 			std::ofstream file(path.c_str(), mode);
 
 			if (file.fail())

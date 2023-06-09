@@ -80,7 +80,7 @@ public:
 	virtual ~BaseColorStructure() = default;
 	explicit BaseColorStructure(const ColorMode mode = normal) : mode(mode) {}
 
-	virtual inline std::string toString() = 0;
+	virtual inline std::string toString() const = 0;
 
 	ColorMode mode;
 };
@@ -90,7 +90,7 @@ class IdColorStructure : public BaseColorStructure
 public:
 	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : BaseColorStructure(mode), idc(idc) {}
 
-	std::string toString() override {
+	std::string toString() const override {
 		return id(idc, mode);
 	}
 
@@ -105,7 +105,7 @@ public:
 	RGBColorStructure(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode = normal) :
 		BaseColorStructure(mode), red(red), green(green), blue(blue) {}
 
-	std::string toString() override {
+	std::string toString() const override {
 		return rgb(red, green, blue, mode);
 	}
 
@@ -122,7 +122,7 @@ public:
 	explicit ColorStructure(const Color color, const ColorMode mode = normal) :
 		BaseColorStructure(mode), color(color) {}
 
-	std::string toString() override {
+	std::string toString() const override {
 		return colorToString(color, mode);
 	}
 

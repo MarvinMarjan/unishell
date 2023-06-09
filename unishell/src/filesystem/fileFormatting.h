@@ -50,7 +50,7 @@ namespace fsys
 			bool virt;
 		};
 
-		static inline FormatedFileData newFormatedFileData(BaseColorStructure* cl, std::string raw) {
+		static inline FormatedFileData newFormatedFileData(BaseColorStructure* cl, const std::string& raw) {
 			FormatedFileData data;
 
 			data.cl = cl;
@@ -74,7 +74,7 @@ namespace fsys
 
 		static FileAtts getFileAtts(const FileEntry& file);
 
-		static inline FormatedFileData getFFDByFileAttribute(FileAtts att) {
+		static inline FormatedFileData getFFDByFileAttribute(const FileAtts& att) {
 			FormatedFileData data;
 
 			if (att.directory)		data = newFormatedFileData(__clr_fs_file_type_dir, "dir");

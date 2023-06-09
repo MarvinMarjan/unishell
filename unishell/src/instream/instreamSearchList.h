@@ -32,7 +32,7 @@ public:
 		return type;
 	}
 
-	constexpr inline void setType(SearchListType type) noexcept {
+	constexpr inline void setType(const SearchListType type) noexcept {
 		this->type = type;
 	}
 

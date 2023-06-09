@@ -11,11 +11,11 @@ public:
 		cursorIndex = 0;
 	}
 
-	inline void cursorLeft() noexcept {
+	constexpr inline void cursorLeft() noexcept {
 		if (cursorIndex > 0) cursorIndex--;
 	}
 
-	inline void cursorRight() noexcept {
+	constexpr inline void cursorRight() noexcept {
 		if (cursorIndex < size()) cursorIndex++;
 	}
 
@@ -27,12 +27,12 @@ public:
 		cursorIndex = index;
 	}
 
-	inline void insertStr(size_t index, const std::string& text) {
+	constexpr inline void insertStr(const size_t index, const std::string& text) {
 		insert(index, text.c_str());
 		cursorIndex++;
 	}
 
-	inline void eraseAtIndex() {
+	constexpr inline void eraseAtIndex() {
 		if (getCursorIndex() - 1 < 0) return;
 		erase(getCursorIndex() - 1, 1);
 		cursorLeft();
