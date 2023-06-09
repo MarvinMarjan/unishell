@@ -15,6 +15,17 @@ public:
 		return res;
 	}
 
+	template <typename T>
+	static inline std::vector<size_t> findAll(std::vector<T> src, T value) {
+		std::vector<size_t> occurrences;
+
+		for (size_t i = 0; i < src.size(); i++)
+			if (src[i] == value)
+				occurrences.push_back(i);
+
+		return occurrences;
+	}
+
 	static inline std::string join(StringList src, std::string sep = "") {
 		std::string joined = "";
 
@@ -37,7 +48,7 @@ public:
 				return {};
 
 		for (std::string item : src)
-			if (StringUtil::startsWith(item, sortener))
+			if (StringUtil::startsWith(item, sortener) && !VectorUtil::exists(res, item))
 				res.push_back(item);
 
 		if (res.empty() || sortener.empty()) return src;

@@ -2,7 +2,7 @@
 
 #include "../environment/environment.h"
 #include "../path/pathHandler.h"
-#include "../commands/definition/cmdsDef.h"
+#include "../commands/definition/cmds.h"
 
 #include "system.h"
 
@@ -56,63 +56,71 @@ const StringList __color_formats = {
 	"clr"
 };
 
-const StringList __sys_commands = {
-	CmdPrint::symbol,
-	CmdClear::symbol,
+const std::vector<CommandBase*> __sys_commands = {
+	new SysCmdPrint(),
+	new SysCmdClear(),
 	
-	CmdCd::symbol,
-	CmdLs::symbol,
-	CmdCreateFile::symbol,
-	CmdCreateDir::symbol,
-	CmdRemoveFile::symbol,
-	CmdRemoveDir::symbol,
+	new SysCmdCd(),
+	new SysCmdLs(),
 
-	CmdVar::symbol,
-	CmdDel::symbol,
-	CmdEnv::symbol,
+	new SysCmdVar(),
+	new SysCmdDel(),
+	new SysCmdEnv(),
 
-	CmdHelp::symbol,
-	CmdCmdHelp::symbol,
-	CmdRetCmdHelp::symbol,
-	CmdClrHelp::symbol,
-	CmdIdColorHelp::symbol,
-	CmdClrModeHelp::symbol,
+	new SysCmdHelp(),
+	new SysCmdCmdHelp(),
+	new SysCmdRetCmdHelp(),
+	new SysCmdClrHelp(),
+	new SysCmdIdColorHelp(),
+	new SysCmdClrModeHelp(),
 	
-	CmdExit::symbol
+	new SysCmdExit(),
+
+	new FSysCmdCreateFile(),
+	new FSysCmdCreateDir(),
+	new FSysCmdRemoveFile(),
+	new FSysCmdRemoveDir(),
 };
 
-const StringList __sys_ret_commands = {
-	RetCmdInput::symbol,
+const std::vector<RetCommandBase*> __sys_ret_commands = {
+	new SysRetCmdInput(),
 
-	RetCmdType::symbol,
-	RetCmdSize::symbol,
+	new LiteralRetCmdAt(),
+	new LiteralRetCmdSize(),
+	new LiteralRetCmdErase(),
+	new LiteralRetCmdSub(),
+	new LiteralRetCmdSplit(),
+	new LiteralRetCmdJoin(),
 
-	RetCmdAt::symbol,
-	RetCmdSub::symbol,
-	RetCmdSplit::symbol,
-	RetCmdJoin::symbol,
+	new NumberRetCmdRound(),
+	new NumberRetCmdIsDecimal(),
 
-	RetCmdAppend::symbol,
-	RetCmdInsert::symbol,
-	RetCmdErase::symbol,
-	RetCmdEraseAt::symbol,
+	new ListRetCmdSize(),
+	new ListRetCmdAppend(),
+	new ListRetCmdAt(),
+	new ListRetCmdErase(),
 
-	RetCmdGetFileData::symbol,
-	RetCmdGetDirEntryName::symbol,
-	RetCmdGetDirEntryData::symbol,
-	RetCmdExists::symbol,
-	RetCmdRead::symbol,
-	RetCmdReadAsList::symbol,
-	RetCmdWrite::symbol,
+	new ObjectRetCmdSize(),
+	new ObjectRetCmdAt(),
+	new ObjectRetCmdInsert(),
+	new ObjectRetCmdEraseAt(),
 
-	RetCmdMatch::symbol,
-	RetCmdReplace::symbol,
+	new FSysRetCmdGetFileData(),
+	new FSysRetCmdGetDirEntryName(),
+	new FSysRetCmdGetDirEntryData(),
+	new FSysRetCmdExists(),
+	new FSysRetCmdRead(),
+	new FSysRetCmdReadAsList(),
+	new FSysRetCmdWrite(),
 
-	RetCmdLiteral::symbol,
-	RetCmdNumber::symbol,
-	RetCmdRound::symbol,
-	RetCmdIsDecimal::symbol,
-	RetCmdBool::symbol
+	new RegexRetCmdMatch(),
+	new RegexRetCmdReplace(),
+
+	new TypeRetCmdType(),
+	new TypeRetCmdLiteral(),
+	new TypeRetCmdNumber(),
+	new TypeRetCmdBool()
+	
 };
 
 const FSExtension __fs_file_extensions_text = {
@@ -200,13 +208,17 @@ BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
 
 BaseColorStructure* __clr_flag = new IdColorStructure(157);
 
-BaseColorStructure* __clr_command = new IdColorStructure(141);
-BaseColorStructure* __clr_ex_command = new IdColorStructure(141, italic);
+BaseColorStructure* __clr_command = new IdColorStructure(218);
+BaseColorStructure* __clr_multi_command = new IdColorStructure(231);
 
-BaseColorStructure* __clr_ret_command = new IdColorStructure(162);
-BaseColorStructure* __clr_ex_ret_command = new IdColorStructure(162, italic);
-BaseColorStructure* __clr_sys_ret_command = new IdColorStructure(203);
-BaseColorStructure* __clr_ex_sys_ret_command = new IdColorStructure(203, italic);
+BaseColorStructure* __clr_type_command = new IdColorStructure(203);
+BaseColorStructure* __clr_literal_command = new IdColorStructure(72);
+BaseColorStructure* __clr_number_command = new IdColorStructure(110);
+BaseColorStructure* __clr_list_command = new IdColorStructure(131);
+BaseColorStructure* __clr_object_command = new IdColorStructure(216);
+BaseColorStructure* __clr_system_command = new IdColorStructure(140);
+BaseColorStructure* __clr_filesystem_command = new IdColorStructure(184);
+BaseColorStructure* __clr_regex_command = new IdColorStructure(163);
 
 BaseColorStructure* __clr_numbers = new IdColorStructure(192);
 BaseColorStructure* __clr_operators = new IdColorStructure(222);

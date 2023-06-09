@@ -129,6 +129,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\commands\definition\filesystemHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\listHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\literalHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\numberTypeDef.cpp" />
+    <ClCompile Include="src\commands\definition\objectHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\regexHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\systemHelpDef.cpp" />
+    <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
     <ClCompile Include="src\filesystem\fileFormating.cpp" />
     <ClCompile Include="src\instream\instream.cpp" />
     <ClCompile Include="src\parser\instream\instrScanner.cpp" />
@@ -146,8 +154,16 @@
     <ClInclude Include="src\base\commandBaseCore.h" />
     <ClInclude Include="src\base\scannerBase.h" />
     <ClInclude Include="src\commands\argList.h" />
-    <ClInclude Include="src\commands\definition\cmdsDef.h" />
-    <ClCompile Include="src\commands\definition\cmdsHelpDef.cpp" />
+    <ClInclude Include="src\commands\definition\cmds.h" />
+    <ClInclude Include="src\commands\definition\defBase.h" />
+    <ClInclude Include="src\commands\definition\filesystem.h" />
+    <ClInclude Include="src\commands\definition\list.h" />
+    <ClInclude Include="src\commands\definition\literal.h" />
+    <ClInclude Include="src\commands\definition\number.h" />
+    <ClInclude Include="src\commands\definition\object.h" />
+    <ClInclude Include="src\commands\definition\regex.h" />
+    <ClInclude Include="src\commands\definition\system.h" />
+    <ClInclude Include="src\commands\definition\type.h" />
     <ClInclude Include="src\commands\flagList.h" />
     <ClInclude Include="src\commands\helpData.h" />
     <ClInclude Include="src\commands\paramList.h" />

@@ -36,27 +36,28 @@ private:
 	}
 
 	// command string
-	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordPos) {
-		BaseColorStructure* commandClr = __clr_command;
+	static inline void renderCommand(std::stringstream& stream, const std::string& text, int cursorPos, size_t& i, size_t firstWordPos)
+	{
+		const std::string cmdName = std::string(text.begin(), text.begin() + firstWordPos + 1);
+		const CommandBase* const cmd = CmdUtil::getCommand(cmdName);
 
-		// start color rendering
-		if (VectorUtil::exists(__sys_commands, std::string(text.begin(), text.begin() + firstWordPos + 1)))
-			commandClr = __clr_ex_command; // commands exists
+		BaseColorStructure* commandClr = commandClr = CmdUtil::getCommandColor(__sys_commands, cmdName);
 
 		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos);
 	}
 
 	static inline void renderRetCommand(std::stringstream& stream, const std::string& text, size_t& i, int cursorPos) {
-		BaseColorStructure* retCmdColor = __clr_ret_command;
+		BaseColorStructure* retCmdColor = __clr_command;
 
 		if (i + 1 < text.size()) {
 			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1) + 1);
 			
 			if (!StringUtil::isAlpha(cmdName[0]))
 				cmdName = cmdName.substr(1);
+			
+			RetCommandBase* cmd = CmdUtil::getRetCommand(cmdName);
 
-			if (VectorUtil::exists(__sys_ret_commands, cmdName))
-				retCmdColor = __clr_ex_sys_ret_command;
+			retCmdColor = CmdUtil::getCommandColor(__sys_ret_commands, cmdName);
 		}
 
 		renderWord(stream, text, i, cursorPos, retCmdColor, true);
