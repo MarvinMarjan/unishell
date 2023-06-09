@@ -173,7 +173,7 @@ public:
 		return cmd;
 	}
 
-	// some commands can have the same name, but with
+	// some commands can have the same name, but
 	// different parameters. use this function to get the
 	// right command based on its arguments
 
