@@ -9,7 +9,7 @@ class CmdUtil
 {
 public:
 	static inline ArgList getArgs(const TokenList& input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
-		size_t index = (firstIsCommand) ? 1 : 0;
+		const size_t index = (firstIsCommand) ? 1 : 0;
 
 		if (input.size() <= index) return ArgList(); // has no args
 

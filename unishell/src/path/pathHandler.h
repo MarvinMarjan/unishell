@@ -32,7 +32,7 @@ public:
 	}
 
 
-	bool manip(PathTokenList instructions, bool ignoreExcp = false);
+	bool manip(const PathTokenList& instructions, bool ignoreExcp = false);
 
 
 	// returns false if dirName doesn't exists
