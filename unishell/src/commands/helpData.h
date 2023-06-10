@@ -37,8 +37,8 @@ inline std::string formatDescription(const std::string& description, const HDPar
 
 	for (size_t i = 0; i < description.size(); i++) {
 		if (description[i] == '^' && i + 1 < description.size() && StringUtil::isDigit(description[i + 1])) {
-			int paramIndex = std::stoi(StringUtil::charToStr(description[i + 1]));
-			std::string paramName = params[paramIndex].name;
+			const int paramIndex = std::stoi(StringUtil::charToStr(description[i + 1]));
+			const std::string paramName = params[paramIndex].name;
 
 
 			fDescription += clr(paramName, __clr_help_param_name->toString());
@@ -55,8 +55,6 @@ inline std::string formatDescription(const std::string& description, const HDPar
 
 inline std::string stringifyHelpData(const CommandHelpData& data, BaseColorStructure* cmdClr = __clr_command, bool nameOnly = false) noexcept {
 	std::stringstream str;
-
-	
 
 	str << clr(data.name, cmdClr->toString());
 	

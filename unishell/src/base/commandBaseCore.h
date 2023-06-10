@@ -3,7 +3,8 @@
 #include "../commands/paramList.h"
 #include "../commands/flagList.h"
 
-#define THROW_COMMAND_ERR(msg) throw SystemException(CommandError, "(" + cmdSymbol + ") " + msg)
+#define THROW_COMMAND_ERR(msg) \
+	throw SystemException(CommandError, "(" + cmdSymbol + ") " + msg) \
 
 struct CommandHelpData;
 
@@ -26,8 +27,8 @@ class CommandBaseCore
 {
 public:
 	CommandBaseCore() : function(CmdFunc::System) {}
-	CommandBaseCore(const std::string& cmdSymbol, CmdFunc func) : symbol(cmdSymbol), function(func) {}
-	CommandBaseCore(ParamList params, ArgList args, FlagList flags, const std::string cmdSymbol, CmdFunc func) :
+	CommandBaseCore(const std::string& cmdSymbol, const CmdFunc func) : symbol(cmdSymbol), function(func) {}
+	CommandBaseCore(const ParamList& params, ArgList args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
 		params(params), flags(flags), symbol(cmdSymbol), function(func)
 	{
 		// default value assignment, if possible
@@ -74,8 +75,8 @@ class CommandBase : public CommandBaseCore<void>
 {
 public:
 	CommandBase() : CommandBaseCore() {}
-	CommandBase(const std::string& cmdSymbol, CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
-	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, CmdFunc func) : 
+	CommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
+	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) : 
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
 };
 
@@ -84,7 +85,7 @@ class RetCommandBase : public CommandBaseCore<LiteralValue*>
 {
 public:
 	RetCommandBase() : CommandBaseCore() {}
-	RetCommandBase(const std::string& cmdSymbol, CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
-	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, CmdFunc func) :
+	RetCommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
+	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
 };

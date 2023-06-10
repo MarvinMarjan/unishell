@@ -6,8 +6,8 @@
 START_COMMAND(ObjectRetCmdAt, ParamVec({ {nullptr, {Object}}, {nullptr, {Literal} } }), RetCommandBase, "at", CmdFunc::Object)
 LiteralValue* exec() override
 {
-	LitObj src = asObj(args[0]);
-	std::string key = asStr(args[1]);
+	const LitObj src = asObj(args[0]);
+	const std::string key = asStr(args[1]);
 
 	checkIndex(src, key, symbol);
 	return src.at(key);
@@ -17,7 +17,7 @@ END_COMMAND
 // size
 START_COMMAND(ObjectRetCmdSize, ParamVec({ {nullptr, {Object}} }), RetCommandBase, "size", CmdFunc::Object)
 LiteralValue* exec() override {
- return lit((double)asObj(args[0]).size());
+	return lit((double)asObj(args[0]).size());
 }
 END_COMMAND
 
@@ -36,7 +36,7 @@ LiteralValue* exec() override {
 	LitObj* src = &asObj(args[0]);
 	LiteralValue* at = args[1];
 
-	std::string key = asStr(at);
+	const std::string key = asStr(at);
 
 	checkIndex(*src, key, symbol);
 

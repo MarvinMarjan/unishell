@@ -14,7 +14,7 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	Param(LiteralValue* defaultValue = nullptr, std::vector<LiteralValueType> paramTypes = {Any}) :
+	Param(LiteralValue* defaultValue = nullptr, const std::vector<LiteralValueType>& paramTypes = {Any}) :
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
@@ -53,8 +53,8 @@ public:
 
 		return count;
 	}
-
-	inline Param get(size_t index) const {
+	
+	inline Param get(const size_t index) const {
 		for (size_t i = 0; i < size(); i++)
 			if (i == index)
 				return (*this)[index];
@@ -62,8 +62,8 @@ public:
 		throw SystemException(CommandError, "Invalid param (index): " + index);
 	}
 
-	inline void match(ArgList& args) {
-		int count = (int)(size() - args.size());
+	inline void match(ArgList& args) const {
+		const int count = (int)(size() - args.size());
 		LiteralValue* defaultVal;
 
 		// comparations with unsigned and signed can have trouble. use "(int)i"
@@ -73,18 +73,18 @@ public:
 	}
 };
 
-inline bool checkParamType(LiteralValueTypeList types, LiteralValueType type) {
+inline bool checkParamType(const LiteralValueTypeList& types, const LiteralValueType type) {
 	if (VectorUtil::exists(types, Any)) return true;
 	else if (VectorUtil::exists(types, type)) return true;
 
 	return false;
 }
 
-inline std::string stringifyParamTypes(LiteralValueTypeList types, bool colorize = false) {
+inline std::string stringifyParamTypes(const LiteralValueTypeList& types, bool colorize = false) {
 	std::string str = "";
 	
 	for (size_t i = 0; i < types.size(); i++) {
-		std::string stype = TypeUtil::getTypeAsString(types[i]);
+		const std::string stype = TypeUtil::getTypeAsString(types[i]);
 
 		str += ((colorize) ? TypeUtil::colorizeStrType(stype) : stype)
 			+ ((i + 1 >= types.size()) ? "" : " | ");

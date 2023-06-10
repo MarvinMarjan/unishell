@@ -11,7 +11,7 @@ LiteralValue* exec() override {
 		THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
 
 	std::string src = asStr(args[0]);
-	std::regex pattern(asStr(args[1]));
+	const std::regex pattern(asStr(args[1]));
 
 	std::smatch matches;
 	std::string::const_iterator searchStart(src.cbegin());

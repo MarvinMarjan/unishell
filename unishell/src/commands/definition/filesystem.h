@@ -5,7 +5,7 @@
 // createFile
 START_COMMAND(FSysCmdCreateFile, ParamVec({ {nullptr, {Literal}} }), CommandBase, "createFile", CmdFunc::Filesystem)
 void exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
 
 	try {
 		fsys::File::createFile(res.path);
@@ -19,7 +19,7 @@ END_COMMAND
 // removeFile
 START_COMMAND(FSysCmdRemoveFile, ParamVec({ {nullptr, {Literal}} }), CommandBase, "removeFile", CmdFunc::Filesystem)
 void exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpFile, symbol);
@@ -31,7 +31,7 @@ END_COMMAND
 // createDir
 START_COMMAND(FSysCmdCreateDir, ParamVec({ {nullptr, {Literal}} }), CommandBase, "createDir", CmdFunc::Filesystem)
 void exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
 
 	try {
 		fsys::File::createDir(res.path);
@@ -45,7 +45,7 @@ END_COMMAND
 // removeDir
 START_COMMAND(FSysCmdRemoveDir, ParamVec({ {nullptr, {Literal}} }), CommandBase, "removeDir", CmdFunc::Filesystem)
 void exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
@@ -64,7 +64,7 @@ END_COMMAND
 // getFileData
 START_COMMAND(FSysRetCmdGetFileData, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getFileData", CmdFunc::Filesystem)
 LiteralValue* exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpFile, symbol);
@@ -76,21 +76,21 @@ END_COMMAND
 // getDirEntryName
 START_COMMAND(FSysRetCmdGetDirEntryName, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getDirEntryName", CmdFunc::Filesystem)
 LiteralValue* exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
 
 	return lit(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
 		return lit(file.path().filename().string());
-		}));
+	}));
 }
 END_COMMAND
 
 // getDirEntryData
 START_COMMAND(FSysRetCmdGetDirEntryData, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "getDirEntryData", CmdFunc::Filesystem)
 LiteralValue* exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
@@ -104,7 +104,7 @@ END_COMMAND
 // exists
 START_COMMAND(FSysRetCmdExists, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "exists", CmdFunc::Filesystem)
 LiteralValue* exec() override {
-	PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
+	const PathHandler::PathOperationData res = (*__workingPath) << asStr(args[0]);
 
 	return lit(fsys::File::exists(res.path));
 }

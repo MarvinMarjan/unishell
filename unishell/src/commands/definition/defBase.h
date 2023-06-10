@@ -62,25 +62,25 @@ enum ExpFileType {
 
 
 // check if the index of a list exists
-inline void checkIndex(int index, size_t max, const std::string& symbol) {
+inline void checkIndex(const int index, const size_t max, const std::string& symbol) {
 	if (index >= max || index < 0)
 		THROW_RUNTIME_ERR("Invalid index: " + numformat(tostr(index)));
 }
 
 // check if the key of an object exists
-inline void checkIndex(LitObj obj, const std::string& key, const std::string& symbol) {
+inline void checkIndex(const LitObj& obj, const std::string& key, const std::string& symbol) {
 	if (obj.find(key) == obj.end())
 		THROW_RUNTIME_ERR("Invalid property: " + qtd(key));
 }
 
 // check if path exists
-inline void checkPath(PathHandler::PathOperationData data, const std::string& argPath, const std::string& symbol) {
+inline void checkPath(const PathHandler::PathOperationData& data, const std::string& argPath, const std::string& symbol) {
 	if (!data.success)
 		THROW_RUNTIME_ERR("Invalid path: " + qtd(argPath));
 }
 
 // checks if the file in the path is of the expected type
-inline void checkPathType(const std::string& path, ExpFileType expected, const std::string& symbol) {
+inline void checkPathType(const std::string& path, const ExpFileType expected, const std::string& symbol) {
 	if ((fs::is_directory(path) && expected == ExpFile) || (!fs::is_directory(path) && expected == ExpDir))
 		THROW_RUNTIME_ERR(((expected == ExpFile) ? "File" : "Directory") + " expected at: " + qtd(path));
 }

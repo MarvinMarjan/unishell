@@ -26,7 +26,7 @@ protected:
 		return current >= src.size();
 	}
 
-	virtual inline bool match(char ch) noexcept {
+	virtual inline bool match(const char ch) noexcept {
 		if (isAtEnd() || peek() != ch) return false;
 
 		current++;

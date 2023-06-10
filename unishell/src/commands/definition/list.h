@@ -6,8 +6,8 @@
 START_COMMAND(ListRetCmdAt, ParamVec({ {nullptr, {List}}, {nullptr, {Number}} }), RetCommandBase, "at", CmdFunc::List)
 LiteralValue* exec() override
 {
-	LitList src = asList(args[0]);
-	int index = (int)asDbl(args[1]);
+	const LitList src = asList(args[0]);
+	const int index = (int)asDbl(args[1]);
 
 	checkIndex(index, src.size(), symbol);
 	return src.at(index);
@@ -39,9 +39,8 @@ END_COMMAND
 // erase
 START_COMMAND(ListRetCmdErase, ParamVec({ {nullptr, {List}}, {nullptr, {Number}}, {nullptr, {Number}} }), RetCommandBase, "erase", CmdFunc::List)
 LiteralValue* exec() override {
-	LitList* src = &asList(args[0]);
-	int begIndex = (int)asDbl(args[1]), endIndex = (int)asDbl(args[2]);
-	int current = 0;
+	LitList* const src = &asList(args[0]);
+	const int begIndex = (int)asDbl(args[1]), endIndex = (int)asDbl(args[2]);
 
 	checkIndex(begIndex, src->size(), symbol);
 	checkIndex(endIndex, src->size(), symbol);
@@ -55,8 +54,8 @@ END_COMMAND
 // eraseAt
 START_COMMAND(ListRetCmdEraseAt, ParamVec({ {nullptr, {List}}, {nullptr, {Number}} }), RetCommandBase, "eraseAt", CmdFunc::List)
 LiteralValue* exec() override {
-	LitList* src = &asList(args[0]);
-	int index = (int)asDbl(args[1]);
+	LitList* const src = &asList(args[0]);
+	const int index = (int)asDbl(args[1]);
 
 	checkIndex(index, src->size(), symbol);
 

@@ -15,8 +15,8 @@ END_COMMAND
 START_COMMAND(LiteralRetCmdAt, ParamVec({ {nullptr, {Literal}}, {nullptr, {Number}} }), RetCommandBase, "at", CmdFunc::Literal)
 LiteralValue* exec() override
 {
-	std::string src = asStr(args[0]);
-	int index = (int)asDbl(args[1]);
+	const std::string src = asStr(args[0]);
+	const int index = (int)asDbl(args[1]);
 
 	checkIndex(index, src.size(), symbol);
 	return lit(StringUtil::charToStr(src.at(index)));
@@ -26,9 +26,9 @@ END_COMMAND
 // sub
 START_COMMAND(LiteralRetCmdSub, ParamVec({ {nullptr, {Literal}}, {nullptr, {Number}}, {nullptr, {Number}} }), RetCommandBase, "sub", CmdFunc::Literal)
 LiteralValue* exec() override {
-	std::string src = asStr(args[0]);
-	int begin = (int)asDbl(args[1]);
-	int end = (int)asDbl(args[2]);
+	const std::string src = asStr(args[0]);
+	const int begin = (int)asDbl(args[1]);
+	const int end = (int)asDbl(args[2]);
 
 	checkIndex(begin, src.size(), symbol);
 	checkIndex(end, src.size(), symbol);
@@ -41,9 +41,9 @@ END_COMMAND
 // erase
 START_COMMAND(LiteralRetCmdErase, ParamVec({ {nullptr, {Literal}}, {nullptr, {Number}}, {nullptr, {Number}} }), RetCommandBase, "erase", CmdFunc::Literal)
 LiteralValue* exec() override {
-	std::string* src = &asStr(args[0]);
-	int begIndex = (int)asDbl(args[1]), endIndex = (int)asDbl(args[2]);
-	int current = 0;
+	std::string* const src = &asStr(args[0]);
+	const int begIndex = (int)asDbl(args[1]), endIndex = (int)asDbl(args[2]);
+	const int current = 0;
 
 	checkIndex(begIndex, src->size(), symbol);
 	checkIndex(endIndex, src->size(), symbol);
