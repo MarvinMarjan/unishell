@@ -18,7 +18,7 @@ enum InstreamScannerHints {
 class InstreamScanner : public ScannerBase<Token>
 {
 public:
-	InstreamScanner(const std::string& src, int hints = 0) : ScannerBase(src) {
+	InstreamScanner(const std::string& src, const int hints = 0) : ScannerBase(src) {
 		ignoreCommand = OPUtil::bwAnd(hints, IgnoreCommand);
 	}
 

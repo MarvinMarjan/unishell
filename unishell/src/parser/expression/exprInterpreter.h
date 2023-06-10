@@ -6,7 +6,7 @@
 class ExprInterpreter : public ExprVisitor
 {
 public:
-	inline LiteralValue* interpret(Expr* expr) {
+	LiteralValue* interpret(Expr* expr) {
 		return evaluate(expr);
 	}
 
@@ -15,11 +15,11 @@ private:
 		return expr->value;
 	}
 
-	LiteralValue* visitGroup(Group* expr) override {
+	constexpr LiteralValue* visitGroup(Group* expr) override {
 		return evaluate(expr->expression);
 	}
 
-	LiteralValue* visitUnary(Unary* expr) override {
+	constexpr LiteralValue* visitUnary(Unary* expr) override {
 		LiteralValue* right = evaluate(expr->expr);
 
 		switch (expr->op.getType()) {
@@ -34,7 +34,7 @@ private:
 		return nullptr;
 	}
 
-	LiteralValue* visitBinary(Binary* expr) override {
+	constexpr LiteralValue* visitBinary(Binary* expr) override {
 		LiteralValue* left = evaluate(expr->left);
 		LiteralValue* right = evaluate(expr->right);
 
@@ -96,18 +96,18 @@ private:
 	}
 
 
-	inline LiteralValue* evaluate(Expr* expr) {
+	constexpr LiteralValue* evaluate(Expr* expr) {
 		return expr->accept(this);
 	}
-
-	inline bool isTruthy(LiteralValue* value) {
+	
+	constexpr bool isTruthy(LiteralValue* value) {
 		if (!value) return false;
 		if (value->type() == Bool) return asBool(value);
 
 		return true;
 	}
 
-	inline bool isEqual(LiteralValue* a, LiteralValue* b, bool strict = false) {
+	constexpr bool isEqual(LiteralValue* a, LiteralValue* b, const bool strict = false) {
 		if (!a && !b) return true;
 		if (!a) return false;
 
@@ -120,15 +120,15 @@ private:
 		return (litToStr(a) == litToStr(b));
 	}
 
-	inline void checkLiteralType(LiteralValue* value, const std::vector<LiteralValueType>& expectedTypes) {
-		for (LiteralValueType type : expectedTypes)
+	constexpr void checkLiteralType(LiteralValue* value, const std::vector<LiteralValueType>& expectedTypes) {
+		for (const LiteralValueType type : expectedTypes)
 			if (TypeUtil::isTypeof(value, type))
 				return;
 		
 		throw SystemException(ExprInterpreterError, TypeUtil::getTypeAsString(expectedTypes) + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
 	}
 
-	inline void checkLiteralType(const std::vector<LiteralValue*>& vals, const std::vector<LiteralValueType>& expectedTypes) {
+	constexpr void checkLiteralType(const std::vector<LiteralValue*>& vals, const std::vector<LiteralValueType>& expectedTypes) {
 		for (LiteralValue* value : vals)
 			checkLiteralType(value, expectedTypes);
 	}

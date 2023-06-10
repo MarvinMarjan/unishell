@@ -8,7 +8,7 @@ template <typename T>
 class ScannerBase 
 {
 public:
-	ScannerBase(const std::string& src) : src(src) {
+	inline constexpr ScannerBase(const std::string& src) : src(src) {
 		current = 0;
 		start = 0;
 	}
@@ -18,35 +18,35 @@ public:
 protected:
 	virtual void scanToken() = 0;
 
-	virtual inline std::string getCurrentSubstring() noexcept {
+	virtual constexpr inline std::string getCurrentSubstring() noexcept {
 		return src.substr(start, current - start);
 	}
 
-	virtual inline bool isAtEnd() const noexcept {
+	virtual constexpr inline bool isAtEnd() const noexcept {
 		return current >= src.size();
 	}
 
-	virtual inline bool match(const char ch) noexcept {
+	virtual constexpr inline bool match(const char ch) noexcept {
 		if (isAtEnd() || peek() != ch) return false;
 
 		current++;
 		return true;
 	}
 
-	virtual inline char advance() noexcept {
+	virtual constexpr inline char advance() noexcept {
 		return src[current++];
 	}
 
-	virtual inline char peek() noexcept {
+	virtual constexpr inline char peek() noexcept {
 		return src[current];
 	}
 
-	virtual inline char peekNext() const noexcept {
+	virtual constexpr inline char peekNext() const noexcept {
 		if (current + 1 >= src.size()) return '\0';
 		return src[current + 1];
 	}
 
-	virtual inline char peekPrev() const noexcept {
+	virtual constexpr inline char peekPrev() const noexcept {
 		if (current - 1 < 0) return '\0';
 		return src[current - 1];
 	}

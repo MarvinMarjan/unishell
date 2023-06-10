@@ -12,7 +12,7 @@ class PathScanner : public ScannerBase<PathToken>
 public:
 	PathScanner(const std::string& src) : ScannerBase(src) {}
 
-	inline PathTokenList scanTokens() override {
+	PathTokenList scanTokens() override {
 		while (!isAtEnd()) {
 			start = current;
 			scanToken();
@@ -24,25 +24,25 @@ public:
 private:
 	void scanToken() override;
 
-	inline void addToken(PathToken::PathTokenType type) noexcept {
+	void addToken(const PathToken::PathTokenType type) noexcept {
 		tokens.push_back(PathToken(type, getCurrentSubstring()));
 	}
 
 	// path to system root "C:/"
-	inline void rootIdentifier() {
+	void rootIdentifier() {
 		if (src.size() >= 3 && fsys::File::exists(StringUtil::charToStr(peekPrev()) + peek() + peekNext())) {
 			current += 2;
 			addToken(PathToken::Root);
 		}
 	}
 
-	inline void indentifier() noexcept {
+	void indentifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
 		if (peek() == ':' && !tokens.size()) rootIdentifier();
 		else addToken(PathToken::IDENTIFIER);
 	}
 
-	static constexpr inline bool isValidChar(char ch) noexcept {
+	static constexpr bool isValidChar(const char ch) noexcept {
 		return (ch != '\\' && ch != '/' && ch != '*' && ch != '?' && 
 				ch != '<' && ch != '>' && ch != '|' && ch != ':');
 	}

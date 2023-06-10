@@ -16,7 +16,7 @@ public:
 	};
 
 	// returns a ColorizedStringSize based on "src"
-	static inline ColorizedStringSize getColorizedStringSize(const std::string& src) noexcept {
+	static ColorizedStringSize getColorizedStringSize(const std::string& src) noexcept {
 		const std::string copy = std::regex_replace(src, std::regex(__regex_color_escape_char_pattern), "", std::regex_constants::format_default | std::regex_constants::match_any);
 
 		int clrSize = 0;
@@ -29,7 +29,7 @@ public:
 
 	// if "src.size" is greater than "maxLen", then
 	// get a substring of 0 and "maxLen" and completes it with "..."
-	static inline std::string truncateString(const std::string& src, size_t maxLen, bool endClr = true) {
+	static std::string truncateString(const std::string& src, const size_t maxLen, const bool endClr = true) {
 		const ColorizedStringSize srcSizes = getColorizedStringSize(src);
 		
 		if (srcSizes.rawStr.size() <= maxLen)

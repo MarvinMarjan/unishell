@@ -32,7 +32,7 @@ struct CommandHelpData
 };
 
 // replaces ^N by the param name located at N index
-inline std::string formatDescription(const std::string& description, const HDParamList& params) {
+constexpr inline std::string formatDescription(const std::string& description, const HDParamList& params) {
 	std::string fDescription = "";
 
 	for (size_t i = 0; i < description.size(); i++) {

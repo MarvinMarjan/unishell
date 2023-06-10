@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 			*sys.input() = INStream::getLine(); // sets global user input
 			
-			TokenList input = TokenProcess::process(InstreamScanner(*sys.input()).scanTokens());
+			TokenList input = TokenProcess::process(InstreamScanner(USER_INPUT).scanTokens());
 
 			// empty
 			if (!input.size())

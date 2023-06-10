@@ -52,11 +52,11 @@ public:
 };
 
 template <typename T>
-inline LiteralValue* lit(T value) noexcept {
+constexpr inline LiteralValue* lit(const T& value) noexcept {
 	return new LiteralValue(LiteralValuePtr(value));
 }
 
-inline LiteralValue* lit(int value) noexcept {
+constexpr inline LiteralValue* lit(const int value) noexcept {
 	return new LiteralValue(LiteralValuePtr((double)value));
 }
 

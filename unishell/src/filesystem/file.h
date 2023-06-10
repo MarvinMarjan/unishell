@@ -22,33 +22,33 @@ namespace fsys
 	class File
 	{
 	public:
-		static inline void createFile(const std::string& path) {
+		static void createFile(const std::string& path) {
 			std::ofstream file(path.c_str(), std::ios::out);
 
 			if (file.fail())
 				throw FileException {path};
 		}
 
-		static inline void removeFile(const std::string& path) {
+		static void removeFile(const std::string& path) {
 			if (!exists(path))
 				throw FileException {path};
 
 			std::remove(path.c_str());
 		}
 
-		static inline void createDir(const std::string& path) {
+		static void createDir(const std::string& path) {
 			if (!fs::create_directory(path))
 				throw FileException {path};
 		}
 
-		static inline void removeDir(const std::string& path, bool removeAll = false) {
+		static void removeDir(const std::string& path, const bool removeAll = false) {
 			if (removeAll && fs::remove_all(path)) return;
 			else if (fs::remove(path)) return;
 			
 			throw FileException {path};
 		}
 
-		static inline void write(const std::string& path, const std::string& data, const std::ios_base::openmode mode = std::ios::out) {
+		static void write(const std::string& path, const std::string& data, const std::ios_base::openmode mode = std::ios::out) {
 			std::ofstream file(path.c_str(), mode);
 
 			if (file.fail())
@@ -59,11 +59,11 @@ namespace fsys
 			file.close();
 		}
 
-		static inline std::string readAsString(const std::string& path) {
+		static std::string readAsString(const std::string& path) {
 			return VectorUtil::join(readAsList(path), "\n");
 		}
 
-		static inline StringList readAsList(const std::string& path) {
+		static StringList readAsList(const std::string& path) {
 			std::ifstream file(path.c_str());
 			StringList content;
 			std::string buff;
@@ -78,7 +78,7 @@ namespace fsys
 			return content;
 		}
 
-		static inline FileList fileList(const std::string& path) {
+		static FileList fileList(const std::string& path) {
 			FileList list;
 
 			for (const FileEntry& it : fs::directory_iterator(path))
@@ -87,7 +87,7 @@ namespace fsys
 			return list;
 		}
 
-		static inline StringList fileListAsString(const std::string& path) {
+		static StringList fileListAsString(const std::string& path) {
 			StringList list;
 
 			for (const FileEntry& it : fs::directory_iterator(path))
@@ -96,13 +96,13 @@ namespace fsys
 			return list;
 		}
 
-		static inline uintmax_t fileSize(const std::string& path) {
+		static uintmax_t fileSize(const std::string& path) {
 			return fs::file_size(path);
 		}
 
 		static LiteralValue* getFileDataObjFromFile(const std::string& path);
 
-		static inline bool exists(const std::string& name) noexcept {
+		static bool exists(const std::string& name) noexcept {
 			return fs::exists(name);
 		}
 	};

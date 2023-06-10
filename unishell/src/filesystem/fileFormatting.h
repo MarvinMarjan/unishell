@@ -50,7 +50,7 @@ namespace fsys
 			bool virt;
 		};
 
-		static inline FormatedFileData newFormatedFileData(BaseColorStructure* cl, const std::string& raw) {
+		static constexpr FormatedFileData newFormatedFileData(BaseColorStructure* cl, const std::string& raw) {
 			FormatedFileData data;
 
 			data.cl = cl;
@@ -62,7 +62,7 @@ namespace fsys
 		static std::string formatFileEntryAsString(const FileEntry& file);
 		static std::string formatFileSizeAsString(uintmax_t size);
 
-		static inline FormatedFileData formatFileExtensionAsString(const std::string& ex) {
+		static FormatedFileData formatFileExtensionAsString(const std::string& ex) {
 			CHECK_GLOBAL_EX(__fs_file_extensions_text, __clr_fs_file_extension_text)
 			CHECK_GLOBAL_EX(__fs_file_extensions_image, __clr_fs_file_extension_image)
 			CHECK_GLOBAL_EX(__fs_file_extensions_audio, __clr_fs_file_extension_audio)
@@ -74,7 +74,7 @@ namespace fsys
 
 		static FileAtts getFileAtts(const FileEntry& file);
 
-		static inline FormatedFileData getFFDByFileAttribute(const FileAtts& att) {
+		static constexpr FormatedFileData getFFDByFileAttribute(const FileAtts& att) {
 			FormatedFileData data;
 
 			if (att.directory)		data = newFormatedFileData(__clr_fs_file_type_dir, "dir");

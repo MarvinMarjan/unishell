@@ -15,16 +15,16 @@ public:
 		current = 0;
 	}
 
-	inline Expr* parse() {
+	Expr* parse() {
 		return expression();
 	}
 
 private:
-	inline Expr* expression() {
+	Expr* expression() {
 		return logicOperator();
 	}
 
-	inline Expr* logicOperator() {
+	Expr* logicOperator() {
 		Expr* expr = assignment();
 
 		while (match({ AND, OR })) {
@@ -39,7 +39,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* assignment() {
+	Expr* assignment() {
 		Expr* expr = equality();
 		
 		while (match({ EQUAL })) {
@@ -51,7 +51,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* equality() {
+	Expr* equality() {
 		Expr* expr = comparison();
 
 		while (match({ EQUAL_EQUAL_EQUAL, EQUAL_EQUAL, BANG_EQUAL })) {
@@ -63,7 +63,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* comparison() {
+	Expr* comparison() {
 		Expr* expr = term();
 
 		while (match({ GREATER, LESS, GREATER_EQUAL, LESS_EQUAL })) {
@@ -75,7 +75,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* term() {
+	Expr* term() {
 		Expr* expr = factor();
 
 		while (match({ PLUS, MINUS })) {
@@ -87,7 +87,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* factor() {
+	Expr* factor() {
 		Expr* expr = unary();
 
 		while (match({ STAR, SLASH })) {
@@ -99,7 +99,7 @@ private:
 		return expr;
 	}
 
-	inline Expr* unary() {
+	Expr* unary() {
 		if (match({ BANG, MINUS })) {
 			const Token op = prev();
 			Expr* expr = unary();
@@ -109,7 +109,7 @@ private:
 		return primary();
 	}
 
-	inline Expr* primary() {
+	Expr* primary() {
 		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT }))
 			return new LiteralExpr(prev().getLiteral());
 
@@ -129,7 +129,7 @@ private:
 	}
 
 
-	inline bool match(const std::vector<TokenEnum>& tokenTypes) {
+	bool match(const std::vector<TokenEnum>& tokenTypes) {
 		for (TokenEnum type : tokenTypes) {
 			if (check(type)) {
 				advance();
@@ -141,7 +141,7 @@ private:
 	}
 
 
-	inline Token consume(TokenEnum type, const std::string& msg) {
+	Token consume(const TokenEnum type, const std::string& msg) {
 		if (check(type))
 			return advance();
 
@@ -149,32 +149,32 @@ private:
 	}
 
 
-	inline bool check(TokenEnum type) {
+	constexpr bool check(const TokenEnum type) {
 		if (isAtEnd())
 			return false;
 
 		return (peek().getType() == type);
 	}
 
-	inline Token advance() noexcept {
+	Token advance() noexcept {
 		if (!isAtEnd())
 			current++;
 
 		return prev();
 	}
 
-	inline Token peek() const noexcept {
+	Token peek() const noexcept {
 		return tokens[current];
 	}
 
-	inline Token prev() const noexcept {
+	Token prev() const noexcept {
 		if (!current) 
 			return tokens[(size_t)current];
 
 		return tokens[(size_t)current - 1];
 	}
 
-	constexpr inline bool isAtEnd() const noexcept {
+	constexpr bool isAtEnd() const noexcept {
 		return ((size_t)current >= tokens.size());
 	}
 

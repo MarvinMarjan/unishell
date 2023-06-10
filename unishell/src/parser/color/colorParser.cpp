@@ -31,7 +31,7 @@ BaseColorStructure* ColorParser::parse()
 }
 
 
-ColorParser::OperationResult ColorParser::checkArgsSize(const TokenList& args, size_t minArgSize, Token& optionalMode) const
+ColorParser::OperationResult ColorParser::checkArgsSize(const TokenList& args, const size_t minArgSize, Token& optionalMode) const
 {
 	// if args size is greater than minArgSize by two, then
 	// throw a exception

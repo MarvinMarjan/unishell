@@ -6,7 +6,7 @@ class ClrUtil
 {
 public:
 	// returns a string containing every color in __color
-	static inline std::string getColoredColorList() noexcept {
+	static std::string getColoredColorList() noexcept {
 		std::string str = "";
 
 		for (size_t i = 0; i < __color.size(); i++)
@@ -16,7 +16,7 @@ public:
 	}
 
 	// returns a string containing a table of 255 ANSI colors
-	static inline std::string getColoredIdColorList() noexcept {
+	static std::string getColoredIdColorList() noexcept {
 		std::stringstream str;
 
 		for (size_t i = 0, col = 1; i <= 255; i++) {
@@ -32,7 +32,7 @@ public:
 	}
 
 	// returns a string containing every color mode in __colormode
-	static inline std::string getColoredColorModeList() noexcept {
+	static std::string getColoredColorModeList() noexcept {
 		std::string str = "";
 
 		for (size_t i = 0; i < __colormode.size(); i++)

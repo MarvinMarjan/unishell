@@ -7,32 +7,32 @@
 class INStreamBuffer : public std::string
 {
 public:
-	INStreamBuffer() : std::string() {
+	constexpr inline INStreamBuffer() : std::string() {
 		cursorIndex = 0;
 	}
 
-	constexpr inline void cursorLeft() noexcept {
+	constexpr void cursorLeft() noexcept {
 		if (cursorIndex > 0) cursorIndex--;
 	}
 
-	constexpr inline void cursorRight() noexcept {
+	constexpr void cursorRight() noexcept {
 		if (cursorIndex < size()) cursorIndex++;
 	}
 
-	constexpr inline int getCursorIndex() const noexcept {
+	constexpr int getCursorIndex() const noexcept {
 		return cursorIndex;
 	}
 
-	constexpr inline void setCursorIndex(int index) noexcept {
+	constexpr void setCursorIndex(int index) noexcept {
 		cursorIndex = index;
 	}
 
-	constexpr inline void insertStr(const size_t index, const std::string& text) {
+	constexpr void insertStr(const size_t index, const std::string& text) {
 		insert(index, text.c_str());
 		cursorIndex++;
 	}
 
-	constexpr inline void eraseAtIndex() {
+	constexpr void eraseAtIndex() {
 		if (getCursorIndex() - 1 < 0) return;
 		erase(getCursorIndex() - 1, 1);
 		cursorLeft();

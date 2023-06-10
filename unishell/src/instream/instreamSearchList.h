@@ -16,27 +16,27 @@ enum class SearchListType
 class INSSearchList : private StringList
 {
 public:
-	INSSearchList() {
+	inline constexpr INSSearchList() {
 		type = SearchListType::Command;
 		index = 0;
 		sequence = false;
 	}
 
-	inline void set(const StringList& other) {
+	constexpr void set(const StringList& other) {
 		if (sequence) return;
 		*((StringList*)this) = other;
 		index = 0;
 	}
 
-	constexpr inline SearchListType getType() const noexcept {
+	constexpr SearchListType getType() const noexcept {
 		return type;
 	}
 
-	constexpr inline void setType(const SearchListType type) noexcept {
+	constexpr void setType(const SearchListType type) noexcept {
 		this->type = type;
 	}
 
-	inline void setFromType() noexcept {
+	constexpr void setFromType() noexcept {
 		this->type = type;
 
 		switch (type)
@@ -63,18 +63,18 @@ public:
 		}
 	}
 
-	inline void next() noexcept {
+	constexpr void next() noexcept {
 		if (index + 1 >= size()) index = 0;
 		else index++;
 	}
 
-	inline std::string get() const noexcept {
+	constexpr std::string get() const noexcept {
 		if (type == SearchListType::Files)
 			return '\"' + (*this)[index] + '\"';
 		return (*this)[index];
 	}
 
-	inline StringList getList() const noexcept {
+	constexpr StringList getList() const noexcept {
 		return *((StringList*)this);
 	}
 

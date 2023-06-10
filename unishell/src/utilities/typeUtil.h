@@ -13,28 +13,28 @@
 class TypeUtil
 {
 public:
-	static inline bool isBoolean(const std::string& strBool) noexcept {
+	constexpr static bool isBoolean(const std::string& strBool) noexcept {
 		return (strBool == "true" || strBool == "false");
 	}
 
-	static inline std::string boolToString(bool boolean) noexcept {
+	constexpr static std::string boolToString(const bool boolean) noexcept {
 		const std::string strBool = ((boolean) ? "true" : "false");
 		return (color) ? boolformat(strBool) : strBool;
 	}
 
-	static inline bool stringToBool(const std::string& boolStr) noexcept {
+	constexpr static bool stringToBool(const std::string& boolStr) noexcept {
 		return (boolStr == "true") ? true : false;
 	}
 
 	// returns true if a double value can be
 	// represented as a integer (1.0, 3.0, ...)
-	static inline bool isInteger(double value) noexcept {
+	static bool isInteger(const double value) noexcept {
 		return (value == std::round(value));
 	}
 
 	// returns a string that represents a double value.
 	// returns a integer string if the value canbe simplified
-	static inline std::string formatDouble(double value) noexcept {
+	static std::string formatDouble(const double value) noexcept {
 		std::string strNum = tostr(value);
 		size_t pos = strNum.find_last_not_of('0');
 
@@ -48,7 +48,7 @@ public:
 
 	// returns a string that represents the value of a List.
 	// List( item1, item2, ... )
-	static inline std::string formatList(LiteralValue* lit) noexcept {
+	static std::string formatList(LiteralValue* lit) noexcept {
 		std::stringstream str;
 
 		str << "List( ";
@@ -65,7 +65,7 @@ public:
 
 	// returns a string that represents the value of a Object.
 	// Object( key: value )
-	static inline std::string formatObject(LiteralValue* lit, bool indent = false) noexcept {
+	static std::string formatObject(LiteralValue* lit) noexcept {
 		std::stringstream str;
 
 		str << "Object( ";
@@ -85,7 +85,7 @@ public:
 	}
 
 	// returns a string that represents a LiteralValue.
-	static inline std::string literalValueToString(LiteralValue* val, bool color = false) noexcept {
+	static std::string literalValueToString(LiteralValue* val, const bool color = false) noexcept {
 		if (!val) return ((color) ? nullformat("null") : "null");
 
 		TypeUtil::color = color;
@@ -99,7 +99,7 @@ public:
 		return std::string();
 	}
 
-	static inline LitList stringListToLiteralList(const StringList& list) noexcept {
+	static LitList stringListToLiteralList(const StringList& list) noexcept {
 		LitList res;
 
 		for (const std::string& item : list)
@@ -108,15 +108,15 @@ public:
 		return res;
 	}
 
-	static inline Token literalToToken(LiteralValue* lit) noexcept {
+	static Token literalToToken(LiteralValue* lit) noexcept {
 		return Token(typeToTokenEnum(lit->type()), "", lit, {}, 0);
 	}
 
-	static inline TokenEnum getLitTokenEnum(LiteralValue* lit) noexcept {
+	static TokenEnum getLitTokenEnum(LiteralValue* lit) noexcept {
 		return typeToTokenEnum(lit->type());
 	}
 
-	constexpr static inline TokenEnum typeToTokenEnum(LiteralValueType type) noexcept {
+	static constexpr TokenEnum typeToTokenEnum(const LiteralValueType type) noexcept {
 		switch (type) {
 		case Literal:	return LITERAL;
 		case Number:	return NUMBER;
@@ -129,7 +129,7 @@ public:
 		return LITERAL;
 	}
 
-	static inline std::string getTypeAsString(LiteralValueType type, bool colorize = false) noexcept {
+	static constexpr std::string getTypeAsString(const LiteralValueType type, const bool colorize = false) noexcept {
 		std::string ret;
 		
 		switch (type) {
@@ -150,7 +150,7 @@ public:
 		return ret;
 	}
 
-	static inline std::string getTypeAsString(const std::vector<LiteralValueType>& types, bool colorize = false) noexcept {
+	static constexpr std::string getTypeAsString(const std::vector<LiteralValueType>& types, const bool colorize = false) noexcept {
 		std::string str = "";
 
 		for (size_t i = 0; i < types.size(); i++)
@@ -159,7 +159,7 @@ public:
 		return str;
 	}
 
-	static inline std::string colorizeStrType(const std::string& type) noexcept {
+	static constexpr std::string colorizeStrType(const std::string& type) noexcept {
 		if (type == "Literal")		return clr(type, __clr_type_literal->toString());
 		else if (type == "Number")	return clr(type, __clr_type_number->toString());
 		else if (type == "Bool")	return clr(type, __clr_type_bool->toString());
@@ -170,12 +170,12 @@ public:
 		else return type;
 	}
 	
-	constexpr static inline bool isTypeof(LiteralValue* value, LiteralValueType type) noexcept {
+	static constexpr bool isTypeof(LiteralValue* value, const LiteralValueType type) noexcept {
 		return (value->type() == type);
 	}
 
 	// return true if all values inside "list" has type "type"
-	static inline bool isListOf(LiteralValue* list, LiteralValueType type) {
+	static constexpr bool isListOf(LiteralValue* list, const LiteralValueType type) {
 		if (list->type() != List) return false;
 
 		for (LiteralValue* val : asList(list))
@@ -185,7 +185,7 @@ public:
 		return true;
 	}
 
-	constexpr static inline void checkNull(LiteralValue* value) noexcept {
+	static constexpr void checkNull(LiteralValue* value) noexcept {
 		if (!value)
 			*value = LiteralValue("null");
 	}

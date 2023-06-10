@@ -19,14 +19,14 @@ public:
 
 	PathHandler(const std::string& path);
 
-	inline PathOperationData operator+(const std::string& path) const noexcept {
+	PathOperationData operator+(const std::string& path) const noexcept {
 	 	const PathTokenList tokens = PathScanner(path).scanTokens();
 		PathHandler copy(*this);
 
 		return { copy.manip(tokens), copy.getPath() };
 	}
 
-	inline PathOperationData operator<<(const std::string& path) const noexcept {
+	PathOperationData operator<<(const std::string& path) const noexcept {
 		const PathTokenList tokens = PathScanner(path).scanTokens();
 		PathHandler copy(*this);
 
@@ -34,11 +34,11 @@ public:
 	}
 
 
-	bool manip(const PathTokenList& instructions, bool ignoreExcp = false);
+	bool manip(const PathTokenList& instructions, const bool ignoreExcp = false);
 
 
 	// returns false if dirName doesn't exists
-	inline bool into(const std::string& dirName, bool root = false, bool ignoreExcp = false) {
+	bool into(const std::string& dirName, const bool root = false, const bool ignoreExcp = false) {
 		if (!ignoreExcp && !root && !fsys::File::exists(path + '/' + dirName)) return false;
 		if (!ignoreExcp && root && !fsys::File::exists(dirName)) return false;
 
@@ -49,7 +49,7 @@ public:
 	}
 
 	// back to the previous directory
-	inline void back() noexcept {
+	void back() noexcept {
 		if (dirCount() <= MIN_DIR_COUNT) return;
 
 		path = path.substr(0, StringUtil::findLast(path, '/'));
@@ -58,11 +58,11 @@ public:
 			path += '/';
 	}
 
-	inline std::string getPath() const noexcept {
+	constexpr std::string getPath() const noexcept {
 		return path;
 	}
 
-	inline void setPath(const std::string& path, bool ignoreLast = false) noexcept {
+	void setPath(const std::string& path, const bool ignoreLast = false) noexcept {
 		if (isDirSeparator(path.back()) && !ignoreLast) this->path = StringUtil::eraseLast(path);
 		else this->path = path;
 
@@ -71,11 +71,11 @@ public:
 
 	
 private:
-	inline size_t dirCount() const noexcept {
+	size_t dirCount() const noexcept {
 		return StringUtil::split(path, '/').size();
 	}
 
-	constexpr static inline bool isDirSeparator(char ch) noexcept {
+	constexpr static bool isDirSeparator(const char ch) noexcept {
 		return (ch == '/' || ch == '\\');
 	}
 

@@ -18,7 +18,7 @@ enum SystemExceptionType
 class SystemException
 {
 public:
-	SystemException(SystemExceptionType type, const std::string& msg, const ExceptionRef& ref = ExceptionRef()) : msg(msg), type(type), ref(ref)
+	SystemException(const SystemExceptionType type, const std::string& msg, const ExceptionRef& ref = ExceptionRef()) : msg(msg), type(type), ref(ref)
 	{
 		switch (type)
 		{
@@ -64,7 +64,7 @@ public:
 	}
 
 	// formated error message
-	inline std::string toString() const noexcept {
+	std::string toString() const noexcept {
 		return clr('#' + typeMsg, 153) + clr(" Error\n", 196) + ref.getString() + "\n" + " > " + msg + '\n';
 	}
 

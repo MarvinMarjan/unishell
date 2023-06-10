@@ -14,7 +14,7 @@ public:
 		std::string type;
 	};
 
-	static inline FormatedIdentifierData formatIdentifier(const Identifier& identifier) {
+	static FormatedIdentifierData formatIdentifier(const Identifier& identifier) {
 		const std::string name = identifier.getName();
 		const std::string strVal = litToStr(identifier.getValue(), true);
 		const std::string type = TypeUtil::getTypeAsString(identifier.getType(), true);
@@ -26,7 +26,7 @@ public:
 		};
 	}
 
-	static inline std::string formatFIDToString(const FormatedIdentifierData& data) noexcept {
+	static std::string formatFIDToString(const FormatedIdentifierData& data) noexcept {
 		std::stringstream str;
 
 		OutUtil::ColorizedStringSize strSizes = OutUtil::getColorizedStringSize(data.name);

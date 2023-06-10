@@ -10,7 +10,7 @@ struct Flag
 class FlagList : public std::vector<Flag>
 {
 public:
-	inline bool hasFlag(const std::string& flagName) const noexcept {
+	constexpr bool hasFlag(const std::string& flagName) const noexcept {
 		for (const Flag& flag : (*this))
 			if (flag.name == flagName)
 				return true;

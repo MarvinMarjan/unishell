@@ -10,7 +10,7 @@
 class ColorParser
 {
 public:
-	explicit ColorParser(const TokenList& src, bool ignoreExceptions = false) : 
+	explicit ColorParser(const TokenList& src, const bool ignoreExceptions = false) : 
 		src(src), ignoreExceptions(ignoreExceptions)
 	{
 		current = 0;
@@ -25,7 +25,7 @@ private:
 	enum OperationResult { Success, Failure };
 
 
-	TokenList getArgs() {
+	constexpr TokenList getArgs() {
 		TokenList args;
 
 		// gets all tokens before a COLON
@@ -39,7 +39,7 @@ private:
 
 
 	// id color format
-	IdColorStructure* getIdClrStructure(TokenList args) const
+	IdColorStructure* getIdClrStructure(const TokenList& args) const
 	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
@@ -51,7 +51,7 @@ private:
 
 
 	// rgb color format
-	RGBColorStructure* getRGBClrStructure(TokenList args) const
+	RGBColorStructure* getRGBClrStructure(const TokenList& args) const
 	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
@@ -66,7 +66,7 @@ private:
 
 
 	// predefined color format
-	ColorStructure* getClrStructure(TokenList args) const
+	ColorStructure* getClrStructure(const TokenList& args) const
 	{
 		Token optionalMode = Token(LITERAL, "normal", nullptr, {}, 0);
 
@@ -83,12 +83,12 @@ private:
 
 	// throws a exception if args size is greater or lower 
 	// than the expected or if color mode doesn't exists
-	OperationResult checkArgsSize(const TokenList& args, size_t minArgSize, Token& optionalMode) const;
+	OperationResult checkArgsSize(const TokenList& args, const size_t minArgSize, Token& optionalMode) const;
 	
 
 	// throws a exception if the type of a token in args is
 	// not the expected
-	OperationResult checkTokenType(const TokenList& args, TokenEnum expectedType, const std::string& expectedTypeStr) const {
+	constexpr OperationResult checkTokenType(const TokenList& args, const TokenEnum expectedType, const std::string& expectedTypeStr) const {
 		for (const Token& token : args) {
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
@@ -100,16 +100,16 @@ private:
 	}
 
 
-	Token advance() {
+	constexpr Token advance() {
 		if (!isAtEnd()) current++;
 		return prev();
 	}
 
-	Token peek() {
+	constexpr Token peek() {
 		return src[current];
 	}
 
-	Token prev() {
+	constexpr Token prev() {
 		if (!current) return src[current];
 		return src[(size_t)current - 1];
 	}

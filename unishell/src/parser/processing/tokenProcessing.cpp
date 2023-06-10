@@ -1,6 +1,43 @@
 #include "tokenProcessing.h"
 
-void TokenProcess::getInside(TokenList& res, const TokenList& source, TokenEnum lchar, TokenEnum rchar, TokenEnum resToken, const std::string& errMsg, bool processSub) {
+TokenList TokenProcess::subToLiteral(const TokenList& source)
+{
+	TokenList res;
+
+	for (const Token& token : source)
+		switch (token.getType()) {
+		case LIST: {
+			if (token.getLiteral()) {
+				res.push_back(token);
+				break;
+			}
+
+			const TokenList parsed = process(token.getSub());
+			res.push_back(Token(LIST, "", getListFromTokenList(parsed), {}, token.getIndex()));
+			break;
+		}
+
+		case OBJECT: {
+			if (token.getLiteral()) {
+				res.push_back(token);
+				break;
+			}
+
+			const TokenList parsed = process(token.getSub());
+			res.push_back(Token(OBJECT, "", getObjFromTokenList(parsed), {}, token.getIndex()));
+			break;
+		}
+
+		default:
+			res.push_back(token);
+		}
+
+	return res;
+}
+
+void TokenProcess::getInside(TokenList& res, const TokenList& source, const TokenEnum lchar, const TokenEnum rchar, 
+	const TokenEnum resToken, const std::string& errMsg, const bool processSub)
+{
 	size_t start = 0, end = 0;
 	unsigned short aux = 0;
 

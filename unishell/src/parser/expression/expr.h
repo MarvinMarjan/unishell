@@ -30,7 +30,7 @@ public:
 
 	Binary(Expr* left, Token op, Expr* right) : left(left), op(op), right(right) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	constexpr LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitBinary(this);
 	}
 
@@ -48,7 +48,7 @@ public:
 
 	Unary(Token op, Expr* expr) : op(op), expr(expr) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	constexpr LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitUnary(this);
 	}
 
@@ -65,7 +65,7 @@ public:
 
 	Group(Expr* expression) : expression(expression) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	constexpr LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitGroup(this);
 	}
 
@@ -81,7 +81,7 @@ public:
 
 	LiteralExpr(LiteralValue* value) : value(value) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	constexpr LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitLiteralExpr(this);
 	}
 
