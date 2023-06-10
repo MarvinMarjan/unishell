@@ -8,7 +8,7 @@
 class RegexUtil
 {
 public:
-	static inline StringList getMatchesAsStringList(const std::string& src, std::regex pattern) {
+	static StringList getMatchesAsStringList(const std::string& src, const std::regex& pattern) {
 		std::sregex_iterator it(src.begin(), src.end(), pattern, std::regex_constants::match_default | std::regex_constants::match_any);
 		std::sregex_iterator end;
 

@@ -5,24 +5,24 @@
 class INSListBuffer : private StringList
 {
 public:
-	INSListBuffer() : StringList() {
+	constexpr inline INSListBuffer() : StringList() {
 		current = 0;
 		ignoreCurrentIndexChange = true;
 	}
 
-	inline void reset() noexcept {
+	constexpr void reset() noexcept {
 		ignoreCurrentIndexChange = true;
 		current = (current > 0) ? size() - 1 : 0;
 	}
 
-	inline void add(const std::string& value) {
+	constexpr void add(const std::string& value) {
 		if (current > 0 && value == at(current)) return;
 		
 		push_back(value);
 		current = size() - 1;
 	}
 	
-	inline void up() noexcept {
+	constexpr void up() noexcept {
 		if (current > 0) current--;
 
 		if (ignoreCurrentIndexChange) {
@@ -31,7 +31,7 @@ public:
 		}
 	}
 
-	inline void down() noexcept {
+	constexpr void down() noexcept {
 		if (current < size() - 1) current++;
 
 		if (ignoreCurrentIndexChange) {
@@ -40,7 +40,7 @@ public:
 		}
 	}
 
-	inline std::string get() noexcept {
+	constexpr std::string get() noexcept {
 		if (size() && current < size()) return (*this)[current];
 		return std::string();
 	}

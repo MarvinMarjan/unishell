@@ -25,7 +25,7 @@ enum ColorMode {
 };
 
 
-inline Color stringToColor(const std::string& strMode) {
+constexpr inline Color stringToColor(const std::string& strMode) {
 	if (strMode == "std") return null;
 
 	if (strMode == "red") return red;
@@ -47,7 +47,7 @@ inline Color stringToColor(const std::string& strMode) {
 	return null;
 }
 
-inline ColorMode stringToColorMode(const std::string& strMode) {
+constexpr inline ColorMode stringToColorMode(const std::string& strMode) {
 	if (strMode == "normal") return normal;
 	if (strMode == "dark") return dark;
 	if (strMode == "italic") return italic;
@@ -60,16 +60,16 @@ inline ColorMode stringToColorMode(const std::string& strMode) {
 
 
 // returns the color assigned to the id (0 - 255)
-inline std::string id(const unsigned int i, const ColorMode mode) noexcept {
+constexpr inline std::string id(const unsigned int i, const ColorMode mode) noexcept {
 	return "\033[" + tostr((int)mode) + ";38;5;" + tostr(i) + 'm';
 }
 
 // returns rgb ANSI notation
-inline std::string rgb(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode) noexcept {
+constexpr inline std::string rgb(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode) noexcept {
 	return "\033[" + tostr((int)mode) + ";38;2;" + tostr(red) + ';' + tostr(green) + ';' + tostr(blue) + 'm';
 }
 
-inline std::string colorToString(const Color color, const ColorMode mode) noexcept {
+constexpr inline std::string colorToString(const Color color, const ColorMode mode) noexcept {
 	return "\033[" + tostr((int)mode) + ';' + tostr((int)color) + 'm';
 }
 
@@ -78,9 +78,9 @@ class BaseColorStructure
 {
 public:
 	virtual ~BaseColorStructure() = default;
-	explicit BaseColorStructure(const ColorMode mode = normal) : mode(mode) {}
+	explicit constexpr inline BaseColorStructure(const ColorMode mode = normal) : mode(mode) {}
 
-	virtual inline std::string toString() const = 0;
+	virtual constexpr inline std::string toString() const = 0;
 
 	ColorMode mode;
 };
@@ -88,9 +88,9 @@ public:
 class IdColorStructure : public BaseColorStructure
 {
 public:
-	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : BaseColorStructure(mode), idc(idc) {}
+	constexpr inline explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : BaseColorStructure(mode), idc(idc) {}
 
-	std::string toString() const override {
+	constexpr std::string toString() const override {
 		return id(idc, mode);
 	}
 
@@ -102,10 +102,10 @@ public:
 class RGBColorStructure : public BaseColorStructure
 {
 public:
-	RGBColorStructure(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode = normal) :
+	constexpr inline RGBColorStructure(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode = normal) :
 		BaseColorStructure(mode), red(red), green(green), blue(blue) {}
 
-	std::string toString() const override {
+	constexpr std::string toString() const override {
 		return rgb(red, green, blue, mode);
 	}
 
@@ -119,10 +119,10 @@ public:
 class ColorStructure : public BaseColorStructure
 {
 public:
-	explicit ColorStructure(const Color color, const ColorMode mode = normal) :
+	explicit constexpr inline ColorStructure(const Color color, const ColorMode mode = normal) :
 		BaseColorStructure(mode), color(color) {}
 
-	std::string toString() const override {
+	constexpr std::string toString() const override {
 		return colorToString(color, mode);
 	}
 

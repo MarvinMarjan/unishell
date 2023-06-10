@@ -11,25 +11,25 @@ typedef std::vector<Identifier> IdentifierList;
 class Identifier
 {
 public:
-	Identifier(const std::string& name, LiteralValue* value, bool sysId = false) : 
+	constexpr inline Identifier(const std::string& name, LiteralValue* value, const bool sysId = false) : 
 		name(name), value(value), sysId(sysId)
 	{
 		updateType();
 	}
 
-	inline std::string getName() const noexcept {
+	constexpr std::string getName() const noexcept {
 		return name;
 	}
 
-	inline LiteralValue* getValue() const noexcept {
+	constexpr LiteralValue* getValue() const noexcept {
 		return value;
 	}
 
-	constexpr inline LiteralValueType getType() const noexcept {
+	constexpr LiteralValueType getType() const noexcept {
 		return type;
 	}
 
-	inline void setValue(LiteralValue* value) noexcept {
+	constexpr void setValue(LiteralValue* value) noexcept {
 		if (sysId) return; // sys identifiers are const
 		this->value = value;
 		updateType();
@@ -40,7 +40,7 @@ public:
 	}
 
 private:
-	inline void updateType() {
+	constexpr void updateType() noexcept {
 		type = (value) ? (LiteralValueType)value->index() : Null;
 	}
 

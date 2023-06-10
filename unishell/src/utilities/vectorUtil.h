@@ -6,7 +6,7 @@ class VectorUtil
 {
 public:
 	template <typename T1, typename T2>
-	static inline std::vector<T2> map(const std::vector<T1>& src, T2 (*func)(T1 item)) {
+	static std::vector<T2> map(const std::vector<T1>& src, T2 (*func)(T1 item)) {
 		std::vector<T2> res;
 		
 		for (const T1& item : src)
@@ -16,7 +16,7 @@ public:
 	}
 
 	template <typename T>
-	static inline std::vector<size_t> findAll(const std::vector<T>& src, const T& value) noexcept {
+	static std::vector<size_t> findAll(const std::vector<T>& src, const T& value) noexcept {
 		std::vector<size_t> occurrences;
 
 		for (size_t i = 0; i < src.size(); i++)
@@ -26,7 +26,7 @@ public:
 		return occurrences;
 	}
 
-	static inline std::string join(const StringList& src, const std::string& sep = "") noexcept {
+	static std::string join(const StringList& src, const std::string& sep = "") noexcept {
 		std::string joined = "";
 
 		for (size_t i = 0; i < src.size(); i++)
@@ -36,11 +36,11 @@ public:
 	}
 
 	template <typename T>
-	static inline bool exists(const std::vector<T>& src, const T& value) {
+	constexpr static bool exists(const std::vector<T>& src, const T& value) {
 		return (std::find(src.begin(), src.end(), value) != src.end());
 	}
 
-	static inline StringList sortByCharacters(const StringList& src, const std::string& sortener) noexcept {
+	constexpr static StringList sortByCharacters(const StringList& src, const std::string& sortener) noexcept {
 		StringList res;
 
 		for (char ch : sortener)

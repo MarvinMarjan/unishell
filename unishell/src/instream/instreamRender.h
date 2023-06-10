@@ -16,11 +16,11 @@ private:
 	friend class INStream;
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
-	static inline std::string cursor(const char ch, const std::string& after = endclr) noexcept {
+	static std::string cursor(const char ch, const std::string& after = endclr) noexcept {
 		return clr(StringUtil::charToStr(ch), __clr_cursor->toString()) + after;
 	}
 
-	static inline void renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, const int cursorPos, size_t i) {
+	static void renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, const int cursorPos, size_t i) {
 		if (cursorPos != -1 && cursorPos > text.size() - 1 && i + 1 >= text.size()) {
 			const int begin = (int)INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1));
 
@@ -34,7 +34,7 @@ private:
 	}
 
 	// command string
-	static inline void renderCommand(std::stringstream& stream, const std::string& text, const int cursorPos, size_t& i, const size_t firstWordPos)
+	static void renderCommand(std::stringstream& stream, const std::string& text, const int cursorPos, size_t& i, const size_t firstWordPos)
 	{
 		const std::string cmdName = std::string(text.begin(), text.begin() + firstWordPos + 1);
 		const CommandBase* const cmd = CmdUtil::getCommand(cmdName);
@@ -44,7 +44,7 @@ private:
 		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos);
 	}
 
-	static inline void renderRetCommand(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static void renderRetCommand(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		BaseColorStructure* retCmdColor = __clr_command;
 
 		if (i + 1 < text.size()) {
@@ -60,7 +60,7 @@ private:
 	}
 
 	// quoted string: "hello, world"
-	static inline void renderQuoted(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static void renderQuoted(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		stream << __clr_quoted->toString();
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString()); // draw first quote
@@ -81,7 +81,7 @@ private:
 		stream << endclr;
 	}
 
-	static inline void renderRawString(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static void renderRawString(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		stream << __clr_raw_string->toString();
 
 		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_raw_string->toString()); // draw first char
@@ -95,7 +95,7 @@ private:
 	}
 
 	// indentifier: $indentifier
-	static inline void renderIdentifier(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static void renderIdentifier(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		BaseColorStructure* idColor = __clr_identifier;
 
 		if (i + 1 < text.size()) {
@@ -111,7 +111,7 @@ private:
 	}
 	
 	// keywords that exists in __keywords
-	static inline bool renderKeyword(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static bool renderKeyword(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		size_t aux = i;
 
 		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
@@ -127,7 +127,7 @@ private:
 	}
 
 	// render boolean values (true | false)
-	static inline bool renderBoolean(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static bool renderBoolean(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		size_t aux = i;
 
 		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
@@ -144,7 +144,7 @@ private:
 
 	// render a color syntax with the color that the syntax represents.
 	// i.e: id:205;underline: | clr:red: | rgb:100;100;100;italic:
-	static inline bool renderColor(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
+	static bool renderColor(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		size_t start = i, end = 0, aux = i;
 
 		while (text[aux] != ':')
@@ -168,7 +168,7 @@ private:
 		return (color) ? true : false;
 	}
 
-	static inline void renderWord(std::stringstream& stream, const std::string& text, size_t& i,
+	static void renderWord(std::stringstream& stream, const std::string& text, size_t& i,
 		const int cursorPos, BaseColorStructure* color, bool digit = false) noexcept
 	{
 		// render color
@@ -185,7 +185,7 @@ private:
 		stream << endclr;
 	}
 
-	static inline void renderUntil(std::stringstream& stream, const std::string& text, size_t& i,
+	static void renderUntil(std::stringstream& stream, const std::string& text, size_t& i,
 		const int cursorPos, const BaseColorStructure* const color, size_t until, bool decrement = true)
 	{
 		stream << color->toString();
@@ -203,7 +203,7 @@ private:
 	// "defaultValue" is the value to be drawed if currentPos not equals to cursorPos.
 	// "after" has same meaning of INStreamRender::cursor
 
-	static inline void renderChar(const size_t currentPos, const int cursorPos, char cursorChar, std::stringstream& stream,
+	static void renderChar(const size_t currentPos, const int cursorPos, char cursorChar, std::stringstream& stream,
 		const std::string& defaultValue, const std::string& after = endclr)
 	{
 		if (currentPos == cursorPos && cursorPos != -1)
@@ -213,7 +213,7 @@ private:
 			stream << defaultValue;
 	}
 
-	static inline size_t getWordEndPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
+	static size_t getWordEndPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
 		if (text[pos] == '\"' && !ignoreQuote) {
 			while (text[++pos] != '\"') {}
 			return pos;
@@ -230,7 +230,7 @@ private:
 		return pos;
 	}
 
-	static inline size_t getWordBeginPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
+	static size_t getWordBeginPos(const std::string& text, size_t pos = 0, bool ignoreQuote = true) {
 		if (text[pos] == '\"' && !ignoreQuote) {
 			while (text[--pos] != '\"') {}
 			return pos;

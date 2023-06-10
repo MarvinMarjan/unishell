@@ -6,16 +6,16 @@
 class WindowsSystem
 {
 public:
-	static inline bool VKIsPressed(int VK) {
+	static bool VKIsPressed(const int VK) {
 		return ((GetAsyncKeyState(VK) & 0x8000) != 0);
 	}
 
-	static inline void setCursorVisible(bool visible) {
+	static void setCursorVisible(bool visible) {
 		CONSOLE_CURSOR_INFO info = { 1, visible };
 		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 	}
 
-	static inline std::string getEnvVariable(const std::string& varName) {
+	static std::string getEnvVariable(const std::string& varName) {
 		char buffer[4096];
 		DWORD res = GetEnvironmentVariableA(varName.c_str(), buffer, sizeof(buffer));
 
@@ -25,7 +25,7 @@ public:
 		return std::string();
 	}
 
-	static inline std::wstring getSystemDesktopPath() {
+	static std::wstring getSystemDesktopPath() {
 		PWSTR buff;
 
 		if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &buff)))

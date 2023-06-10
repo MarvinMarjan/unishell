@@ -8,8 +8,8 @@
 class ObjUtil
 {
 public:
-	static inline LiteralValue* newFileDataObj(
-		const std::string& fileName, const std::string& fileEx, int size, const fsys::FileF::FileAtts& atts
+	static LiteralValue* newFileDataObj(
+		const std::string& fileName, const std::string& fileEx, const int size, const fsys::FileF::FileAtts& atts
 	) noexcept 
 	{
 		return lit(LitObj({
@@ -43,10 +43,10 @@ public:
 		}));
 	}
 
-	static inline LiteralValue* newRegexResult(std::smatch& match) {
+	static LiteralValue* newRegexResult(std::smatch& match) {
 		LiteralValue* list = lit(LitList());
 
-		if (match.size() > 0)
+		if (match.size())
 			asObj(list).insert({ "full", lit(match[0])});
 
 		asObj(list).insert({ "group", lit(LitList()) });

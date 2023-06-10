@@ -7,10 +7,10 @@ ExceptionRef::ExceptionRef() {
 	index = -1;
 }
 
-ExceptionRef::ExceptionRef(const std::string& src, int index) :
+ExceptionRef::ExceptionRef(const std::string& src, const int index) :
 	src(src), index(index) {}
 
-ExceptionRef::ExceptionRef(const std::string& src, size_t index) :
+ExceptionRef::ExceptionRef(const std::string& src, const size_t index) :
 	src(src), index((int)index) {}
 
 std::string ExceptionRef::getString() const {

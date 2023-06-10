@@ -18,13 +18,13 @@ public:
 		Root
 	};
 
-	PathToken(PathTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}
+	PathToken(const PathTokenType type, const std::string& lexical) : type(type), lexical(lexical) {}
 
-	constexpr inline PathTokenType getType() const noexcept {
+	constexpr PathTokenType getType() const noexcept {
 		return type;
 	}
 
-	inline std::string getLexical() const noexcept {
+	constexpr std::string getLexical() const noexcept {
 		return lexical;
 	}
 

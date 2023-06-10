@@ -8,7 +8,7 @@
 class CmdUtil
 {
 public:
-	static inline std::string funcToString(CmdFunc func) noexcept {
+	static std::string funcToString(const CmdFunc func) noexcept {
 		switch (func) {
 		case CmdFunc::Type:			return "Type";
 		case CmdFunc::Literal:		return "Literal";
@@ -23,7 +23,7 @@ public:
 		}
 	}
 	
-	constexpr static inline BaseColorStructure* funcToColor(CmdFunc func) noexcept {
+	constexpr static BaseColorStructure* funcToColor(const CmdFunc func) noexcept {
 		switch (func) {
 		case CmdFunc::Type:			return __clr_type_command;
 		case CmdFunc::Literal:		return __clr_literal_command;
@@ -39,7 +39,7 @@ public:
 	}
 
 	// get the args of a command from TokenList
-	static inline ArgList getArgs(const TokenList& input, bool encapsulate = true, bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
+	static ArgList getArgs(const TokenList& input, const bool encapsulate = true, const bool firstIsCommand = true, bool* hasExplicitList = nullptr) {
 		const size_t index = (firstIsCommand) ? 1 : 0;
 
 		if (input.size() <= index)
@@ -61,7 +61,7 @@ public:
 		return ArgList();
 	}
 
-	static inline FlagList getFlags(const TokenList& input) noexcept {
+	static FlagList getFlags(const TokenList& input) noexcept {
 		FlagList flags;
 
 		for (const Token& token : input)
@@ -71,7 +71,7 @@ public:
 		return flags;
 	}
 
-	static inline TokenList removeFlags(const TokenList& input) {
+	static TokenList removeFlags(const TokenList& input) {
 		TokenList res;
 
 		for (const Token& token : input)
@@ -81,7 +81,7 @@ public:
 		return res;
 	}
 
-	static inline std::string getAllCmdHelpMessage(bool nameOnly = false) noexcept {
+	static std::string getAllCmdHelpMessage(const bool nameOnly = false) noexcept {
 		std::string msg = "";
 
 		for (CommandBase* cmd : __sys_commands)
@@ -90,7 +90,7 @@ public:
 		return msg;
 	}
 
-	static inline std::string getAllRetCmdHelpMessage(bool nameOnly = false) noexcept {
+	static std::string getAllRetCmdHelpMessage(const bool nameOnly = false) noexcept {
 		std::string msg = "";
 
 		for (RetCommandBase* cmd : __sys_ret_commands)
@@ -100,7 +100,7 @@ public:
 	}
 
 	template <typename T>
-	static inline StringList cmdListToStr(const std::vector<T>& list) {
+	static StringList cmdListToStr(const std::vector<T>& list) {
 		StringList strList;
 
 		for (T item : list)
@@ -110,12 +110,12 @@ public:
 	}
 
 	template <typename T>
-	static inline unsigned int getCommandCount(const std::vector<T>& list, const std::string& cmdName) noexcept {
+	static unsigned int getCommandCount(const std::vector<T>& list, const std::string& cmdName) noexcept {
 		return (unsigned int)VectorUtil::findAll(cmdListToStr(list), cmdName).size();
 	}
 
 	template <typename T>
-	static inline BaseColorStructure* getCommandColor(const std::vector<T>& list, const std::string& cmdName) {
+	static BaseColorStructure* getCommandColor(const std::vector<T>& list, const std::string& cmdName) {
 		const T cmd = getCommandFrom(list, cmdName);
 
 		if (getCommandCount(list, cmdName) > 1)
@@ -129,7 +129,7 @@ public:
 	}
 
 	template <typename T>
-	static inline T getCommandFrom(const std::vector<T>& list, const std::string& cmdName) noexcept {
+	static T getCommandFrom(const std::vector<T>& list, const std::string& cmdName) noexcept {
 		for (T cmd : list)
 			if (cmdName == cmd->symbol)
 				return cmd;
@@ -141,7 +141,7 @@ public:
 	// return a CommandBase* according to "cmdName"
 	static CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags);
 
-	static inline CommandBase* getCommand(const std::string& cmdName) noexcept  {
+	static CommandBase* getCommand(const std::string& cmdName) noexcept  {
 		for (CommandBase* cmd : __sys_commands)
 			if (cmdName == cmd->symbol)
 				return cmd;
@@ -152,7 +152,7 @@ public:
 	// return a RetCommandBase* according to "cmdName"
 	static RetCommandBase* getRetCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags);
 
-	static inline RetCommandBase* getRetCommand(const std::string& cmdName) noexcept {
+	static RetCommandBase* getRetCommand(const std::string& cmdName) noexcept {
 		for (RetCommandBase* cmd : __sys_ret_commands)
 			if (cmdName == cmd->symbol)
 				return cmd;
@@ -166,7 +166,7 @@ public:
 	// right command based on its arguments
 
 	template <typename... Ts>
-	static inline RetCommandBase* checkArgOverload(const ArgList& args, const FlagList& flags) {
+	static RetCommandBase* checkArgOverload(const ArgList& args, const FlagList& flags) {
 		RetCommandBase* cmd = nullptr;
 
 		// fold expression
@@ -176,7 +176,7 @@ public:
 	}
 
 	template <typename T>
-	static inline RetCommandBase* checkArgOverloadImpl(RetCommandBase* cmd, const ArgList& args, const FlagList& flags) {
+	static RetCommandBase* checkArgOverloadImpl(RetCommandBase* cmd, const ArgList& args, const FlagList& flags) {
 		if (cmd)
 			return cmd;
 

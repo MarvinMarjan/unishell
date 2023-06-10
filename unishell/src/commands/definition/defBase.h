@@ -62,7 +62,7 @@ enum ExpFileType {
 
 
 // check if the index of a list exists
-inline void checkIndex(const int index, const size_t max, const std::string& symbol) {
+constexpr inline void checkIndex(const int index, const size_t max, const std::string& symbol) {
 	if (index >= max || index < 0)
 		THROW_RUNTIME_ERR("Invalid index: " + numformat(tostr(index)));
 }
@@ -74,7 +74,7 @@ inline void checkIndex(const LitObj& obj, const std::string& key, const std::str
 }
 
 // check if path exists
-inline void checkPath(const PathHandler::PathOperationData& data, const std::string& argPath, const std::string& symbol) {
+constexpr inline void checkPath(const PathHandler::PathOperationData& data, const std::string& argPath, const std::string& symbol) {
 	if (!data.success)
 		THROW_RUNTIME_ERR("Invalid path: " + qtd(argPath));
 }

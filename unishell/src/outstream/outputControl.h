@@ -19,7 +19,7 @@ inline std::string delWindow(DelHint hint = CursorToEnd) noexcept {
 	return "\033[" + std::to_string(hint) + "J";
 }
 
-inline std::string saveCursor() noexcept {
+constexpr inline std::string saveCursor() noexcept {
 	return "\033[s";
 }
 
