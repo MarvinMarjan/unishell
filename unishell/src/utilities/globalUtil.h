@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../parser/instream/token.h"
+#include "../instream/scanner/token.h"
 
 class GlobalUtil
 {

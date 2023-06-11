@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../parser/expression/type.h"
-#include "../utilities/stringUtil.h"
+#include "../data/type.h"
 #include "../utilities/typeUtil.h"
-#include "../system/system.h"
+#include "../system/exception/systemException.h"
+#include "../utilities/vectorUtil.h"
 
 #include "argList.h"
 

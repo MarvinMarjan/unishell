@@ -2,13 +2,13 @@
 
 #include "../../system/system.h"
 #include "../../base/commandBaseCore.h"
-#include "../../outstream/outputControl.h"
+#include "../../outstream/control/controlChars.h"
 #include "../../utilities/typeUtil.h"
 #include "../../utilities/cmdUtil.h"
 #include "../../utilities/clrUtil.h"
 #include "../../utilities/envUtil.h"
 #include "../../utilities/objUtil.h"
-#include "../../filesystem/fileFormatting.h"
+#include "../../filesystem/formating/fileFormatting.h"
 
 #include "../helpData.h"
 

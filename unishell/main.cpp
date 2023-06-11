@@ -1,24 +1,27 @@
-#include <iostream>
+#include "src/instream/input/instream.h"
 
-#include "src/system/system.h"
-#include "src/instream/instream.h"
+#include "src/instream/scanner/instreamScanner.h"
 
-#include "src/parser/instream/instrScanner.h"
+#include "src/parser/processing/token/tokenProcessing.h"
 
-#include "src/parser/processing/tokenProcessing.h"
+#include "src/expression/AST/exprASTPrinter.h"
+#include "src/expression/parser/exprParser.h"
 
-#include "src/parser/expression/exprASTPrinter.h"
-#include "src/parser/expression/exprParser.h"
-
-#include "src/filesystem/file.h"
+#include "src/filesystem/handle/file.h"
 
 #include "src/utilities/cmdUtil.h"
 #include "src/commands/definition/cmds.h"
 #include "src/utilities/regexUtil.h"
 #include "src/utilities/objUtil.h"
 
+// deps
+#include <chrono>
+
 int main(int argc, char** argv)
 {
+
+
+
 	// disable command line caret
 	WindowsSystem::setCursorVisible(false);
 

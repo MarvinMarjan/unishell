@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../utilities/stringUtil.h"
-#include "../parser/expression/type.h"
-#include "../parser/instream/token.h"
+#include "../data/type.h"
 
 class ArgList : public std::vector<LiteralValue*>
 {

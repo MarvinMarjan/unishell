@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../utilities/stringUtil.h"
-#include "../parser/expression/type.h"
-#include "../parser/instream/token.h"
+#include "../data/type.h"
+#include "../instream/scanner/token.h"
 
 class Identifier;
 

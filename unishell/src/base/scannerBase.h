@@ -2,8 +2,6 @@
 
 #include "../utilities/stringUtil.h"
 
-#include "../system/systemException.h"
-
 template <typename T>
 class ScannerBase 
 {

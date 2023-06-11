@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../outstream/outputColor.h"
+#include "../outstream/color/colorChars.h"
 #include "regexUtil.h"
 
 class OutUtil

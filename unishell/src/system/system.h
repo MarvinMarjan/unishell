@@ -1,14 +1,13 @@
 #pragma once
 
 #include <iostream>
-#include <Windows.h>
 #include <ShlObj.h>
 
-#include "systemException.h"
-#include "windowsSystem.h"
+#include "exception/systemException.h"
+#include "windows/windowsSystem.h"
 
-#include "../outstream/outputColor.h"
-#include "../path/pathHandler.h"
+#include "../outstream/color/colorChars.h"
+#include "../path/handler/pathHandler.h"
 #include "../environment/environment.h"
 
 #define sysprint        System::print

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../parser/expression/type.h"
-#include "../filesystem/fileFormatting.h"
+#include "../data/type.h"
+#include "../filesystem/formating/fileFormatting.h"
 
 #include "regexUtil.h"
 

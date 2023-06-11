@@ -3,10 +3,8 @@
 #include <iostream>
 #include <iomanip>
 
-#include "stringUtil.h"
-
-#include "../parser/expression/type.h"
-#include "../outstream/outputColor.h"
+#include "../data/type.h"
+#include "../outstream/control/controlChars.h"
 
 #define litToStr TypeUtil::literalValueToString
 

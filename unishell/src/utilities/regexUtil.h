@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../system/global.h"
+#include "../system/global/global.h"
 #include "stringUtil.h"
 
 #include <regex>
