@@ -73,5 +73,6 @@ rebuild:
 # clear build folder
 .PHONY: clean
 clean:
+	@ echo Removing object files
 	@ del /Q "$(OBJECT_PATH)"
 	@ rmdir "$(OBJECT_PATH)"
