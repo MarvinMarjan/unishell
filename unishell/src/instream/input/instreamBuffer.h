@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utilities/stringUtil.h"
+#include <string>
 
 class INStreamBuffer : public std::string
 {

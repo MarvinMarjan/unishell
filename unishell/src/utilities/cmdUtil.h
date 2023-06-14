@@ -3,6 +3,7 @@
 #include "../commands/argList.h"
 #include "../base/commandBaseCore.h"
 #include "../commands/helpData.h"
+#include "../algorithm/vector/item.h"
 
 class CmdUtil
 {
@@ -110,7 +111,7 @@ public:
 
 	template <typename T>
 	static unsigned int getCommandCount(const std::vector<T>& list, const std::string& cmdName) noexcept {
-		return (unsigned int)VectorUtil::findAll(cmdListToStr(list), cmdName).size();
+		return (unsigned int)alg::vector::findAll(cmdListToStr(list), cmdName).size();
 	}
 
 	template <typename T>

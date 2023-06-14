@@ -2,7 +2,7 @@
 
 #include "../utilities/typeUtil.h"
 #include "../system/exception/systemException.h"
-#include "../utilities/vectorUtil.h"
+#include "../algorithm/vector/item.h"
 
 #include "argList.h"
 
@@ -73,8 +73,8 @@ public:
 };
 
 inline bool checkParamType(const LiteralValueTypeList& types, const LiteralValueType type) {
-	if (VectorUtil::exists(types, Any)) return true;
-	else if (VectorUtil::exists(types, type)) return true;
+	if (alg::vector::exists(types, Any)) return true;
+	else if (alg::vector::exists(types, type)) return true;
 
 	return false;
 }

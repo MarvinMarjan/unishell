@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utilities/stringUtil.h"
+#include "../../system/global/typedecl.h"
 
 class INSListBuffer : private StringList
 {

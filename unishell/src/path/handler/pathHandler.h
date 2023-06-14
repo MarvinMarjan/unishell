@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../../filesystem/handle/file.h"
-
 #include "../scanner/pathScanner.h"
+#include "../../algorithm/string/manip.h"
 
 #define MIN_DIR_COUNT 1
 
@@ -49,7 +49,7 @@ public:
 	void back() noexcept {
 		if (dirCount() <= MIN_DIR_COUNT) return;
 
-		path = path.substr(0, StringUtil::findLast(path, '/'));
+		path = path.substr(0, alg::string::findLast(path, '/'));
 
 		if (dirCount() == MIN_DIR_COUNT)
 			path += '/';
@@ -60,7 +60,7 @@ public:
 	}
 
 	void setPath(const std::string& path, const bool ignoreLast = false) noexcept {
-		if (isDirSeparator(path.back()) && !ignoreLast) this->path = StringUtil::eraseLast(path);
+		if (isDirSeparator(path.back()) && !ignoreLast) this->path = alg::string::eraseLastCh(path);
 		else this->path = path;
 
 		std::replace(this->path.begin(), this->path.end(), '\\', '/');
@@ -69,7 +69,7 @@ public:
 	
 private:
 	size_t dirCount() const noexcept {
-		return StringUtil::split(path, '/').size();
+		return alg::string::split(path, '/').size();
 	}
 
 	constexpr static bool isDirSeparator(const char ch) noexcept {

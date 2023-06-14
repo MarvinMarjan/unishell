@@ -1,14 +1,12 @@
 #pragma once
 
+#include "../../algorithm/vector/item.h"
+#include "../../utilities/opUtil.h"
+#include "../../system/global/global.h"
+#include "../../data/type.h"
+
 #include <filesystem>
 #include <fstream>
-
-#include "../../utilities/vectorUtil.h"
-#include "../../utilities/opUtil.h"
-
-#include "../../system/global/global.h"
-
-#include "../../data/type.h"
 
 namespace fs = std::filesystem;
 
@@ -62,7 +60,7 @@ namespace fsys
 		}
 
 		static std::string readAsString(const std::string& path) {
-			return VectorUtil::join(readAsList(path), "\n");
+			return alg::vector::join(readAsList(path), "\n");
 		}
 
 		static StringList readAsList(const std::string& path) {

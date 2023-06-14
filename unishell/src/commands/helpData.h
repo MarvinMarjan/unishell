@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../utilities/stringUtil.h"
 #include "../system/global/global.h"
 #include "../data/type.h"
 

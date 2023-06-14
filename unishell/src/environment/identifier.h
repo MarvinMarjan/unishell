@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../utilities/stringUtil.h"
 #include "../data/type.h"
-#include "../instream/scanner/token.h"
 
 class Identifier;
 

@@ -67,6 +67,12 @@ public:
 		else index++;
 	}
 
+	constexpr void prev() noexcept {
+		if (index - 1 < 0) index = (int)size() - 1;
+		else index--;
+	}
+
+
 	std::string get() const noexcept {
 		if (type == SearchListType::Files)
 			return '\"' + (*this)[index] + '\"';
@@ -76,6 +82,9 @@ public:
 	StringList getList() const noexcept {
 		return *((StringList*)this);
 	}
+
+	
+	
 
 
 	bool sequence;

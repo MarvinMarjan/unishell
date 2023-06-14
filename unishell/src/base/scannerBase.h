@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../utilities/stringUtil.h"
+#include <string>
 
 template <typename T>
 class ScannerBase 
