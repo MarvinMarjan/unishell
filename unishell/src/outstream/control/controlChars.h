@@ -11,11 +11,11 @@ enum DelHint
 	delWindow_ScrollBuffer // Only supported in delWindow
 };
 
-inline std::string delLine(DelHint hint = CursorToEnd) noexcept {
+inline std::string delLine(const DelHint hint = CursorToEnd) noexcept {
 	return "\033[" + std::to_string(hint) + "K";
 }
 
-inline std::string delWindow(DelHint hint = CursorToEnd) noexcept {
+inline std::string delWindow(const DelHint hint = CursorToEnd) noexcept {
 	return "\033[" + std::to_string(hint) + "J";
 }
 

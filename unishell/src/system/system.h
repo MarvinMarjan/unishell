@@ -36,7 +36,7 @@ public:
 		sysprintln(exception.toString());
 	}
 
-	constexpr static bool getAbort() noexcept {
+	static bool getAbort() noexcept {
 		return abort;
 	}
 
@@ -46,15 +46,15 @@ public:
 
 
 
-	constexpr static PathHandler* path() noexcept {
+	static PathHandler* path() noexcept {
 		return __workingPath;
 	}
 
-	constexpr static std::string* input() noexcept {
+	static std::string* input() noexcept {
 		return __userInput;
 	}
 
-	constexpr static Environment* env() noexcept {
+	static Environment* env() noexcept {
 		return __environment;
 	}
 

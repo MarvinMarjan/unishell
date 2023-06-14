@@ -24,7 +24,7 @@ private:
 	enum OperationResult { Success, Failure };
 
 
-	constexpr TokenList getArgs() {
+	TokenList getArgs() {
 		TokenList args;
 
 		// gets all tokens before a COLON
@@ -87,7 +87,7 @@ private:
 
 	// throws a exception if the type of a token in args is
 	// not the expected
-	constexpr OperationResult checkTokenType(const TokenList& args, const TokenEnum expectedType, const std::string& expectedTypeStr) const {
+	OperationResult checkTokenType(const TokenList& args, const TokenEnum expectedType, const std::string& expectedTypeStr) const {
 		for (const Token& token : args) {
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
@@ -99,21 +99,21 @@ private:
 	}
 
 
-	constexpr Token advance() {
+	Token advance() noexcept {
 		if (!isAtEnd()) current++;
 		return prev();
 	}
 
-	constexpr Token peek() {
+	Token peek() const noexcept {
 		return src[current];
 	}
 
-	constexpr Token prev() {
+	Token prev() const noexcept {
 		if (!current) return src[current];
 		return src[(size_t)current - 1];
 	}
 
-	constexpr bool isAtEnd() const {
+	bool isAtEnd() const noexcept {
 		return ((size_t)current >= src.size());
 	}
 

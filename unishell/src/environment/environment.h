@@ -7,11 +7,11 @@ class Environment
 public:
 	Environment() {}
 
-	constexpr IdentifierList getIdList() const noexcept {
+	IdentifierList getIdList() const noexcept {
 		return idList;
 	}
 
-	constexpr StringList getIdNameList() const noexcept{
+	StringList getIdNameList() const noexcept {
 		StringList nameList;
 
 		for (const Identifier& id : idList)
@@ -20,7 +20,7 @@ public:
 		return nameList;
 	}
 	
-	constexpr Identifier* getId(std::string idName) noexcept {
+	Identifier* getId(std::string idName) noexcept {
 		checkIdName(idName);
 		for (size_t i = 0; i < idList.size(); i++)
 			if (idList[i].getName() == idName)
@@ -29,7 +29,7 @@ public:
 		return nullptr;
 	}
 
-	constexpr void addId(const Identifier& id) {
+	void addId(const Identifier& id) {
 		if (exists(id.getName()))
 			getId(id.getName())->setValue(id.getValue()); // modify value if already exists
 
@@ -37,14 +37,14 @@ public:
 			idList.push_back(id);
 	}
 
-	constexpr void delId(std::string idName) {
+	void delId(std::string idName) {
 		checkIdName(idName);
 		for (size_t i = 0; i < idList.size(); i++)
 			if (idList[i].getName() == idName)
 				idList.erase(idList.begin() + i);
 	}
 
-	constexpr bool exists(std::string idName) const {
+	bool exists(std::string idName) const {
 		checkIdName(idName);
 		for (const Identifier& id : idList)
 			if (id.getName() == idName)
@@ -53,7 +53,7 @@ public:
 		return false;
 	}
 
-	constexpr bool isSysId(std::string idName) {
+	bool isSysId(std::string idName) {
 		checkIdName(idName);
 		for (const Identifier& id : idList)
 			if (id.getName() == idName && id.isSysId())
@@ -63,7 +63,7 @@ public:
 	}
 
 private:
-	static constexpr void checkIdName(std::string& name) {
+	static void checkIdName(std::string& name) {
 		while (name[0] == '$') name = name.substr(1);
 	}
 

@@ -64,7 +64,7 @@ std::string fsys::FileF::formatFileSizeAsString(uintmax_t size) {
 
 fsys::FileF::FileAtts fsys::FileF::getFileAtts(const FileEntry& file) {
 	FileAtts atts{};
-	const DWORD att = GetFileAttributes(StringUtil::charToWchar(file.path().string().c_str()));
+	const DWORD att = GetFileAttributesA(file.path().string().c_str());
 
 	atts.archive =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_ARCHIVE);
 	atts.compressed =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_COMPRESSED);

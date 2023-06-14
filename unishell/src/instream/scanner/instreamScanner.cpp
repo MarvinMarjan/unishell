@@ -13,7 +13,7 @@ TokenList InstreamScanner::scanTokens() {
 
 void InstreamScanner::scanToken()
 {
-	char ch = advance();
+	const char ch = advance();
 
 	switch (ch)
 	{

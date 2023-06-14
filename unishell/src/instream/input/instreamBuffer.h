@@ -5,7 +5,7 @@
 class INStreamBuffer : public std::string
 {
 public:
-	constexpr inline INStreamBuffer() : std::string() {
+	INStreamBuffer() : std::string() {
 		cursorIndex = 0;
 	}
 

@@ -28,7 +28,7 @@ enum ASCIICode
 class INStream
 {
 public:
-	static inline std::string getLine() {
+	static std::string getLine() {
 		INStreamBuffer lineInput;
 		char charInput;
 
@@ -53,7 +53,7 @@ private:
 	static INSListBuffer inputList;
 	static INSSearchList searchList;
 
-	static inline void updateSearchList(const INStreamBuffer& buffer, const int begin, const int end) noexcept {
+	static void updateSearchList(const INStreamBuffer& buffer, const int begin, const int end) noexcept {
 		if (!searchList.sequence) {
 			int _begin = begin, _end = end;
 
@@ -64,14 +64,14 @@ private:
 		}
 	}
 
-	constexpr static inline void insertAtINStreamBuffer(INStreamBuffer& buffer, const std::string& item, const int begin, const int end) {
+	static void insertAtINStreamBuffer(INStreamBuffer& buffer, const std::string& item, const int begin, const int end) {
 		buffer.erase(begin, end - begin + 1);
 		buffer.insert(begin + ((!begin || begin + 1 > buffer.size()) ? 0 : 1), item);
 		buffer.setCursorIndex((int)buffer.size());
 	}
 
 	// gets the color of enclose characters based on scope
-	constexpr static inline BaseColorStructure* getEncloseColorByScope(const int scope) {
+	static BaseColorStructure* getEncloseColorByScope(const int scope) {
 		if (scope == 1) return __clr_encloses_s1;
 		if (scope == 2) return __clr_encloses_s2;
 		if (scope == 3) return __clr_encloses_s3;
@@ -83,11 +83,11 @@ private:
 	static void controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end);
 	static std::string formatString(const std::string& text, const int cursorPos);	
 
-	static inline void updateConsoleInput(const INStreamBuffer& lineInput, const bool drawCursor = true) noexcept {
+	static void updateConsoleInput(const INStreamBuffer& lineInput, const bool drawCursor = true) noexcept {
 		sysprint(delWindow() + formatString(lineInput, ((drawCursor) ? lineInput.getCursorIndex() : -1)));
 	}
 
-	constexpr static inline bool isValidForNum(const char ch) noexcept {
+	constexpr static bool isValidForNum(const char ch) noexcept {
 		return (StringUtil::isDigit(ch) || StringUtil::isWordSeparator(ch));
 	}
 };

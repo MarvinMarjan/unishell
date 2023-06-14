@@ -28,19 +28,19 @@ private:
 	void scanToken() override;
 
 
-	inline void addToken(TokenEnum type) noexcept {
+	void addToken(const TokenEnum type) noexcept {
 		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1));
 	}
 
-	inline void addToken(TokenEnum type, const std::string& lex) noexcept {
+	void addToken(const TokenEnum type, const std::string& lex) noexcept {
 		tokens.push_back(Token(type, lex, nullptr, {}, current - 1));
 	}
 
-	inline void addToken(TokenEnum type, LiteralValue* lit) noexcept {
+	void addToken(const TokenEnum type, LiteralValue* lit) noexcept {
 		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1));
 	}
 
-	inline bool addBoolean(const std::string& boolStr) {
+	bool addBoolean(const std::string& boolStr) {
 		if (TypeUtil::isBoolean(boolStr)) {
 			addToken(BOOLEANVAL, new LiteralValue(TypeUtil::stringToBool(boolStr)));
 			return true;
@@ -49,7 +49,7 @@ private:
 		return false;
 	}
 
-	inline bool addKeyword(const std::string& keyword) {
+	bool addKeyword(const std::string& keyword) {
 		TokenEnum keyw = GlobalUtil::keywordToToken(keyword);
 		if (keyw != LITERAL) {
 			addToken(keyw);
@@ -61,7 +61,7 @@ private:
 
 
 	// gets a string inside quotes like "hello, world"
-	inline void string(char delimiter, bool raw = false) {
+	void string(const char delimiter, const bool raw = false) {
 		while (peek() != delimiter) {
 			if (isAtEnd()) 
 				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
@@ -76,7 +76,7 @@ private:
 		advance(); // closing char
 	}
 
-	constexpr inline char checkEscapeChar(char ch) const noexcept {
+	constexpr char checkEscapeChar(const char ch) const noexcept {
 		switch (ch)
 		{
 		case 'n':  return '\n';
@@ -88,7 +88,7 @@ private:
 		return '\0';
 	}
 
-	inline void addEscapeChar() {
+	void addEscapeChar() {
 		char aux;
 
 		if ((aux = checkEscapeChar(peek())) == '\0')
@@ -99,27 +99,27 @@ private:
 	}
 
 	// gets a sequence of digits. dot ('.') included
-	inline void number() {
+	void number() {
 		for (current; StringUtil::isDigit(peek()); current++) {}
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
 	
 	// if is keyword, returns true and add it
 	// else return false
-	inline bool keyword() {
+	bool keyword() {
 		for (current; StringUtil::isAlpha(peek()); current++) {}
 		return addKeyword(getCurrentSubstring());
 	}
 
 	// if is boolean value, returns true and add it;
 	// else return false
-	inline bool boolean() {
+	bool boolean() {
 		for (current; StringUtil::isAlpha(peek()); current++) {}
 		return addBoolean(getCurrentSubstring());
 	}
 
 	// gets a sequence of alpha / digits characters
-	inline void word(TokenEnum type, bool hasLiteral = false) {
+	void word(const TokenEnum type, const bool hasLiteral = false) {
 		while (StringUtil::isAlphaNumeric(peek())) advance();
 		if (!hasLiteral) addToken(type, getCurrentSubstring());
 		else addToken(type, new LiteralValue(getCurrentSubstring()));

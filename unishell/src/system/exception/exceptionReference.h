@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../utilities/stringUtil.h"
-#include "../../outstream/color/colorChars.h"
+#include <string>
 
 class ExceptionRef
 {

@@ -25,12 +25,12 @@ public:
 		return std::string();
 	}
 
-	static std::wstring getSystemDesktopPath() {
-		PWSTR buff;
+	static std::string getSystemDesktopPath() {
+		char buff[MAX_PATH];
+		
+		if (SUCCEEDED(SHGetFolderPathA(NULL, CSIDL_DESKTOPDIRECTORY, NULL, 0, buff)))
+			return std::string(buff);
 
-		if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_Desktop, 0, NULL, &buff)))
-			return buff;
-
-		return std::wstring();
+		return std::string();
 	}
 };

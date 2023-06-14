@@ -139,6 +139,7 @@
     <ClCompile Include="src\commands\definition\regexHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\systemHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
+    <ClCompile Include="src\commands\helpData.cpp" />
     <ClCompile Include="src\filesystem\formating\fileFormating.cpp" />
     <ClCompile Include="src\instream\input\instream.cpp" />
     <ClCompile Include="src\color\parser\colorParser.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="src\path\handler\pathHandler.cpp" />
     <ClCompile Include="src\path\scanner\pathScanner.cpp" />
     <ClCompile Include="src\system\exception\exceptionRef.cpp" />
+    <ClCompile Include="src\system\exception\systemException.cpp" />
     <ClCompile Include="src\system\global\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
     <ClCompile Include="src\filesystem\handle\file.cpp" />
@@ -194,6 +196,7 @@
     <ClInclude Include="src\path\scanner\pathScanner.h" />
     <ClInclude Include="src\path\scanner\pathToken.h" />
     <ClInclude Include="src\system\exception\exceptionReference.h" />
+    <ClInclude Include="src\system\global\decl.h" />
     <ClInclude Include="src\system\global\global.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\exception\systemException.h" />
@@ -210,6 +213,9 @@
     <ClInclude Include="src\utilities\stringUtil.h" />
     <ClInclude Include="src\utilities\typeUtil.h" />
     <ClInclude Include="src\utilities\vectorUtil.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,15 +11,15 @@ public:
 	}
 
 private:
-	constexpr LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
+	LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
 		return expr->value;
 	}
 
-	constexpr LiteralValue* visitGroup(Group* expr) override {
+	LiteralValue* visitGroup(Group* expr) override {
 		return evaluate(expr->expression);
 	}
 
-	constexpr LiteralValue* visitUnary(Unary* expr) override {
+	LiteralValue* visitUnary(Unary* expr) override {
 		LiteralValue* right = evaluate(expr->expr);
 
 		switch (expr->op.getType()) {
@@ -34,7 +34,7 @@ private:
 		return nullptr;
 	}
 
-	constexpr LiteralValue* visitBinary(Binary* expr) override {
+	LiteralValue* visitBinary(Binary* expr) override {
 		LiteralValue* left = evaluate(expr->left);
 		LiteralValue* right = evaluate(expr->right);
 
@@ -96,18 +96,18 @@ private:
 	}
 
 
-	constexpr LiteralValue* evaluate(Expr* expr) {
+	LiteralValue* evaluate(Expr* expr) {
 		return expr->accept(this);
 	}
 	
-	constexpr bool isTruthy(LiteralValue* value) {
+	bool isTruthy(LiteralValue* value) {
 		if (!value) return false;
 		if (value->type() == Bool) return asBool(value);
 
 		return true;
 	}
 
-	constexpr bool isEqual(LiteralValue* a, LiteralValue* b, const bool strict = false) {
+	bool isEqual(LiteralValue* a, LiteralValue* b, const bool strict = false) {
 		if (!a && !b) return true;
 		if (!a) return false;
 
@@ -120,7 +120,7 @@ private:
 		return (litToStr(a) == litToStr(b));
 	}
 
-	constexpr void checkLiteralType(LiteralValue* value, const std::vector<LiteralValueType>& expectedTypes) {
+	void checkLiteralType(LiteralValue* value, const std::vector<LiteralValueType>& expectedTypes) {
 		for (const LiteralValueType type : expectedTypes)
 			if (TypeUtil::isTypeof(value, type))
 				return;
@@ -128,7 +128,7 @@ private:
 		throw SystemException(ExprInterpreterError, TypeUtil::getTypeAsString(expectedTypes) + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
 	}
 
-	constexpr void checkLiteralType(const std::vector<LiteralValue*>& vals, const std::vector<LiteralValueType>& expectedTypes) {
+	void checkLiteralType(const std::vector<LiteralValue*>& vals, const std::vector<LiteralValueType>& expectedTypes) {
 		for (LiteralValue* value : vals)
 			checkLiteralType(value, expectedTypes);
 	}

@@ -5,7 +5,7 @@
 class INSListBuffer : private StringList
 {
 public:
-	constexpr inline INSListBuffer() : StringList() {
+	INSListBuffer() : StringList() {
 		current = 0;
 		ignoreCurrentIndexChange = true;
 	}
@@ -40,7 +40,7 @@ public:
 		}
 	}
 
-	constexpr std::string get() noexcept {
+	std::string get() const noexcept {
 		if (size() && current < size()) return (*this)[current];
 		return std::string();
 	}

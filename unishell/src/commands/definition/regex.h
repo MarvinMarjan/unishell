@@ -2,6 +2,8 @@
 
 #include "defBase.h"
 
+#include "../../utilities/objUtil.h"
+
 // match
 START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
 LiteralValue* exec() override {
