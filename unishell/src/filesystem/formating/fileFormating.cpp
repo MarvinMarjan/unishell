@@ -15,12 +15,15 @@ std::string fsys::FileF::formatFileEntryAsString(const FileEntry& file) {
 	const FormatedFileData ex = formatFileExtensionAsString(file.path().extension().string());
 	const FormatedFileData data = getFFDByFileAttribute(atts);
 
-	// size
-	str << formatFileSizeAsString(file.file_size()) << "   ";
+
+	// using FileEntry::file_size with directories will
+	// result in a error (std::filesystem::filesystem_error)
+	str << formatFileSizeAsString((dir) ? 0 : file.file_size()) << "   ";
 
 	// raw
 	str << std::setw(9) << std::left << data.raw;
 
+	 
 	// extension
 	str << ex.cl->toString();
 	str << std::setw(11) << std::left << ((dir) ? "" : ex.raw);
@@ -36,7 +39,9 @@ std::string fsys::FileF::formatFileSizeAsString(uintmax_t size) {
 	std::stringstream str;
 	std::string sizeNotation = "BT";
 	BaseColorStructure* cl = __clr_fs_filesize1;
+
 	double dsize = (double)size;
+
 
 	if (size >= N_BYTE && size < N_KILO_BYTE) {
 		dsize = double(size / N_BYTE);
