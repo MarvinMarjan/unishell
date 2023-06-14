@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../data/type.h"
 #include "../utilities/typeUtil.h"
 #include "../system/exception/systemException.h"
 #include "../utilities/vectorUtil.h"
@@ -14,22 +13,22 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	constexpr inline Param(LiteralValue* defaultValue = nullptr, const std::vector<LiteralValueType>& paramTypes = {Any}) :
+	Param(LiteralValue* defaultValue = nullptr, const std::vector<LiteralValueType>& paramTypes = {Any}) :
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
-	constexpr LiteralValue* getDefaultValue() const noexcept {
+	LiteralValue* getDefaultValue() const noexcept {
 		return defaultValue;
 	}
 
-	constexpr std::vector<LiteralValueType> getParamTypes() const noexcept {
+	std::vector<LiteralValueType> getParamTypes() const noexcept {
 		return paramTypes;
 	}
 
-	constexpr StringList getParamTypesAsString() const noexcept {
+	StringList getParamTypesAsString() const noexcept {
 		StringList types;
 
-		for (LiteralValueType type : getParamTypes())
+		for (const LiteralValueType type : getParamTypes())
 			types.push_back(TypeUtil::getTypeAsString(type));
 
 		return types;
@@ -44,7 +43,7 @@ private:
 class ParamList : public ParamVec
 {
 public:
-	constexpr size_t getRequiredParams() const {
+	size_t getRequiredParams() const {
 		size_t count = 0;
 
 		for (const Param& param : (*this))
@@ -54,7 +53,7 @@ public:
 		return count;
 	}
 	
-	constexpr Param get(const size_t index) const {
+	Param get(const size_t index) const {
 		for (size_t i = 0; i < size(); i++)
 			if (i == index)
 				return (*this)[index];
@@ -62,7 +61,7 @@ public:
 		throw SystemException(CommandError, "Invalid param (index): " + index);
 	}
 
-	constexpr void match(ArgList& args) const {
+	void match(ArgList& args) const {
 		const int count = (int)(size() - args.size());
 		LiteralValue* defaultVal;
 
@@ -73,14 +72,14 @@ public:
 	}
 };
 
-constexpr inline bool checkParamType(const LiteralValueTypeList& types, const LiteralValueType type) {
+inline bool checkParamType(const LiteralValueTypeList& types, const LiteralValueType type) {
 	if (VectorUtil::exists(types, Any)) return true;
 	else if (VectorUtil::exists(types, type)) return true;
 
 	return false;
 }
 
-constexpr inline std::string stringifyParamTypes(const LiteralValueTypeList& types, const bool colorize = false) {
+inline std::string stringifyParamTypes(const LiteralValueTypeList& types, const bool colorize = false) {
 	std::string str = "";
 	
 	for (size_t i = 0; i < types.size(); i++) {

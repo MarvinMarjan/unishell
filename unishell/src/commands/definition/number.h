@@ -1,6 +1,7 @@
 #pragma once
 
 #include "defBase.h"
+#include <cmath>
 
 // round
 START_COMMAND(NumberRetCmdRound, ParamVec({ {nullptr, {Number}} }), RetCommandBase, "round", CmdFunc::Number)

@@ -36,11 +36,11 @@ public:
 	}
 
 	template <typename T>
-	constexpr static bool exists(const std::vector<T>& src, const T& value) {
+	static bool exists(const std::vector<T>& src, const T& value) {
 		return (std::find(src.begin(), src.end(), value) != src.end());
 	}
 
-	constexpr static StringList sortByCharacters(const StringList& src, const std::string& sortener) noexcept {
+	static StringList sortByCharacters(const StringList& src, const std::string& sortener) noexcept {
 		StringList res;
 
 		for (char ch : sortener)

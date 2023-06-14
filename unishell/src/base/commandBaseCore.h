@@ -26,9 +26,9 @@ template <typename T>
 class CommandBaseCore
 {
 public:
-	constexpr inline CommandBaseCore() : function(CmdFunc::System) {}
-	constexpr inline CommandBaseCore(const std::string& cmdSymbol, const CmdFunc func) : symbol(cmdSymbol), function(func) {}
-	constexpr inline CommandBaseCore(const ParamList& params, ArgList args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
+	CommandBaseCore() : function(CmdFunc::System) {}
+	CommandBaseCore(const std::string& cmdSymbol, const CmdFunc func) : symbol(cmdSymbol), function(func) {}
+	CommandBaseCore(const ParamList& params, ArgList args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
 		params(params), flags(flags), symbol(cmdSymbol), function(func)
 	{
 		// default value assignment, if possible
@@ -56,7 +56,7 @@ protected:
 	ParamList params;
 
 private:
-	constexpr void checkArgumentsType(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
+	void checkArgumentsType(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		for (size_t i = 0; i < params.size(); i++)
 			if (!checkParamType(params[i].getParamTypes(), getValueType(args[i])) && params[i].getParamTypes().size())
 				THROW_COMMAND_ERR("Type of argument " + tostr(i + 1) +
@@ -64,7 +64,7 @@ private:
 					stringifyParamTypes(params[i].getParamTypes(), true));
 	}
 
-	constexpr void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
+	void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		if (args.size() < params.getRequiredParams())
 			THROW_COMMAND_ERR("(" + cmdSymbol + ") " + "Insufficient arguments");
 	}

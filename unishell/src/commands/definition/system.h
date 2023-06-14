@@ -2,6 +2,12 @@
 
 #include "defBase.h"
 
+#include "../../utilities/envUtil.h"
+#include "../../utilities/clrUtil.h"
+#include "../../utilities/cmdUtil.h"
+#include "../../filesystem/formating/fileFormatting.h"
+#include "../../system/system.h"
+
 // print
 START_COMMAND(SysCmdPrint, { lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
 void exec() override {

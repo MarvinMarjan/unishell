@@ -1,16 +1,8 @@
 #pragma once
 
-#include "../../system/system.h"
-#include "../../base/commandBaseCore.h"
-#include "../../outstream/control/controlChars.h"
-#include "../../utilities/typeUtil.h"
-#include "../../utilities/cmdUtil.h"
-#include "../../utilities/clrUtil.h"
-#include "../../utilities/envUtil.h"
-#include "../../utilities/objUtil.h"
-#include "../../filesystem/formating/fileFormatting.h"
-
 #include "../helpData.h"
+#include "../../path/handler/pathHandler.h"
+#include "../../base/commandBaseCore.h"
 
 // boilerplate
 
@@ -62,7 +54,7 @@ enum ExpFileType {
 
 
 // check if the index of a list exists
-constexpr inline void checkIndex(const int index, const size_t max, const std::string& symbol) {
+inline void checkIndex(const int index, const size_t max, const std::string& symbol) {
 	if (index >= max || index < 0)
 		THROW_RUNTIME_ERR("Invalid index: " + numformat(tostr(index)));
 }
@@ -74,7 +66,7 @@ inline void checkIndex(const LitObj& obj, const std::string& key, const std::str
 }
 
 // check if path exists
-constexpr inline void checkPath(const PathHandler::PathOperationData& data, const std::string& argPath, const std::string& symbol) {
+inline void checkPath(const PathHandler::PathOperationData& data, const std::string& argPath, const std::string& symbol) {
 	if (!data.success)
 		THROW_RUNTIME_ERR("Invalid path: " + qtd(argPath));
 }

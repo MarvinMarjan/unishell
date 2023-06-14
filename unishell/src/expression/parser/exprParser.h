@@ -147,7 +147,7 @@ private:
 	}
 
 
-	constexpr bool check(const TokenEnum type) {
+	bool check(const TokenEnum type) {
 		if (isAtEnd())
 			return false;
 
@@ -172,7 +172,7 @@ private:
 		return tokens[(size_t)current - 1];
 	}
 
-	constexpr bool isAtEnd() const noexcept {
+	bool isAtEnd() const noexcept {
 		return ((size_t)current >= tokens.size());
 	}
 

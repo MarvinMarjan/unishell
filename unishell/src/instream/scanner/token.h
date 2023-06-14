@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../utilities/stringUtil.h"
+#include <string>
+#include <vector>
 
 class LiteralValue;
 
@@ -41,7 +42,7 @@ class Token
 public:
 	friend class TokenProcess;
 
-	inline constexpr Token(const TokenEnum type, const std::string& lexical, LiteralValue* lit, const TokenList& sub, const size_t index) : 
+	Token(const TokenEnum type, const std::string& lexical, LiteralValue* lit, const TokenList& sub, const size_t index) : 
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
 	{}
 
@@ -61,7 +62,7 @@ public:
 		return index;
 	}
 
-	constexpr TokenList getSub() const noexcept {
+	TokenList getSub() const noexcept {
 		return sub;
 	}
 

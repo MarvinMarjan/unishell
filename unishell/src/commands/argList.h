@@ -7,12 +7,12 @@ class ArgList : public std::vector<LiteralValue*>
 public:
 	ArgList() {}
 
-	explicit constexpr inline ArgList(const TokenList& tokens) {
-		for (Token val : tokens)
+	explicit ArgList(const TokenList& tokens) {
+		for (const Token& val : tokens)
 			push_back(val.getLiteral());
 	}
 
-	explicit constexpr inline ArgList(const Token& list) {
+	explicit ArgList(const Token& list) {
 		for (LiteralValue* val : asList(list.getLiteral()))
 			push_back(val);
 	}

@@ -2,9 +2,13 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cmath>
+
+#include <sstream>
 
 #include "../data/type.h"
 #include "../outstream/control/controlChars.h"
+#include "../system/global/global.h"
 
 #define litToStr TypeUtil::literalValueToString
 
@@ -15,7 +19,7 @@ public:
 		return (strBool == "true" || strBool == "false");
 	}
 
-	constexpr static std::string boolToString(const bool boolean) noexcept {
+	static std::string boolToString(const bool boolean) noexcept {
 		const std::string strBool = ((boolean) ? "true" : "false");
 		return (color) ? boolformat(strBool) : strBool;
 	}
@@ -168,12 +172,12 @@ public:
 		else return type;
 	}
 	
-	static constexpr bool isTypeof(LiteralValue* value, const LiteralValueType type) noexcept {
+	static bool isTypeof(LiteralValue* value, const LiteralValueType type) noexcept {
 		return (value->type() == type);
 	}
 
 	// return true if all values inside "list" has type "type"
-	static constexpr bool isListOf(LiteralValue* list, const LiteralValueType type) {
+	static bool isListOf(LiteralValue* list, const LiteralValueType type) {
 		if (list->type() != List) return false;
 
 		for (LiteralValue* val : asList(list))
@@ -183,7 +187,7 @@ public:
 		return true;
 	}
 
-	static constexpr void checkNull(LiteralValue* value) noexcept {
+	static void checkNull(LiteralValue* value) noexcept {
 		if (!value)
 			*value = LiteralValue("null");
 	}

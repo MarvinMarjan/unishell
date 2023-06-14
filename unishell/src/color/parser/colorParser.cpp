@@ -26,7 +26,6 @@ BaseColorStructure* ColorParser::parse()
 		throw SystemException(ColorParserError, "Unknown color format", ExceptionRef(*System::input(), src[0].getIndex()));
 	}
 
-	// for safety
 	return nullptr;
 }
 

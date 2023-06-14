@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #include <Windows.h>
 
@@ -70,8 +71,8 @@ public:
 		return res;
 	}
 
-	constexpr static bool isWordSeparator(const char ch) noexcept {
-		return (std::find(__word_separator.cbegin(), __word_separator.cend(), ch) != __word_separator.cend());
+	static bool isWordSeparator(const char ch) noexcept {
+		return (std::find(__word_separator.begin(), __word_separator.end(), ch) != __word_separator.end());
 	}
 
 	constexpr static bool startsWith(const std::string& src, const std::string& sub) noexcept {

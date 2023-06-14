@@ -14,6 +14,9 @@
 #define asObj(pLit)		std::get<std::map<std::string, LiteralValue*>>(*pLit)
 
 
+extern std::string* __userInput;
+
+
 enum LiteralValueType
 {
 	Literal,
@@ -38,30 +41,30 @@ typedef LiteralValueObject LitObj;
 
 typedef std::variant<std::string, double, bool, LitList, LitObj> LiteralValuePtr;
 
-constexpr inline LiteralValueType getValueType(LiteralValue* value) noexcept;
+inline LiteralValueType getValueType(LiteralValue* value) noexcept;
 
 class LiteralValue : public LiteralValuePtr
 {
 public:
 	LiteralValue(LiteralValuePtr other) : LiteralValuePtr(other) {}
 
-	constexpr inline LiteralValueType type() const noexcept {
+	LiteralValueType type() const noexcept {
 		return getValueType((LiteralValue*)this);
 	}
 };
 
 template <typename T>
-constexpr inline LiteralValue* lit(const T& value) noexcept {
+inline LiteralValue* lit(const T& value) noexcept {
 	return new LiteralValue(LiteralValuePtr(value));
 }
 
-constexpr inline LiteralValue* lit(const int value) noexcept {
+inline LiteralValue* lit(const int value) noexcept {
 	return new LiteralValue(LiteralValuePtr((double)value));
 }
 
 
 
-constexpr inline LiteralValueType getValueType(LiteralValue* value) noexcept {
+inline LiteralValueType getValueType(LiteralValue* value) noexcept {
 	if (!value) return Null;
 	return (LiteralValueType)value->index();
 }
@@ -75,11 +78,11 @@ inline LiteralValue* getListFromTokenList(const TokenList& source) {
 	return lit;
 }
 
-inline LiteralValue* getObjFromTokenList(TokenList source) {
+inline LiteralValue* getObjFromTokenList(const TokenList& source) {
 	LiteralValue* const lit = new LiteralValue(std::map<std::string, LiteralValue*>());
 	LiteralValue* aux;
 
-	for (Token token : source) {
+	for (const Token& token : source) {
 		if (token.getType() != LIST) continue;
 		if (!token.getLiteral()) continue;
 		if (asList(token.getLiteral()).size() < 2) continue;
