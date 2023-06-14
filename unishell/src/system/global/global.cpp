@@ -7,6 +7,7 @@
 
 
 
+
 Environment* __environment = new Environment();
 PathHandler* __workingPath = new PathHandler(WindowsSystem::getSystemDesktopPath());
 std::string* __userInput = new std::string();
