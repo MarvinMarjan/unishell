@@ -1,10 +1,8 @@
 #pragma once
 
 #include "../../instream/scanner/token.h"
-
 #include "../../system/system.h"
-
-#include "../../utilities/vectorUtil.h"
+#include "../../algorithm/vector/item.h"
 
 class ColorParser
 {
@@ -72,7 +70,7 @@ private:
 		if (checkArgsSize(args, ColorStructure::argSize, optionalMode) == Failure) return nullptr;
 		if (checkTokenType({ args[0] }, LITERAL, "Literal") == Failure) return nullptr;
 
-		if (!VectorUtil::exists(__color, asStr(args[0].getLiteral())) && !ignoreExceptions) {
+		if (!alg::vector::exists(__color, asStr(args[0].getLiteral())) && !ignoreExceptions) {
 			if (ignoreExceptions) return nullptr;
 			throw SystemException(ColorParserError, "Unknown color", ExceptionRef(*System::input(), args[0].getIndex()));
 		}

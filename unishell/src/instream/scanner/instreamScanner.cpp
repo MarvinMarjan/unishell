@@ -56,8 +56,8 @@ void InstreamScanner::scanToken()
 	default:
 		if (tokens.empty() && !ignoreCommand) word(COMMAND);
 
-		else if (StringUtil::isDigit(ch)) {
-			if (ch == '.' && StringUtil::isDigit(peek()) && peek() != '.') number();
+		else if (alg::string::isDigit(ch)) {
+			if (ch == '.' && alg::string::isDigit(peek()) && peek() != '.') number();
 			else if (ch != '.') number();
 			else throw SystemException(InstreamScannerError, "Unexpected token", ExceptionRef(src, current - 1));
 		}

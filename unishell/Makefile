@@ -10,6 +10,8 @@ CC := g++
 CPP_VERSION := -std=c++20
 SOURCE := \
 	main.cpp \
+	src/algorithm/string/manip.cpp \
+	src/algorithm/vector/sort.cpp \
 	src/color/parser/colorParser.cpp \
 	src/commands/definition/helpData.cpp \
 	src/commands/definition/filesystemHelpDef.cpp \

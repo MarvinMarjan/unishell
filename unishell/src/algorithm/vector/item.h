@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include "../../system/global/typedecl.h"
 
 namespace alg

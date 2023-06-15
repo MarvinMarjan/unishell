@@ -2,13 +2,12 @@
 
 #include "../../system/system.h"
 
-#include "../../utilities/stringUtil.h"
+#include "../../algorithm/string/char.h"
 #include "../../utilities/typeUtil.h"
 
 #include "../../base/scannerBase.h"
 #include "token.h"
 
-#include "../../system/global/global.h"
 #include "../../utilities/globalUtil.h"
 
 enum InstreamScannerHints {
@@ -100,27 +99,27 @@ private:
 
 	// gets a sequence of digits. dot ('.') included
 	void number() {
-		for (current; StringUtil::isDigit(peek()); current++) {}
+		for (current; alg::string::isDigit(peek()); current++) {}
 		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
 	}
 	
 	// if is keyword, returns true and add it
 	// else return false
 	bool keyword() {
-		for (current; StringUtil::isAlpha(peek()); current++) {}
+		for (current; alg::string::isAlpha(peek()); current++) {}
 		return addKeyword(getCurrentSubstring());
 	}
 
 	// if is boolean value, returns true and add it;
 	// else return false
 	bool boolean() {
-		for (current; StringUtil::isAlpha(peek()); current++) {}
+		for (current; alg::string::isAlpha(peek()); current++) {}
 		return addBoolean(getCurrentSubstring());
 	}
 
 	// gets a sequence of alpha / digits characters
 	void word(const TokenEnum type, const bool hasLiteral = false) {
-		while (StringUtil::isAlphaNumeric(peek())) advance();
+		while (alg::string::isAlphaNumeric(peek())) advance();
 		if (!hasLiteral) addToken(type, getCurrentSubstring());
 		else addToken(type, new LiteralValue(getCurrentSubstring()));
 	}

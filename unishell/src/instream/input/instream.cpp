@@ -80,7 +80,7 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	default:
-		lineInput.insertStr(lineInput.getCursorIndex(), StringUtil::charToStr(charInput));
+		lineInput.insertStr(lineInput.getCursorIndex(), alg::string::charToStr(charInput));
 		updateConsoleInput(lineInput);
 	}
 }
@@ -109,7 +109,7 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 		{
 		case ' ':
 		case '\t':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, alg::string::charToStr(text[i]));
 			continue;
 
 		case '\"':
@@ -124,7 +124,7 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 		case '{':
 		case '[':
 			// render first
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(alg::string::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
 
 			scopeDepth++;
 
@@ -137,7 +137,7 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 			scopeDepth--;
 			if (scopeDepth < 1) scopeDepth = 1;
 			
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(alg::string::charToStr(text[i]), getEncloseColorByScope(scopeDepth)->toString()));
 
 
 			break;
@@ -150,7 +150,7 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 		case '-':
 		case '*':
 		case '/':
-			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_operators->toString()));
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(alg::string::charToStr(text[i]), __clr_operators->toString()));
 			break;
 
 		// identifier rendering
@@ -173,10 +173,10 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 
 		// other
 		default:
-			if (StringUtil::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
+			if (alg::string::isDigit(text[i]) && isValidForNum(text[i - 1]) && ((i + 1 < text.size() && isValidForNum(text[i + 1])) || i + 1 >= text.size()))
 			{
-				for (i; StringUtil::isDigit(text[i]); i++)
-					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(StringUtil::charToStr(text[i]), __clr_numbers->toString()));
+				for (i; alg::string::isDigit(text[i]); i++)
+					INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(alg::string::charToStr(text[i]), __clr_numbers->toString()));
 
 				i--;
 			}
@@ -185,7 +185,7 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 				     !INStreamRender::renderBoolean(fText, text, i, cursorPos) &&
 					 !INStreamRender::renderColor(fText, text, i, cursorPos))
 			{
-				INStreamRender::renderChar(i, cursorPos, text[i], fText, StringUtil::charToStr(text[i]));
+				INStreamRender::renderChar(i, cursorPos, text[i], fText, alg::string::charToStr(text[i]));
 			}
 		}
 

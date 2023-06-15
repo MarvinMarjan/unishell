@@ -20,7 +20,7 @@ std::string ExceptionRef::getString() const {
 
 	if (index != -1) {
 		for (size_t i = 0; i < src.size(); i++)
-			str += ((i == index) ? clr(StringUtil::charToStr(src[i]), 196) : StringUtil::charToStr(src[i]));
+			str += ((i == index) ? clr(alg::string::charToStr(src[i]), 196) : alg::string::charToStr(src[i]));
 
 		for (size_t i = 0; i < index; i++)
 			space += ' ';

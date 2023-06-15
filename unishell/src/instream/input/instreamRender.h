@@ -17,7 +17,7 @@ private:
 
 	// returns a string that represents a cursor. "after" is the string that will be drawed after cursor
 	static std::string cursor(const char ch, const std::string& after = endclr) noexcept {
-		return clr(StringUtil::charToStr(ch), __clr_cursor->toString()) + after;
+		return clr(alg::string::charToStr(ch), __clr_cursor->toString()) + after;
 	}
 
 	static void renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, const int cursorPos, size_t i) {
@@ -26,7 +26,7 @@ private:
 
 			std::string lastWord = text.substr(begin, cursorPos - begin);
 
-			StringList tempSearchList = VectorUtil::sortByCharacters(INStream::searchList.getList(), lastWord);
+			StringList tempSearchList = alg::vector::sortByCharacters(INStream::searchList.getList(), lastWord);
 
 			if (tempSearchList.size() == 1 && lastWord.size() <= tempSearchList[0].size())
 				stream << clr(tempSearchList[0].substr(lastWord.size()), __clr_autocomplete_suggestion->toString());
@@ -50,7 +50,7 @@ private:
 		if (i + 1 < text.size()) {
 			std::string cmdName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1) + 1);
 			
-			if (!StringUtil::isAlpha(cmdName[0]))
+			if (!alg::string::isAlpha(cmdName[0]))
 				cmdName = cmdName.substr(1);
 			
 			retCmdColor = CmdUtil::getCommandColor(__sys_ret_commands, cmdName);
@@ -63,20 +63,20 @@ private:
 	static void renderQuoted(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		stream << __clr_quoted->toString();
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString()); // draw first quote
+		renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), __clr_quoted->toString()); // draw first quote
 
 		while (text[++i] != '\"' && i < text.size()) {
 			if (text[i] == '\\' && i + 1 < text.size()) {
-				renderChar(i, cursorPos, text[i], stream, __clr_escape_char->toString() + StringUtil::charToStr(text[i]) , __clr_escape_char->toString());
+				renderChar(i, cursorPos, text[i], stream, __clr_escape_char->toString() + alg::string::charToStr(text[i]) , __clr_escape_char->toString());
 				i++;
-				renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_escape_char->toString());
+				renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), __clr_escape_char->toString());
 				stream << __clr_quoted->toString();
 			}
 			else
-				renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_quoted->toString());
+				renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), __clr_quoted->toString());
 		}
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last quote
+		renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), ""); // draw last quote
 
 		stream << endclr;
 	}
@@ -84,12 +84,12 @@ private:
 	static void renderRawString(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		stream << __clr_raw_string->toString();
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_raw_string->toString()); // draw first char
+		renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), __clr_raw_string->toString()); // draw first char
 
 		while (text[++i] != '`' && i < text.size())
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), __clr_raw_string->toString());
+			renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), __clr_raw_string->toString());
 
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), ""); // draw last char
+		renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), ""); // draw last char
 
 		stream << endclr;
 	}
@@ -114,11 +114,11 @@ private:
 	static bool renderKeyword(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		size_t aux = i;
 
-		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
+		if (alg::string::isAlphaNumeric(text[aux - 1])) return false;
 
-		while (StringUtil::isAlpha(text[aux])) aux++;
+		while (alg::string::isAlpha(text[aux])) aux++;
 
-		if (VectorUtil::exists(__keywords, text.substr(i, aux - i))) {
+		if (alg::vector::exists(__keywords, text.substr(i, aux - i))) {
 			renderWord(stream, text, i, cursorPos, __clr_keyword);
 			return true;
 		}
@@ -130,11 +130,11 @@ private:
 	static bool renderBoolean(std::stringstream& stream, const std::string& text, size_t& i, const int cursorPos) {
 		size_t aux = i;
 
-		if (StringUtil::isAlphaNumeric(text[aux - 1])) return false;
+		if (alg::string::isAlphaNumeric(text[aux - 1])) return false;
 
-		while (StringUtil::isAlpha(text[aux])) aux++;
+		while (alg::string::isAlpha(text[aux])) aux++;
 
-		if (VectorUtil::exists(__boolean, text.substr(i, aux - i))) {
+		if (alg::vector::exists(__boolean, text.substr(i, aux - i))) {
 			renderWord(stream, text, i, cursorPos, __clr_boolean);
 			return true;
 		}
@@ -148,9 +148,9 @@ private:
 		size_t start = i, end = 0, aux = i;
 
 		while (text[aux] != ':')
-			if (!StringUtil::isAlpha(text[aux++])) return false;
+			if (!alg::string::isAlpha(text[aux++])) return false;
 
-		if (!VectorUtil::exists(__color_formats, std::string(text.begin() + start, text.begin() + aux))) return false;
+		if (!alg::vector::exists(__color_formats, std::string(text.begin() + start, text.begin() + aux))) return false;
 		if (++aux >= text.size()) return false;
 		
 		while (text[aux] != ':')
@@ -175,10 +175,10 @@ private:
 		stream << color->toString();
 
 		// render first char
-		renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
+		renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), color->toString());
 
-		while (StringUtil::isAlpha(text[++i]) || (StringUtil::isDigit(text[i]) && digit))
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
+		while (alg::string::isAlpha(text[++i]) || (alg::string::isDigit(text[i]) && digit))
+			renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), color->toString());
 
 		i--; // necessary to dis-ignore next char
 
@@ -191,7 +191,7 @@ private:
 		stream << color->toString();
 
 		for (i; i <= until; i++)
-			renderChar(i, cursorPos, text[i], stream, StringUtil::charToStr(text[i]), color->toString());
+			renderChar(i, cursorPos, text[i], stream, alg::string::charToStr(text[i]), color->toString());
 
 		if (decrement) i--;
 
@@ -220,10 +220,10 @@ private:
 		}
 
 		do {
-			if (pos >= text.size() - 1 && StringUtil::isAlphaNumeric(text[pos]))
+			if (pos >= text.size() - 1 && alg::string::isAlphaNumeric(text[pos]))
 				return pos;
 		}
-		while (StringUtil::isAlphaNumeric(text[pos++]));
+		while (alg::string::isAlphaNumeric(text[pos++]));
 		pos--;
 
 		if (pos > 0) pos--;
@@ -237,10 +237,10 @@ private:
 		}
 
 		do {
-			if (pos <= 0 && StringUtil::isAlphaNumeric(text[pos]))
+			if (pos <= 0 && alg::string::isAlphaNumeric(text[pos]))
 				return pos;
 		}
-		while (StringUtil::isAlphaNumeric(text[pos--]));
+		while (alg::string::isAlphaNumeric(text[pos--]));
 		pos++;
 
 		if (pos + 1 < text.size()) pos++;

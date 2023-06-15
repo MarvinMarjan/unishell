@@ -81,7 +81,7 @@ LiteralValue* exec() override {
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
 
-	return lit(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
+	return lit(alg::vector::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
 		return lit(file.path().filename().string());
 	}));
 }
@@ -95,7 +95,7 @@ LiteralValue* exec() override {
 	checkPath(res, asStr(args[0]), symbol);
 	checkPathType(res.path, ExpDir, symbol);
 
-	return lit(VectorUtil::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
+	return lit(alg::vector::map<FileEntry, LiteralValue*>(fsys::File::fileList(res.path), [](FileEntry file) {
 		return fsys::File::getFileDataObjFromFile(file.path().string());
 	}));
 }

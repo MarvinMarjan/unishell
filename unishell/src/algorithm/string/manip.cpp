@@ -1,6 +1,6 @@
 #include "manip.h"
 
-StringList alg::string::split(const std::string& src, const char delimiter = ' ') noexcept
+StringList alg::string::split(const std::string& src, const char delimiter) noexcept
 {
 	StringList vec;
 	std::string aux = "";

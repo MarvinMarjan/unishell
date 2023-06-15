@@ -51,7 +51,7 @@ ColorParser::OperationResult ColorParser::checkArgsSize(const TokenList& args, c
 	}
 
 	// checks if optionalMode is valid
-	if (!VectorUtil::exists(__colormode, optionalMode.getLexical())) {
+	if (!alg::vector::exists(__colormode, optionalMode.getLexical())) {
 		if (ignoreExceptions) return Failure;
 		throw SystemException(ColorParserError, "Unknown color mode", ExceptionRef(USER_INPUT, args[args.size() - 1].getIndex()));
 	}

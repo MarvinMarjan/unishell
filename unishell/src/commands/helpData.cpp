@@ -1,6 +1,7 @@
 #include "helpData.h"
 
 #include "../outstream/color/colorChars.h"
+#include "../algorithm/string/char.h"
 #include "paramList.h"
 
 std::string formatDescription(const std::string& description, const HDParamList& params)
@@ -8,8 +9,8 @@ std::string formatDescription(const std::string& description, const HDParamList&
 	std::string fDescription = "";
 
 	for (size_t i = 0; i < description.size(); i++) {
-		if (description[i] == '^' && i + 1 < description.size() && StringUtil::isDigit(description[i + 1])) {
-			const int paramIndex = std::stoi(StringUtil::charToStr(description[i + 1]));
+		if (description[i] == '^' && i + 1 < description.size() && alg::string::isDigit(description[i + 1])) {
+			const int paramIndex = std::stoi(alg::string::charToStr(description[i + 1]));
 			const std::string paramName = params[paramIndex].name;
 
 

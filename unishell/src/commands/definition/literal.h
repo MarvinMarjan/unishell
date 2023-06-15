@@ -19,7 +19,7 @@ LiteralValue* exec() override
 	const int index = (int)asDbl(args[1]);
 
 	checkIndex(index, src.size(), symbol);
-	return lit(StringUtil::charToStr(src.at(index)));
+	return lit(alg::string::charToStr(src.at(index)));
 }
 END_COMMAND
 
@@ -64,7 +64,7 @@ LiteralValue* exec() override {
 
 	LiteralValue* list = lit(LitList());
 
-	for (const std::string& item : StringUtil::split(asStr(args[0]), asStr(args[1])[0]))
+	for (const std::string& item : alg::string::split(asStr(args[0]), asStr(args[1])[0]))
 		asList(list).push_back(lit(item));
 
 	return list;
@@ -77,7 +77,7 @@ LiteralValue* exec() override {
 	if (!TypeUtil::isListOf(args[0], Literal))
 		THROW_RUNTIME_ERR("Only Literal type List accepted: " + litToStr(args[0], true));
 
-	return lit(VectorUtil::join(VectorUtil::map<LiteralValue*, std::string>(asList(args[0]), [](LiteralValue* val) {
+	return lit(alg::vector::join(alg::vector::map<LiteralValue*, std::string>(asList(args[0]), [](LiteralValue* val) {
 		return asStr(val);
 		}), asStr(args[1])));
 }

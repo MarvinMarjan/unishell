@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../handle/file.h"
+#include "../../algorithm/string/char.h"
 
 #define N_BYTE		1000.0
 #define N_KILO_BYTE	1000000.0
@@ -10,7 +11,7 @@
 // boilerplate
 #define CHECK_GLOBAL_EX(src, clr) \
 	for (const auto& it : src) { \
-		if (VectorUtil::exists(it.first, ex)) \
+		if (alg::vector::exists(it.first, ex)) \
 			return newFormatedFileData(clr, it.second); \
 	} \
 
@@ -69,7 +70,7 @@ namespace fsys
 			CHECK_GLOBAL_EX(__fs_file_extensions_video, __clr_fs_file_extension_video)
 			CHECK_GLOBAL_EX(__fs_file_extensions_binary, __clr_fs_file_extension_binary)
 
-			return newFormatedFileData(__clr_fs_file_extension_other, StringUtil::toUpper(ex));
+			return newFormatedFileData(__clr_fs_file_extension_other, alg::string::toUpper(ex));
 		}
 
 		static FileAtts getFileAtts(const FileEntry& file);
