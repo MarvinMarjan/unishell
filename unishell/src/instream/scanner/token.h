@@ -3,7 +3,10 @@
 #include <string>
 #include <vector>
 
-class LiteralValue;
+namespace lit
+{
+	class LiteralValue;
+}
 
 class Token;
 
@@ -42,7 +45,7 @@ class Token
 public:
 	friend class TokenProcess;
 
-	Token(const TokenEnum type, const std::string& lexical, LiteralValue* lit, const TokenList& sub, const size_t index) : 
+	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index) : 
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
 	{}
 
@@ -54,7 +57,7 @@ public:
 		return lexical;
 	}
 
-	constexpr LiteralValue* getLiteral() const noexcept {
+	constexpr lit::LiteralValue* getLiteral() const noexcept {
 		return lit;
 	}
 
@@ -69,7 +72,7 @@ public:
 private:
 	TokenEnum type;
 	std::string lexical;
-	LiteralValue* lit;
+	lit::LiteralValue* lit;
 	size_t index;
 
 	TokenList sub;

@@ -3,7 +3,7 @@
 #include "../../algorithm/vector/item.h"
 #include "../../utilities/opUtil.h"
 #include "../../system/global/global.h"
-#include "../../data/type.h"
+#include "../../data/litvalue/type.h"
 
 #include <filesystem>
 #include <fstream>
@@ -100,7 +100,7 @@ namespace fsys
 			return fs::file_size(path);
 		}
 
-		static LiteralValue* getFileDataObjFromFile(const std::string& path);
+		static lit::LiteralValue* getFileDataObjFromFile(const std::string& path);
 
 		static bool exists(const std::string& name) noexcept {
 			return fs::exists(name);

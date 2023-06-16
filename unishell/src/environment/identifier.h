@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../data/type.h"
+#include "../data/litvalue/type.h"
 
 class Identifier;
 
@@ -9,7 +9,7 @@ typedef std::vector<Identifier> IdentifierList;
 class Identifier
 {
 public:
-	Identifier(const std::string& name, LiteralValue* value, const bool sysId = false) : 
+	Identifier(const std::string& name, lit::LiteralValue* value, const bool sysId = false) : 
 		name(name), value(value), sysId(sysId)
 	{
 		updateType();
@@ -19,15 +19,15 @@ public:
 		return name;
 	}
 
-	LiteralValue* getValue() const noexcept {
+	lit::LiteralValue* getValue() const noexcept {
 		return value;
 	}
 
-	LiteralValueType getType() const noexcept {
+	lit::LitType getType() const noexcept {
 		return type;
 	}
 
-	void setValue(LiteralValue* value) noexcept {
+	void setValue(lit::LiteralValue* value) noexcept {
 		if (sysId) return; // sys identifiers are const
 		this->value = value;
 		updateType();
@@ -39,12 +39,12 @@ public:
 
 private:
 	void updateType() noexcept {
-		type = (value) ? (LiteralValueType)value->index() : Null;
+		type = (value) ? (lit::LitType)value->index() : lit::LitType::Null;
 	}
 
 	std::string name;
-	LiteralValue* value;
-	LiteralValueType type;
+	lit::LiteralValue* value;
+	lit::LitType type;
 
 	bool sysId;
 };

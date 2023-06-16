@@ -40,7 +40,7 @@ private:
 				list.push_back(source[o]);
 	}
 
-	constexpr static void insertIntegrate(ArgList& args, LiteralValue* integrateLiteral) {
+	constexpr static void insertIntegrate(ArgList& args, lit::LiteralValue* integrateLiteral) {
 		args.insert(args.begin() + 0, integrateLiteral);
 	}
 
@@ -89,11 +89,11 @@ private:
 	// exists, a exception
 	static Token assignIdentifierToken(Token token) {
 		const Identifier respectiveId = *System::getEnvId(token.lexical.substr(1), (int)token.index);
-		LiteralValue* idValue = respectiveId.getValue();
+		lit::LiteralValue* idValue = respectiveId.getValue();
 
 		token.lexical = litToStr(idValue);
 		token.lit = idValue;
-		token.type = TypeUtil::typeToTokenEnum(respectiveId.getType());
+		token.type = lit::typeToTokenEnum(respectiveId.getType());
 
 		return token;
 	}

@@ -80,7 +80,7 @@ public:
 	}
 
 private:
-	static void addSysId(const std::string& name, LiteralValue* value) {
+	static void addSysId(const std::string& name, lit::LiteralValue* value) {
 		__environment->addId(Identifier(name, value, true));
 	}
 

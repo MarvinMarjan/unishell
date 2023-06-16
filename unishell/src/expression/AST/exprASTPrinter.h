@@ -1,37 +1,35 @@
 #pragma once
 
-#include "../../utilities/typeUtil.h"
-
 #include "../expr.h"
 
 
 class ExprASTPrinter : public ExprVisitor
 {
 public:
-	LiteralValue* print(Expr* expr) {
+	lit::LiteralValue* print(Expr* expr) {
 		return expr->accept(this);
 	}
 
 private:
-	LiteralValue* visitBinary(Binary* expr) override {
+	lit::LiteralValue* visitBinary(Binary* expr) override {
 		return parenthesize(expr->op.getLexical(), { expr->left, expr->right });
 	}
 
-	LiteralValue* visitUnary(Unary* expr) override {
+	lit::LiteralValue* visitUnary(Unary* expr) override {
 		return parenthesize(expr->op.getLexical(), { expr->expr });
 	}
 
-	LiteralValue* visitGroup(Group* expr) override {
+	lit::LiteralValue* visitGroup(Group* expr) override {
 		return parenthesize("group", { expr->expression });
 	}
 
-	LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
-		if (!expr->value) return new LiteralValue(std::string("null"));
-		return new LiteralValue(litToStr(expr->value));
+	lit::LiteralValue* visitLiteralExpr(LiteralExpr* expr) override {
+		if (!expr->value) return new lit::LiteralValue(std::string("null"));
+		return new lit::LiteralValue(litToStr(expr->value));
 	}
 
 
-	LiteralValue* parenthesize(const std::string& name, const std::vector<Expr*>& exprs) {
+	lit::LiteralValue* parenthesize(const std::string& name, const std::vector<Expr*>& exprs) {
 		std::string builder;
 
 		builder += "(" + name;
@@ -43,6 +41,6 @@ private:
 
 		builder += ")";
 
-		return lit(builder);
+		return lit::lit(builder);
 	}
 };

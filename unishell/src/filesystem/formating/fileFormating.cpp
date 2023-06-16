@@ -1,8 +1,6 @@
 #include "fileFormatting.h"
 
 #include "../../utilities/objUtil.h"
-#include "../../utilities/typeUtil.h"
-
 #include "../../system/system.h"
 
 std::string fsys::FileF::formatFileEntryAsString(const FileEntry& file) {

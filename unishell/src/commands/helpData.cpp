@@ -4,6 +4,8 @@
 #include "../algorithm/string/char.h"
 #include "paramList.h"
 
+#include <sstream>
+
 std::string formatDescription(const std::string& description, const HDParamList& params)
 {
 	std::string fDescription = "";

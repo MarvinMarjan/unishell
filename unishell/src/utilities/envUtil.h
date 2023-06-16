@@ -17,7 +17,7 @@ public:
 	static FormatedIdentifierData formatIdentifier(const Identifier& identifier) {
 		const std::string name = identifier.getName();
 		const std::string strVal = litToStr(identifier.getValue(), true);
-		const std::string type = TypeUtil::getTypeAsString(identifier.getType(), true);
+		const std::string type = lit::getTypeAsString(identifier.getType(), true);
 
 		return { 
 			.name = clr(name, (identifier.isSysId()) ? __clr_sys_identifier->toString() : __clr_identifier->toString()),
