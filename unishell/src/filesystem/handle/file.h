@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../algorithm/vector/item.h"
-#include "../../utilities/opUtil.h"
 #include "../../system/global/global.h"
 #include "../../data/litvalue/type.h"
 

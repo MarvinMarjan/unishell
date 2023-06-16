@@ -2,10 +2,10 @@
 
 #include "../../system/system.h"
 #include "../../algorithm/string/char.h"
+#include "../../algorithm/bit/operations.h"
 #include "../../base/scannerBase.h"
-#include "../../utilities/globalUtil.h"
 #include "../../data/litvalue/checking.h"
-#include "../../data/litvalue/format.h"
+#include "../../data/litvalue/litformat.h"
 #include "token.h"
 
 enum InstreamScannerHints {
@@ -16,7 +16,7 @@ class InstreamScanner : public ScannerBase<Token>
 {
 public:
 	InstreamScanner(const std::string& src, const int hints = 0) : ScannerBase(src) {
-		ignoreCommand = OPUtil::bwAnd(hints, IgnoreCommand);
+		ignoreCommand = alg::bit::hasBits(hints, IgnoreCommand);
 	}
 
 	TokenList scanTokens() override;
@@ -47,7 +47,7 @@ private:
 	}
 
 	bool addKeyword(const std::string& keyword) {
-		TokenEnum keyw = GlobalUtil::keywordToToken(keyword);
+		TokenEnum keyw = keywordToTokenEnum(keyword);
 		if (keyw != LITERAL) {
 			addToken(keyw);
 			return true;

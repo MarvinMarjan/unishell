@@ -2,7 +2,7 @@
 
 #include "defBase.h"
 
-#include "../../utilities/envUtil.h"
+#include "../../environment/identifier/idformat.h"
 #include "../../utilities/clrUtil.h"
 #include "../../utilities/cmdUtil.h"
 #include "../../filesystem/formating/fileFormatting.h"
@@ -70,9 +70,9 @@ END_COMMAND
 START_COMMAND(SysCmdEnv, {}, CommandBase, "env", CmdFunc::System)
 void exec() override {
 	for (const Identifier& identifier : __environment->getIdList()) {
-		EnvUtil::FormatedIdentifierData data = EnvUtil::formatIdentifier(identifier);
+		FormatedIdentifierData data = formatIdentifier(identifier);
 
-		sysprintln(EnvUtil::formatFIDToString(data));
+		sysprintln(formatedIdentifierDataToString(data));
 	}
 }
 END_COMMAND

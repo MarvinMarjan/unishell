@@ -77,3 +77,11 @@ private:
 
 	TokenList sub;
 };
+
+constexpr inline TokenEnum keywordToTokenEnum(const std::string& keyword) noexcept {
+	if (keyword == "and") return AND;
+	if (keyword == "or") return OR;
+	if (keyword == "null") return NULLVAL;
+
+	return LITERAL;
+}

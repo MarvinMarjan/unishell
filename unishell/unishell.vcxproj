@@ -142,12 +142,15 @@
     <ClCompile Include="src\commands\definition\systemHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
     <ClCompile Include="src\commands\helpData.cpp" />
-    <ClCompile Include="src\data\litvalue\format.cpp" />
+    <ClCompile Include="src\data\litvalue\litformat.cpp" />
+    <ClCompile Include="src\data\litvalue\obj_predef.cpp" />
     <ClCompile Include="src\data\litvalue\type.cpp" />
+    <ClCompile Include="src\environment\identifier\idformat.cpp" />
     <ClCompile Include="src\filesystem\formating\fileFormating.cpp" />
     <ClCompile Include="src\instream\input\instream.cpp" />
     <ClCompile Include="src\color\parser\colorParser.cpp" />
     <ClCompile Include="src\instream\scanner\instreamScanner.cpp" />
+    <ClCompile Include="src\outstream\control\outformat.cpp" />
     <ClCompile Include="src\parser\processing\token\tokenProcessing.cpp" />
     <ClCompile Include="src\path\handler\pathHandler.cpp" />
     <ClCompile Include="src\path\scanner\pathScanner.cpp" />
@@ -159,6 +162,8 @@
     <ClCompile Include="src\utilities\cmdUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\algorithm\bit\operations.h" />
+    <ClInclude Include="src\algorithm\regex\match.h" />
     <ClInclude Include="src\algorithm\string\char.h" />
     <ClInclude Include="src\algorithm\string\manip.h" />
     <ClInclude Include="src\algorithm\vector\item.h" />
@@ -180,10 +185,12 @@
     <ClInclude Include="src\commands\helpData.h" />
     <ClInclude Include="src\commands\paramList.h" />
     <ClInclude Include="src\data\litvalue\checking.h" />
-    <ClInclude Include="src\data\litvalue\format.h" />
+    <ClInclude Include="src\data\litvalue\litformat.h" />
+    <ClInclude Include="src\data\litvalue\obj_predef.h" />
     <ClInclude Include="src\data\litvalue\type.h" />
     <ClInclude Include="src\environment\environment.h" />
-    <ClInclude Include="src\environment\identifier.h" />
+    <ClInclude Include="src\environment\identifier\idformat.h" />
+    <ClInclude Include="src\environment\identifier\identifier.h" />
     <ClInclude Include="src\filesystem\formating\fileFormatting.h" />
     <ClInclude Include="src\instream\input\instream.h" />
     <ClInclude Include="src\instream\input\instreamBuffer.h" />
@@ -200,6 +207,7 @@
     <ClInclude Include="src\expression\interpreter\exprInterpreter.h" />
     <ClInclude Include="src\instream\scanner\instreamScanner.h" />
     <ClInclude Include="src\instream\scanner\token.h" />
+    <ClInclude Include="src\outstream\control\outformat.h" />
     <ClInclude Include="src\parser\processing\token\tokenProcessing.h" />
     <ClInclude Include="src\path\handler\pathHandler.h" />
     <ClInclude Include="src\path\scanner\pathScanner.h" />
@@ -213,12 +221,6 @@
     <ClInclude Include="src\utilities\clrUtil.h" />
     <ClInclude Include="src\utilities\cmdUtil.h" />
     <ClInclude Include="src\filesystem\handle\file.h" />
-    <ClInclude Include="src\utilities\envUtil.h" />
-    <ClInclude Include="src\utilities\globalUtil.h" />
-    <ClInclude Include="src\utilities\objUtil.h" />
-    <ClInclude Include="src\utilities\opUtil.h" />
-    <ClInclude Include="src\utilities\outUtil.h" />
-    <ClInclude Include="src\utilities\regexUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

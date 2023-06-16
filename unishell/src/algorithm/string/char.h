@@ -13,6 +13,8 @@ namespace alg
 
 namespace string
 {
+
+
 	constexpr inline bool isAlpha(const char ch) noexcept {
 		return (ch >= 'a' && ch <= 'z') ||
 			(ch >= 'A' && ch <= 'Z') ||

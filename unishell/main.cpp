@@ -11,11 +11,10 @@
 
 #include "src/utilities/cmdUtil.h"
 #include "src/commands/definition/cmds.h"
-#include "src/utilities/regexUtil.h"
-#include "src/utilities/objUtil.h"
 
-// deps
+
 #include <chrono>
+
 
 int main(int argc, char** argv)
 {

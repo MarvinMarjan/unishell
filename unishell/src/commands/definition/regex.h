@@ -2,7 +2,7 @@
 
 #include "defBase.h"
 
-#include "../../utilities/objUtil.h"
+#include "../../data/litvalue/obj_predef.h"
 
 // match
 START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {lit::LitType::Literal}}, {nullptr, {lit::LitType::Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
@@ -18,7 +18,7 @@ lit::LiteralValue* exec() override {
 	std::smatch matches;
 	std::string::const_iterator searchStart(src.cbegin());
 	while (std::regex_search(searchStart, src.cend(), matches, pattern)) {
-		asList(list).push_back(ObjUtil::newRegexResult(matches));
+		asList(list).push_back(lit::newRegexResultObj(matches));
 		searchStart = matches.suffix().first;
 	}
 

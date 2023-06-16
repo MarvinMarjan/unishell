@@ -1,7 +1,6 @@
 #pragma once
 
 #include "type.h"
-#include "format.h"
 
 #include "../../system/global/typedecl.h"
 #include "../../instream/scanner/token.h"

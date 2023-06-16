@@ -1,6 +1,7 @@
 #include "fileFormatting.h"
 
-#include "../../utilities/objUtil.h"
+#include "../../data/litvalue/obj_predef.h"
+#include "../../algorithm/bit/operations.h"
 #include "../../system/system.h"
 
 #include <cmath>
@@ -71,28 +72,28 @@ fsys::FileF::FileAtts fsys::FileF::getFileAtts(const FileEntry& file) {
 	FileAtts atts{};
 	const DWORD att = GetFileAttributesA(file.path().string().c_str());
 
-	atts.archive =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_ARCHIVE);
-	atts.compressed =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_COMPRESSED);
-	atts.device =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_DEVICE);
-	atts.directory =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_DIRECTORY);
-	atts.ea =					OPUtil::bwAnd(att, FILE_ATTRIBUTE_EA);
-	atts.encrypted =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_ENCRYPTED);
-	atts.hidden =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_HIDDEN);
-	atts.integrityStream =		OPUtil::bwAnd(att, FILE_ATTRIBUTE_INTEGRITY_STREAM);
-	atts.normal =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_NORMAL);
-	atts.noScrubData =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_NO_SCRUB_DATA);
-	atts.notContentIndexed =	OPUtil::bwAnd(att, FILE_ATTRIBUTE_NOT_CONTENT_INDEXED);
-	atts.offline =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_OFFLINE);
-	atts.pinned =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_PINNED);
-	atts.readOnly =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_READONLY);
-	atts.recallOnDataAccess =	OPUtil::bwAnd(att, FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS);
-	atts.recallOnOpen =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_RECALL_ON_OPEN);
-	atts.reparsePoint =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_REPARSE_POINT);
-	atts.sparseFile =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_SPARSE_FILE);
-	atts.strictlySequential =	OPUtil::bwAnd(att, FILE_ATTRIBUTE_STRICTLY_SEQUENTIAL);
-	atts.system =				OPUtil::bwAnd(att, FILE_ATTRIBUTE_SYSTEM);
-	atts.temporary =			OPUtil::bwAnd(att, FILE_ATTRIBUTE_TEMPORARY);
-	atts.virt =					OPUtil::bwAnd(att, FILE_ATTRIBUTE_ARCHIVE);
+	atts.archive =				alg::bit::hasBits(att, FILE_ATTRIBUTE_ARCHIVE);
+	atts.compressed =			alg::bit::hasBits(att, FILE_ATTRIBUTE_COMPRESSED);
+	atts.device =				alg::bit::hasBits(att, FILE_ATTRIBUTE_DEVICE);
+	atts.directory =			alg::bit::hasBits(att, FILE_ATTRIBUTE_DIRECTORY);
+	atts.ea =					alg::bit::hasBits(att, FILE_ATTRIBUTE_EA);
+	atts.encrypted =			alg::bit::hasBits(att, FILE_ATTRIBUTE_ENCRYPTED);
+	atts.hidden =				alg::bit::hasBits(att, FILE_ATTRIBUTE_HIDDEN);
+	atts.integrityStream =		alg::bit::hasBits(att, FILE_ATTRIBUTE_INTEGRITY_STREAM);
+	atts.normal =				alg::bit::hasBits(att, FILE_ATTRIBUTE_NORMAL);
+	atts.noScrubData =			alg::bit::hasBits(att, FILE_ATTRIBUTE_NO_SCRUB_DATA);
+	atts.notContentIndexed =	alg::bit::hasBits(att, FILE_ATTRIBUTE_NOT_CONTENT_INDEXED);
+	atts.offline =				alg::bit::hasBits(att, FILE_ATTRIBUTE_OFFLINE);
+	atts.pinned =				alg::bit::hasBits(att, FILE_ATTRIBUTE_PINNED);
+	atts.readOnly =				alg::bit::hasBits(att, FILE_ATTRIBUTE_READONLY);
+	atts.recallOnDataAccess =	alg::bit::hasBits(att, FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS);
+	atts.recallOnOpen =			alg::bit::hasBits(att, FILE_ATTRIBUTE_RECALL_ON_OPEN);
+	atts.reparsePoint =			alg::bit::hasBits(att, FILE_ATTRIBUTE_REPARSE_POINT);
+	atts.sparseFile =			alg::bit::hasBits(att, FILE_ATTRIBUTE_SPARSE_FILE);
+	atts.strictlySequential =	alg::bit::hasBits(att, FILE_ATTRIBUTE_STRICTLY_SEQUENTIAL);
+	atts.system =				alg::bit::hasBits(att, FILE_ATTRIBUTE_SYSTEM);
+	atts.temporary =			alg::bit::hasBits(att, FILE_ATTRIBUTE_TEMPORARY);
+	atts.virt =					alg::bit::hasBits(att, FILE_ATTRIBUTE_ARCHIVE);
 
 	return atts;
 }

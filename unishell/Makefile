@@ -24,6 +24,7 @@ SOURCE := \
 	src/commands/definition/typeHelpDef.cpp \
 	src/filesystem/formating/fileFormating.cpp \
 	src/filesystem/handle/file.cpp \
+	src/outstream/control/format.cpp \
 	src/instream/input/instream.cpp \
 	src/instream/scanner/instreamScanner.cpp \
 	src/parser/processing/token/tokenProcessing.cpp \
@@ -31,6 +32,7 @@ SOURCE := \
 	src/path/scanner/pathScanner.cpp \
 	src/data/litvalue/format.cpp \
 	src/data/litvalue/type.cpp \
+	src/data/litvalue/obj_predef.cpp \
 	src/system/exception/exceptionRef.cpp \
 	src/system/exception/systemException.cpp \
 	src/system/global/global.cpp \
