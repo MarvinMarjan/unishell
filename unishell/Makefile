@@ -24,13 +24,14 @@ SOURCE := \
 	src/commands/definition/typeHelpDef.cpp \
 	src/filesystem/formating/fileFormating.cpp \
 	src/filesystem/handle/file.cpp \
-	src/outstream/control/format.cpp \
+	src/outstream/control/outformat.cpp \
 	src/instream/input/instream.cpp \
 	src/instream/scanner/instreamScanner.cpp \
+	src/environment/identifier/idformat.cpp \
 	src/parser/processing/token/tokenProcessing.cpp \
 	src/path/handler/pathHandler.cpp \
 	src/path/scanner/pathScanner.cpp \
-	src/data/litvalue/format.cpp \
+	src/data/litvalue/litformat.cpp \
 	src/data/litvalue/type.cpp \
 	src/data/litvalue/obj_predef.cpp \
 	src/system/exception/exceptionRef.cpp \
