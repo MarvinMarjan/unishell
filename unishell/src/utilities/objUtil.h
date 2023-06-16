@@ -44,7 +44,7 @@ public:
 	}
 
 	static LiteralValue* newRegexResult(std::smatch& match) {
-		LiteralValue* list = lit(LitList());
+		LiteralValue* list = lit(LitObj());
 
 		if (match.size())
 			asObj(list).insert({ "full", lit(match[0])});

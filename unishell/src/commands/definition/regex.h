@@ -12,14 +12,17 @@ LiteralValue* exec() override {
 	if (asStr(args[1]).empty())
 		THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
 
-	std::string src = asStr(args[0]);
+	const std::string src = asStr(args[0]);
 	const std::regex pattern(asStr(args[1]));
 
 	std::smatch matches;
 	std::string::const_iterator searchStart(src.cbegin());
+
 	while (std::regex_search(searchStart, src.cend(), matches, pattern)) {
 		asList(list).push_back(ObjUtil::newRegexResult(matches));
 		searchStart = matches.suffix().first;
+
+		if (searchStart == src.cend()) break;
 	}
 
 	return list;

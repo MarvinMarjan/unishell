@@ -63,7 +63,7 @@ public:
 	}
 
 	constexpr void next() noexcept {
-		if (index + 1 >= size()) index = 0;
+		if ((size_t)index + 1 >= size()) index = 0;
 		else index++;
 	}
 

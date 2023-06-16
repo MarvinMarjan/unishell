@@ -32,7 +32,7 @@ public:
 
 	constexpr void eraseAtIndex() {
 		if (getCursorIndex() - 1 < 0) return;
-		erase(getCursorIndex() - 1, 1);
+		erase((size_t)getCursorIndex() - 1, 1);
 		cursorLeft();
 	}
 
