@@ -30,12 +30,12 @@ END_COMMAND
 // cd
 START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd", CmdFunc::System)
 void exec() override {
-	PathHandler* sysp = System::path();
+	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
-	const std::string path = asStr(args[0]);
+	checkPath(res, asStr(args[0]), symbol);
+	checkPathType(res.path, ExpDir, symbol);
 
-	if (!sysp->manip(PathScanner(path).scanTokens()))
-		THROW_RUNTIME_ERR("Invalid path: " + qtd(path));
+	__workingPath->setPath(res.path);
 }
 END_COMMAND
 
