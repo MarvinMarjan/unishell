@@ -148,9 +148,13 @@
     <ClCompile Include="src\data\litvalue\obj_predef.cpp" />
     <ClCompile Include="src\data\litvalue\type.cpp" />
     <ClCompile Include="src\environment\identifier\idformat.cpp" />
+    <ClCompile Include="src\expression\interpreter\exprInterpreter.cpp" />
+    <ClCompile Include="src\expression\parser\exprParser.cpp" />
     <ClCompile Include="src\filesystem\formating\fileFormating.cpp" />
     <ClCompile Include="src\instream\input\instream.cpp" />
     <ClCompile Include="src\color\parser\colorParser.cpp" />
+    <ClCompile Include="src\instream\input\instreamRender.cpp" />
+    <ClCompile Include="src\instream\input\instreamSearchList.cpp" />
     <ClCompile Include="src\instream\scanner\instreamScanner.cpp" />
     <ClCompile Include="src\outstream\color\colorChars.cpp" />
     <ClCompile Include="src\outstream\control\outformat.cpp" />

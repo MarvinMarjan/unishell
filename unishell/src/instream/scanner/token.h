@@ -10,7 +10,9 @@ namespace lit
 
 class Token;
 
-typedef std::vector<Token> TokenList;
+
+using TokenList = std::vector<Token>;
+
 
 enum TokenEnum
 {

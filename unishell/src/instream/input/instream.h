@@ -30,24 +30,7 @@ enum ASCIICode
 class INStream
 {
 public:
-	static std::string getLine() {
-		INStreamBuffer lineInput;
-		char charInput;
-
-		bool end = false;
-
-		sysprint(saveCursor());
-
-		while (!end) {
-			sysprint(loadCursor());
-
-			charInput = _getch();
-
-			controlKeyHandler(charInput, lineInput, end);
-		}
-
-		return lineInput;
-	}
+	static std::string getLine();
 
 private:
 	friend class INStreamRender;

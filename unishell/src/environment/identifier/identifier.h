@@ -4,7 +4,9 @@
 
 class Identifier;
 
-typedef std::vector<Identifier> IdentifierList;
+
+using IdentifierList = std::vector<Identifier>;
+
 
 class Identifier
 {

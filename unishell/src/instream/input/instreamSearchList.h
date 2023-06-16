@@ -35,32 +35,9 @@ public:
 		this->type = type;
 	}
 
-	void setFromType() noexcept {
-		this->type = type;
 
-		switch (type)
-		{
-		case SearchListType::Nothing:
-			set({});
-			break;
+	void setFromType() noexcept;
 
-		case SearchListType::Command:
-			set(cmdListToStr(__sys_commands));
-			break;
-
-		case SearchListType::RetCommand:
-			set(cmdListToStr(__sys_ret_commands));
-			break;
-
-		case SearchListType::Identifier:
-			set(__environment->getIdNameList());
-			break;
-
-		case SearchListType::Files:
-			set(fsys::File::fileListAsString(__workingPath->getPath()));
-			break;
-		}
-	}
 
 	constexpr void next() noexcept {
 		if (index + 1 >= size()) index = 0;

@@ -3,4 +3,4 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<std::string> StringList;
+using StringList = std::vector<std::string>;

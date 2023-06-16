@@ -18,113 +18,16 @@ public:
 	}
 
 private:
-	Expr* expression() {
-		return logicOperator();
-	}
+	Expr* expression();
 
-	Expr* logicOperator() {
-		Expr* expr = assignment();
-
-		while (match({ AND, OR })) {
-			const Token op = prev();
-			Expr* right = assignment();
-			expr = new Binary(expr, op, right);
-		}
-
-		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT, LPAREN }))
-			throw SystemException(ExprParserError, "Operator expected", ExceptionRef(rawSource, prev().getIndex()));
-
-		return expr;
-	}
-
-	Expr* assignment() {
-		Expr* expr = equality();
-		
-		while (match({ EQUAL })) {
-			const Token op = prev();
-			Expr* right = equality();
-			expr = new Binary(expr, op, right);
-		}
-
-		return expr;
-	}
-
-	Expr* equality() {
-		Expr* expr = comparison();
-
-		while (match({ EQUAL_EQUAL_EQUAL, EQUAL_EQUAL, BANG_EQUAL })) {
-			const Token op = prev();
-			Expr* right = comparison();
-			expr = new Binary(expr, op, right);
-		}
-
-		return expr;
-	}
-
-	Expr* comparison() {
-		Expr* expr = term();
-
-		while (match({ GREATER, LESS, GREATER_EQUAL, LESS_EQUAL })) {
-			const Token op = prev();
-			Expr* right = term();
-			expr = new Binary(expr, op, right);
-		}
-
-		return expr;
-	}
-
-	Expr* term() {
-		Expr* expr = factor();
-
-		while (match({ PLUS, MINUS })) {
-			const Token op = prev();
-			Expr* right = factor();
-			expr = new Binary(expr, op, right);
-		}
-
-		return expr;
-	}
-
-	Expr* factor() {
-		Expr* expr = unary();
-
-		while (match({ STAR, SLASH })) {
-			const Token op = prev();
-			Expr* right = unary();
-			expr = new Binary(expr, op, right);
-		}
-
-		return expr;
-	}
-
-	Expr* unary() {
-		if (match({ BANG, MINUS })) {
-			const Token op = prev();
-			Expr* expr = unary();
-			return new Unary(op, expr);
-		}
-
-		return primary();
-	}
-
-	Expr* primary() {
-		if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT }))
-			return new LiteralExpr(prev().getLiteral());
-
-		if (match({ NULLVAL }))
-			return new LiteralExpr(nullptr);
-
-		if (match({ LPAREN })) {
-			Expr* expr = expression();
-			advance();
-			return new Group(expr);
-		}
-
-		if (!tokens.size())
-			return new LiteralExpr(nullptr);
-
-		throw SystemException(ExprParserError, "Expression expected", ExceptionRef(rawSource, prev().getIndex()));
-	}
+	Expr* logicOperator();
+	Expr* assignment();
+	Expr* equality();
+	Expr* comparison();
+	Expr* term();
+	Expr* factor();
+	Expr* unary();
+	Expr* primary();
 
 
 	bool match(const std::vector<TokenEnum>& tokenTypes) {

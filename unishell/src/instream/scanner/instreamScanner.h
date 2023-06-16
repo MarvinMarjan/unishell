@@ -58,20 +58,7 @@ private:
 
 
 	// gets a string inside quotes like "hello, world"
-	void string(const char delimiter, const bool raw = false) {
-		while (peek() != delimiter) {
-			if (isAtEnd()) 
-				throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
-
-			if (advance() != '\\' || raw) continue;
-
-			// escape character processing
-			addEscapeChar();
-		}
-
-		addToken(LITERAL, new lit::LiteralValue(src.substr(start + 1, current - 1 - start)));
-		advance(); // closing char
-	}
+	void string(const char delimiter, const bool raw = false);
 
 	constexpr char checkEscapeChar(const char ch) const noexcept {
 		switch (ch)

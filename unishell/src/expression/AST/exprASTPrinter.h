@@ -36,9 +36,9 @@ private:
 
 		for (Expr* expr : exprs) {
 			builder += " ";
-			builder += std::get<std::string>(*expr->accept(this));
+			builder += asStr(expr->accept(this));
 		}
-
+		
 		builder += ")";
 
 		return lit::lit(builder);

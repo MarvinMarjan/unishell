@@ -62,26 +62,12 @@ private:
 
 		return source;
 	}
-
+	
 
 	// expands (replace) tokens that can be expanded by they
 	// corresponding value like IDENTIFIER
-	static TokenList expandTokens(const TokenList& source) {
-		TokenList res;
+	static TokenList expandTokens(const TokenList& source);
 
-		for (const Token& token : source) {
-			switch (token.getType()) {
-			case IDENTIFIER:
-				res.push_back(assignIdentifierToken(token));
-				break;
-
-			default:
-				res.push_back(token);
-			}
-		}
-
-		return res;
-	}
 
 	// receive a token that represents a symbol and return a new token
 	// containing the value inside that symbol. if the identifier doesn't

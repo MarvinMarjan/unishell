@@ -8,7 +8,7 @@
 
 class Param;
 
-typedef std::vector<Param> ParamVec;
+using ParamVec = std::vector<Param>;
 
 class Param
 {

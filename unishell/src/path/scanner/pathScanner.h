@@ -23,7 +23,7 @@ public:
 private:
 	void scanToken() override;
 
-	void addToken(const PathToken::PathTokenType type) noexcept {
+	void addToken(const PathToken::Type type) noexcept {
 		tokens.push_back(PathToken(type, getCurrentSubstring()));
 	}
 

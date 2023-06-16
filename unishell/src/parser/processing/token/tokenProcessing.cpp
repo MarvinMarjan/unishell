@@ -96,7 +96,8 @@ TokenList TokenProcess::generateColorTokens(const TokenList& source) {
 }
 
 
-TokenList TokenProcess::parseTokens(const TokenList& source) {
+TokenList TokenProcess::parseTokens(const TokenList& source)
+{
 	TokenList res;
 
 	for (const Token& token : source)
@@ -124,7 +125,8 @@ TokenList TokenProcess::parseTokens(const TokenList& source) {
 }
 
 
-TokenList TokenProcess::expandRetCommands(const TokenList& source) {
+TokenList TokenProcess::expandRetCommands(const TokenList& source)
+{
 	TokenList res;
 
 	for (size_t i = 0; i < source.size(); i++) {
@@ -151,7 +153,8 @@ TokenList TokenProcess::expandRetCommands(const TokenList& source) {
 }
 
 
-inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool integrate) {
+Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool integrate)
+{
 	RetCommandBase* retCmd = nullptr;
 	lit::LiteralValue* ret = nullptr;
 	TokenList list;
@@ -176,4 +179,23 @@ inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& 
 	if (hasExplicitList) i++;
 
 	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex());
+}
+
+
+TokenList TokenProcess::expandTokens(const TokenList& source)
+{
+	TokenList res;
+
+	for (const Token& token : source) {
+		switch (token.getType()) {
+		case IDENTIFIER:
+			res.push_back(assignIdentifierToken(token));
+			break;
+
+		default:
+			res.push_back(token);
+		}
+	}
+
+	return res;
 }

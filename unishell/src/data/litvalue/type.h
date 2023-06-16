@@ -21,11 +21,11 @@ namespace lit
 {
 
 	
-	typedef std::vector<LiteralValue*> LitList;
-	typedef std::map<std::string, LiteralValue*> LitObject;
+	using LitList = std::vector<LiteralValue*> ;
+	using LitObject = std::map<std::string, LiteralValue*>;
 
 
-	typedef std::variant<std::string, double, bool, LitList, LitObject> LiteralValueDecl;
+	using LiteralValueDecl = std::variant<std::string, double, bool, LitList, LitObject>;
 
 
 	class LiteralValue : public LiteralValueDecl
@@ -43,10 +43,10 @@ namespace lit
 			Any
 		};
 
-		typedef std::vector<Type> TypeList;
+		using TypeList = std::vector<Type>;
 
-		typedef LitList List;
-		typedef LitObject Object;
+		using List = LitList;
+		using Object = LitObject;
 
 
 		LiteralValue(const LiteralValueDecl& other) : LiteralValueDecl(other) {}

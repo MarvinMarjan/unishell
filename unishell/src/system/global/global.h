@@ -11,7 +11,8 @@ class RetCommandBase;
 class Environment;
 class PathHandler;
 
-typedef std::map<StringList, std::string> FSExtension;
+
+using FSExtension = std::map<StringList, std::string>;
 
 // global variables
 

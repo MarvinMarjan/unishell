@@ -10,7 +10,7 @@ public:
 		return ((GetAsyncKeyState(VK) & 0x8000) != 0);
 	}
 
-	static void setCursorVisible(bool visible) {
+	static void setCursorVisible(const bool visible) {
 		CONSOLE_CURSOR_INFO info = { 1, visible };
 		SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
 	}

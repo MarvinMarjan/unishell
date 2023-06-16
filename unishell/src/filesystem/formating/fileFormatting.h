@@ -63,15 +63,7 @@ namespace fsys
 		static std::string formatFileEntryAsString(const FileEntry& file);
 		static std::string formatFileSizeAsString(uintmax_t size);
 
-		static FormatedFileData formatFileExtensionAsString(const std::string& ex) {
-			CHECK_GLOBAL_EX(__fs_file_extensions_text, __clr_fs_file_extension_text)
-			CHECK_GLOBAL_EX(__fs_file_extensions_image, __clr_fs_file_extension_image)
-			CHECK_GLOBAL_EX(__fs_file_extensions_audio, __clr_fs_file_extension_audio)
-			CHECK_GLOBAL_EX(__fs_file_extensions_video, __clr_fs_file_extension_video)
-			CHECK_GLOBAL_EX(__fs_file_extensions_binary, __clr_fs_file_extension_binary)
-
-			return newFormatedFileData(__clr_fs_file_extension_other, alg::string::toUpper(ex));
-		}
+		static FormatedFileData formatFileExtensionAsString(const std::string& ex);
 
 		static FileAtts getFileAtts(const FileEntry& file);
 

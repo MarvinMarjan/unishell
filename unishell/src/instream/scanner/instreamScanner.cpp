@@ -65,3 +65,20 @@ void InstreamScanner::scanToken()
 		else if (!keyword() && !boolean()) word(LITERAL, true);
 	}
 }
+
+
+void InstreamScanner::string(const char delimiter, const bool raw)
+{
+	while (peek() != delimiter) {
+		if (isAtEnd())
+			throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
+
+		if (advance() != '\\' || raw) continue;
+
+		// escape character processing
+		addEscapeChar();
+	}
+
+	addToken(LITERAL, new lit::LiteralValue(src.substr(start + 1, current - 1 - start)));
+	advance(); // closing char
+}

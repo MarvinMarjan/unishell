@@ -17,8 +17,10 @@ struct HDFlag
 	std::string meaning;
 };
 
-typedef std::vector<HDParam> HDParamList;
-typedef std::vector<HDFlag> HDFlagList;
+
+using HDParamList = std::vector<HDParam>;
+using HDFlagList  = std::vector<HDFlag>;
+
 
 struct CommandHelpData
 {

@@ -29,8 +29,12 @@ SOURCE := \
 	src/outstream/control/outformat.cpp \
 	src/outstrean/color/colorChars.cpp \
 	src/instream/input/instream.cpp \
+	src/instream/input/instreamRender.cpp \
 	src/instream/scanner/instreamScanner.cpp \
+	src/instream/scanner/instreamSearchList.cpp \
 	src/environment/identifier/idformat.cpp \
+	src/expression/parser/exprParser.cpp \
+	src/expression/interpreter/exprInterpreter.cpp \
 	src/parser/processing/token/tokenProcessing.cpp \
 	src/path/handler/pathHandler.cpp \
 	src/path/scanner/pathScanner.cpp \

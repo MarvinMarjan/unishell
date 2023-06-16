@@ -9,8 +9,8 @@
 
 namespace fs = std::filesystem;
 
-typedef std::vector<fs::directory_entry> FileList;
-typedef fs::directory_entry FileEntry;
+using FileList = std::vector<fs::directory_entry>;
+using FileEntry = fs::directory_entry;
 
 namespace fsys
 {

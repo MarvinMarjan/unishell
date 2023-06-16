@@ -7,6 +7,26 @@ INSListBuffer INStream::inputList = INSListBuffer();
 INSSearchList INStream::searchList = INSSearchList();
 
 
+std::string INStream::getLine() {
+	INStreamBuffer lineInput;
+	char charInput;
+
+	bool end = false;
+
+	sysprint(saveCursor());
+
+	while (!end) {
+		sysprint(loadCursor());
+
+		charInput = _getch();
+
+		controlKeyHandler(charInput, lineInput, end);
+	}
+
+	return lineInput;
+}
+
+
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
