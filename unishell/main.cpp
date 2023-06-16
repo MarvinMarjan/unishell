@@ -9,7 +9,6 @@
 
 #include "src/filesystem/handle/file.h"
 
-#include "src/utilities/cmdUtil.h"
 #include "src/commands/definition/cmds.h"
 
 
@@ -40,11 +39,11 @@ int main(int argc, char** argv)
 			if (!input.size())
 				continue;
 
-			FlagList flags = CmdUtil::getFlags(input);
-			input = CmdUtil::removeFlags(input);
+			FlagList flags = getFlags(input);
+			removeFlags(input);
 
-			ArgList args = CmdUtil::getArgs(input);
-			CommandBase* command = CmdUtil::getCommand(input[0].getLexical(), args, flags);
+			ArgList args = getArgs(input);
+			CommandBase* command = getCommand(input[0].getLexical(), args, flags);
 
 			// unknown command
 			if (!command)

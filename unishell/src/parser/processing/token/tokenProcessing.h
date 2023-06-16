@@ -3,8 +3,7 @@
 #include "../../../color/parser/colorParser.h"
 #include "../../../expression/parser/exprParser.h"
 #include "../../../expression/interpreter/exprInterpreter.h"
-
-#include "../../../utilities/cmdUtil.h"
+#include "../../../commands/cmdcore/args.h"
 
 class TokenProcess
 {

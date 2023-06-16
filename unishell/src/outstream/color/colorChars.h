@@ -51,3 +51,15 @@ inline std::string numformat(const std::string& text) noexcept {
 inline std::string nullformat(const std::string& text) noexcept {
 	return clr(text, __clr_keyword->toString());
 }
+
+
+
+
+// returns a string containing every color in __color
+std::string getColoredColorList() noexcept;
+
+// returns a string containing a table of 255 ANSI colors
+std::string getColoredIdColorList() noexcept;
+
+// returns a string containing every color mode in __colormode
+std::string getColoredColorModeList() noexcept;

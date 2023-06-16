@@ -1,7 +1,9 @@
 #pragma once
 
-#include "../commands/paramList.h"
-#include "../commands/flagList.h"
+#include "../commands/cmdcore/params.h"
+#include "../commands/cmdcore/flags.h"
+
+#include "../system/global/global.h"
 
 #define THROW_COMMAND_ERR(msg) \
 	throw SystemException(CommandError, "(" + cmdSymbol + ") " + msg) \
@@ -20,6 +22,38 @@ enum class CmdFunc
 	Filesystem,
 	Regex
 };
+
+
+inline std::string funcToString(const CmdFunc func) noexcept {
+	switch (func) {
+	case CmdFunc::Type:			return "Type";
+	case CmdFunc::Literal:		return "Literal";
+	case CmdFunc::Number:		return "Number";
+	case CmdFunc::List:			return "List";
+	case CmdFunc::Object:		return "Object";
+	case CmdFunc::System:		return "System";
+	case CmdFunc::Filesystem:	return "Filesystem";
+	case CmdFunc::Regex:	return "Regex";
+
+	default: return "unknown";
+	}
+}
+
+constexpr inline BaseColorStructure* funcToColor(const CmdFunc func) noexcept {
+	switch (func) {
+	case CmdFunc::Type:			return __clr_type_command;
+	case CmdFunc::Literal:		return __clr_literal_command;
+	case CmdFunc::Number:		return __clr_number_command;
+	case CmdFunc::List:			return __clr_list_command;
+	case CmdFunc::Object:		return __clr_object_command;
+	case CmdFunc::System:		return __clr_system_command;
+	case CmdFunc::Filesystem:	return __clr_filesystem_command;
+	case CmdFunc::Regex:		return __clr_regex_command;
+
+	default: return __clr_command;
+	}
+}
+
 
 // exec return type
 template <typename T>

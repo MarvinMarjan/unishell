@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../helpData.h"
+#include "../cmdcore/helpData.h"
 #include "../../path/handler/pathHandler.h"
 #include "../../base/commandBaseCore.h"
 
@@ -27,20 +27,6 @@
 
 #define END_COMMAND \
 	}; \
-
-
-#define CHECK_CMD(cmd) \
-	if (cmdName == cmd().symbol) return new cmd(args, flags) \
-
-
-
-#define CHECK_CMD_OL(symbol, ...) \
-	if (cmdName == symbol) return CmdUtil::checkArgOverload<__VA_ARGS__>(args, flags) \
-
-
-
-#define CHECK_CMD_P(cmd) \
-	if (cmdName == cmd().symbol) return new cmd() \
 
 
 #define THROW_RUNTIME_ERR(msg) \

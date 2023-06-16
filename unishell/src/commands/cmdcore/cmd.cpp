@@ -1,16 +1,15 @@
-#include "cmdUtil.h"
+#include "cmd.h"
 
-#include "../commands/definition/cmds.h"
+#include "../definition/cmds.h"
 
-
-CommandBase* CmdUtil::getCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
+CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
 {
 	CHECK_CMD(SysCmdPrint);
 	CHECK_CMD(SysCmdClear);
 
 	CHECK_CMD(SysCmdCd);
 	CHECK_CMD(SysCmdLs);
-	
+
 	CHECK_CMD(SysCmdVar);
 	CHECK_CMD(SysCmdDel);
 	CHECK_CMD(SysCmdEnv);
@@ -33,7 +32,7 @@ CommandBase* CmdUtil::getCommand(const std::string& cmdName, const ArgList& args
 	return nullptr;
 }
 
-RetCommandBase* CmdUtil::getRetCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
+RetCommandBase* getRetCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
 {
 	CHECK_CMD(SysRetCmdInput);
 

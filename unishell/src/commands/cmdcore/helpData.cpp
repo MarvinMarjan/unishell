@@ -1,8 +1,8 @@
 #include "helpData.h"
 
-#include "../outstream/color/colorChars.h"
-#include "../algorithm/string/char.h"
-#include "paramList.h"
+#include "../../outstream/color/colorChars.h"
+#include "../../algorithm/string/char.h"
+#include "params.h"
 
 #include <sstream>
 

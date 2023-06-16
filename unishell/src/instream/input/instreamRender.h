@@ -37,9 +37,9 @@ private:
 	static void renderCommand(std::stringstream& stream, const std::string& text, const int cursorPos, size_t& i, const size_t firstWordPos)
 	{
 		const std::string cmdName = std::string(text.begin(), text.begin() + firstWordPos + 1);
-		const CommandBase* const cmd = CmdUtil::getCommand(cmdName);
+		const CommandBase* const cmd = getCommand(cmdName);
 
-		BaseColorStructure* commandClr = commandClr = CmdUtil::getCommandColor(__sys_commands, cmdName);
+		BaseColorStructure* commandClr = commandClr = getCommandColor(__sys_commands, cmdName);
 
 		renderUntil(stream, text, i, cursorPos, commandClr, firstWordPos);
 	}
@@ -53,7 +53,7 @@ private:
 			if (!alg::string::isAlpha(cmdName[0]))
 				cmdName = cmdName.substr(1);
 			
-			retCmdColor = CmdUtil::getCommandColor(__sys_ret_commands, cmdName);
+			retCmdColor = getCommandColor(__sys_ret_commands, cmdName);
 		}
 
 		renderWord(stream, text, i, cursorPos, retCmdColor, true);

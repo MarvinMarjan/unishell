@@ -133,6 +133,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\algorithm\string\manip.cpp" />
     <ClCompile Include="src\algorithm\vector\sort.cpp" />
+    <ClCompile Include="src\commands\cmdcore\args.cpp" />
+    <ClCompile Include="src\commands\cmdcore\cmd.cpp" />
     <ClCompile Include="src\commands\definition\filesystemHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\listHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\literalHelpDef.cpp" />
@@ -141,7 +143,7 @@
     <ClCompile Include="src\commands\definition\regexHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\systemHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
-    <ClCompile Include="src\commands\helpData.cpp" />
+    <ClCompile Include="src\commands\cmdcore\helpData.cpp" />
     <ClCompile Include="src\data\litvalue\litformat.cpp" />
     <ClCompile Include="src\data\litvalue\obj_predef.cpp" />
     <ClCompile Include="src\data\litvalue\type.cpp" />
@@ -150,6 +152,7 @@
     <ClCompile Include="src\instream\input\instream.cpp" />
     <ClCompile Include="src\color\parser\colorParser.cpp" />
     <ClCompile Include="src\instream\scanner\instreamScanner.cpp" />
+    <ClCompile Include="src\outstream\color\colorChars.cpp" />
     <ClCompile Include="src\outstream\control\outformat.cpp" />
     <ClCompile Include="src\parser\processing\token\tokenProcessing.cpp" />
     <ClCompile Include="src\path\handler\pathHandler.cpp" />
@@ -159,7 +162,6 @@
     <ClCompile Include="src\system\global\global.cpp" />
     <ClCompile Include="src\system\system.cpp" />
     <ClCompile Include="src\filesystem\handle\file.cpp" />
-    <ClCompile Include="src\utilities\cmdUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithm\bit\operations.h" />
@@ -170,7 +172,8 @@
     <ClInclude Include="src\algorithm\vector\sort.h" />
     <ClInclude Include="src\base\commandBaseCore.h" />
     <ClInclude Include="src\base\scannerBase.h" />
-    <ClInclude Include="src\commands\argList.h" />
+    <ClInclude Include="src\commands\cmdcore\args.h" />
+    <ClInclude Include="src\commands\cmdcore\cmd.h" />
     <ClInclude Include="src\commands\definition\cmds.h" />
     <ClInclude Include="src\commands\definition\defBase.h" />
     <ClInclude Include="src\commands\definition\filesystem.h" />
@@ -181,9 +184,9 @@
     <ClInclude Include="src\commands\definition\regex.h" />
     <ClInclude Include="src\commands\definition\system.h" />
     <ClInclude Include="src\commands\definition\type.h" />
-    <ClInclude Include="src\commands\flagList.h" />
-    <ClInclude Include="src\commands\helpData.h" />
-    <ClInclude Include="src\commands\paramList.h" />
+    <ClInclude Include="src\commands\cmdcore\flags.h" />
+    <ClInclude Include="src\commands\cmdcore\helpData.h" />
+    <ClInclude Include="src\commands\cmdcore\params.h" />
     <ClInclude Include="src\data\litvalue\checking.h" />
     <ClInclude Include="src\data\litvalue\litformat.h" />
     <ClInclude Include="src\data\litvalue\obj_predef.h" />
@@ -218,8 +221,6 @@
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\exception\systemException.h" />
     <ClInclude Include="src\system\windows\windowsSystem.h" />
-    <ClInclude Include="src\utilities\clrUtil.h" />
-    <ClInclude Include="src\utilities\cmdUtil.h" />
     <ClInclude Include="src\filesystem\handle\file.h" />
   </ItemGroup>
   <ItemGroup>

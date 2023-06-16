@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../filesystem/handle/file.h"
-#include "../../utilities/cmdUtil.h"
+#include "../../commands/cmdcore/cmd.h"
 
 enum class SearchListType
 {
@@ -45,11 +45,11 @@ public:
 			break;
 
 		case SearchListType::Command:
-			set(CmdUtil::cmdListToStr(__sys_commands));
+			set(cmdListToStr(__sys_commands));
 			break;
 
 		case SearchListType::RetCommand:
-			set(CmdUtil::cmdListToStr(__sys_ret_commands));
+			set(cmdListToStr(__sys_ret_commands));
 			break;
 
 		case SearchListType::Identifier:

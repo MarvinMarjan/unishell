@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../system/exception/systemException.h"
-#include "../algorithm/vector/item.h"
-#include "../data/litvalue/litformat.h"
+#include "../../system/exception/systemException.h"
+#include "../../algorithm/vector/item.h"
+#include "../../data/litvalue/litformat.h"
 
-#include "argList.h"
+#include "args.h"
 
 class Param;
 

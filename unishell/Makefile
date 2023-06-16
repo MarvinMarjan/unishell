@@ -13,7 +13,6 @@ SOURCE := \
 	src/algorithm/string/manip.cpp \
 	src/algorithm/vector/sort.cpp \
 	src/color/parser/colorParser.cpp \
-	src/commands/definition/helpData.cpp \
 	src/commands/definition/filesystemHelpDef.cpp \
 	src/commands/definition/listHelpDef.cpp \
 	src/commands/definition/literalHelpDef.cpp \
@@ -22,9 +21,13 @@ SOURCE := \
 	src/commands/definition/regexHelpDef.cpp \
 	src/commands/definition/systemHelpDef.cpp \
 	src/commands/definition/typeHelpDef.cpp \
+	src/commands/cmdcore/args.cpp \
+	src/commands/cmdcore/cmd.cpp \
+	src/commands/cmdcore/helpData.cpp \
 	src/filesystem/formating/fileFormating.cpp \
 	src/filesystem/handle/file.cpp \
 	src/outstream/control/outformat.cpp \
+	src/outstrean/color/colorChars.cpp \
 	src/instream/input/instream.cpp \
 	src/instream/scanner/instreamScanner.cpp \
 	src/environment/identifier/idformat.cpp \
@@ -38,7 +41,6 @@ SOURCE := \
 	src/system/exception/systemException.cpp \
 	src/system/global/global.cpp \
 	src/system/system.cpp \
-	src/utilities/cmdUtil.cpp \
 
 
 

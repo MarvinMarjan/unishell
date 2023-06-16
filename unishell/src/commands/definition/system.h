@@ -2,9 +2,8 @@
 
 #include "defBase.h"
 
+#include "../../commands/cmdcore/cmd.h"
 #include "../../environment/identifier/idformat.h"
-#include "../../utilities/clrUtil.h"
-#include "../../utilities/cmdUtil.h"
 #include "../../filesystem/formating/fileFormatting.h"
 #include "../../system/system.h"
 
@@ -100,7 +99,7 @@ void exec() override {
 	std::string cmdName = asStr(args[0]);
 
 	if (!cmdName.empty()) {
-		CommandBase* pCmd = CmdUtil::getCommand(cmdName);
+		CommandBase* pCmd = getCommand(cmdName);
 
 		if (!pCmd)
 			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
@@ -109,7 +108,7 @@ void exec() override {
 		sysprintln(msg);
 	}
 
-	else sysprintln(CmdUtil::getAllCmdHelpMessage(flags.hasFlag("nm")));
+	else sysprintln(getAllCmdHelpMessage(flags.hasFlag("nm")));
 }
 END_COMMAND
 
@@ -119,7 +118,7 @@ void exec() override {
 	std::string cmdName = asStr(args[0]);
 
 	if (!cmdName.empty()) {
-		RetCommandBase* pCmd = CmdUtil::getRetCommand(cmdName);
+		RetCommandBase* pCmd = getRetCommand(cmdName);
 
 		if (!pCmd)
 			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
@@ -128,7 +127,7 @@ void exec() override {
 		sysprintln(msg);
 	}
 
-	else sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
+	else sysprintln(getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 }
 END_COMMAND
 
@@ -137,21 +136,21 @@ END_COMMAND
 // clrHelp
 START_COMMAND(SysCmdClrHelp, {}, CommandBase, "clrHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredColorList());
+	sysprintln(getColoredColorList());
 }
 END_COMMAND
 
 // idClrHelp
 START_COMMAND(SysCmdIdColorHelp, {}, CommandBase, "idClrHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredIdColorList());
+	sysprintln(getColoredIdColorList());
 }
 END_COMMAND
 
 // clrModeHelp
 START_COMMAND(SysCmdClrModeHelp, {}, CommandBase, "clrModeHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredColorModeList());
+	sysprintln(getColoredColorModeList());
 }
 END_COMMAND
 

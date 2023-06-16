@@ -1,13 +1,16 @@
 #include "instream.h"
+
 #include "instreamRender.h"
+
 
 INSListBuffer INStream::inputList = INSListBuffer();
 INSSearchList INStream::searchList = INSSearchList();
 
+
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
-	searchList.set(CmdUtil::cmdListToStr(__sys_commands));
+	searchList.set(cmdListToStr(__sys_commands));
 
 	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)

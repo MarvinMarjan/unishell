@@ -1,5 +1,8 @@
 #include "tokenProcessing.h"
 
+#include "../../../commands/cmdcore/cmd.h"
+
+
 TokenList TokenProcess::subToLiteral(const TokenList& source)
 {
 	TokenList res;
@@ -157,13 +160,13 @@ inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& 
 	argsFromList(source, i, list);
 
 	// don't encapsulate in RETCOMMANDS
-	ArgList args = CmdUtil::getArgs(list, false, true, &hasExplicitList);
+	ArgList args = getArgs(list, false, true, &hasExplicitList);
 
 	if (integrate)
 		insertIntegrate(args, source[i - 1].getLiteral());
 
 	// no flags support in RETCOMMANDS
-	retCmd = CmdUtil::getRetCommand(source[i].getLexical().substr(1), args, {});
+	retCmd = getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
 		throw SystemException(CommandError, "Unknown command: " + clr(source[i].getLexical(), __clr_command->toString()));

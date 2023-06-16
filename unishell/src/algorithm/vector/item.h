@@ -1,7 +1,9 @@
 #pragma once
 
-#include <algorithm>
 #include "../../system/global/typedecl.h"
+
+#include <algorithm>
+
 
 namespace alg
 {
@@ -18,13 +20,27 @@ namespace vector
 
 
 	// execute "func" for every item in "src" and
-	// return a vector containing the return of "func"
+	// return a vector containing the returns of "func"
 	template <typename T1, typename T2>
-	inline std::vector<T2> map(const std::vector<T1>& src, T2(*func)(T1 item)) {
+	inline std::vector<T2> map(const std::vector<T1>& src, T2 (*func)(T1)) {
 		std::vector<T2> res;
 
 		for (const T1& item : src)
 			res.push_back(func(item));
+
+		return res;
+	}
+
+	// execute "func" for every item in "src" and
+	// return a vector containing the items that "func"
+	// returned true
+	template <typename T>
+	inline std::vector<T> filter(const std::vector<T>& src, bool (*func)(T)) {
+		std::vector<T> res;
+
+		for (const T& item : src)
+			if (func(item))
+				res.push_back(item);
 
 		return res;
 	}
