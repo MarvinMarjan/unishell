@@ -1,12 +1,12 @@
 #pragma once
 
 #include "../system/global/global.h"
-#include "../data/type.h"
+#include "../data/litvalue/type.h"
 
 struct HDParam
 {
 	std::string name;
-	LiteralValueTypeList types;
+	lit::LitTypeList types;
 	bool optional = false;
 };
 

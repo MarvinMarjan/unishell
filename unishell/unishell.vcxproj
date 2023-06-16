@@ -142,6 +142,8 @@
     <ClCompile Include="src\commands\definition\systemHelpDef.cpp" />
     <ClCompile Include="src\commands\definition\typeHelpDef.cpp" />
     <ClCompile Include="src\commands\helpData.cpp" />
+    <ClCompile Include="src\data\litvalue\format.cpp" />
+    <ClCompile Include="src\data\litvalue\type.cpp" />
     <ClCompile Include="src\filesystem\formating\fileFormating.cpp" />
     <ClCompile Include="src\instream\input\instream.cpp" />
     <ClCompile Include="src\color\parser\colorParser.cpp" />
@@ -155,7 +157,6 @@
     <ClCompile Include="src\system\system.cpp" />
     <ClCompile Include="src\filesystem\handle\file.cpp" />
     <ClCompile Include="src\utilities\cmdUtil.cpp" />
-    <ClCompile Include="src\utilities\typeUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithm\string\char.h" />
@@ -178,6 +179,9 @@
     <ClInclude Include="src\commands\flagList.h" />
     <ClInclude Include="src\commands\helpData.h" />
     <ClInclude Include="src\commands\paramList.h" />
+    <ClInclude Include="src\data\litvalue\checking.h" />
+    <ClInclude Include="src\data\litvalue\format.h" />
+    <ClInclude Include="src\data\litvalue\type.h" />
     <ClInclude Include="src\environment\environment.h" />
     <ClInclude Include="src\environment\identifier.h" />
     <ClInclude Include="src\filesystem\formating\fileFormatting.h" />
@@ -194,7 +198,6 @@
     <ClInclude Include="src\expression\AST\exprASTPrinter.h" />
     <ClInclude Include="src\expression\parser\exprParser.h" />
     <ClInclude Include="src\expression\interpreter\exprInterpreter.h" />
-    <ClInclude Include="src\data\type.h" />
     <ClInclude Include="src\instream\scanner\instreamScanner.h" />
     <ClInclude Include="src\instream\scanner\token.h" />
     <ClInclude Include="src\parser\processing\token\tokenProcessing.h" />
@@ -216,7 +219,6 @@
     <ClInclude Include="src\utilities\opUtil.h" />
     <ClInclude Include="src\utilities\outUtil.h" />
     <ClInclude Include="src\utilities\regexUtil.h" />
-    <ClInclude Include="src\utilities\typeUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />

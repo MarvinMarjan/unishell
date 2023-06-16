@@ -13,7 +13,7 @@ TokenList TokenProcess::subToLiteral(const TokenList& source)
 			}
 
 			const TokenList parsed = process(token.getSub());
-			res.push_back(Token(LIST, "", getListFromTokenList(parsed), {}, token.getIndex()));
+			res.push_back(Token(LIST, "", lit::getListFromTokenList(parsed), {}, token.getIndex()));
 			break;
 		}
 
@@ -24,7 +24,7 @@ TokenList TokenProcess::subToLiteral(const TokenList& source)
 			}
 
 			const TokenList parsed = process(token.getSub());
-			res.push_back(Token(OBJECT, "", getObjFromTokenList(parsed), {}, token.getIndex()));
+			res.push_back(Token(OBJECT, "", lit::getObjFromTokenList(parsed), {}, token.getIndex()));
 			break;
 		}
 
@@ -100,15 +100,15 @@ TokenList TokenProcess::parseTokens(const TokenList& source) {
 		switch (token.getType()) {
 		case COLOR: {
 			const std::string parsed = ColorParser(token.getSub()).parse()->toString();
-			res.push_back(Token(LITERAL, parsed, new LiteralValue(parsed), {}, token.getIndex()));
+			res.push_back(Token(LITERAL, parsed, new lit::LiteralValue(parsed), {}, token.getIndex()));
 			break;
 		}
 
 		case EXPRESSION: {
 			Expr* const parsed = ExprParser(token.getSub(), *System::input()).parse();
-			LiteralValue* const interpreted = ExprInterpreter().interpret(parsed);
-			TypeUtil::checkNull(interpreted);
-			res.push_back(Token(TypeUtil::getLitTokenEnum(interpreted),
+			lit::LiteralValue* const interpreted = ExprInterpreter().interpret(parsed);
+			lit::checkNull(interpreted);
+			res.push_back(Token(lit::getLitTokenEnum(interpreted),
 				litToStr(interpreted), interpreted, {}, token.getIndex()));
 			break;
 		}
@@ -150,7 +150,7 @@ TokenList TokenProcess::expandRetCommands(const TokenList& source) {
 
 inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool integrate) {
 	RetCommandBase* retCmd = nullptr;
-	LiteralValue* ret = nullptr;
+	lit::LiteralValue* ret = nullptr;
 	TokenList list;
 	bool hasExplicitList = false;
 
@@ -172,5 +172,5 @@ inline Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& 
 
 	if (hasExplicitList) i++;
 
-	return Token(TypeUtil::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex());
+	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex());
 }

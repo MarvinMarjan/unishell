@@ -9,9 +9,9 @@
 #include "../../system/system.h"
 
 // print
-START_COMMAND(SysCmdPrint, { lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
+START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
 void exec() override {
-	for (LiteralValue* value : args)
+	for (lit::LiteralValue* value : args)
 		sysprint(litToStr(value));
 
 	sysprintln("");
@@ -28,7 +28,7 @@ END_COMMAND
 
 
 // cd
-START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd", CmdFunc::System)
+START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {lit::LitType::Literal}} }), CommandBase, "cd", CmdFunc::System)
 void exec() override {
 	PathHandler* sysp = System::path();
 
@@ -53,7 +53,7 @@ END_COMMAND
 
 
 // var
-START_COMMAND(SysCmdVar, ParamVec({ {nullptr, {Literal}},	nullptr }), CommandBase, "var", CmdFunc::System)
+START_COMMAND(SysCmdVar, ParamVec({ {nullptr, {lit::LitType::Literal}},	nullptr }), CommandBase, "var", CmdFunc::System)
 void exec() override {
 	System::env()->addId(Identifier(litToStr(args[0]), args[1]));
 }
@@ -95,7 +95,7 @@ void exec() override {
 END_COMMAND
 
 // cmdHelp
-START_COMMAND(SysCmdCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdCmdHelp, ParamVec({ {lit::lit(""), {lit::LitType::Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
@@ -114,7 +114,7 @@ void exec() override {
 END_COMMAND
 
 // retCmdHelp
-START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {lit::lit(""), {lit::LitType::Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
@@ -173,10 +173,10 @@ END_COMMAND
 
 // input
 START_COMMAND(SysRetCmdInput, {}, RetCommandBase, "input", CmdFunc::System);
-LiteralValue* exec() override {
+lit::LiteralValue* exec() override {
 	std::string input;
 	std::getline(std::cin, input);
 
-	return lit(input);
+	return lit::lit(input);
 }
 END_COMMAND

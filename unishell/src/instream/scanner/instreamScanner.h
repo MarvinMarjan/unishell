@@ -1,14 +1,12 @@
 #pragma once
 
 #include "../../system/system.h"
-
 #include "../../algorithm/string/char.h"
-#include "../../utilities/typeUtil.h"
-
 #include "../../base/scannerBase.h"
-#include "token.h"
-
 #include "../../utilities/globalUtil.h"
+#include "../../data/litvalue/checking.h"
+#include "../../data/litvalue/format.h"
+#include "token.h"
 
 enum InstreamScannerHints {
 	IgnoreCommand = 1
@@ -35,13 +33,13 @@ private:
 		tokens.push_back(Token(type, lex, nullptr, {}, current - 1));
 	}
 
-	void addToken(const TokenEnum type, LiteralValue* lit) noexcept {
+	void addToken(const TokenEnum type, lit::LiteralValue* lit) noexcept {
 		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1));
 	}
 
 	bool addBoolean(const std::string& boolStr) {
-		if (TypeUtil::isBoolean(boolStr)) {
-			addToken(BOOLEANVAL, new LiteralValue(TypeUtil::stringToBool(boolStr)));
+		if (lit::isBoolean(boolStr)) {
+			addToken(BOOLEANVAL, new lit::LiteralValue(lit::stringToBool(boolStr)));
 			return true;
 		}
 
@@ -71,7 +69,7 @@ private:
 			addEscapeChar();
 		}
 
-		addToken(LITERAL, new LiteralValue(src.substr(start + 1, current - 1 - start)));
+		addToken(LITERAL, new lit::LiteralValue(src.substr(start + 1, current - 1 - start)));
 		advance(); // closing char
 	}
 
@@ -100,7 +98,7 @@ private:
 	// gets a sequence of digits. dot ('.') included
 	void number() {
 		for (current; alg::string::isDigit(peek()); current++) {}
-		addToken(NUMBER, new LiteralValue(std::stod(getCurrentSubstring())));
+		addToken(NUMBER, new lit::LiteralValue(std::stod(getCurrentSubstring())));
 	}
 	
 	// if is keyword, returns true and add it
@@ -121,7 +119,7 @@ private:
 	void word(const TokenEnum type, const bool hasLiteral = false) {
 		while (alg::string::isAlphaNumeric(peek())) advance();
 		if (!hasLiteral) addToken(type, getCurrentSubstring());
-		else addToken(type, new LiteralValue(getCurrentSubstring()));
+		else addToken(type, new lit::LiteralValue(getCurrentSubstring()));
 	}
 
 	TokenList tokens;

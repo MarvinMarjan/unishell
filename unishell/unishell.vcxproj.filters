@@ -83,12 +83,27 @@
     <ClCompile Include="src\commands\helpData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\algorithm\string\manip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\algorithm\vector\sort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\litvalue\type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\litvalue\format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\stringUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utilities\typeUtil.h">
@@ -101,9 +116,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\environment\identifier.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\vectorUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\utilities\globalUtil.h">
@@ -253,7 +265,31 @@
     <ClInclude Include="src\filesystem\handle\file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\system\global\decl.h">
+    <ClInclude Include="src\algorithm\string\char.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithm\string\manip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithm\vector\item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithm\vector\sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\global\typedecl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\litvalue\type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\litvalue\format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\litvalue\checking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

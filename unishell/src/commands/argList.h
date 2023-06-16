@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../data/type.h"
+#include "../data/litvalue/type.h"
 
-class ArgList : public std::vector<LiteralValue*>
+class ArgList : public lit::LitList
 {
 public:
 	ArgList() {}
@@ -13,7 +13,7 @@ public:
 	}
 
 	explicit ArgList(const Token& list) {
-		for (LiteralValue* val : asList(list.getLiteral()))
+		for (lit::LiteralValue* val : asList(list.getLiteral()))
 			push_back(val);
 	}
 };

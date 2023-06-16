@@ -2,7 +2,7 @@
 
 // print
 START_HELP(SysCmdPrint)
-return { .name = SysCmdPrint().symbol, .params = {{ "Text", {Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console." };
+return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console." };
 END_HELP
 
 // clear
@@ -14,7 +14,7 @@ END_HELP
 
 // cd
 START_HELP(SysCmdCd)
-return { .name = SysCmdCd().symbol, .params = {{"Path", {Literal}}}, .description = "working path manipulation." };
+return { .name = SysCmdCd().symbol, .params = {{"Path", {lit::LitType::Literal}}}, .description = "working path manipulation." };
 END_HELP
 
 // ls
@@ -28,12 +28,12 @@ END_HELP
 
 // var
 START_HELP(SysCmdVar)
-return { .name = SysCmdVar().symbol, .params = {{"Name", {Literal}}, {"Value", {Any}}}, .description = "creates a variable called ^0 that stores ^1." };
+return { .name = SysCmdVar().symbol, .params = {{"Name", {lit::LitType::Literal}}, {"Value", {lit::LitType::Any}}}, .description = "creates a variable called ^0 that stores ^1." };
 END_HELP
 
 // del
 START_HELP(SysCmdDel)
-return { .name = SysCmdDel().symbol, .params = {{"Name", {Literal}}}, .description = "deletes a variable called ^0." };
+return { .name = SysCmdDel().symbol, .params = {{"Name", {lit::LitType::Literal}}}, .description = "deletes a variable called ^0." };
 END_HELP
 
 // env

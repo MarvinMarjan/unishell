@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../utilities/typeUtil.h"
 #include "../system/exception/systemException.h"
 #include "../algorithm/vector/item.h"
+#include "../data/litvalue/format.h"
 
 #include "argList.h"
 
@@ -13,30 +13,30 @@ typedef std::vector<Param> ParamVec;
 class Param
 {
 public:
-	Param(LiteralValue* defaultValue = nullptr, const std::vector<LiteralValueType>& paramTypes = {Any}) :
+	Param(lit::LiteralValue* defaultValue = nullptr, const std::vector<lit::LitType>& paramTypes = { lit::LitType::Any }) :
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
-	LiteralValue* getDefaultValue() const noexcept {
+	lit::LiteralValue* getDefaultValue() const noexcept {
 		return defaultValue;
 	}
 
-	std::vector<LiteralValueType> getParamTypes() const noexcept {
+	std::vector<lit::LitType> getParamTypes() const noexcept {
 		return paramTypes;
 	}
 
 	StringList getParamTypesAsString() const noexcept {
 		StringList types;
 
-		for (const LiteralValueType type : getParamTypes())
-			types.push_back(TypeUtil::getTypeAsString(type));
+		for (const lit::LitType type : getParamTypes())
+			types.push_back(lit::getTypeAsString(type));
 
 		return types;
 	}
 
 private:
-	LiteralValue* defaultValue;
-	std::vector<LiteralValueType> paramTypes;
+	lit::LiteralValue* defaultValue;
+	std::vector<lit::LitType> paramTypes;
 };
 
 
@@ -63,7 +63,7 @@ public:
 
 	void match(ArgList& args) const {
 		const int count = (int)(size() - args.size());
-		LiteralValue* defaultVal;
+		lit::LiteralValue* defaultVal;
 
 		// comparations with unsigned and signed can have trouble. use "(int)i"
 		for (size_t i = 1; (int)i <= count; i++)
@@ -72,20 +72,20 @@ public:
 	}
 };
 
-inline bool checkParamType(const LiteralValueTypeList& types, const LiteralValueType type) {
-	if (alg::vector::exists(types, Any)) return true;
+inline bool checkParamType(const lit::LitTypeList& types, const lit::LitType type) {
+	if (alg::vector::exists(types, lit::LitType::Any)) return true;
 	else if (alg::vector::exists(types, type)) return true;
 
 	return false;
 }
 
-inline std::string stringifyParamTypes(const LiteralValueTypeList& types, const bool colorize = false) {
+inline std::string stringifyParamTypes(const lit::LitTypeList& types, const bool colorize = false) {
 	std::string str = "";
 	
 	for (size_t i = 0; i < types.size(); i++) {
-		const std::string stype = TypeUtil::getTypeAsString(types[i]);
+		const std::string stype = lit::getTypeAsString(types[i]);
 
-		str += ((colorize) ? TypeUtil::colorizeStrType(stype) : stype)
+		str += ((colorize) ? lit::colorizeStrType(stype) : stype)
 			+ ((i + 1 >= types.size()) ? "" : " | ");
 	}
 

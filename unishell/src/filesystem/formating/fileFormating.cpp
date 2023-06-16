@@ -1,9 +1,9 @@
 #include "fileFormatting.h"
 
 #include "../../utilities/objUtil.h"
-#include "../../utilities/typeUtil.h"
-
 #include "../../system/system.h"
+
+#include <cmath>
 
 std::string fsys::FileF::formatFileEntryAsString(const FileEntry& file) {
 	std::stringstream str;

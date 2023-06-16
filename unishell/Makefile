@@ -29,12 +29,13 @@ SOURCE := \
 	src/parser/processing/token/tokenProcessing.cpp \
 	src/path/handler/pathHandler.cpp \
 	src/path/scanner/pathScanner.cpp \
+	src/data/litvalue/format.cpp \
+	src/data/litvalue/type.cpp \
 	src/system/exception/exceptionRef.cpp \
 	src/system/exception/systemException.cpp \
 	src/system/global/global.cpp \
 	src/system/system.cpp \
 	src/utilities/cmdUtil.cpp \
-	src/utilities/typeUtil.cpp 
 
 
 
@@ -47,7 +48,7 @@ OBJECTS := $(addprefix $(OBJECT_PATH)/, $(notdir $(SOURCE:.cpp=.o)))
 .PHONY: build
 build: $(OBJECT_PATH) $(OBJECTS)
 	@ echo Creating $(APP_NAME)
-	@ $(CC) $(CPP_VERSION) $(OBJECTS) -o $(APP_NAME)
+	@ $(CC) $(CPP_VERSION) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
 
 
 $(OBJECT_PATH):

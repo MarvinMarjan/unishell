@@ -3,7 +3,7 @@
 #include "../formating/fileFormatting.h"
 #include "../../utilities/objUtil.h"
 
-LiteralValue* fsys::File::getFileDataObjFromFile(const std::string& path) {
+lit::LiteralValue* fsys::File::getFileDataObjFromFile(const std::string& path) {
 	const FileEntry file(path);
 
 	return ObjUtil::newFileDataObj(

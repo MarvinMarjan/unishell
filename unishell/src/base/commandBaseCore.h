@@ -58,7 +58,7 @@ protected:
 private:
 	void checkArgumentsType(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		for (size_t i = 0; i < params.size(); i++)
-			if (!checkParamType(params[i].getParamTypes(), getValueType(args[i])) && params[i].getParamTypes().size())
+			if (!checkParamType(params[i].getParamTypes(), lit::LiteralValue::typeof(args[i])) && params[i].getParamTypes().size())
 				THROW_COMMAND_ERR("Type of argument " + tostr(i + 1) +
 					" unacceptable: " + litToStr(args[i], true) + "\n     Acceptable types: " +
 					stringifyParamTypes(params[i].getParamTypes(), true));
@@ -81,7 +81,7 @@ public:
 };
 
 // return command bases
-class RetCommandBase : public CommandBaseCore<LiteralValue*> 
+class RetCommandBase : public CommandBaseCore<lit::LiteralValue*>
 {
 public:
 	RetCommandBase() : CommandBaseCore() {}
