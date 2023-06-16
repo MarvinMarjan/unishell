@@ -33,7 +33,7 @@ inline std::string funcToString(const CmdFunc func) noexcept {
 	case CmdFunc::Object:		return "Object";
 	case CmdFunc::System:		return "System";
 	case CmdFunc::Filesystem:	return "Filesystem";
-	case CmdFunc::Regex:	return "Regex";
+	case CmdFunc::Regex:		return "Regex";
 
 	default: return "unknown";
 	}

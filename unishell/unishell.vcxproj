@@ -133,6 +133,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\algorithm\string\manip.cpp" />
     <ClCompile Include="src\algorithm\vector\sort.cpp" />
+    <ClCompile Include="src\color\structure\colorStructure.cpp" />
     <ClCompile Include="src\commands\cmdcore\args.cpp" />
     <ClCompile Include="src\commands\cmdcore\cmd.cpp" />
     <ClCompile Include="src\commands\definition\filesystemHelpDef.cpp" />

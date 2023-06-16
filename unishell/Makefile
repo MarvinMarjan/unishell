@@ -13,6 +13,7 @@ SOURCE := \
 	src/algorithm/string/manip.cpp \
 	src/algorithm/vector/sort.cpp \
 	src/color/parser/colorParser.cpp \
+	src/color/structure/colorStructure.cpp \
 	src/commands/definition/filesystemHelpDef.cpp \
 	src/commands/definition/listHelpDef.cpp \
 	src/commands/definition/literalHelpDef.cpp \
