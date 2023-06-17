@@ -35,7 +35,7 @@ private:
 		}
 	}
 
-	void indentifier() noexcept {
+	void identifier() noexcept {
 		while (isValidChar(peek()) && !isAtEnd()) advance();
 		if (peek() == ':' && !tokens.size()) rootIdentifier();
 		else addToken(PathToken::IDENTIFIER);
