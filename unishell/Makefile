@@ -10,25 +10,40 @@ CC := g++
 CPP_VERSION := -std=c++20
 SOURCE := \
 	main.cpp \
-	src/color/parser/colorParser.cpp \
-	src/commands/definition/helpData.cpp \
-	src/commands/definition/filesystemHelpDef.cpp \
-	src/commands/definition/listHelpDef.cpp \
-	src/commands/definition/literalHelpDef.cpp \
-	src/commands/definition/numberTypeDef.cpp \
-	src/commands/definition/objectHelpDef.cpp \
-	src/commands/definition/regexHelpDef.cpp \
-	src/commands/definition/systemHelpDef.cpp \
-	src/commands/definition/typeHelpDef.cpp \
-	src/filesystem/formating/fileFormating.cpp \
+	src/algorithm/string/manip.cpp \
+	src/algorithm/vector/sort.cpp \
+	src/color/parser/color_parser.cpp \
+	src/color/structure/color_structure.cpp \
+	src/commands/definition/filesystem_help.cpp \
+	src/commands/definition/list_help.cpp \
+	src/commands/definition/literal_help.cpp \
+	src/commands/definition/number_type.cpp \
+	src/commands/definition/object_help.cpp \
+	src/commands/definition/regex_help.cpp \
+	src/commands/definition/system_help.cpp \
+	src/commands/definition/type_help.cpp \
+	src/commands/cmdcore/args.cpp \
+	src/commands/cmdcore/cmd.cpp \
+	src/commands/cmdcore/help_data.cpp \
+	src/filesystem/formating/formating.cpp \
 	src/filesystem/handle/file.cpp \
+	src/outstream/control/outformat.cpp \
+	src/outstrean/color/color_chars.cpp \
 	src/instream/input/instream.cpp \
-	src/instream/scanner/instreamScanner.cpp \
-	src/parser/processing/token/tokenProcessing.cpp \
-	src/path/handler/pathHandler.cpp \
-	src/path/scanner/pathScanner.cpp \
-	src/system/exception/exceptionRef.cpp \
-	src/system/exception/systemException.cpp \
+	src/instream/input/render.cpp \
+	src/instream/scanner/instream_scanner.cpp \
+	src/instream/scanner/search_list.cpp \
+	src/environment/identifier/idformat.cpp \
+	src/expression/parser/expr_parser.cpp \
+	src/expression/interpreter/expr_interpreter.cpp \
+	src/parser/processing/token/token_processing.cpp \
+	src/path/handler/path_handler.cpp \
+	src/path/scanner/path_scanner.cpp \
+	src/data/litvalue/litformat.cpp \
+	src/data/litvalue/type.cpp \
+	src/data/litvalue/obj_predef.cpp \
+	src/system/exception/exception_reference.cpp \
+	src/system/exception/system_exception.cpp \
 	src/system/global/global.cpp \
 	src/system/system.cpp \
 	src/utilities/cmdUtil.cpp \
