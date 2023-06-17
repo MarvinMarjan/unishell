@@ -46,8 +46,6 @@ SOURCE := \
 	src/system/exception/system_exception.cpp \
 	src/system/global/global.cpp \
 	src/system/system.cpp \
-	src/utilities/cmdUtil.cpp \
-	src/utilities/typeUtil.cpp 
 
 
 
@@ -60,7 +58,7 @@ OBJECTS := $(addprefix $(OBJECT_PATH)/, $(notdir $(SOURCE:.cpp=.o)))
 .PHONY: build
 build: $(OBJECT_PATH) $(OBJECTS)
 	@ echo Creating $(APP_NAME)
-	@ $(CC) $(CPP_VERSION) $(OBJECTS) -o $(APP_NAME)
+	@ $(CC) $(CPP_VERSION) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
 
 
 $(OBJECT_PATH):

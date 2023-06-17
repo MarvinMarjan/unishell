@@ -1,21 +1,19 @@
 #include "src/instream/input/instream.h"
 
-#include "src/instream/scanner/instreamScanner.h"
+#include "src/instream/scanner/instream_scanner.h"
 
-#include "src/parser/processing/token/tokenProcessing.h"
+#include "src/parser/processing/token/token_processing.h"
 
-#include "src/expression/AST/exprASTPrinter.h"
-#include "src/expression/parser/exprParser.h"
+#include "src/expression/AST/expr_ast_printer.h"
+#include "src/expression/parser/expr_parser.h"
 
 #include "src/filesystem/handle/file.h"
 
-#include "src/utilities/cmdUtil.h"
 #include "src/commands/definition/cmds.h"
-#include "src/utilities/regexUtil.h"
-#include "src/utilities/objUtil.h"
 
-// deps
+
 #include <chrono>
+
 
 int main(int argc, char** argv)
 {
@@ -41,11 +39,11 @@ int main(int argc, char** argv)
 			if (!input.size())
 				continue;
 
-			FlagList flags = CmdUtil::getFlags(input);
-			input = CmdUtil::removeFlags(input);
+			FlagList flags = getFlags(input);
+			removeFlags(input);
 
-			ArgList args = CmdUtil::getArgs(input);
-			CommandBase* command = CmdUtil::getCommand(input[0].getLexical(), args, flags);
+			ArgList args = getArgs(input);
+			CommandBase* command = getCommand(input[0].getLexical(), args, flags);
 
 			// unknown command
 			if (!command)

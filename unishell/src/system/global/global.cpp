@@ -1,7 +1,7 @@
 #include "global.h"
 
 #include "../../environment/environment.h"
-#include "../../path/handler/pathHandler.h"
+#include "../../path/handler/path_handler.h"
 #include "../../commands/definition/cmds.h"
 #include "../system.h"
 
@@ -185,7 +185,7 @@ const FSExtension __fs_file_extensions_audio = {
 };
 
 const FSExtension __fs_file_extensions_binary = {
-	{{".exe", ".dll", ".sys", ".bin", ".dat", ".iso", ".jar", ".reg"}, "Binary"}
+	{{".exe", ".dll", ".sys", ".bin", ".dat", ".iso", ".jar", ".reg", ".o", ".a"}, "Binary"}
 };
 
 

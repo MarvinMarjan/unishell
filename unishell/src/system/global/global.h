@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../color/structure/colorStructure.h"
-#include "decl.h"
+#include "../../color/structure/color_structure.h"
+#include "typedecl.h"
 
 #include <map>
 
@@ -11,7 +11,8 @@ class RetCommandBase;
 class Environment;
 class PathHandler;
 
-typedef std::map<StringList, std::string> FSExtension;
+
+using FSExtension = std::map<StringList, std::string>;
 
 // global variables
 

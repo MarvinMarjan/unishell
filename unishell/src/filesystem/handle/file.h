@@ -1,19 +1,16 @@
 #pragma once
 
+#include "../../algorithm/vector/item.h"
+#include "../../system/global/global.h"
+#include "../../data/litvalue/type.h"
+
 #include <filesystem>
 #include <fstream>
 
-#include "../../utilities/vectorUtil.h"
-#include "../../utilities/opUtil.h"
-
-#include "../../system/global/global.h"
-
-#include "../../data/type.h"
-
 namespace fs = std::filesystem;
 
-typedef std::vector<fs::directory_entry> FileList;
-typedef fs::directory_entry FileEntry;
+using FileList = std::vector<fs::directory_entry>;
+using FileEntry = fs::directory_entry;
 
 namespace fsys
 {
@@ -62,7 +59,7 @@ namespace fsys
 		}
 
 		static std::string readAsString(const std::string& path) {
-			return VectorUtil::join(readAsList(path), "\n");
+			return alg::vector::join(readAsList(path), "\n");
 		}
 
 		static StringList readAsList(const std::string& path) {
@@ -102,7 +99,7 @@ namespace fsys
 			return fs::file_size(path);
 		}
 
-		static LiteralValue* getFileDataObjFromFile(const std::string& path);
+		static lit::LiteralValue* getFileDataObjFromFile(const std::string& path);
 
 		static bool exists(const std::string& name) noexcept {
 			return fs::exists(name);

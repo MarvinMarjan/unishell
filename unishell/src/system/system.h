@@ -3,11 +3,11 @@
 #include <iostream>
 #include <ShlObj.h>
 
-#include "exception/systemException.h"
-#include "windows/windowsSystem.h"
+#include "exception/system_exception.h"
+#include "windows/system.h"
 
-#include "../outstream/color/colorChars.h"
-#include "../path/handler/pathHandler.h"
+#include "../outstream/color/color_chars.h"
+#include "../path/handler/path_handler.h"
 #include "../environment/environment.h"
 
 #define sysprint        System::print
@@ -60,27 +60,12 @@ public:
 
 
 
-	static Identifier* getEnvId(const std::string& idName, const int index = -1) {
-		Identifier* identifier = __environment->getId(idName);
+	static Identifier* getEnvId(const std::string& idName, const int index = -1);
 
-		if (!identifier)
-			throw SystemException(EnvironmentError, "Unknown indentifier: " + idformat(idName), 
-				(index != -1) ? ExceptionRef(*__userInput, index) : ExceptionRef(""));
-		
-		return identifier;
-	}
-
-	static void delEnvId(const std::string& idName) {
-		if (__environment->exists(idName) && !__environment->isSysId(idName))
-			__environment->delId(idName);
-		else if (!__environment->isSysId(idName))
-			throw SystemException(EnvironmentError, "Unknown identifier: " + idformat(idName));
-		else
-			throw SystemException(EnvironmentError, "Can't delete system identifiers.");
-	}
+	static void delEnvId(const std::string& idName);
 
 private:
-	static void addSysId(const std::string& name, LiteralValue* value) {
+	static void addSysId(const std::string& name, lit::LiteralValue* value) {
 		__environment->addId(Identifier(name, value, true));
 	}
 

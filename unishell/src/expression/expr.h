@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../data/type.h"
+#include "../data/litvalue/type.h"
 
 class Binary;
 class Unary;
@@ -10,15 +10,15 @@ class LiteralExpr;
 class ExprVisitor
 {
 public:
-	virtual LiteralValue* visitBinary(Binary*) = 0;
-	virtual LiteralValue* visitUnary(Unary*) = 0;
-	virtual LiteralValue* visitGroup(Group*) = 0;
-	virtual LiteralValue* visitLiteralExpr(LiteralExpr*) = 0;
+	virtual lit::LiteralValue* visitBinary(Binary*) = 0;
+	virtual lit::LiteralValue* visitUnary(Unary*) = 0;
+	virtual lit::LiteralValue* visitGroup(Group*) = 0;
+	virtual lit::LiteralValue* visitLiteralExpr(LiteralExpr*) = 0;
 };
 
 class Expr {
 public:
-	virtual LiteralValue* accept(ExprVisitor*) = 0;
+	virtual lit::LiteralValue* accept(ExprVisitor*) = 0;
 };
 
 class Binary : public Expr
@@ -29,7 +29,7 @@ public:
 
 	Binary(Expr* left, Token op, Expr* right) : left(left), op(op), right(right) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitBinary(this);
 	}
 
@@ -47,7 +47,7 @@ public:
 
 	Unary(Token op, Expr* expr) : op(op), expr(expr) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitUnary(this);
 	}
 
@@ -64,7 +64,7 @@ public:
 
 	Group(Expr* expression) : expression(expression) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitGroup(this);
 	}
 
@@ -78,12 +78,12 @@ public:
 	friend class ExprASTPrinter;
 	friend class ExprInterpreter;
 
-	LiteralExpr(LiteralValue* value) : value(value) {}
+	LiteralExpr(lit::LiteralValue* value) : value(value) {}
 
-	LiteralValue* accept(ExprVisitor* v) override {
+	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitLiteralExpr(this);
 	}
 
 private:
-	LiteralValue* value;
+	lit::LiteralValue* value;
 };

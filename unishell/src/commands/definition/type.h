@@ -1,24 +1,24 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 // type
 START_COMMAND(TypeRetCmdType, { nullptr }, RetCommandBase, "type", CmdFunc::Type)
-LiteralValue* exec() override {
-	return lit(TypeUtil::getTypeAsString(getValueType(args[0])));
+lit::LiteralValue* exec() override {
+	return lit::lit(lit::getTypeAsString(lit::LiteralValue::typeof(args[0])));
 }
 END_COMMAND
 
 // literal
-START_COMMAND(TypeRetCmdLiteral, ParamVec({ {nullptr, {Literal, Number, Bool}} }), RetCommandBase, "literal", CmdFunc::Type)
-LiteralValue* exec() override {
-	return lit(litToStr(args[0]));
+START_COMMAND(TypeRetCmdLiteral, ParamVec({ {nullptr, {lit::LitType::Literal, lit::LitType::Number, lit::LitType::Bool}} }), RetCommandBase, "literal", CmdFunc::Type)
+lit::LiteralValue* exec() override {
+	return lit::lit(litToStr(args[0]));
 }
 END_COMMAND
 
 // number
-START_COMMAND(TypeRetCmdNumber, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "number", CmdFunc::Type)
-LiteralValue* exec() override {
+START_COMMAND(TypeRetCmdNumber, ParamVec({ {nullptr, {lit::LitType::Literal}} }), RetCommandBase, "number", CmdFunc::Type)
+lit::LiteralValue* exec() override {
 	double res;
 	
 	try {
@@ -31,13 +31,13 @@ LiteralValue* exec() override {
 		THROW_RUNTIME_ERR("Value too large: " + qtd(asStr(args[0])));
 	}
 
-	return lit(res);
+	return lit::lit(res);
 }
 END_COMMAND
 
 // bool
-START_COMMAND(TypeRetCmdBool, ParamVec({ {nullptr, {Literal}} }), RetCommandBase, "bool", CmdFunc::Type)
-LiteralValue* exec() override {
-	return lit(TypeUtil::stringToBool(asStr(args[0])));
+START_COMMAND(TypeRetCmdBool, ParamVec({ {nullptr, {lit::LitType::Literal}} }), RetCommandBase, "bool", CmdFunc::Type)
+lit::LiteralValue* exec() override {
+	return lit::lit(lit::stringToBool(asStr(args[0])));
 }
 END_COMMAND

@@ -1,17 +1,16 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
-#include "../../utilities/envUtil.h"
-#include "../../utilities/clrUtil.h"
-#include "../../utilities/cmdUtil.h"
-#include "../../filesystem/formating/fileFormatting.h"
+#include "../../commands/cmdcore/cmd.h"
+#include "../../environment/identifier/idformat.h"
+#include "../../filesystem/formating/formating.h"
 #include "../../system/system.h"
 
 // print
-START_COMMAND(SysCmdPrint, { lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
+START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
 void exec() override {
-	for (LiteralValue* value : args)
+	for (lit::LiteralValue* value : args)
 		sysprint(litToStr(value));
 
 	sysprintln("");
@@ -28,7 +27,7 @@ END_COMMAND
 
 
 // cd
-START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {Literal}} }), CommandBase, "cd", CmdFunc::System)
+START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {lit::LitType::Literal}} }), CommandBase, "cd", CmdFunc::System)
 void exec() override {
 	PathHandler::PathOperationData res = (*__workingPath) + asStr(args[0]);
 
@@ -53,7 +52,7 @@ END_COMMAND
 
 
 // var
-START_COMMAND(SysCmdVar, ParamVec({ {nullptr, {Literal}},	nullptr }), CommandBase, "var", CmdFunc::System)
+START_COMMAND(SysCmdVar, ParamVec({ {nullptr, {lit::LitType::Literal}},	nullptr }), CommandBase, "var", CmdFunc::System)
 void exec() override {
 	System::env()->addId(Identifier(litToStr(args[0]), args[1]));
 }
@@ -70,9 +69,9 @@ END_COMMAND
 START_COMMAND(SysCmdEnv, {}, CommandBase, "env", CmdFunc::System)
 void exec() override {
 	for (const Identifier& identifier : __environment->getIdList()) {
-		EnvUtil::FormatedIdentifierData data = EnvUtil::formatIdentifier(identifier);
+		FormatedIdentifierData data = formatIdentifier(identifier);
 
-		sysprintln(EnvUtil::formatFIDToString(data));
+		sysprintln(formatedIdentifierDataToString(data));
 	}
 }
 END_COMMAND
@@ -95,12 +94,12 @@ void exec() override {
 END_COMMAND
 
 // cmdHelp
-START_COMMAND(SysCmdCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdCmdHelp, ParamVec({ {lit::lit(""), {lit::LitType::Literal}} }), CommandBase, "cmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
 	if (!cmdName.empty()) {
-		CommandBase* pCmd = CmdUtil::getCommand(cmdName);
+		CommandBase* pCmd = getCommand(cmdName);
 
 		if (!pCmd)
 			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
@@ -109,17 +108,17 @@ void exec() override {
 		sysprintln(msg);
 	}
 
-	else sysprintln(CmdUtil::getAllCmdHelpMessage(flags.hasFlag("nm")));
+	else sysprintln(getAllCmdHelpMessage(flags.hasFlag("nm")));
 }
 END_COMMAND
 
 // retCmdHelp
-START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {lit(""), {Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
+START_COMMAND(SysCmdRetCmdHelp, ParamVec({ {lit::lit(""), {lit::LitType::Literal}} }), CommandBase, "retCmdHelp", CmdFunc::System)
 void exec() override {
 	std::string cmdName = asStr(args[0]);
 
 	if (!cmdName.empty()) {
-		RetCommandBase* pCmd = CmdUtil::getRetCommand(cmdName);
+		RetCommandBase* pCmd = getRetCommand(cmdName);
 
 		if (!pCmd)
 			THROW_RUNTIME_ERR("Unknown command: " + clr(cmdName, __clr_command->toString()));
@@ -128,7 +127,7 @@ void exec() override {
 		sysprintln(msg);
 	}
 
-	else sysprintln(CmdUtil::getAllRetCmdHelpMessage(flags.hasFlag("nm")));
+	else sysprintln(getAllRetCmdHelpMessage(flags.hasFlag("nm")));
 }
 END_COMMAND
 
@@ -137,21 +136,21 @@ END_COMMAND
 // clrHelp
 START_COMMAND(SysCmdClrHelp, {}, CommandBase, "clrHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredColorList());
+	sysprintln(getColoredColorList());
 }
 END_COMMAND
 
 // idClrHelp
 START_COMMAND(SysCmdIdColorHelp, {}, CommandBase, "idClrHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredIdColorList());
+	sysprintln(getColoredIdColorList());
 }
 END_COMMAND
 
 // clrModeHelp
 START_COMMAND(SysCmdClrModeHelp, {}, CommandBase, "clrModeHelp", CmdFunc::System)
 void exec() override {
-	sysprintln(ClrUtil::getColoredColorModeList());
+	sysprintln(getColoredColorModeList());
 }
 END_COMMAND
 
@@ -173,10 +172,10 @@ END_COMMAND
 
 // input
 START_COMMAND(SysRetCmdInput, {}, RetCommandBase, "input", CmdFunc::System);
-LiteralValue* exec() override {
+lit::LiteralValue* exec() override {
 	std::string input;
 	std::getline(std::cin, input);
 
-	return lit(input);
+	return lit::lit(input);
 }
 END_COMMAND

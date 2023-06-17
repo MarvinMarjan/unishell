@@ -1,13 +1,13 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
-#include "../../utilities/objUtil.h"
+#include "../../data/litvalue/obj_predef.h"
 
 // match
-START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
-LiteralValue* exec() override {
-	LiteralValue* list = lit(LitList());
+START_COMMAND(RegexRetCmdMatch, ParamVec({ {nullptr, {lit::LitType::Literal}}, {nullptr, {lit::LitType::Literal}} }), RetCommandBase, "match", CmdFunc::Regex)
+lit::LiteralValue* exec() override {
+	lit::LiteralValue* list = lit::lit(lit::LitList());
 
 	if (asStr(args[1]).empty())
 		THROW_RUNTIME_ERR("Empty regex pattern: " + qtd(asStr(args[1])));
@@ -19,7 +19,7 @@ LiteralValue* exec() override {
 	std::string::const_iterator searchStart(src.cbegin());
 
 	while (std::regex_search(searchStart, src.cend(), matches, pattern)) {
-		asList(list).push_back(ObjUtil::newRegexResult(matches));
+		asList(list).push_back(lit::newRegexResultObj(matches));
 		searchStart = matches.suffix().first;
 
 		if (searchStart == src.cend()) break;
@@ -30,8 +30,8 @@ LiteralValue* exec() override {
 END_COMMAND
 
 // replace
-START_COMMAND(RegexRetCmdReplace, ParamVec({ {nullptr, {Literal}}, {nullptr, {Literal}}, {nullptr, {Literal}} }), RetCommandBase, "replace", CmdFunc::Regex)
-LiteralValue* exec() override {
+START_COMMAND(RegexRetCmdReplace, ParamVec({ {nullptr, {lit::LitType::Literal}}, {nullptr, {lit::LitType::Literal}}, {nullptr, {lit::LitType::Literal}} }), RetCommandBase, "replace", CmdFunc::Regex)
+lit::LiteralValue* exec() override {
 	std::string src = asStr(args[0]);
 	std::string repStr = asStr(args[2]);
 
@@ -42,6 +42,6 @@ LiteralValue* exec() override {
 
 	src = std::regex_replace(src, pattern, repStr);
 
-	return lit(src);
+	return lit::lit(src);
 }
 END_COMMAND

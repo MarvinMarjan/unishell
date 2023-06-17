@@ -3,12 +3,14 @@
 #include <iostream>
 #include <conio.h>
 
-#include "../../outstream/control/controlChars.h"
+#include "../../outstream/control/control_chars.h"
 #include "../../system/system.h"
+#include "../../algorithm/vector/sort.h"
+#include "../../algorithm/string/char.h"
 
-#include "instreamListBuffer.h"
-#include "instreamSearchList.h"
-#include "instreamBuffer.h"
+#include "list_buffer.h"
+#include "search_list.h"
+#include "buffer.h"
 
 
 enum ASCIICode
@@ -28,24 +30,7 @@ enum ASCIICode
 class INStream
 {
 public:
-	static std::string getLine() {
-		INStreamBuffer lineInput;
-		char charInput;
-
-		bool end = false;
-
-		sysprint(saveCursor());
-
-		while (!end) {
-			sysprint(loadCursor());
-
-			charInput = _getch();
-
-			controlKeyHandler(charInput, lineInput, end);
-		}
-
-		return lineInput;
-	}
+	static std::string getLine();
 
 private:
 	friend class INStreamRender;
@@ -60,7 +45,7 @@ private:
 			if (searchList.getType() == SearchListType::Files && buffer[begin] == '\"' && buffer[end] == '\"')
 				_begin++, _end--;
 
-			searchList.set(VectorUtil::sortByCharacters(searchList.getList(), buffer.substr(_begin, _end - _begin + 1)));
+			searchList.set(alg::vector::sortByCharacters(searchList.getList(), buffer.substr(_begin, _end - _begin + 1)));
 		}
 	}
 
@@ -88,6 +73,6 @@ private:
 	}
 
 	constexpr static bool isValidForNum(const char ch) noexcept {
-		return (StringUtil::isDigit(ch) || StringUtil::isWordSeparator(ch));
+		return (alg::string::isDigit(ch) || alg::string::isWordSeparator(ch));
 	}
 };
