@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../../color/parser/colorParser.h"
-#include "../../../expression/parser/exprParser.h"
-#include "../../../expression/interpreter/exprInterpreter.h"
+#include "../../../color/parser/color_parser.h"
+#include "../../../expression/parser/expr_parser.h"
+#include "../../../expression/interpreter/expr_interpreter.h"
 #include "../../../commands/cmdcore/args.h"
 
 class TokenProcess

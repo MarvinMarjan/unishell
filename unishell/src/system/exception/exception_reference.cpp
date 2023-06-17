@@ -1,7 +1,7 @@
-#include "exceptionReference.h"
+#include "exception_reference.h"
 
 #include "../system.h"
-#include "../../outstream/color/colorChars.h"
+#include "../../outstream/color/color_chars.h"
 
 ExceptionRef::ExceptionRef() {
 	src = *System::input();

@@ -3,14 +3,14 @@
 #include <iostream>
 #include <conio.h>
 
-#include "../../outstream/control/controlChars.h"
+#include "../../outstream/control/control_chars.h"
 #include "../../system/system.h"
 #include "../../algorithm/vector/sort.h"
 #include "../../algorithm/string/char.h"
 
-#include "instreamListBuffer.h"
-#include "instreamSearchList.h"
-#include "instreamBuffer.h"
+#include "list_buffer.h"
+#include "search_list.h"
+#include "buffer.h"
 
 
 enum ASCIICode

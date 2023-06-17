@@ -1,11 +1,11 @@
 #pragma once
 
-#include "instreamBuffer.h"
+#include "buffer.h"
 #include "instream.h"
 
-#include "../../outstream/color/colorChars.h"
-#include "../../instream/scanner/instreamScanner.h"
-#include "../../color/parser/colorParser.h"
+#include "../../outstream/color/color_chars.h"
+#include "../../instream/scanner/instream_scanner.h"
+#include "../../color/parser/color_parser.h"
 #include "../../system/global/global.h"
 
 #define INSCursor INStreamRender::cursor

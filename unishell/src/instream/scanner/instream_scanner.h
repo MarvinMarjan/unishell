@@ -3,10 +3,10 @@
 #include "../../system/system.h"
 #include "../../algorithm/string/char.h"
 #include "../../algorithm/bit/operations.h"
-#include "../../base/scannerBase.h"
+#include "../../base/scanner_base.h"
 #include "../../data/litvalue/checking.h"
 #include "../../data/litvalue/litformat.h"
-#include "token.h"
+#include "instream_token.h"
 
 enum InstreamScannerHints {
 	IgnoreCommand = 1

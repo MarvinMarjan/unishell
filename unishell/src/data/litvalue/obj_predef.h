@@ -1,7 +1,7 @@
 #pragma once
 
 #include "type.h"
-#include "../../filesystem/formating/fileFormatting.h"
+#include "../../filesystem/formating/formating.h"
 
 #include <regex>
 

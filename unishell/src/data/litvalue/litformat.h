@@ -3,7 +3,7 @@
 #include "type.h"
 
 #include "../../system/global/typedecl.h"
-#include "../../instream/scanner/token.h"
+#include "../../instream/scanner/instream_token.h"
 
 #define litToStr lit::literalValueToString
 

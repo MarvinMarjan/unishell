@@ -1,6 +1,6 @@
-#include "helpData.h"
+#include "help_data.h"
 
-#include "../../outstream/color/colorChars.h"
+#include "../../outstream/color/color_chars.h"
 #include "../../algorithm/string/char.h"
 #include "params.h"
 

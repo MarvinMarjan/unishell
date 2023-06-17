@@ -1,11 +1,11 @@
 #include "src/instream/input/instream.h"
 
-#include "src/instream/scanner/instreamScanner.h"
+#include "src/instream/scanner/instream_scanner.h"
 
-#include "src/parser/processing/token/tokenProcessing.h"
+#include "src/parser/processing/token/token_processing.h"
 
-#include "src/expression/AST/exprASTPrinter.h"
-#include "src/expression/parser/exprParser.h"
+#include "src/expression/AST/expr_ast_printer.h"
+#include "src/expression/parser/expr_parser.h"
 
 #include "src/filesystem/handle/file.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 // at
 START_COMMAND(ObjectRetCmdAt, ParamVec({ {nullptr, {lit::LitType::Object}}, {nullptr, {lit::LitType::Literal} } }), RetCommandBase, "at", CmdFunc::Object)

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "exceptionReference.h"
-#include "../../outstream/color/colorChars.h"
+#include "exception_reference.h"
+#include "../../outstream/color/color_chars.h"
 
 
 enum SystemExceptionType

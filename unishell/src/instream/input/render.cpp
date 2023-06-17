@@ -1,4 +1,4 @@
-#include "instreamRender.h"
+#include "render.h"
 
 
 void INStreamRender::renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, const int cursorPos, size_t i)

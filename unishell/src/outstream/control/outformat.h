@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../algorithm/regex/match.h"
-#include "../../color/structure/colorStructure.h"
+#include "../../color/structure/color_structure.h"
 
 #include <string>
 

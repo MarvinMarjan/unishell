@@ -1,4 +1,4 @@
-#include "tokenProcessing.h"
+#include "token_processing.h"
 
 #include "../../../commands/cmdcore/cmd.h"
 
@@ -68,7 +68,8 @@ void TokenProcess::getInside(TokenList& res, const TokenList& source, const Toke
 	}
 }
 
-TokenList TokenProcess::generateColorTokens(const TokenList& source) {
+TokenList TokenProcess::generateColorTokens(const TokenList& source)
+{
 	TokenList res;
 
 	size_t start = 0, end = 0;

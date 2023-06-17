@@ -1,10 +1,10 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 #include "../../commands/cmdcore/cmd.h"
 #include "../../environment/identifier/idformat.h"
-#include "../../filesystem/formating/fileFormatting.h"
+#include "../../filesystem/formating/formating.h"
 #include "../../system/system.h"
 
 // print

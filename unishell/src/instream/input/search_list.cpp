@@ -1,7 +1,7 @@
-#include "instreamSearchList.h"
+#include "search_list.h"
 
 #include "../../environment/environment.h"
-#include "../../path/handler/pathHandler.h"
+#include "../../path/handler/path_handler.h"
 
 
 void INSSearchList::setFromType() noexcept

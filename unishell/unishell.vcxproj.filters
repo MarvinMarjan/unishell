@@ -17,58 +17,52 @@
     <ClCompile Include="src\system\system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utilities\typeUtil.cpp">
+    <ClCompile Include="src\commands\definition\filesystem_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utilities\cmdUtil.cpp">
+    <ClCompile Include="src\commands\definition\list_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\filesystemHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\system_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\listHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\literal_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\systemHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\object_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\literalHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\regex_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\objectHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\type_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\regexHelpDef.cpp">
+    <ClCompile Include="src\commands\definition\number_type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\commands\definition\typeHelpDef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\commands\definition\numberTypeDef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\filesystem\formating\fileFormating.cpp">
+    <ClCompile Include="src\filesystem\formating\formating.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\instream\input\instream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\color\parser\colorParser.cpp">
+    <ClCompile Include="src\color\parser\color_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\instream\scanner\instreamScanner.cpp">
+    <ClCompile Include="src\instream\scanner\instream_scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\parser\processing\token\tokenProcessing.cpp">
+    <ClCompile Include="src\parser\processing\token\token_processing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\path\handler\pathHandler.cpp">
+    <ClCompile Include="src\path\handler\path_handler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\path\scanner\pathScanner.cpp">
+    <ClCompile Include="src\path\scanner\path_scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\system\exception\exceptionRef.cpp">
+    <ClCompile Include="src\system\exception\exception_reference.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\system\global\global.cpp">
@@ -77,10 +71,7 @@
     <ClCompile Include="src\filesystem\handle\file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\system\exception\systemException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\commands\helpData.cpp">
+    <ClCompile Include="src\system\exception\system_exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\algorithm\string\manip.cpp">
@@ -89,16 +80,46 @@
     <ClCompile Include="src\algorithm\vector\sort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\data\format.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\data\type.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\data\litvalue\type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\data\litvalue\format.cpp">
+    <ClCompile Include="src\color\structure\color_structure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands\cmdcore\args.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands\cmdcore\cmd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands\cmdcore\help_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\litvalue\litformat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\data\litvalue\obj_predef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\environment\identifier\idformat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\expression\interpreter\expr_interpreter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\expression\parser\expr_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\instream\input\render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\instream\input\search_list.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\outstream\color\color_chars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\outstream\control\outformat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,58 +127,16 @@
     <ClInclude Include="src\system\system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utilities\typeUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\base\scannerBase.h">
+    <ClInclude Include="src\base\scanner_base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\environment\environment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\environment\identifier.h">
+    <ClInclude Include="src\commands\definition\def.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utilities\globalUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\commands\definition\defBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\commands\argList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\commands\paramList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\base\commandBaseCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\cmdUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\opUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\objUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\commands\helpData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\commands\flagList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\clrUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\envUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\regexUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\utilities\outUtil.h">
+    <ClInclude Include="src\base\command_base_core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\commands\definition\system.h">
@@ -187,79 +166,76 @@
     <ClInclude Include="src\commands\definition\regex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\filesystem\formating\fileFormatting.h">
+    <ClInclude Include="src\filesystem\formating\formating.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\instream\input\instream.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\input\instreamBuffer.h">
+    <ClInclude Include="src\instream\input\buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\input\instreamListBuffer.h">
+    <ClInclude Include="src\instream\input\list_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\input\instreamRender.h">
+    <ClInclude Include="src\instream\input\render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\input\instreamSearchList.h">
+    <ClInclude Include="src\instream\input\search_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\color\structure\colorStructure.h">
+    <ClInclude Include="src\color\structure\color_structure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\outstream\color\colorChars.h">
+    <ClInclude Include="src\outstream\color\color_chars.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\outstream\control\controlChars.h">
+    <ClInclude Include="src\outstream\control\control_chars.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\color\parser\colorParser.h">
+    <ClInclude Include="src\color\parser\color_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\expression\expr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\expression\AST\exprASTPrinter.h">
+    <ClInclude Include="src\expression\AST\expr_ast_printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\expression\parser\exprParser.h">
+    <ClInclude Include="src\expression\parser\expr_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\expression\interpreter\exprInterpreter.h">
+    <ClInclude Include="src\expression\interpreter\expr_interpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\data\type.h">
+    <ClInclude Include="src\instream\scanner\instream_scanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\scanner\instreamScanner.h">
+    <ClInclude Include="src\instream\scanner\instream_token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\instream\scanner\token.h">
+    <ClInclude Include="src\parser\processing\token\token_processing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\parser\processing\token\tokenProcessing.h">
+    <ClInclude Include="src\path\handler\path_handler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\path\handler\pathHandler.h">
+    <ClInclude Include="src\path\scanner\path_scanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\path\scanner\pathScanner.h">
+    <ClInclude Include="src\path\scanner\path_token.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\path\scanner\pathToken.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\system\exception\exceptionReference.h">
+    <ClInclude Include="src\system\exception\exception_reference.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\system\global\global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\system\exception\systemException.h">
+    <ClInclude Include="src\system\exception\system_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\system\windows\windowsSystem.h">
+    <ClInclude Include="src\system\windows\system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\filesystem\handle\file.h">
@@ -280,16 +256,46 @@
     <ClInclude Include="src\system\global\typedecl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\data\format.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\data\litvalue\type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\data\litvalue\format.h">
+    <ClInclude Include="src\data\litvalue\checking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\data\litvalue\checking.h">
+    <ClInclude Include="src\algorithm\bit\operations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithm\regex\match.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\cmdcore\args.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\cmdcore\cmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\cmdcore\flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\cmdcore\help_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\cmdcore\params.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\litvalue\litformat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\data\litvalue\obj_predef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\environment\identifier\idformat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\environment\identifier\identifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\outstream\control\outformat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

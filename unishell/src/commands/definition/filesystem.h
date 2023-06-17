@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 // createFile
 START_COMMAND(FSysCmdCreateFile, ParamVec({ {nullptr, {lit::LitType::Literal}} }), CommandBase, "createFile", CmdFunc::Filesystem)

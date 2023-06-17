@@ -3,11 +3,11 @@
 #include <iostream>
 #include <ShlObj.h>
 
-#include "exception/systemException.h"
-#include "windows/windowsSystem.h"
+#include "exception/system_exception.h"
+#include "windows/system.h"
 
-#include "../outstream/color/colorChars.h"
-#include "../path/handler/pathHandler.h"
+#include "../outstream/color/color_chars.h"
+#include "../path/handler/path_handler.h"
 #include "../environment/environment.h"
 
 #define sysprint        System::print

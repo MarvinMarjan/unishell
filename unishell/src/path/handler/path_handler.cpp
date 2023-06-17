@@ -1,4 +1,4 @@
-#include "pathHandler.h"
+#include "path_handler.h"
 
 PathHandler::PathHandler(const std::string& path) {
 	setPath(path);

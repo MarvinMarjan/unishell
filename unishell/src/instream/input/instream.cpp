@@ -1,6 +1,6 @@
 #include "instream.h"
 
-#include "instreamRender.h"
+#include "render.h"
 
 
 INSListBuffer INStream::inputList = INSListBuffer();

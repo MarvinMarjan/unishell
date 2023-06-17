@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../instream/scanner/token.h"
+#include "../../instream/scanner/instream_token.h"
 #include "../../system/system.h"
 #include "../../algorithm/vector/item.h"
 

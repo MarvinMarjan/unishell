@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../../base/commandBaseCore.h"
+#include "../../base/command_base_core.h"
 #include "../../system/global/global.h"
 #include "../../algorithm/vector/item.h"
 #include "args.h"

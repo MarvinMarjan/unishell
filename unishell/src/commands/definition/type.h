@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 // type
 START_COMMAND(TypeRetCmdType, { nullptr }, RetCommandBase, "type", CmdFunc::Type)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../color/structure/colorStructure.h"
+#include "../../color/structure/color_structure.h"
 
 #include <vector>
 
@@ -26,7 +26,7 @@ inline std::string clr(const std::string& text, const std::vector<unsigned int>&
 	return rgb(rgbVec[0], rgbVec[1], rgbVec[2], mode) + text + endclr;
 }
 
-inline std::string clr(const std::string& text, const std::string& strColor) noexcept {
+constexpr inline std::string clr(const std::string& text, const std::string& strColor) noexcept {
 	return strColor + text + endclr;
 }
 

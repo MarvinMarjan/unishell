@@ -1,4 +1,4 @@
-#include "instreamScanner.h"
+#include "instream_scanner.h"
 
 TokenList InstreamScanner::scanTokens() {
 	while (!isAtEnd()) {

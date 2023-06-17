@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../cmdcore/helpData.h"
-#include "../../path/handler/pathHandler.h"
-#include "../../base/commandBaseCore.h"
+#include "../cmdcore/help_data.h"
+#include "../../path/handler/path_handler.h"
+#include "../../base/command_base_core.h"
 
 // boilerplate
 

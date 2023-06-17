@@ -1,4 +1,4 @@
-#include "colorStructure.h"
+#include "color_structure.h"
 
 
 Color stringToColor(const std::string& strMode)

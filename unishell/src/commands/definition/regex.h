@@ -1,6 +1,6 @@
 #pragma once
 
-#include "defBase.h"
+#include "def.h"
 
 #include "../../data/litvalue/obj_predef.h"
 

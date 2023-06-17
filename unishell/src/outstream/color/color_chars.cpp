@@ -1,4 +1,4 @@
-#include "colorChars.h"
+#include "color_chars.h"
 
 #include "../../system/global/global.h"
 
@@ -33,7 +33,8 @@ std::string getColoredColorList() noexcept
 }
 
 
-std::string getColoredColorModeList() noexcept {
+std::string getColoredColorModeList() noexcept
+{
 	std::string str = "";
 
 	for (size_t i = 0; i < __colormode.size(); i++)

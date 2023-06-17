@@ -1,17 +1,17 @@
 #pragma once
 
 #include "../../filesystem/handle/file.h"
-#include "../scanner/pathScanner.h"
+#include "../scanner/path_scanner.h"
 #include "../../algorithm/string/manip.h"
 
-#define MIN_DIR_COUNT 1
+#define UNISHLL_MIN_DIR_COUNT 1
 
 class PathHandler
 {
 public:
 	struct PathOperationData {
-		const bool success;
-		const std::string path;
+		bool success;
+		std::string path;
 	};
 
 	PathHandler(const std::string& path);
@@ -47,11 +47,11 @@ public:
 
 	// back to the previous directory
 	void back() noexcept {
-		if (dirCount() <= MIN_DIR_COUNT) return;
+		if (dirCount() <= UNISHLL_MIN_DIR_COUNT) return;
 
 		path = path.substr(0, alg::string::findLast(path, '/'));
 
-		if (dirCount() == MIN_DIR_COUNT)
+		if (dirCount() == UNISHLL_MIN_DIR_COUNT)
 			path += '/';
 	}
 

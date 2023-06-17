@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../color/structure/colorStructure.h"
+#include "../../color/structure/color_structure.h"
 #include "typedecl.h"
 
 #include <map>

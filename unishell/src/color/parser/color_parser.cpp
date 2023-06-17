@@ -1,4 +1,4 @@
-#include "colorParser.h"
+#include "color_parser.h"
 
 BaseColorStructure* ColorParser::parse()
 {

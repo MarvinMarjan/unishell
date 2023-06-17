@@ -2,9 +2,9 @@
 
 #include "../../algorithm/string/char.h"
 #include "../../filesystem/handle/file.h"
-#include "../../base/scannerBase.h"
+#include "../../base/scanner_base.h"
 
-#include "pathToken.h"
+#include "path_token.h"
 
 class PathScanner : public ScannerBase<PathToken>
 {

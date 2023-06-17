@@ -2,7 +2,7 @@
 
 #include "../../system/global/global.h"
 #include "../../data/litvalue/type.h"
-#include "../../base/commandBaseCore.h"
+#include "../../base/command_base_core.h"
 
 struct HDParam
 {

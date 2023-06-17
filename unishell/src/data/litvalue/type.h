@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../instream/scanner/token.h"
-#include "../../system/exception/systemException.h"
+#include "../../instream/scanner/instream_token.h"
+#include "../../system/exception/system_exception.h"
 
 #include <variant>
 #include <map>
