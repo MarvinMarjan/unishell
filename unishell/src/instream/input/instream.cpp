@@ -30,8 +30,6 @@ std::string INStream::getLine() {
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
-	searchList.set(cmdListToStr(__sys_commands));
-
 	// reset input list current index if input is not a control char
 	if ((int)charInput != SpecialChar)
 		inputList.reset();
@@ -55,14 +53,11 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	case Tab: {
-		searchList.setFromType();
-
-		const int cIndex = lineInput.getCursorIndex();
+		const int cursorIndex = lineInput.getCursorIndex();
 
 		if (searchList.getList().empty()) break;
-		if (cIndex < lineInput.size()) break;
 
-		const int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cIndex == 0) ? cIndex : cIndex - 1), false);
+		const int begin = (int)INStreamRender::getWordBeginPos(lineInput, ((cursorIndex == 0) ? cursorIndex : cursorIndex - 1), false);
 		const int end = (int)INStreamRender::getWordEndPos(lineInput, begin, false);
 
 		updateSearchList(lineInput, begin, end);		
@@ -114,18 +109,22 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 	std::stringstream fText;
 	const size_t firstWordPos = INStreamRender::getWordEndPos(text);
 	int scopeDepth = 1;
+	bool canUpdateSearchListType;
 
 	for (size_t i = 0; i < text.size(); i++)
 	{
-		searchList.setType(SearchListType::Files);
+		canUpdateSearchListType = (i == cursorPos - (int)(cursorPos >= 0));
+
+		updateSearchListType(SearchListType::Files, canUpdateSearchListType);
 
 		if (i <= firstWordPos) {
-			searchList.setType(SearchListType::Command);
- 			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
+			updateSearchListType(SearchListType::Command, canUpdateSearchListType);
+ 			
+			INStreamRender::renderCommand(fText, text, cursorPos, i, firstWordPos);
 			INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 			continue;
 		}
-
+		
 		const char current = text[i];
 
 		switch (current)
@@ -177,17 +176,23 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 			break;
 
 		// identifier rendering
-		case '$':
-			searchList.setType(SearchListType::Identifier);
+		case '$': {
+			const int oldI = (int)i;
 			INStreamRender::renderIdentifier(fText, text, i, cursorPos);
+			
+			updateSearchListType(SearchListType::Identifier, cursorPos, oldI, (int)i);
 			break;
+		}
 
 		// RetCommand rendering
 		case '@':
-		case '#':
-			searchList.setType(SearchListType::RetCommand);
+		case '#': {
+			const int oldI = (int)i;
 			INStreamRender::renderRetCommand(fText, text, i, cursorPos);
+
+			updateSearchListType(SearchListType::RetCommand, cursorPos, oldI, (int)i);
 			break;
+		}
 
 		// flag rendering
 		case '%':
@@ -211,9 +216,6 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 				INStreamRender::renderChar(i, cursorPos, text[i], fText, alg::string::charToStr(text[i]));
 			}
 		}
-
-		if (i + 1 >= text.size())
-			searchList.setFromType();
 
 		INStreamRender::renderAutocompleteSuggestion(fText, text, cursorPos, i);
 	}

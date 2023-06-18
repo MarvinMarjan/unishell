@@ -38,6 +38,22 @@ private:
 	static INSListBuffer inputList;
 	static INSSearchList searchList;
 
+	// updates if "set" is true
+	static void updateSearchListType(const SearchListType type, const bool set) {
+		if (set) {
+			searchList.setType(type);
+			searchList.setFromType();
+		}
+	}
+
+	// updates if "cursorPos" is between "begin" and "end"
+	static void updateSearchListType(const SearchListType type, const int cursorPos, const int begin, const int end) {
+		if (cursorPos >= begin || cursorPos <= end) {
+			searchList.setType(type);
+			searchList.setFromType();
+		}
+	}
+
 	static void updateSearchList(const INStreamBuffer& buffer, const int begin, const int end) noexcept {
 		if (!searchList.sequence) {
 			int _begin = begin, _end = end;
@@ -50,9 +66,12 @@ private:
 	}
 
 	static void insertAtINStreamBuffer(INStreamBuffer& buffer, const std::string& item, const int begin, const int end) {
-		buffer.erase(begin, end - begin + 1);
-		buffer.insert(begin + ((!begin || begin + 1 > buffer.size()) ? 0 : 1), item);
-		buffer.setCursorIndex((int)buffer.size());
+		const std::string oldBuffer = buffer;
+
+		buffer.erase(begin, end - begin + (int)(begin != end));	// don't increment "end - begin" if "begin" equals to "end"
+		buffer.insert(begin + (int)(begin == end), item);		// increment it if "begin" equals to "end"
+
+		buffer.setCursorIndex(buffer.getCursorIndex() + (int)buffer.size() - (int)oldBuffer.size());                                      
 	}
 
 	// gets the color of enclose characters based on scope
