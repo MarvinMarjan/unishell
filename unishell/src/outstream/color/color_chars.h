@@ -36,6 +36,10 @@ inline std::string qtd(const std::string& text) noexcept {
 	return clr('\"' + text + '\"', __clr_quoted->toString());
 }
 
+inline std::string keywformat(const std::string& text) noexcept {
+	return clr(text, __clr_keyword->toString());
+}
+
 inline std::string idformat(const std::string& text) noexcept {
 	return clr(text, __clr_identifier->toString());
 }

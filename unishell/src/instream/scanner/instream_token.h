@@ -30,7 +30,7 @@ enum TokenEnum
 	EQUAL_EQUAL, EQUAL_EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
 	
 	// keywords
-	AND, OR, NULLVAL,
+	AND, OR, NULLVAL, UNPACK,
 
 	// others
 	COLON, LBRACE, RBRACE, LBRACKET, RBRACKET,
@@ -84,6 +84,7 @@ constexpr inline TokenEnum keywordToTokenEnum(const std::string& keyword) noexce
 	if (keyword == "and") return AND;
 	if (keyword == "or") return OR;
 	if (keyword == "null") return NULLVAL;
+	if (keyword == "unpack") return UNPACK;
 
 	return LITERAL;
 }

@@ -16,7 +16,8 @@ std::string* __userInput = new std::string();
 const StringList __keywords = {
 	"and",
 	"or",
-	"null"
+	"null",
+	"unpack"
 };
 
 const StringList __boolean = {

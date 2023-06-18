@@ -47,7 +47,8 @@ private:
 	}
 
 	bool addKeyword(const std::string& keyword) {
-		TokenEnum keyw = keywordToTokenEnum(keyword);
+		const TokenEnum keyw = keywordToTokenEnum(keyword);
+
 		if (keyw != LITERAL) {
 			addToken(keyw);
 			return true;

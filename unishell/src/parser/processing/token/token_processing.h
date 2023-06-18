@@ -19,10 +19,14 @@ public:
 		source = subToLiteral(source);
 		source = expandRetCommands(source);
 
+		source = processKeywords(source);
+
 		return source;
 	}
 
 private:
+	static TokenList processKeywords(const TokenList& source);
+
 	// execute a RETCOMMAND and replace it by
 	// the returned value
 	static TokenList expandRetCommands(const TokenList& source);

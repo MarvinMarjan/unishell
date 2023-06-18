@@ -126,6 +126,36 @@ TokenList TokenProcess::parseTokens(const TokenList& source)
 }
 
 
+TokenList TokenProcess::processKeywords(const TokenList& source)
+{
+	TokenList res;
+
+	for (size_t i = 0; i < source.size(); i++) {
+		const Token token = source[i];
+
+		switch (token.getType())
+		{
+		case UNPACK:
+			if (i + 1 >= source.size() || source[i + 1].getType() != LIST)
+				throw SystemException(TokenProcessingError, "List expected for " + keywformat("unpack"), ExceptionRef(USER_INPUT, token.getIndex()));
+
+			for (lit::LiteralValue* value : asList(source[i + 1].getLiteral()))
+				res.push_back(Token(lit::typeToTokenEnum(value->type()), "", value, {}, 0));
+			
+			// jump next token
+			i++;
+
+			break;
+
+		default:
+			res.push_back(token);
+		}
+	}
+
+	return res;
+}
+
+
 TokenList TokenProcess::expandRetCommands(const TokenList& source)
 {
 	TokenList res;
