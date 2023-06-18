@@ -61,10 +61,7 @@ public:
 		throw SystemException(CommandError, "Invalid param (index): " + index);
 	}
 
-	bool match(ArgList& args) const {
-		if (!args.size() && getRequiredParams()) // has no explicit arg list, but has required parameters
-			return false;
-
+	void match(ArgList& args) const {
 		const int count = (int)(size() - args.size());
 		lit::LiteralValue* defaultVal;
 
@@ -72,8 +69,6 @@ public:
 		for (size_t i = 1; (int)i <= count; i++)
 			if ((defaultVal = (*this)[args.size() - 1 + i].getDefaultValue()))
 				args.push_back(defaultVal);
-
-		return true;
 	}
 };
 
@@ -84,7 +79,6 @@ inline bool checkParamType(const lit::LitTypeList& types, const lit::LitType typ
 	return false;
 }
 
-// gets a list of "LiteralValue::Type" and return a string containing the types
 inline std::string stringifyParamTypes(const lit::LitTypeList& types, const bool colorize = false) {
 	std::string str = "";
 	

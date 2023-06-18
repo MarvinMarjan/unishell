@@ -1,6 +1,7 @@
 #include "path_scanner.h"
 
 
+
 void PathScanner::scanToken() {
 	const char ch = advance();
 

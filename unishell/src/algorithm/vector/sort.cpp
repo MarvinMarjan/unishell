@@ -9,7 +9,7 @@ StringList alg::vector::sortByCharacters(const StringList& src, const std::strin
 
 	for (const char ch : sortener)
 		if (!alg::string::isAlphaNumeric(ch))
-			return src;
+			return {};
 
 	for (const std::string& item : src)
 		if (alg::string::startsWith(item, sortener) && !exists(res, item))

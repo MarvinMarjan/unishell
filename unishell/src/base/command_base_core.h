@@ -66,8 +66,7 @@ public:
 		params(params), flags(flags), symbol(cmdSymbol), function(func)
 	{
 		// default value assignment, if possible
-		if (!params.match(args))
-			THROW_COMMAND_ERR("Insufficient arguments");
+		params.match(args);
 		
 		// arguments insufficient
 		checkArgumentCount(params, args, cmdSymbol);
@@ -100,15 +99,8 @@ private:
 	}
 
 	void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
-		if (args.size() < params.getRequiredParams() || argsHasNull(args))
-			THROW_COMMAND_ERR("Insufficient arguments");
-	}
-
-	bool argsHasNull(const ArgList& args) {
-		for (lit::LiteralValue* val : args)
-			if (!val) return true;
-		
-		return false;
+		if (args.size() < params.getRequiredParams())
+			THROW_COMMAND_ERR("(" + cmdSymbol + ") " + "Insufficient arguments");
 	}
 };
 

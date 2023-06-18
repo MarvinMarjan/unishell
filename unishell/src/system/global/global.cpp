@@ -143,7 +143,7 @@ const FSExtension __fs_file_extensions_text = {
 	".l"},							"Lisp"},
 	{{".dart"},						"Dart"},
 	{{".f", ".f90"},				"Fortran"},
-	{{".go"},						"Go"},
+	{{".go"}, "Go"},
 	{{".html", ".htm"},				"HTML"},
 	{{".hs"},						"Haskell"},
 	{{".json"},						"JSON"},

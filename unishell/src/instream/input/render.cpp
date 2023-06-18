@@ -4,7 +4,7 @@
 void INStreamRender::renderAutocompleteSuggestion(std::stringstream& stream, const std::string& text, const int cursorPos, size_t i)
 {
 	if (cursorPos != -1 && cursorPos > text.size() - 1 && i + 1 >= text.size()) {
-		const int begin = (int)INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1), false);
+		const int begin = (int)INStreamRender::getWordBeginPos(text, ((cursorPos == 0) ? cursorPos : cursorPos - 1));
 
 		std::string lastWord = text.substr(begin, cursorPos - begin);
 
@@ -193,45 +193,35 @@ void INStreamRender::renderUntil(std::stringstream& stream, const std::string& t
 
 size_t INStreamRender::getWordEndPos(const std::string& text, size_t pos, bool ignoreQuote)
 {
-	const size_t cpos = pos;
-
 	if (text[pos] == '\"' && !ignoreQuote) {
-		while (text[++pos] != '\"' && pos < text.size() - 1) {}
-		if (text[pos] != '\"') return cpos; // not found
-		else return pos;
+		while (text[++pos] != '\"') {}
+		return pos;
 	}
 
 	do {
 		if (pos >= text.size() - 1 && alg::string::isAlphaNumeric(text[pos]))
 			return pos;
-	} while (alg::string::isAlphaNumeric(text[pos]) && ++pos); // use "++pos" after "&&" to only increment when left condition is true
-	
-	// "pos" was modified
-	if (cpos != pos)
-		pos--;
+	} while (alg::string::isAlphaNumeric(text[pos++]));
+	pos--;
 
+	if (pos > 0) pos--;
 	return pos;
 }
 
 
 size_t INStreamRender::getWordBeginPos(const std::string& text, size_t pos, bool ignoreQuote)
 {
-	const size_t cpos = pos;
-
 	if (text[pos] == '\"' && !ignoreQuote) {
-		while (text[--pos] != '\"' && pos > 0) {}
-		if (text[pos] != '\"') return cpos; // not found
-		else return pos;
+		while (text[--pos] != '\"') {}
+		return pos;
 	}
 
 	do {
 		if (pos <= 0 && alg::string::isAlphaNumeric(text[pos]))
 			return pos;
-	} while (alg::string::isAlphaNumeric(text[pos]) && pos--);
-	
-	// "pos" was modified
-	if (cpos != pos)
-		pos++;
+	} while (alg::string::isAlphaNumeric(text[pos--]));
+	pos++;
 
+	if (pos + 1 < text.size()) pos++;
 	return pos;
 }
