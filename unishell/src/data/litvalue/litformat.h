@@ -56,7 +56,6 @@ namespace lit
 	std::string colorizeStrType(const std::string& type) noexcept;
 
 	TokenEnum typeToTokenEnum(const LiteralValue::Type type) noexcept;
-	std::string getTypeAsString(const LiteralValue::Type type, const bool colorize = false) noexcept;
 
 
 
@@ -70,6 +69,7 @@ namespace lit
 
 
 
+	std::string getTypeAsString(const LiteralValue::Type type, const bool colorize = false) noexcept;
 	inline std::string getTypeAsString(const std::vector<LiteralValue::Type>& types, const bool colorize = false) noexcept {
 		std::string str = "";
 

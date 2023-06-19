@@ -1,15 +1,8 @@
 #pragma once
 
-#include "../../color/structure/color_structure.h"
-
-#include <vector>
+#include "../../system/global/global.h"
 
 
-extern BaseColorStructure* __clr_quoted;
-extern BaseColorStructure* __clr_identifier;
-extern BaseColorStructure* __clr_boolean;
-extern BaseColorStructure* __clr_numbers;
-extern BaseColorStructure* __clr_keyword;
 
 // predefined color
 inline std::string clr(const std::string& text, const Color color = null, const ColorMode mode = normal) noexcept {
@@ -38,6 +31,10 @@ inline std::string qtd(const std::string& text) noexcept {
 
 inline std::string keywformat(const std::string& text) noexcept {
 	return clr(text, __clr_keyword->toString());
+}
+
+inline std::string cmdformat(const std::string& text) noexcept {
+	return clr(text, __clr_command->toString());
 }
 
 inline std::string idformat(const std::string& text) noexcept {

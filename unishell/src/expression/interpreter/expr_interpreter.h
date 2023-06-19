@@ -48,7 +48,8 @@ private:
 			if (lit::isTypeof(value, type))
 				return;
 		
-		throw SystemException(ExprInterpreterError, lit::getTypeAsString(expectedTypes) + " expected: " + litToStr(value, true), ExceptionRef(USER_INPUT));
+		throw SystemException(ExprInterpreterError, 
+			lit::getTypeAsString(expectedTypes, true) + " expected, got " + lit::getTypeAsString(value->type(), true), ExceptionRef(USER_INPUT));
 	}
 
 	void checkLiteralType(const std::vector<lit::LiteralValue*>& vals, const std::vector<lit::LiteralValue::Type>& expectedTypes) {

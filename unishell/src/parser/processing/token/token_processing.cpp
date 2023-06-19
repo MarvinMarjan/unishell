@@ -203,7 +203,7 @@ Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool
 	retCmd = getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
-		throw SystemException(CommandError, "Unknown command: " + clr(source[i].getLexical(), __clr_command->toString()));
+		throw SystemException(CommandError, "Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(USER_INPUT, source[i].getIndex()));
 
 	ret = retCmd->exec();
 
