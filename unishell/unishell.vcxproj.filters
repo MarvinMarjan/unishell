@@ -235,7 +235,7 @@
     <ClInclude Include="src\system\exception\system_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\system\windows\system.h">
+    <ClInclude Include="src\system\windows\windows_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\filesystem\handle\file.h">

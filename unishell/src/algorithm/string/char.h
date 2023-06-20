@@ -50,7 +50,7 @@ namespace string
 	}
 
 	constexpr inline bool isWordSeparator(const char ch) noexcept {
-		return __word_separator.find(ch);
+		return (__word_separator.find(ch) != SIZE_MAX);
 	}
 
 

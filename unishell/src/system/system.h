@@ -4,7 +4,7 @@
 #include <ShlObj.h>
 
 #include "exception/system_exception.h"
-#include "windows/system.h"
+#include "windows/windows_system.h"
 
 #include "../outstream/color/color_chars.h"
 #include "../path/handler/path_handler.h"
@@ -23,6 +23,7 @@ public:
 
 	template <typename... Args>
 	static void printv(const Args&... args) noexcept {
+		std::cout << std::boolalpha;
 		(std::cout << ... << args);
 	}
 

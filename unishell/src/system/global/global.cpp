@@ -190,7 +190,7 @@ const FSExtension __fs_file_extensions_binary = {
 };
 
 
-const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$ ";
+const std::string __word_separator = "=+-*/()[]{}<>?;:,|&\\!#@$\"\' ";
 
 
 

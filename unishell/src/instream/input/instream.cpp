@@ -17,8 +17,13 @@ std::string INStream::getLine() {
 
 	while (!end) {
 		sysprint(loadCursor());
-
+		
 		charInput = _getch();
+
+		/*for (int i = 0; i < 256; i++) {
+			if (keyIsNotCtrlVK(i) && (GetAsyncKeyState(i) & 0x8000) == 0x8000)
+				sysprintv("key code: ", i);
+		}*/
 
 		controlKeyHandler(charInput, lineInput, end);
 	}
@@ -30,6 +35,20 @@ std::string INStream::getLine() {
 // process control keys
 void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool& end)
 {
+	int modifiers = getPressedModifiers();
+
+	bool ctrl = alg::bit::hasBits(modifiers, Control);
+	bool shift = alg::bit::hasBits(modifiers, Shift);
+	bool alt = alg::bit::hasBits(modifiers, Alt);
+
+	// get the key that is pressed with CTRL
+	if (ctrl) {
+		const char oldCharInput = charInput;
+		
+		if (!(charInput = getKeyPressedWhileCtrlPressed()))
+			charInput = oldCharInput;
+	}
+
 	searchList.set(cmdListToStr(__sys_commands));
 
 	// reset input list current index if input is not a control char
@@ -50,7 +69,11 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		break;
 
 	case Backspace:
-		lineInput.eraseAtIndex(); // erase the character before cursor
+		if (ctrl)
+			lineInput.eraseUntilSeparator();
+		else
+			lineInput.eraseAtIndex(); // erase the character before cursor
+
 		updateConsoleInput(lineInput);
 		break;
 
@@ -94,16 +117,18 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 		}
 
 		else if (charInput == LeftArrow)
-			lineInput.cursorLeft();
+			lineInput.cursorLeft(ctrl);
 
 		else if (charInput == RightArrow)
-			lineInput.cursorRight();
+			lineInput.cursorRight(ctrl);
 
 		updateConsoleInput(lineInput);
 		break;
 
 	default:
-		lineInput.insertStr(lineInput.getCursorIndex(), alg::string::charToStr(charInput));
+		if (charInput)
+			lineInput.insertStr(lineInput.getCursorIndex(), alg::string::charToStr(charInput));
+		
 		updateConsoleInput(lineInput);
 	}
 }

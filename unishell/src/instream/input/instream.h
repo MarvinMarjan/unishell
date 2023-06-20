@@ -7,6 +7,7 @@
 #include "../../system/system.h"
 #include "../../algorithm/vector/sort.h"
 #include "../../algorithm/string/char.h"
+#include "../../algorithm/bit/operations.h"
 
 #include "list_buffer.h"
 #include "search_list.h"
@@ -24,8 +25,16 @@ enum ASCIICode
 	UpArrow        =  72,
 	DownArrow      =  80,
 	LeftArrow      =  75,
-	RightArrow     =  77
+	RightArrow     =  77,
 };
+
+enum KeyModifiers
+{
+	Control = 0x01,
+	Shift   = 0x02,
+	Alt     = 0x04
+};
+
 
 class INStream
 {
@@ -34,6 +43,42 @@ public:
 
 private:
 	friend class INStreamRender;
+
+
+	static int getPressedModifiers() noexcept {
+		int modifiers = 0;
+
+		if (alg::bit::hasBits(GetAsyncKeyState(VK_LCONTROL), 0x8000))	modifiers |= Control;
+		if (alg::bit::hasBits(GetAsyncKeyState(VK_LSHIFT), 0x8000))		modifiers |= Shift;
+		if (alg::bit::hasBits(GetAsyncKeyState(VK_LMENU), 0x8000))		modifiers |= Alt;
+
+		return modifiers;	
+	}
+	
+	static int getKeyPressedWhileCtrlPressed() {
+		for (int i = 0; i < 256; i++) {
+			const int state = (GetAsyncKeyState(i) & 0x8000);
+
+			if (keyIsNotCtrlVK(i) && state == 0x8000)
+				return (keyWithCtrlIsValid(i)) ? i : 0;
+		}
+
+		return 0;
+	}
+
+	static constexpr bool keyIsNotCtrlVK(const int key) {
+		return (!alg::vector::exists({
+			VK_CONTROL, VK_LCONTROL, VK_RCONTROL
+		}, key));
+	}
+
+	// ctrl + "keys" that already has its functionality
+	static constexpr bool keyWithCtrlIsValid(const int key) {
+		return (!alg::vector::exists({
+			VK_CONTROL, 'V'
+		}, key));
+	}
+
 
 	static INSListBuffer inputList;
 	static INSSearchList searchList;
