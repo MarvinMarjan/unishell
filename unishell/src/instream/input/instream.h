@@ -56,11 +56,11 @@ private:
 	}
 	
 	static int getKeyPressedWhileCtrlPressed() {
-		for (int i = 0; i < 256; i++) {
-			const int state = (GetAsyncKeyState(i) & 0x8000);
-
-			if (keyIsNotCtrlVK(i) && state == 0x8000)
+		for (int i = 1; i < 256; i++) {
+			// checks if the key pressed is not the CONTROL keycode
+			if (keyIsNotCtrlVK(i) && (GetAsyncKeyState(i) & 0x8000) == 0x8000) {
 				return (keyWithCtrlIsValid(i)) ? i : 0;
+			}
 		}
 
 		return 0;
@@ -77,6 +77,11 @@ private:
 		return (!alg::vector::exists({
 			VK_CONTROL, 'V'
 		}, key));
+	}
+
+
+	static constexpr bool isCtrlCombination(const int key) {
+		return alg::vector::exists(ctrlCombinations, key);
 	}
 
 
@@ -120,4 +125,8 @@ private:
 	constexpr static bool isValidForNum(const char ch) noexcept {
 		return (alg::string::isDigit(ch) || alg::string::isWordSeparator(ch));
 	}
+
+
+
+	static const std::vector<int> ctrlCombinations;
 };

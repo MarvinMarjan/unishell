@@ -7,9 +7,14 @@ INSListBuffer INStream::inputList = INSListBuffer();
 INSSearchList INStream::searchList = INSSearchList();
 
 
+const std::vector<int> INStream::ctrlCombinations = {
+	Backspace
+};
+
+
 std::string INStream::getLine() {
 	INStreamBuffer lineInput;
-	char charInput;
+	char charInput = 0;
 
 	bool end = false;
 
@@ -19,11 +24,6 @@ std::string INStream::getLine() {
 		sysprint(loadCursor());
 		
 		charInput = _getch();
-
-		/*for (int i = 0; i < 256; i++) {
-			if (keyIsNotCtrlVK(i) && (GetAsyncKeyState(i) & 0x8000) == 0x8000)
-				sysprintv("key code: ", i);
-		}*/
 
 		controlKeyHandler(charInput, lineInput, end);
 	}
@@ -44,9 +44,13 @@ void INStream::controlKeyHandler(char charInput, INStreamBuffer& lineInput, bool
 	// get the key that is pressed with CTRL
 	if (ctrl) {
 		const char oldCharInput = charInput;
-		
+
 		if (!(charInput = getKeyPressedWhileCtrlPressed()))
 			charInput = oldCharInput;
+
+		// only accept CTRL if has combination
+		if (!isCtrlCombination(charInput))
+			return;
 	}
 
 	searchList.set(cmdListToStr(__sys_commands));
