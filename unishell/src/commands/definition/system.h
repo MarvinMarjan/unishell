@@ -156,6 +156,17 @@ END_COMMAND
 
 
 
+
+// opts
+START_COMMAND(SysCmdOpts, {}, CommandBase, "opts", CmdFunc::System)
+void exec() override {
+	for (const Option& option : __settings->getAllOptions())
+		sysprintln(formatOption(option));
+}
+END_COMMAND
+
+
+
 // exit
 START_COMMAND(SysCmdExit, {}, CommandBase, "exit", CmdFunc::System)
 void exec() override {

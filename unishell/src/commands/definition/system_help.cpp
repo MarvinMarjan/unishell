@@ -75,6 +75,13 @@ END_HELP
 
 
 
+// opts
+START_HELP(SysCmdOpts)
+return { .name = SysCmdOpts().symbol, .description = "displays a list of all options."};
+END_HELP
+
+
+
 // exit
 START_HELP(SysCmdExit)
 return { .name = SysCmdExit().symbol, .description = "quit unishell." };

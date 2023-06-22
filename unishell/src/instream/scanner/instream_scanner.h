@@ -9,7 +9,7 @@
 #include "instream_token.h"
 
 enum InstreamScannerHints {
-	IgnoreCommand = 1
+	IgnoreCommand = 0x01
 };
 
 class InstreamScanner : public ScannerBase<Token>

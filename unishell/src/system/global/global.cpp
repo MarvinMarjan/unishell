@@ -3,14 +3,15 @@
 #include "../../environment/environment.h"
 #include "../../path/handler/path_handler.h"
 #include "../../commands/definition/cmds.h"
-#include "../system.h"
+#include "../settings/settings.h"
 
 
 
 
-Environment* __environment = new Environment();
-PathHandler* __workingPath = new PathHandler(WindowsSystem::getSystemDesktopPath());
-std::string* __userInput = new std::string();
+Environment*	__environment	= new Environment();
+PathHandler*	__workingPath	= new PathHandler(WindowsSystem::getSystemDesktopPath());
+std::string*	__userInput		= new std::string();
+Settings*		__settings		= new Settings();
 
 
 const StringList __keywords = {
@@ -76,6 +77,8 @@ const std::vector<CommandBase*> __sys_commands = {
 	new SysCmdClrHelp(),
 	new SysCmdIdColorHelp(),
 	new SysCmdClrModeHelp(),
+
+	new SysCmdOpts(),
 	
 	new SysCmdExit(),
 

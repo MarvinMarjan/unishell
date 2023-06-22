@@ -27,9 +27,10 @@ enum ColorMode {
 
 
 Color stringToColor(const std::string& strMode);
+std::string colorEnumToString(const Color color);
 
 ColorMode stringToColorMode(const std::string& strMode);
-
+std::string colorModeEnumToString(const ColorMode mode);
 
 
 // returns the color assigned to the id (0 - 255)
@@ -53,6 +54,7 @@ public:
 	explicit BaseColorStructure(const ColorMode mode = normal) : mode(mode) {}
 
 	virtual std::string toString() const = 0;
+	virtual std::string toStrColorStructure() const = 0;
 
 	ColorMode mode;
 };
@@ -64,6 +66,10 @@ public:
 
 	std::string toString() const override {
 		return id(idc, mode);
+	}
+
+	std::string toStrColorStructure() const override {
+		return "id:" + tostr(idc) + ';' + colorModeEnumToString(mode) + ':';
 	}
 
 	unsigned int idc;
@@ -81,6 +87,10 @@ public:
 		return rgb(red, green, blue, mode);
 	}
 
+	std::string toStrColorStructure() const override {
+		return "rgb:" + tostr(red) + ';' + tostr(green) + ';' + tostr(blue) + ';' + colorModeEnumToString(mode) + ':';
+	}
+
 	unsigned int red;
 	unsigned int green;
 	unsigned int blue;
@@ -96,6 +106,10 @@ public:
 
 	std::string toString() const override {
 		return colorToString(color, mode);
+	}
+
+	std::string toStrColorStructure() const override {
+		return "clr:" + colorEnumToString(color) + ';' + colorModeEnumToString(mode) + ':';
 	}
 
 	Color color;

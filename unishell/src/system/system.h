@@ -6,9 +6,11 @@
 #include "exception/system_exception.h"
 #include "windows/windows_system.h"
 
-#include "../outstream/color/color_chars.h"
 #include "../path/handler/path_handler.h"
 #include "../environment/environment.h"
+
+#include "settings/settings.h"
+
 
 #define sysprint        System::print
 #define sysprintv		System::printv

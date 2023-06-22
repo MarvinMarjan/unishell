@@ -10,6 +10,7 @@ class RetCommandBase;
 
 class Environment;
 class PathHandler;
+class Settings;
 
 
 using FSExtension = std::map<StringList, std::string>;
@@ -19,6 +20,7 @@ using FSExtension = std::map<StringList, std::string>;
 extern Environment* __environment; // stores a Environment pointer
 extern PathHandler* __workingPath; // stores the current working directory path
 extern std::string* __userInput;   // stores the last user input raw string
+extern Settings*	__settings;
 
 // --> string lists
 extern const StringList __keywords;
@@ -55,10 +57,24 @@ extern BaseColorStructure* __clr_quoted;
 extern BaseColorStructure* __clr_raw_string;
 extern BaseColorStructure* __clr_escape_char;
 
+extern BaseColorStructure* __clr_numbers;
+extern BaseColorStructure* __clr_operators;
+extern BaseColorStructure* __clr_keyword;
+extern BaseColorStructure* __clr_boolean;
+
 extern BaseColorStructure* __clr_identifier;
 extern BaseColorStructure* __clr_ex_identifier;
 extern BaseColorStructure* __clr_sys_identifier;
 extern BaseColorStructure* __clr_ex_sys_identifier;
+
+extern BaseColorStructure* __clr_type_literal;
+extern BaseColorStructure* __clr_type_number;
+extern BaseColorStructure* __clr_type_bool;
+extern BaseColorStructure* __clr_type_list;
+extern BaseColorStructure* __clr_type_object;
+extern BaseColorStructure* __clr_type_any;
+
+extern BaseColorStructure* __clr_cursor;
 
 extern BaseColorStructure* __clr_flag;
 
@@ -74,17 +90,11 @@ extern BaseColorStructure* __clr_system_command;
 extern BaseColorStructure* __clr_filesystem_command;
 extern BaseColorStructure* __clr_regex_command;
 
-extern BaseColorStructure* __clr_numbers;
-extern BaseColorStructure* __clr_operators;
-
 extern BaseColorStructure* __clr_encloses_s1;
 extern BaseColorStructure* __clr_encloses_s2;
 extern BaseColorStructure* __clr_encloses_s3;
 extern BaseColorStructure* __clr_encloses_s4;
 
-extern BaseColorStructure* __clr_cursor;
-extern BaseColorStructure* __clr_keyword;
-extern BaseColorStructure* __clr_boolean;
 
 extern BaseColorStructure* __clr_fs_file_type_regular;
 extern BaseColorStructure* __clr_fs_file_type_symlink;
@@ -110,11 +120,4 @@ extern BaseColorStructure* __clr_help_param_name;
 extern BaseColorStructure* __clr_help_flag_meaning;
 extern BaseColorStructure* __clr_help_optional;
 extern BaseColorStructure* __clr_help_undefined_param_size;
-
-extern BaseColorStructure* __clr_type_literal;
-extern BaseColorStructure* __clr_type_number;
-extern BaseColorStructure* __clr_type_bool;
-extern BaseColorStructure* __clr_type_list;
-extern BaseColorStructure* __clr_type_object;
-extern BaseColorStructure* __clr_type_any;
 // <--
