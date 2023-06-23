@@ -31,11 +31,45 @@ public:
 		value_ = value;
 	}
 
+
 private:
-	friend std::string formatOption(const Option&) noexcept;
+	friend class Settings;
+	friend std::string formatOption(const Option&, const int) noexcept;
 
 	std::string name_;
 	lit::LiteralValue* value_;
 
 	bool valueRepresentsColor_;
+};
+
+
+
+class Section
+{
+public:
+	explicit Section(std::vector<Option> options)
+		: options_(options)
+	{}
+
+	Option* getOption(const std::string& name) noexcept {
+		for (size_t i = 0; i < options_.size(); i++)
+			if (options_[i].name() == name)
+				return &options_[i];
+
+		return nullptr;
+	}
+
+	std::vector<Option> getAllOptions() const noexcept {
+		return options_;
+	}
+
+private:
+	friend class Settings;
+
+	std::vector<Option>& getAllOptionsRef() noexcept {
+		return options_;
+	}
+
+
+	std::vector<Option> options_;
 };

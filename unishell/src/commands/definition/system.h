@@ -6,6 +6,7 @@
 #include "../../environment/identifier/idformat.h"
 #include "../../filesystem/formating/formating.h"
 #include "../../system/system.h"
+#include "../../system/settings/option_format.h"
 
 // print
 START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
@@ -158,10 +159,23 @@ END_COMMAND
 
 
 // opts
-START_COMMAND(SysCmdOpts, {}, CommandBase, "opts", CmdFunc::System)
+START_COMMAND(SysCmdOpts, { lit::lit(-1) }, CommandBase, "opts", CmdFunc::System)
 void exec() override {
-	for (const Option& option : __settings->getAllOptions())
-		sysprintln(formatOption(option));
+	const int index = (int)asDbl(args[0]);
+	int currentOptionIndex = 0;
+
+	if (index != -1) {
+		Option* option = __settings->getOption((size_t)index);
+
+		if (!option)
+			THROW_RUNTIME_ERR("Couldn't find option with index: " + numformat(tostr(index)));
+
+		sysprintln(formatOption(*option));
+		return;
+	}
+
+	for (const Section& section : __settings->getAllSections())
+		sysprintln(formatSection(section, currentOptionIndex));
 }
 END_COMMAND
 

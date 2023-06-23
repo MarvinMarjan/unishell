@@ -6,4 +6,5 @@
 
 #include <sstream>
 
-std::string formatOption(const Option& option) noexcept;
+std::string formatSection(const Section& section, int& optionIndex) noexcept;
+std::string formatOption(const Option& option, int space = -1) noexcept;
