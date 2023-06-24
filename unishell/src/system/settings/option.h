@@ -2,6 +2,7 @@
 
 #include "../../data/litvalue/type.h"
 #include "../../algorithm/bit/operations.h"
+#include "../../algorithm/vector/item.h"
 
 
 enum OptionFlag
@@ -13,8 +14,15 @@ enum OptionFlag
 class Option
 {
 public:
-	Option(const std::string& name, lit::LiteralValue* value, const int flags)
-		: name_(name), value_(value)
+	struct InvalidValueTypeErr {
+		lit::LiteralValue* value;
+	};
+
+	
+	Option(const std::string& name, lit::LiteralValue* value, void (*onValueChange)(lit::LiteralValue*), 
+		const lit::LitTypeList validTypes = { lit::LitType::Any }, const int flags = 0)
+		
+		: name_(name), value_(value), types_(validTypes), onValueChange_(onValueChange)
 	{
 		valueRepresentsColor_ = alg::bit::hasBits(flags, ValueRepresentsColor);
 	}
@@ -27,19 +35,40 @@ public:
 		return value_;
 	}
 
-	constexpr void setValue(lit::LiteralValue* value) noexcept {
+	constexpr lit::LitTypeList types() const noexcept {
+		return types_;
+	}
+
+
+	void setValue(lit::LiteralValue* value) {
+		if (!valueIsValid(value))
+			throw InvalidValueTypeErr {value};
+
 		value_ = value;
+
+		onValueChange_(value_);
 	}
 
 
 private:
+	constexpr bool valueIsValid(lit::LiteralValue* value) {
+		return (alg::vector::exists(types_, value->type()) || alg::vector::exists(types_, lit::LitType::Any));
+	}
+
 	friend class Settings;
 	friend std::string formatOption(const Option&, const int) noexcept;
 
 	std::string name_;
+
 	lit::LiteralValue* value_;
 
+	lit::LitTypeList types_;
+
 	bool valueRepresentsColor_;
+
+	
+	// callback function
+	void (*onValueChange_)(lit::LiteralValue*);
 };
 
 

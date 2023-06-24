@@ -6,6 +6,7 @@
 #include "../../environment/identifier/idformat.h"
 #include "../../filesystem/formating/formating.h"
 #include "../../system/system.h"
+#include "../../system/settings/settings.h"
 #include "../../system/settings/option_format.h"
 
 // print
@@ -158,10 +159,11 @@ END_COMMAND
 
 
 
-// opts
-START_COMMAND(SysCmdOpts, { lit::lit(-1) }, CommandBase, "opts", CmdFunc::System)
+// listOpts
+START_COMMAND(SysCmdListOpts, ParamVec({ { lit::lit(-1), {lit::LitType::Number} } }), CommandBase, "listOpts", CmdFunc::System)
 void exec() override {
 	const int index = (int)asDbl(args[0]);
+
 	int currentOptionIndex = 0;
 
 	if (index != -1) {
@@ -176,6 +178,25 @@ void exec() override {
 
 	for (const Section& section : __settings->getAllSections())
 		sysprintln(formatSection(section, currentOptionIndex));
+}
+END_COMMAND
+
+// setOpt
+START_COMMAND(SysCmdSetOpt, ParamVec({ {nullptr, {lit::LitType::Number}}, {nullptr, {lit::LitType::Any}} }), CommandBase, "setOpt", CmdFunc::System)
+void exec() override {
+	const int optionIndex = (int)asDbl(args[0]);
+
+	Option* option = __settings->getOption((size_t)optionIndex);
+
+	if (!option)
+		THROW_RUNTIME_ERR("Couldn't find option with index: " + numformat(tostr(optionIndex)));
+
+	try {
+		option->setValue(args[1]);
+	}
+	catch (Option::InvalidValueTypeErr err) {
+		THROW_RUNTIME_ERR(lit::getTypeAsString(option->types(), true) + " expected, got " + lit::getTypeAsString(err.value->type(), true));
+	}
 }
 END_COMMAND
 

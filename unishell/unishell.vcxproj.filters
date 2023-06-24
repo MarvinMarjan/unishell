@@ -122,6 +122,9 @@
     <ClCompile Include="src\outstream\control\outformat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\settings\option_format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -296,6 +299,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\outstream\control\outformat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\settings\option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\settings\option_format.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\settings\settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\settings\option_callback_def.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

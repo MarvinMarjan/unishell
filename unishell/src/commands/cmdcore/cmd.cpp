@@ -21,7 +21,8 @@ CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const F
 	CHECK_CMD(SysCmdIdColorHelp);
 	CHECK_CMD(SysCmdClrModeHelp);
 
-	CHECK_CMD(SysCmdOpts);
+	CHECK_CMD(SysCmdListOpts);
+	CHECK_CMD(SysCmdSetOpt);
 
 	CHECK_CMD(SysCmdExit);
 

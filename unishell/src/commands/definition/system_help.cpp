@@ -75,11 +75,15 @@ END_HELP
 
 
 
-// opts
-START_HELP(SysCmdOpts)
-return { .name = SysCmdOpts().symbol, .description = "displays a list of all options."};
+// getOpts
+START_HELP(SysCmdListOpts)
+return { .name = SysCmdListOpts().symbol, .description = "displays a list of all options."};
 END_HELP
 
+// setOpt
+START_HELP(SysCmdSetOpt)
+return { .name = SysCmdSetOpt().symbol, .description = "modifies the value of an option" };
+END_HELP
 
 
 // exit

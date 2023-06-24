@@ -49,6 +49,10 @@ extern const std::string __word_separator;
 
 extern const std::string __regex_color_escape_char_pattern;
 
+extern const std::string __regex_id_color_escape_char_pattern;
+extern const std::string __regex_rgb_color_escape_char_pattern;
+extern const std::string __regex_clr_color_escape_char_pattern;
+
 
 // --> global color variables
 extern BaseColorStructure* __clr_autocomplete_suggestion;

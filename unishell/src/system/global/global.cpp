@@ -78,7 +78,8 @@ const std::vector<CommandBase*> __sys_commands = {
 	new SysCmdIdColorHelp(),
 	new SysCmdClrModeHelp(),
 
-	new SysCmdOpts(),
+	new SysCmdListOpts(),
+	new SysCmdSetOpt(),
 	
 	new SysCmdExit(),
 

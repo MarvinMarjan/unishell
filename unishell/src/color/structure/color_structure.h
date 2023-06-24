@@ -50,19 +50,14 @@ inline std::string colorToString(const Color color, const ColorMode mode) noexce
 class BaseColorStructure
 {
 public:
-	virtual ~BaseColorStructure() = default;
-	explicit BaseColorStructure(const ColorMode mode = normal) : mode(mode) {}
-
 	virtual std::string toString() const = 0;
 	virtual std::string toStrColorStructure() const = 0;
-
-	ColorMode mode;
 };
 
 class IdColorStructure : public BaseColorStructure
 {
 public:
-	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : BaseColorStructure(mode), idc(idc) {}
+	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : mode(mode), idc(idc) {}
 
 	std::string toString() const override {
 		return id(idc, mode);
@@ -72,7 +67,9 @@ public:
 		return "id:" + tostr(idc) + ';' + colorModeEnumToString(mode) + ':';
 	}
 
+
 	unsigned int idc;
+	ColorMode mode;
 
 	static constexpr size_t argSize = 1;
 };
@@ -81,7 +78,7 @@ class RGBColorStructure : public BaseColorStructure
 {
 public:
 	RGBColorStructure(const unsigned int red, const unsigned int green, const unsigned int blue, const ColorMode mode = normal) :
-		BaseColorStructure(mode), red(red), green(green), blue(blue) {}
+		mode(mode), red(red), green(green), blue(blue) {}
 
 	std::string toString() const noexcept override {
 		return rgb(red, green, blue, mode);
@@ -91,9 +88,12 @@ public:
 		return "rgb:" + tostr(red) + ';' + tostr(green) + ';' + tostr(blue) + ';' + colorModeEnumToString(mode) + ':';
 	}
 
+
 	unsigned int red;
 	unsigned int green;
 	unsigned int blue;
+
+	ColorMode mode;
 
 	static constexpr size_t argSize = 3;
 };
@@ -102,7 +102,7 @@ class ColorStructure : public BaseColorStructure
 {
 public:
 	explicit ColorStructure(const Color color, const ColorMode mode = normal) :
-		BaseColorStructure(mode), color(color) {}
+		mode(mode), color(color) {}
 
 	std::string toString() const override {
 		return colorToString(color, mode);
@@ -112,7 +112,9 @@ public:
 		return "clr:" + colorEnumToString(color) + ';' + colorModeEnumToString(mode) + ':';
 	}
 
+
 	Color color;
+	ColorMode mode;
 
 	static constexpr size_t argSize = 1;
 };
