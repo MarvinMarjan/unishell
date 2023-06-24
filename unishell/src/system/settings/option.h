@@ -16,6 +16,7 @@ class Option
 public:
 	struct InvalidValueTypeErr {
 		lit::LiteralValue* value;
+		bool expectedColorString;
 	};
 
 	
@@ -42,7 +43,7 @@ public:
 
 	void setValue(lit::LiteralValue* value) {
 		if (!valueIsValid(value))
-			throw InvalidValueTypeErr {value};
+			throw InvalidValueTypeErr {value, valueRepresentsColor_};
 
 		value_ = value;
 
@@ -51,9 +52,7 @@ public:
 
 
 private:
-	constexpr bool valueIsValid(lit::LiteralValue* value) {
-		return (alg::vector::exists(types_, value->type()) || alg::vector::exists(types_, lit::LitType::Any));
-	}
+	bool valueIsValid(lit::LiteralValue* value);
 
 	friend class Settings;
 	friend std::string formatOption(const Option&, const int) noexcept;

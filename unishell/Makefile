@@ -45,6 +45,7 @@ SOURCE := \
 	src/system/exception/exception_reference.cpp \
 	src/system/exception/system_exception.cpp \
 	src/system/global/global.cpp \
+	src/system/settings/option.cpp \
 	src/system/settings/option_format.cpp \
 	src/system/system.cpp \
 

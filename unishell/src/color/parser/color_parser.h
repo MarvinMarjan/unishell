@@ -26,7 +26,7 @@ private:
 		TokenList args;
 
 		// gets all tokens before a COLON
-		while (peek().getType() != COLON) {
+		while (!isAtEnd() && peek().getType() != COLON) {
 			args.push_back(peek());
 			advance();
 		}
@@ -70,7 +70,7 @@ private:
 		if (checkArgsSize(args, ColorStructure::argSize, optionalMode) == Failure) return nullptr;
 		if (checkTokenType({ args[0] }, LITERAL, "Literal") == Failure) return nullptr;
 
-		if (!alg::vector::exists(__color, asStr(args[0].getLiteral())) && !ignoreExceptions) {
+		if (!alg::vector::exists(__color, asStr(args[0].getLiteral()))) {
 			if (ignoreExceptions) return nullptr;
 			throw SystemException(ColorParserError, "Unknown color", ExceptionRef(*System::input(), args[0].getIndex()));
 		}

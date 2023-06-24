@@ -8,5 +8,6 @@
 
 #define onValueChange_BaseColorStructure(clr_pointer) \
 	[] (lit::LiteralValue* value) { \
-		clr_pointer = ColorParser(InstreamScanner(asStr(value)).scanTokens(), true).parse(); \
+		clr_pointer = ColorParser(InstreamScanner(asStr(value), IgnoreCommand).scanTokens(), true).parse(); \
 	} \
+

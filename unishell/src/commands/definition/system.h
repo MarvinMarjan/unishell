@@ -195,7 +195,10 @@ void exec() override {
 		option->setValue(args[1]);
 	}
 	catch (Option::InvalidValueTypeErr err) {
-		THROW_RUNTIME_ERR(lit::getTypeAsString(option->types(), true) + " expected, got " + lit::getTypeAsString(err.value->type(), true));
+		if (!err.expectedColorString)
+			THROW_RUNTIME_ERR(lit::getTypeAsString(option->types(), true) + " expected, got " + lit::getTypeAsString(err.value->type(), true));
+		else
+			THROW_RUNTIME_ERR("Valid Color Structure String expected");
 	}
 }
 END_COMMAND
