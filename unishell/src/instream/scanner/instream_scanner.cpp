@@ -45,6 +45,8 @@ void InstreamScanner::scanToken()
 	case '}': addToken(RBRACE); break;
 
 	case '\"': string('\"'); break;
+	case '\'': string('\''); break;
+
 	case '`': string('`', true); break;
 	case '$': word(IDENTIFIER); break;
 	case '%': word(FLAG); break;

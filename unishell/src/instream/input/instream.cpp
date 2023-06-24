@@ -164,6 +164,10 @@ std::string INStream::formatString(const std::string& text, const int cursorPos)
 			INStreamRender::renderChar(i, cursorPos, text[i], fText, alg::string::charToStr(text[i]));
 			continue;
 
+		case '\'':
+			INStreamRender::renderChar(i, cursorPos, text[i], fText, clr(alg::string::charToStr(text[i]), __clr_quoted->toString()));
+			break;
+
 		case '\"':
 			INStreamRender::renderQuoted(fText, text, i, cursorPos);
 			break;
