@@ -11,15 +11,11 @@
 
 #include "src/commands/definition/cmds.h"
 
-
-#include <chrono>
+#include "src/algorithm/chrono/meter.h"
 
 
 int main(int argc, char** argv)
 {
-
-
-
 	// disable command line caret
 	WindowsSystem::setCursorVisible(false);
 
@@ -33,7 +29,11 @@ int main(int argc, char** argv)
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 			*sys.input() = INStream::getLine(); // sets global user input
 			
+			alg::chrono::Meter meter;
+
 			TokenList input = TokenProcess::process(InstreamScanner(USER_INPUT).scanTokens());
+
+			sysprintv("Duration: ", meter.get(), '\n');
 
 			// empty
 			if (!input.size())
