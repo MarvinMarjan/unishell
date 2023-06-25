@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\algorithm\bit\operations.h" />
+    <ClInclude Include="src\algorithm\chrono\meter.h" />
     <ClInclude Include="src\algorithm\regex\match.h" />
     <ClInclude Include="src\algorithm\string\char.h" />
     <ClInclude Include="src\algorithm\string\manip.h" />
