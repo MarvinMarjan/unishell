@@ -42,6 +42,10 @@ SystemException::SystemException(const SystemExceptionType type, const std::stri
 		typeMsg = "command_runtime";
 		break;
 
+	case SettingsError:
+		typeMsg = "settings";
+		break;
+
 	default:
 		typeMsg = "unknown";
 	}

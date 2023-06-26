@@ -31,8 +31,6 @@ int main(int argc, char** argv)
 
 			TokenList input = TokenProcess::process(InstreamScanner(USER_INPUT).scanTokens());
 
-			sysprintv("Duration: ", meter.get(), '\n');
-
 			// empty
 			if (!input.size())
 				continue;
@@ -61,4 +59,7 @@ int main(int argc, char** argv)
 			sys.error(SystemException(InternalSystemError, "Unexpected error"));
 		}
 	}
+
+
+	__settings->saveDataToJSONFile(UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH);
 }

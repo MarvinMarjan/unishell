@@ -52,10 +52,11 @@ public:
 
 
 private:
-	bool valueIsValid(lit::LiteralValue* value);
-
 	friend class Settings;
 	friend std::string formatOption(const Option&, const int) noexcept;
+
+
+	bool valueIsValid(lit::LiteralValue* value);
 
 	std::string name_;
 

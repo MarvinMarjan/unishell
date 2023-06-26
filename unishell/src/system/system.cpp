@@ -106,6 +106,10 @@ System::System()
 		{ "Optional Color",				lit::lit(__clr_help_optional->toStrColorStructure()), onValueChange_BaseColorStructure(__clr_help_optional), {lit::LitType::Literal}, ValueRepresentsColor },
 		{ "Undefined Param Size Color", lit::lit(__clr_help_undefined_param_size->toStrColorStructure()), onValueChange_BaseColorStructure(__clr_help_undefined_param_size), {lit::LitType::Literal}, ValueRepresentsColor }
 	}));
+
+
+
+	__settings->updateOptionsFromData();
 }
 
 

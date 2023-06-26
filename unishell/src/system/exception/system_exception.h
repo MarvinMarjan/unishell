@@ -14,7 +14,9 @@ enum SystemExceptionType
 	EnvironmentError,
 	InternalSystemError,
 	CommandError,
-	CommandRuntimeError
+	CommandRuntimeError,
+
+	SettingsError
 };
 
 
@@ -35,5 +37,3 @@ private:
 
 	SystemExceptionType type;
 };
-
-

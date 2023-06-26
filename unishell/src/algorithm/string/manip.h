@@ -24,6 +24,11 @@ namespace string
 	StringList split(const std::string& src, const char delimiter = ' ') noexcept;
 
 
+	std::string toSnakeCase(const std::string& src) noexcept;
+
+	std::string snakeCaseToPascal(const std::string& src) noexcept;
+
+
 } // namespace string
 
 } // namespace alg
