@@ -7,7 +7,7 @@
   "bool_type_color": "id:219;normal:",
   "boolean_color": "id:219;normal:",
   "command_color": "id:218;normal:",
-  "cursor_color": "clr:red;underline:",
+  "cursor_color": "id:75 underline:",
   "dir_file_type_color": "id:120;normal:",
   "enclose_scope_1_color": "id:210;normal:",
   "enclose_scope_2_color": "id:113;normal:",

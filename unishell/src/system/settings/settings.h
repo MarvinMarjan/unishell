@@ -17,6 +17,10 @@ using json = nlohmann::json;
 class Settings
 {
 public:
+	struct JSONFileNotFound {
+		std::string path;
+	};
+
 	Settings() {
 		loadDataFromJSONFile(UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH);
 	}
@@ -55,15 +59,23 @@ public:
 
 
 	void saveDataToJSONFile(const std::string& path) const {
-		if (!fsys::File::exists(path)) return;
+		if (!fsys::File::exists(path))
+			throw JSONFileNotFound {.path = path};
 
 		fsys::File::write(path, data_.dump(2));
 	}
 
 	void loadDataFromJSONFile(const std::string& path) {
-		if (!fsys::File::exists(path)) return;
+		if (!fsys::File::exists(path))
+			throw JSONFileNotFound {.path = path};
 
 		data_ = json::parse(fsys::File::readAsString(path));
+	}
+
+	void updateDataFromOptions() {
+		for (const Section& section : getAllSections())
+			for (const Option& option : section.getAllOptions())
+				data_[alg::string::toSnakeCase(option.name())] = LiteralValueToJSONValue(option.value());
 	}
 
 private:
@@ -75,7 +87,7 @@ private:
 
 		for (const Option& option : section.getAllOptions())
 			if (!data_.contains(alg::string::toSnakeCase(option.name())))
-				data_[alg::string::toSnakeCase(option.name())] = litToStr(option.value_);
+				data_[alg::string::toSnakeCase(option.name())] = LiteralValueToJSONValue(option.value_);
 	}
 
 
@@ -84,8 +96,27 @@ private:
 		for (const auto& [key, value] : data_.items()) {
 			Option* option = getOption(alg::string::snakeCaseToPascal(key));
 
-			option->setValue(lit::lit(value.get<std::string>()));
+			if (option)
+				option->setValue(JSONValueToLiteralValue(value));
 		}
+	}
+
+
+
+	static lit::LiteralValue* JSONValueToLiteralValue(json data) {
+		if (data.is_string()) return new lit::LiteralValue(data.get<std::string>());
+		if (data.is_number()) return new lit::LiteralValue(data.get<double>());
+		if (data.is_boolean()) return new lit::LiteralValue(data.get<bool>());
+
+		return nullptr;
+	}
+
+	static json LiteralValueToJSONValue(lit::LiteralValue* value) {
+		if (value->index() == 0) return asStr(value);
+		if (value->index() == 1) return asDbl(value);
+		if (value->index() == 2) return asBool(value);
+
+		return nullptr;
 	}
 
 

@@ -9,5 +9,11 @@
 #define onValueChange_BaseColorStructure(clr_pointer) \
 	[] (lit::LiteralValue* value) { \
 		clr_pointer = ColorParser(InstreamScanner(asStr(value), IgnoreCommand).scanTokens(), true).parse(); \
-	} \
+	}
 
+
+
+#define onValueChange_boolean(boolean_val) \
+	[] (lit::LiteralValue* value) { \
+		boolean_val = asBool(value); \
+	}

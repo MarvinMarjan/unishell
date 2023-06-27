@@ -128,3 +128,9 @@ extern BaseColorStructure* __clr_help_undefined_param_size;
 extern BaseColorStructure* __clr_exception_title;
 extern BaseColorStructure* __clr_exception_error;
 // <--
+
+
+
+// --> Application settings
+
+// <--

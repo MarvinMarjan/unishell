@@ -20,7 +20,7 @@ std::string formatSection(const Section& section, int& optionIndex) noexcept
 std::string formatOption(const Option& option, int space) noexcept
 {
 	std::stringstream str;
-	std::string strVal = litToStr(option.value_);
+	std::string strVal;
 
 	if (space == -1)
 		space = (int)option.name().size();
@@ -29,8 +29,11 @@ std::string formatOption(const Option& option, int space) noexcept
 		const TokenList valTokens = InstreamScanner(litToStr(option.value_), IgnoreCommand).scanTokens();
 		BaseColorStructure* color = ColorParser(valTokens).parse();
 
-		strVal = clr(strVal, color->toString());
+		strVal = clr(litToStr(option.value_), color->toString());
 	}
+
+	else
+		strVal = litToStr(option.value_, true);
 
 	str << std::setw(space + 3) << std::left << option.name_ + ':' << strVal;
 
