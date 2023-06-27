@@ -16,7 +16,17 @@
 #define sysprintv		System::printv
 #define sysprintln(msg) System::print(msg, true)
 
+#define UNISHLL_NAME	"unishell"
+#define UNISHLL_OS		"Windows"
+
 #define UNISHLL_USER_INPUT *System::input()
+
+
+struct SysStat
+{
+	bool settingJsonFileLoadFailed;
+};
+
 
 class System
 {

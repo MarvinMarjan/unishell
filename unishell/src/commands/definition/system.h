@@ -205,6 +205,19 @@ END_COMMAND
 
 
 
+// appStat
+START_COMMAND(SysCmdAppStat, {}, CommandBase, "appStat", CmdFunc::System)
+void exec() override {
+	sysprintln(std::string("Name: ") + qtd(UNISHLL_NAME));
+	sysprintln(std::string("System: ") + qtd(UNISHLL_OS));
+
+	sysprintln("");
+	sysprintln("Settings JSON Data File Load Failed: " + lit::boolToString(__sys_stat->settingJsonFileLoadFailed, true));
+}
+END_COMMAND
+
+
+
 // exit
 START_COMMAND(SysCmdExit, {}, CommandBase, "exit", CmdFunc::System)
 void exec() override {

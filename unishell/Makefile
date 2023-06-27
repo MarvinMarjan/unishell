@@ -47,6 +47,7 @@ SOURCE := \
 	src/data/litvalue/obj_predef.cpp \
 	src/system/exception/exception_reference.cpp \
 	src/system/global/global.cpp \
+	src/system/settings/settings.cpp \
 	src/system/settings/option.cpp \
 	src/system/settings/option_format.cpp \
 	src/system/system.cpp \
@@ -62,7 +63,7 @@ OBJECTS := $(addprefix $(OBJECT_PATH)/, $(notdir $(SOURCE:.cpp=.o)))
 .PHONY: build
 build: $(OBJECT_PATH) $(OBJECTS)
 	@ echo Creating $(APP_NAME)
-	@ $(CC) $(CPP_VERSION) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
+	@ $(CC) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
 
 
 $(OBJECT_PATH):
@@ -70,7 +71,7 @@ $(OBJECT_PATH):
 	@ mkdir "$(OBJECT_PATH)"
 
 
-# compile source file into object one
+# compile source file into objects
 $(OBJECT_PATH)/%.o: %.cpp
 	@ echo Compiling $(notdir $<)
 	@ $(CC) $(CPP_VERSION) $(INCLUDE_PATHS) -c $< -o $@

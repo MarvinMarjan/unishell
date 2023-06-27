@@ -6,8 +6,8 @@ bool System::abort = false;
 
 System::System()
 {
-	addSysId("NAME",	lit::lit("unishell"));
-	addSysId("OS",		lit::lit("Windows"));
+	addSysId("NAME",	lit::lit(UNISHLL_NAME));
+	addSysId("OS",		lit::lit(UNISHLL_OS));
 
 
 	__settings->addSection(Section({

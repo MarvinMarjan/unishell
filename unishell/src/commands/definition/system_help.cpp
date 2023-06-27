@@ -86,6 +86,14 @@ return { .name = SysCmdSetOpt().symbol, .description = "modifies the value of an
 END_HELP
 
 
+
+// appStat
+START_HELP(SysCmdAppStat)
+return { .name = SysCmdAppStat().symbol, .description = "displays some application status" };
+END_HELP
+
+
+
 // exit
 START_HELP(SysCmdExit)
 return { .name = SysCmdExit().symbol, .description = "quit unishell." };

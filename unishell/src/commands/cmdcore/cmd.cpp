@@ -24,6 +24,8 @@ CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const F
 	CHECK_CMD(SysCmdListOpts);
 	CHECK_CMD(SysCmdSetOpt);
 
+	CHECK_CMD(SysCmdAppStat);
+
 	CHECK_CMD(SysCmdExit);
 
 

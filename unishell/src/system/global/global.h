@@ -13,14 +13,20 @@ class PathHandler;
 class Settings;
 
 
+struct SysStat;
+
+
 using FSExtension = std::map<StringList, std::string>;
 
 // global variables
 
-extern Environment* __environment; // stores a Environment pointer
-extern PathHandler* __workingPath; // stores the current working directory path
-extern std::string* __userInput;   // stores the last user input raw string
-extern Settings*	__settings;
+extern SysStat*	__sys_stat;
+
+extern Environment*		__environment; // stores a Environment pointer
+extern PathHandler*		__workingPath; // stores the current working directory path
+extern std::string*		__userInput;   // stores the last user input raw string
+extern Settings*		__settings;
+
 
 // --> string lists
 extern const StringList __keywords;

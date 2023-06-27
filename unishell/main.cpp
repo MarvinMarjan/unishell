@@ -62,5 +62,7 @@ int main(int argc, char** argv)
 
 
 	__settings->updateDataFromOptions();
-	__settings->saveDataToJSONFile(UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH);
+
+	__settings->data().save();
+	__environment->data().save();
 }

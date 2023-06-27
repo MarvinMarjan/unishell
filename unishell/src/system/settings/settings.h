@@ -4,11 +4,14 @@
 
 #include "../../data/litvalue/litformat.h"
 #include "../../filesystem/handle/file.h"
+#include "../../algorithm/string/manip.h"
+#include "json_fstream_handle.h"
+
 
 #include <nlohmann/json.hpp>
 
 
-#define UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH "data/data.json"
+#define UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH "data/setting.json"
 
 
 using json = nlohmann::json;
@@ -17,13 +20,7 @@ using json = nlohmann::json;
 class Settings
 {
 public:
-	struct JSONFileNotFound {
-		std::string path;
-	};
-
-	Settings() {
-		loadDataFromJSONFile(UNISHLL_SETTINGS_DEFAULT_JSON_FILE_PATH);
-	}
+	Settings();
 
 	~Settings() = default;
 
@@ -58,24 +55,15 @@ public:
 	}
 
 
-	void saveDataToJSONFile(const std::string& path) const {
-		if (!fsys::File::exists(path))
-			throw JSONFileNotFound {.path = path};
-
-		fsys::File::write(path, data_.dump(2));
-	}
-
-	void loadDataFromJSONFile(const std::string& path) {
-		if (!fsys::File::exists(path))
-			throw JSONFileNotFound {.path = path};
-
-		data_ = json::parse(fsys::File::readAsString(path));
-	}
-
 	void updateDataFromOptions() {
 		for (const Section& section : getAllSections())
 			for (const Option& option : section.getAllOptions())
-				data_[alg::string::toSnakeCase(option.name())] = LiteralValueToJSONValue(option.value());
+				data_[alg::string::toSnakeCase(option.name())] = JSONFstreamHandle::LiteralValueToJSONValue(option.value());
+	}
+
+
+	JSONFstreamHandle& data() noexcept {
+		return data_;
 	}
 
 private:
@@ -87,7 +75,7 @@ private:
 
 		for (const Option& option : section.getAllOptions())
 			if (!data_.contains(alg::string::toSnakeCase(option.name())))
-				data_[alg::string::toSnakeCase(option.name())] = LiteralValueToJSONValue(option.value_);
+				data_[alg::string::toSnakeCase(option.name())] = JSONFstreamHandle::LiteralValueToJSONValue(option.value_);
 	}
 
 
@@ -97,30 +85,12 @@ private:
 			Option* option = getOption(alg::string::snakeCaseToPascal(key));
 
 			if (option)
-				option->setValue(JSONValueToLiteralValue(value));
+				option->setValue(JSONFstreamHandle::JSONValueToLiteralValue(value));
 		}
-	}
-
-
-
-	static lit::LiteralValue* JSONValueToLiteralValue(json data) {
-		if (data.is_string()) return new lit::LiteralValue(data.get<std::string>());
-		if (data.is_number()) return new lit::LiteralValue(data.get<double>());
-		if (data.is_boolean()) return new lit::LiteralValue(data.get<bool>());
-
-		return nullptr;
-	}
-
-	static json LiteralValueToJSONValue(lit::LiteralValue* value) {
-		if (value->index() == 0) return asStr(value);
-		if (value->index() == 1) return asDbl(value);
-		if (value->index() == 2) return asBool(value);
-
-		return nullptr;
 	}
 
 
 	std::vector<Section> sections_;
 
-	json data_;
+	JSONFstreamHandle data_;
 };

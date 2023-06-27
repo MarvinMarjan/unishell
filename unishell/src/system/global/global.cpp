@@ -7,6 +7,7 @@
 
 
 
+SysStat*	__sys_stat		= new SysStat;
 
 Environment*	__environment	= new Environment();
 PathHandler*	__workingPath	= new PathHandler(WindowsSystem::getSystemDesktopPath());
@@ -80,6 +81,8 @@ const std::vector<CommandBase*> __sys_commands = {
 
 	new SysCmdListOpts(),
 	new SysCmdSetOpt(),
+
+	new SysCmdAppStat(),
 	
 	new SysCmdExit(),
 
