@@ -13,6 +13,15 @@
 	}; \
 
 
+#define NEW_EXCEPTION(name, title) \
+	class name : public Exception \
+	{ \
+	public: \
+		name(const std::string& msg) \
+			: Exception(title, msg) {} \
+	}; \
+
+
 
 class Exception
 {
@@ -55,3 +64,6 @@ NEW_USER_EXCEPTION(TokenProcessingErr, "token_processing")
 NEW_USER_EXCEPTION(EnvironmentErr, "environment")
 NEW_USER_EXCEPTION(CommandErr, "command")
 NEW_USER_EXCEPTION(CommandRuntimeErr, "command_runtime")
+
+
+NEW_EXCEPTION(SettingsErr, "settings")

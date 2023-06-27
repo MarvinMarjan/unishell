@@ -108,7 +108,6 @@ System::System()
 	}));
 
 
-
 	__settings->updateOptionsFromData();
 }
 
