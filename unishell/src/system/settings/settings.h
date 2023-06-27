@@ -24,8 +24,8 @@ public:
 	~Settings() = default;
 
 
-	// returns the value of an option "name" or throws a
-	// exception if couldn't find
+	// returns the value of an option "name" or nullptr
+	// if couldn't find
 	lit::LiteralValue* operator[](const std::string& name) {
 		return getOption(name)->value();
 	}
@@ -55,8 +55,7 @@ public:
 
 
 	void saveDataToJSONFile(const std::string& path) const {
-		if (!fsys::File::exists(path))
-			fsys::File::createFile(path);
+		if (!fsys::File::exists(path)) return;
 
 		fsys::File::write(path, data_.dump(2));
 	}

@@ -8,6 +8,9 @@ OBJECT_PATH := $(BUILD_PATH)/obj
 
 CC := g++
 CPP_VERSION := -std=c++20
+INCLUDE_PATHS := \
+	-I deps/json/include
+
 SOURCE := \
 	main.cpp \
 	src/algorithm/string/manip.cpp \
@@ -71,7 +74,7 @@ $(OBJECT_PATH):
 # compile source file into object one
 $(OBJECT_PATH)/%.o: %.cpp
 	@ echo Compiling $(notdir $<)
-	@ $(CC) $(CPP_VERSION) -c $< -o $@
+	@ $(CC) $(CPP_VERSION) $(INCLUDE_PATHS) -c $< -o $@
 
 
 
