@@ -2,52 +2,52 @@
 
 
 SystemException::SystemException(const SystemExceptionType type, const std::string& msg, const ExceptionRef& ref)
-	: msg(msg), type(type), ref(ref)
+	: Exception("system", msg), type_(type), ref_(ref)
 {
 	switch (type)
 	{
 	case ExprInterpreterError:
-		typeMsg = "expression_interpreter";
+		title_ = "expression_interpreter";
 		break;
 
 	case ExprParserError:
-		typeMsg = "parser";
+		title_ = "parser";
 		break;
 
 	case ColorParserError:
-		typeMsg = "color_parser";
+		title_ = "color_parser";
 		break;
 
 	case InstreamScannerError:
-		typeMsg = "instream_scanner";
+		title_ = "instream_scanner";
 		break;
 
 	case TokenProcessingError:
-		typeMsg = "token_processing";
+		title_ = "token_processing";
 		break;
 
 	case EnvironmentError:
-		typeMsg = "environment";
+		title_ = "environment";
 		break;
 
 	case InternalSystemError:
-		typeMsg = "internal_system";
+		title_ = "internal_system";
 		break;
 
 	case CommandError:
-		typeMsg = "command";
+		title_ = "command";
 		break;
 
 	case CommandRuntimeError:
-		typeMsg = "command_runtime";
+		title_ = "command_runtime";
 		break;
 
 	case SettingsError:
-		typeMsg = "settings";
+		title_ = "settings";
 		break;
 
 	default:
-		typeMsg = "unknown";
+		title_ = "unknown";
 	}
 }
 

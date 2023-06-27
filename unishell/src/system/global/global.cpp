@@ -208,10 +208,24 @@ BaseColorStructure* __clr_quoted = new IdColorStructure(106);
 BaseColorStructure* __clr_raw_string = new IdColorStructure(107);
 BaseColorStructure* __clr_escape_char = new IdColorStructure(209);
 
+BaseColorStructure* __clr_numbers = new IdColorStructure(192);
+BaseColorStructure* __clr_operators = new IdColorStructure(222);
+BaseColorStructure* __clr_keyword = new IdColorStructure(170);
+BaseColorStructure* __clr_boolean = new IdColorStructure(219);
+
 BaseColorStructure* __clr_identifier = new IdColorStructure(115);
 BaseColorStructure* __clr_ex_identifier = new IdColorStructure(115, italic);
 BaseColorStructure* __clr_sys_identifier = new IdColorStructure(178);
 BaseColorStructure* __clr_ex_sys_identifier = new IdColorStructure(178, italic);
+
+BaseColorStructure* __clr_type_literal = new IdColorStructure(113);
+BaseColorStructure* __clr_type_number = new IdColorStructure(192);
+BaseColorStructure* __clr_type_bool = new IdColorStructure(219);
+BaseColorStructure* __clr_type_list = new IdColorStructure(38);
+BaseColorStructure* __clr_type_object = new IdColorStructure(215);
+BaseColorStructure* __clr_type_any = new IdColorStructure(198);
+
+BaseColorStructure* __clr_cursor = new IdColorStructure(75, underline);
 
 BaseColorStructure* __clr_flag = new IdColorStructure(157);
 
@@ -227,17 +241,10 @@ BaseColorStructure* __clr_system_command = new IdColorStructure(140);
 BaseColorStructure* __clr_filesystem_command = new IdColorStructure(184);
 BaseColorStructure* __clr_regex_command = new IdColorStructure(163);
 
-BaseColorStructure* __clr_numbers = new IdColorStructure(192);
-BaseColorStructure* __clr_operators = new IdColorStructure(222);
-
 BaseColorStructure* __clr_encloses_s1 = new IdColorStructure(210);
 BaseColorStructure* __clr_encloses_s2 = new IdColorStructure(113);
 BaseColorStructure* __clr_encloses_s3 = new IdColorStructure(117);
 BaseColorStructure* __clr_encloses_s4 = new IdColorStructure(220);
-
-BaseColorStructure* __clr_cursor = new IdColorStructure(75, underline);
-BaseColorStructure* __clr_keyword = new IdColorStructure(170);
-BaseColorStructure* __clr_boolean = new IdColorStructure(219);
 
 BaseColorStructure* __clr_fs_file_type_regular = new ColorStructure(null);
 BaseColorStructure* __clr_fs_file_type_symlink = new IdColorStructure(209);
@@ -265,9 +272,5 @@ BaseColorStructure* __clr_help_flag_meaning = new IdColorStructure(115);
 BaseColorStructure* __clr_help_optional = new IdColorStructure(169);
 BaseColorStructure* __clr_help_undefined_param_size = new IdColorStructure(208);
 
-BaseColorStructure* __clr_type_literal = new IdColorStructure(113);
-BaseColorStructure* __clr_type_number = new IdColorStructure(192);
-BaseColorStructure* __clr_type_bool = new IdColorStructure(219);
-BaseColorStructure* __clr_type_list = new IdColorStructure(38);
-BaseColorStructure* __clr_type_object = new IdColorStructure(215);
-BaseColorStructure* __clr_type_any = new IdColorStructure(198);
+BaseColorStructure* __clr_exception_title = new IdColorStructure(153);
+BaseColorStructure* __clr_exception_error = new IdColorStructure(196);

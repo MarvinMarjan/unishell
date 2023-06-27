@@ -20,20 +20,34 @@ enum SystemExceptionType
 };
 
 
-class SystemException
+class Exception
+{
+public:
+	Exception(const std::string& title, const std::string& msg) : title_(title), msg_(msg) {}
+	
+	~Exception() = default;
+
+	virtual std::string toString() const {
+		return clr('#' + title_, __clr_exception_title->toString()) + clr(" Error\n", __clr_exception_error->toString()) + "\n" + " > " + msg_ + '\n';
+	}
+
+protected:
+	std::string msg_;
+	std::string title_;
+};
+
+
+class SystemException : public Exception
 {
 public:
 	SystemException(const SystemExceptionType type, const std::string& msg, const ExceptionRef& ref = ExceptionRef());
 
 	// formated error message
-	std::string toString() const noexcept {
-		return clr('#' + typeMsg, 153) + clr(" Error\n", 196) + ref.getString() + "\n" + " > " + msg + '\n';
+	std::string toString() const noexcept override {
+		return clr('#' + title_, __clr_exception_title->toString()) + clr(" Error\n", __clr_exception_error->toString()) + ref_.getString() + "\n" + " > " + msg_ + '\n';
 	}
 
 private:
-	std::string typeMsg; 
-	std::string msg;
-	ExceptionRef ref;
-
-	SystemExceptionType type;
+	ExceptionRef ref_;
+	SystemExceptionType type_;
 };

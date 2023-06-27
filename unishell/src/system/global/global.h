@@ -124,4 +124,7 @@ extern BaseColorStructure* __clr_help_param_name;
 extern BaseColorStructure* __clr_help_flag_meaning;
 extern BaseColorStructure* __clr_help_optional;
 extern BaseColorStructure* __clr_help_undefined_param_size;
+
+extern BaseColorStructure* __clr_exception_title;
+extern BaseColorStructure* __clr_exception_error;
 // <--
