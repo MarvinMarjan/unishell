@@ -77,7 +77,7 @@ private:
 		char aux;
 
 		if ((aux = checkEscapeChar(peek())) == '\0')
-			throw SystemException(InstreamScannerError, "Unknown escape character", ExceptionRef(USER_INPUT, current));
+			throw new InstreamScannerErr("Unknown escape character", ExceptionRef(UNISHLL_USER_INPUT, current));
 
 		src.erase(src.begin() + current);
 		src[current - 1] = aux;

@@ -163,7 +163,6 @@
     <ClCompile Include="src\path\handler\path_handler.cpp" />
     <ClCompile Include="src\path\scanner\path_scanner.cpp" />
     <ClCompile Include="src\system\exception\exception_reference.cpp" />
-    <ClCompile Include="src\system\exception\system_exception.cpp" />
     <ClCompile Include="src\system\global\global.cpp" />
     <ClCompile Include="src\system\settings\option.cpp" />
     <ClCompile Include="src\system\settings\option_format.cpp" />

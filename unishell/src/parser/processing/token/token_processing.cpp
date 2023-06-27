@@ -80,7 +80,7 @@ TokenList TokenProcess::generateColorTokens(const TokenList& source)
 			i++;
 
 			if (i + 1 >= source.size())
-				throw SystemException(TokenProcessingError, "Unterminated color structure", ExceptionRef(USER_INPUT, System::input()->size() - 1));
+				throw new TokenProcessingErr("Unterminated color structure", ExceptionRef(UNISHLL_USER_INPUT, System::input()->size() - 1));
 
 			i++;
 			consume(source, COLON, i, "Unterminated color structure");
@@ -137,7 +137,7 @@ TokenList TokenProcess::processKeywords(const TokenList& source)
 		{
 		case UNPACK:
 			if (i + 1 >= source.size() || source[i + 1].getType() != LIST)
-				throw SystemException(TokenProcessingError, "List expected for " + keywformat("unpack"), ExceptionRef(USER_INPUT, token.getIndex()));
+				throw new TokenProcessingErr("List expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token.getIndex()));
 
 			for (lit::LiteralValue* value : asList(source[i + 1].getLiteral()))
 				res.push_back(Token(lit::typeToTokenEnum(value->type()), "", value, {}, 0));
@@ -203,7 +203,7 @@ Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool
 	retCmd = getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
-		throw SystemException(CommandError, "Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(USER_INPUT, source[i].getIndex()));
+		throw new TokenProcessingErr("Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
 
 	ret = retCmd->exec();
 

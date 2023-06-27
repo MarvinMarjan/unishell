@@ -30,7 +30,7 @@
 
 
 #define THROW_RUNTIME_ERR(msg) \
-	throw SystemException(CommandRuntimeError, "(" + symbol + ") " + msg) \
+	throw new CommandRuntimeErr("(" + symbol + ") " + msg) \
 
 
 enum ExpFileType {

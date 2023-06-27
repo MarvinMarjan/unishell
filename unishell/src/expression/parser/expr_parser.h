@@ -42,13 +42,6 @@ private:
 	}
 
 
-	Token consume(const TokenEnum type, const std::string& msg) {
-		if (check(type))
-			return advance();
-
-		throw SystemException(ExprParserError, msg);
-	}
-
 
 	bool check(const TokenEnum type) {
 		if (isAtEnd())

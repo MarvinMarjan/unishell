@@ -6,7 +6,7 @@
 #include "../system/global/global.h"
 
 #define THROW_COMMAND_ERR(msg) \
-	throw SystemException(CommandError, "(" + cmdSymbol + ") " + msg) \
+	throw new CommandErr("(" + cmdSymbol + ") " + msg) \
 
 struct CommandHelpData;
 

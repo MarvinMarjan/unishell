@@ -43,14 +43,9 @@ private:
 		return (litToStr(a) == litToStr(b));
 	}
 
-	void checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes) {
-		for (const lit::LiteralValue::Type type : expectedTypes)
-			if (lit::isTypeof(value, type))
-				return;
-		
-		throw SystemException(ExprInterpreterError, 
-			lit::getTypeAsString(expectedTypes, true) + " expected, got " + lit::getTypeAsString(value->type(), true), ExceptionRef(USER_INPUT));
-	}
+
+
+	void checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes);
 
 	void checkLiteralType(const std::vector<lit::LiteralValue*>& vals, const std::vector<lit::LiteralValue::Type>& expectedTypes) {
 		for (lit::LiteralValue* value : vals)

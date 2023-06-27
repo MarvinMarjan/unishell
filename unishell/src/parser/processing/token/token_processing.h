@@ -94,7 +94,7 @@ private:
 
 	static void checkIndex(const TokenList& source, size_t& i, const unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
-			throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, source[i].getIndex()));
+			throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
 		else
 			i++;
 	}
@@ -143,7 +143,7 @@ private:
 	static void consume(const TokenList& source, const TokenEnum delimiter, size_t& i, const std::string& errMsg) {
 		while (source[i].getType() != delimiter) {
 			if (i + 1 >= source.size())
-				throw SystemException(TokenProcessingError, errMsg, ExceptionRef(USER_INPUT, System::input()->size() - 1));
+				throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, System::input()->size() - 1));
 			else
 				i++;
 		}

@@ -24,7 +24,7 @@ lit::LiteralValue* lit::getObjFromTokenList(const TokenList& source)
 		aux = token.getLiteral();
 
 		if (LiteralValue::typeof(asList(aux)[0]) != LitType::Literal)
-			throw SystemException(TokenProcessingError, "Literal type expected for property name", ExceptionRef(*__userInput, token.getIndex()));
+			throw new TokenProcessingErr("Literal type expected for property name", ExceptionRef(*__userInput, token.getIndex()));
 
 		asObj(lit).insert({ asStr(asList(aux)[0]), asList(aux)[1] });
 	}

@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
 			*sys.input() = INStream::getLine(); // sets global user input
 
-			TokenList input = TokenProcess::process(InstreamScanner(USER_INPUT).scanTokens());
+			TokenList input = TokenProcess::process(InstreamScanner(UNISHLL_USER_INPUT).scanTokens());
 
 			// empty
 			if (!input.size())
@@ -43,20 +43,20 @@ int main(int argc, char** argv)
 
 			// unknown command
 			if (!command)
-				throw SystemException(CommandError, "Unknown command: " + clr(input[0].getLexical(), __clr_command->toString()));
+				throw new CommandErr("Unknown command: " + clr(input[0].getLexical(), __clr_command->toString()));
 
 			// execute command
 			command->exec();
 		}
 
 		// system exception was thrown
-		catch (const SystemException& sysErr) {
+		catch (UserException* sysErr) {
 			sys.error(sysErr);
 		}
 
 		// unhandled exception
 		catch (...) {
-			sys.error(SystemException(InternalSystemError, "Unexpected error"));
+			sys.error(Exception("unknown", "Unexpected error"));
 		}
 	}
 

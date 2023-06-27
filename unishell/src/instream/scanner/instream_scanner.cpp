@@ -61,7 +61,7 @@ void InstreamScanner::scanToken()
 		else if (alg::string::isDigit(ch)) {
 			if (ch == '.' && alg::string::isDigit(peek()) && peek() != '.') number();
 			else if (ch != '.') number();
-			else throw SystemException(InstreamScannerError, "Unexpected token", ExceptionRef(src, current - 1));
+			else throw new InstreamScannerErr("Unexpected token", ExceptionRef(src, current - 1));
 		}
 
 		else if (!keyword() && !boolean()) word(LITERAL, true);
@@ -73,7 +73,7 @@ void InstreamScanner::string(const char delimiter, const bool raw)
 {
 	while (peek() != delimiter) {
 		if (isAtEnd())
-			throw SystemException(InstreamScannerError, "Unterminated string", ExceptionRef(USER_INPUT, current - 1));
+			throw new InstreamScannerErr("Unterminated string", ExceptionRef(UNISHLL_USER_INPUT, current - 1));
 
 		if (advance() != '\\' || raw) continue;
 

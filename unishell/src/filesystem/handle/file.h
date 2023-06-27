@@ -22,7 +22,7 @@ namespace fsys
 	{
 	public:
 		static void createFile(const std::string& path) {
-			std::ofstream file(path.c_str(), std::ios::out);
+			std::ofstream file(path, std::ios::out);
 
 			if (file.fail())
 				throw FileException {path};
@@ -54,8 +54,6 @@ namespace fsys
 				throw FileException {path};
 
 			file << data;
-
-			file.close();
 		}
 
 		static std::string readAsString(const std::string& path) {
@@ -63,7 +61,7 @@ namespace fsys
 		}
 
 		static StringList readAsList(const std::string& path) {
-			std::ifstream file(path.c_str());
+			std::ifstream file(path);
 			StringList content;
 			std::string buff;
 
@@ -73,7 +71,6 @@ namespace fsys
 			while (std::getline(file, buff))
 				content.push_back(buff);
 
-			file.close();
 			return content;
 		}
 

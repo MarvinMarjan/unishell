@@ -58,7 +58,7 @@ public:
 			if (i == index)
 				return (*this)[index];
 
-		throw SystemException(CommandError, "Invalid param (index): " + index);
+		throw new CommandErr("Invalid param (index): " + index);
 	}
 
 	void match(ArgList& args) const {

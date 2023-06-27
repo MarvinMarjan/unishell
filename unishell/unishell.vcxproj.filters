@@ -71,9 +71,6 @@
     <ClCompile Include="src\filesystem\handle\file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\system\exception\system_exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\algorithm\string\manip.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

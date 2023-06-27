@@ -16,7 +16,7 @@
 #define sysprintv		System::printv
 #define sysprintln(msg) System::print(msg, true)
 
-#define USER_INPUT *System::input()
+#define UNISHLL_USER_INPUT *System::input()
 
 class System
 {
@@ -34,10 +34,16 @@ public:
 		if (endLine) std::cout << std::endl;
 	}
 
+
 	// prints a error format message
-	static void error(const SystemException& exception) noexcept {
+	static void error(const Exception& exception) noexcept {
 		sysprintln(exception.toString());
 	}
+
+	static void error(Exception* exception) noexcept {
+		sysprintln(exception->toString());
+	}
+
 
 	static bool getAbort() noexcept {
 		return abort;

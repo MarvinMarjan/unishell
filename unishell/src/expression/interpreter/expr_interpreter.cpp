@@ -88,3 +88,16 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 
 	return nullptr;
 }
+
+
+void ExprInterpreter::checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes)
+{
+	for (const lit::LiteralValue::Type type : expectedTypes)
+		if (lit::isTypeof(value, type))
+			return;
+
+	const std::string strExpected = lit::getTypeAsString(expectedTypes, true);
+	const std::string strGot = lit::getTypeAsString(value->type(), true);
+
+	throw ExprInterpreterErr(strExpected + " expected, got " + strGot, ExceptionRef(UNISHLL_USER_INPUT));
+}

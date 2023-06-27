@@ -46,7 +46,6 @@ SOURCE := \
 	src/data/litvalue/type.cpp \
 	src/data/litvalue/obj_predef.cpp \
 	src/system/exception/exception_reference.cpp \
-	src/system/exception/system_exception.cpp \
 	src/system/global/global.cpp \
 	src/system/settings/option.cpp \
 	src/system/settings/option_format.cpp \
