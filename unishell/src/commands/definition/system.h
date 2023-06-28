@@ -28,6 +28,17 @@ END_COMMAND
 
 
 
+// sys
+START_COMMAND(SysCmdSys, ParamVec({ {nullptr, {lit::LitType::Literal}} }), CommandBase, "sys", CmdFunc::System)
+void exec() override {
+	const std::string cmdline = "cd " + __workingPath->getPath() + " & " + asStr(args[0]);
+
+	system(cmdline.c_str());
+}
+END_COMMAND
+
+
+
 // cd
 START_COMMAND(SysCmdCd, ParamVec({ {nullptr, {lit::LitType::Literal}} }), CommandBase, "cd", CmdFunc::System)
 void exec() override {

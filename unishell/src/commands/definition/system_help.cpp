@@ -12,6 +12,13 @@ END_HELP
 
 
 
+// sys
+START_HELP(SysCmdSys)
+return { .name = SysCmdSys().symbol, .params = {{"Source", {lit::LitType::Literal}}}, .description = "executes ^0 as a operational system command." };
+END_HELP
+
+
+
 // cd
 START_HELP(SysCmdCd)
 return { .name = SysCmdCd().symbol, .params = {{"Path", {lit::LitType::Literal}}}, .description = "working path manipulation." };

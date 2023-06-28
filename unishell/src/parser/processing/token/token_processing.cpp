@@ -137,7 +137,7 @@ TokenList TokenProcess::processKeywords(const TokenList& source)
 		{
 		case UNPACK:
 			if (i + 1 >= source.size() || source[i + 1].getType() != LIST)
-				throw new TokenProcessingErr("List expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token.getIndex()));
+				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::List, true) + " expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token.getIndex()));
 
 			for (lit::LiteralValue* value : asList(source[i + 1].getLiteral()))
 				res.push_back(Token(lit::typeToTokenEnum(value->type()), "", value, {}, 0));
