@@ -99,6 +99,7 @@ extern BaseColorStructure* __clr_object_command;
 extern BaseColorStructure* __clr_system_command;
 extern BaseColorStructure* __clr_filesystem_command;
 extern BaseColorStructure* __clr_regex_command;
+extern BaseColorStructure* __clr_json_command;
 
 extern BaseColorStructure* __clr_encloses_s1;
 extern BaseColorStructure* __clr_encloses_s2;

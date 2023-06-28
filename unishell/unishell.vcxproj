@@ -137,6 +137,7 @@
     <ClCompile Include="src\commands\cmdcore\args.cpp" />
     <ClCompile Include="src\commands\cmdcore\cmd.cpp" />
     <ClCompile Include="src\commands\definition\filesystem_help.cpp" />
+    <ClCompile Include="src\commands\definition\json_help.cpp" />
     <ClCompile Include="src\commands\definition\list_help.cpp" />
     <ClCompile Include="src\commands\definition\literal_help.cpp" />
     <ClCompile Include="src\commands\definition\number_type.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="src\commands\definition\cmds.h" />
     <ClInclude Include="src\commands\definition\def.h" />
     <ClInclude Include="src\commands\definition\filesystem.h" />
+    <ClInclude Include="src\commands\definition\json.h" />
     <ClInclude Include="src\commands\definition\list.h" />
     <ClInclude Include="src\commands\definition\literal.h" />
     <ClInclude Include="src\commands\definition\number.h" />

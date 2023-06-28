@@ -8,3 +8,4 @@
 #include "list.h"
 #include "object.h"
 #include "regex.h"
+#include "json.h"

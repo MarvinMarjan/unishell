@@ -20,7 +20,9 @@ enum class CmdFunc
 
 	System,
 	Filesystem,
-	Regex
+
+	Regex,
+	JSON
 };
 
 
@@ -34,6 +36,7 @@ inline std::string funcToString(const CmdFunc func) noexcept {
 	case CmdFunc::System:		return "System";
 	case CmdFunc::Filesystem:	return "Filesystem";
 	case CmdFunc::Regex:		return "Regex";
+	case CmdFunc::JSON:			return "JSON";
 
 	default: return "unknown";
 	}
@@ -49,6 +52,7 @@ constexpr inline BaseColorStructure* funcToColor(const CmdFunc func) noexcept {
 	case CmdFunc::System:		return __clr_system_command;
 	case CmdFunc::Filesystem:	return __clr_filesystem_command;
 	case CmdFunc::Regex:		return __clr_regex_command;
+	case CmdFunc::JSON:			return __clr_json_command;
 
 	default: return __clr_command;
 	}

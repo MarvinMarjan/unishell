@@ -17,3 +17,4 @@
 	[] (lit::LiteralValue* value) { \
 		boolean_val = asBool(value); \
 	}
+

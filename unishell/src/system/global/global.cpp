@@ -126,6 +126,9 @@ const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new RegexRetCmdMatch(),
 	new RegexRetCmdReplace(),
 
+	new JSONRetCmdFromJson(),
+	new JSONRetCmdToJson(),
+
 	new TypeRetCmdType(),
 	new TypeRetCmdLiteral(),
 	new TypeRetCmdNumber(),
@@ -243,6 +246,7 @@ BaseColorStructure* __clr_object_command = new IdColorStructure(216);
 BaseColorStructure* __clr_system_command = new IdColorStructure(140);
 BaseColorStructure* __clr_filesystem_command = new IdColorStructure(184);
 BaseColorStructure* __clr_regex_command = new IdColorStructure(163);
+BaseColorStructure* __clr_json_command = new IdColorStructure(221);
 
 BaseColorStructure* __clr_encloses_s1 = new IdColorStructure(210);
 BaseColorStructure* __clr_encloses_s2 = new IdColorStructure(113);

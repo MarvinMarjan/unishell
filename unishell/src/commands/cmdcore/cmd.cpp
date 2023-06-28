@@ -60,6 +60,9 @@ RetCommandBase* getRetCommand(const std::string& cmdName, const ArgList& args, c
 	CHECK_CMD(RegexRetCmdMatch);
 	CHECK_CMD(RegexRetCmdReplace);
 
+	CHECK_CMD(JSONRetCmdFromJson);
+	CHECK_CMD(JSONRetCmdToJson);
+
 	CHECK_CMD(TypeRetCmdType);
 	CHECK_CMD(TypeRetCmdLiteral);
 	CHECK_CMD(TypeRetCmdNumber);

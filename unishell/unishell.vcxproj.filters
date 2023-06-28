@@ -125,6 +125,12 @@
     <ClCompile Include="src\system\settings\option.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\system\settings\settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\commands\definition\json_help.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -314,6 +320,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\algorithm\chrono\meter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\settings\json_fstream_handle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\commands\definition\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
