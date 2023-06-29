@@ -11,7 +11,12 @@ class Environment
 {
 public:
 	Environment() {
-		data_ = JSONFstreamHandle(UNISHLL_ENVIRONMENT_DEFAULT_JSON_FILE_PATH);
+		try {
+			data_ = JSONFstreamHandle(UNISHLL_ENVIRONMENT_DEFAULT_JSON_FILE_PATH);
+		}
+		catch (JSONFstreamHandle::JSONFileNotFound) {
+			return;
+		}
 
 		loadFromData();
 	}

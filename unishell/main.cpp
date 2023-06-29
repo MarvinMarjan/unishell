@@ -39,8 +39,6 @@ int main(int argc, char** argv)
 	setCursorVisible(false);
 
 	System sys;
-	PathHandler* sysPath = sys.path();
-	Environment* sysEnv = sys.env();
 
 	
 	// entry modes
