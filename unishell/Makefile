@@ -25,6 +25,7 @@ SOURCE := \
 	src/commands/definition/regex_help.cpp \
 	src/commands/definition/system_help.cpp \
 	src/commands/definition/type_help.cpp \
+	src/commands/definition/json_help.cpp \
 	src/commands/cmdcore/args.cpp \
 	src/commands/cmdcore/cmd.cpp \
 	src/commands/cmdcore/help_data.cpp \

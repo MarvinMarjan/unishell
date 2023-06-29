@@ -10,7 +10,7 @@
 SysStat*	__sys_stat		= new SysStat;
 
 Environment*	__environment	= new Environment();
-PathHandler*	__workingPath	= new PathHandler(WindowsSystem::getSystemDesktopPath());
+PathHandler*	__workingPath	= new PathHandler(getSystemDesktopPath());
 std::string*	__userInput		= new std::string();
 Settings*		__settings		= new Settings();
 
@@ -96,6 +96,8 @@ const std::vector<CommandBase*> __sys_commands = {
 
 const std::vector<RetCommandBase*> __sys_ret_commands = {
 	new SysRetCmdInput(),
+	new SysRetCmdSysMemStat(),
+	new SysRetCmdSysDiskStat(),
 
 	new LiteralRetCmdAt(),
 	new LiteralRetCmdSize(),

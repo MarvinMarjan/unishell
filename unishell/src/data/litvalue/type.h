@@ -84,7 +84,6 @@ namespace lit
 		return new LiteralValue(LiteralValueDecl((double)value));
 	}
 
-
 	LiteralValue* getListFromTokenList(const TokenList& source);
 	LiteralValue* getObjFromTokenList(const TokenList& source);
 

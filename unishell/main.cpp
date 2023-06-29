@@ -13,11 +13,12 @@
 
 #include "src/algorithm/chrono/meter.h"
 
+#include "src/system/windows/system_memory.h"
 
 int main(int argc, char** argv)
 {
 	// disable command line caret
-	WindowsSystem::setCursorVisible(false);
+	setCursorVisible(false);
 
 	System sys;
 	PathHandler* sysPath = sys.path();

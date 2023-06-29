@@ -49,3 +49,21 @@ lit::LiteralValue* lit::newRegexResultObj(std::smatch& match)
 
 	return list;
 }
+
+lit::LiteralValue* lit::newSysMemStatObj(const SystemMemoryInfo& memInfo)
+{
+	return lit::lit(lit::LitObject({
+		{"availableMemory", lit::lit((double)memInfo.availableMemory)},
+		{"memoryAvailablePercent", lit::lit((double)memInfo.memoryAvailablePercent)},
+		{"totalInstalledMemory", lit::lit((double)memInfo.totalInstalledMemory)}
+	}));
+}
+
+lit::LiteralValue* lit::newSysDiskStatObj(const SystemDiskInfo& diskInfo)
+{
+	return lit::lit(lit::LitObject({
+		{"totalBytes", lit::lit((double)diskInfo.totalBytes)},
+		{"totalBytesAvailable", lit::lit((double)diskInfo.totalBytesAvailable)},
+		{"totalFreeBytes", lit::lit((double)diskInfo.totalFreeBytes)}
+	}));
+}
