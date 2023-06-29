@@ -235,6 +235,7 @@
     <ClInclude Include="src\system\settings\settings.h" />
     <ClInclude Include="src\system\system.h" />
     <ClInclude Include="src\system\exception\system_exception.h" />
+    <ClInclude Include="src\system\windows\system_memory.h" />
     <ClInclude Include="src\system\windows\windows_system.h" />
     <ClInclude Include="src\filesystem\handle\file.h" />
   </ItemGroup>

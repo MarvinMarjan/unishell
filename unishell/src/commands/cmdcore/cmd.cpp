@@ -42,6 +42,8 @@ CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const F
 RetCommandBase* getRetCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
 {
 	CHECK_CMD(SysRetCmdInput);
+	CHECK_CMD(SysRetCmdSysMemStat);
+	CHECK_CMD(SysRetCmdSysDiskStat);
 
 	CHECK_CMD(LiteralRetCmdSub);
 	CHECK_CMD(LiteralRetCmdSplit);

@@ -8,6 +8,7 @@
 #include "../../system/system.h"
 #include "../../system/settings/settings.h"
 #include "../../system/settings/option_format.h"
+#include "../../data/litvalue/obj_predef.h"
 
 // print
 START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
@@ -250,5 +251,21 @@ lit::LiteralValue* exec() override {
 	std::getline(std::cin, input);
 
 	return lit::lit(input);
+}
+END_COMMAND
+
+
+
+// sysMemStat
+START_COMMAND(SysRetCmdSysMemStat, {}, RetCommandBase, "sysMemStat", CmdFunc::System)
+lit::LiteralValue* exec() override {
+	return lit::newSysMemStatObj(getSystemMemoryInfo());
+}
+END_COMMAND
+
+// sysDiskStat
+START_COMMAND(SysRetCmdSysDiskStat, {}, RetCommandBase, "sysDiskStat", CmdFunc::System)
+lit::LiteralValue* exec() override {
+	return lit::newSysDiskStatObj(getSystemDiskInfo());
 }
 END_COMMAND

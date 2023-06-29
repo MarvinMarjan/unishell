@@ -117,3 +117,15 @@ END_HELP
 START_HELP(SysRetCmdInput)
 return { .name = SysRetCmdInput().symbol, .description = "returns the user input." };
 END_HELP
+
+
+
+// sysMemStat
+START_HELP(SysRetCmdSysMemStat)
+return { .name = SysRetCmdSysMemStat().symbol, .description = "returns a object containing information about system memory." };
+END_HELP
+
+// sysDiskStat
+START_HELP(SysRetCmdSysDiskStat)
+return { .name = SysRetCmdSysDiskStat().symbol, .description = "returns a object containing information about system disk." };
+END_HELP
