@@ -10,13 +10,23 @@
 #include "../../system/settings/option_format.h"
 #include "../../data/litvalue/obj_predef.h"
 
+
+
+// exp
+START_COMMAND(SysCmdExp, {}, CommandBase, "exp", CmdFunc::System)
+void exec() {}
+END_COMMAND
+
+
+
 // print
 START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
 void exec() override {
 	for (lit::LiteralValue* value : args)
 		sysprint(litToStr(value));
 
-	sysprintln("");
+	if (!flags.hasFlag("nl"))
+		sysprintln("");
 }
 END_COMMAND
 

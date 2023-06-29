@@ -39,7 +39,10 @@ enum TokenEnum
 	EQUAL,
 
 	// data
-	NUMBER, LITERAL, BOOLEANVAL
+	NUMBER, LITERAL, BOOLEANVAL,
+
+	// analisys
+	ENDLINE
 };
 
 class Token
@@ -47,8 +50,8 @@ class Token
 public:
 	friend class TokenProcess;
 
-	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index) : 
-		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
+	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1) : 
+		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line)
 	{}
 
 	constexpr TokenEnum getType() const noexcept {
@@ -67,6 +70,10 @@ public:
 		return index;
 	}
 
+	constexpr size_t getLine() const noexcept {
+		return line;
+	}
+
 	TokenList getSub() const noexcept {
 		return sub;
 	}
@@ -76,6 +83,7 @@ private:
 	std::string lexical;
 	lit::LiteralValue* lit;
 	size_t index;
+	size_t line;
 
 	TokenList sub;
 };

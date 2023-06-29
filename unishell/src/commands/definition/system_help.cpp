@@ -1,8 +1,16 @@
 #include "system.h"
 
+
+// exp
+START_HELP(SysCmdExp)
+return { .name = SysCmdExp().symbol, .params = {{"Expr", {lit::LitType::Any}, true}} , .undefinedParamSize = true, .description = "execute the expression ^0."};
+END_HELP
+
+
+
 // print
 START_HELP(SysCmdPrint)
-return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console." };
+return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console.", .flags = {{"nl", "no-newline"}}};
 END_HELP
 
 // clear

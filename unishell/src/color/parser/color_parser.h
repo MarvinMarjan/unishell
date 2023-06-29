@@ -72,7 +72,7 @@ private:
 
 		if (!alg::vector::exists(__color, asStr(args[0].getLiteral()))) {
 			if (ignoreExceptions) return nullptr;
-			throw new ColorParserErr("Unknown color", ExceptionRef(UNISHLL_USER_INPUT, args[0].getIndex()));
+			throw new ColorParserErr("Unknown color", ExceptionRef(UNISHLL_USER_INPUT, args[0]));
 		}
 
 		return new ColorStructure(stringToColor(asStr(args[0].getLiteral())), stringToColorMode(optionalMode.getLexical()));
@@ -89,7 +89,7 @@ private:
 		for (const Token& token : args) {
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
-				throw new ColorParserErr(expectedTypeStr + " expected", ExceptionRef(*System::input(), token.getIndex()));
+				throw new ColorParserErr(expectedTypeStr + " expected", ExceptionRef(*System::input(), token));
 			}
 		}
 

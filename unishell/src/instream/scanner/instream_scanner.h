@@ -9,32 +9,40 @@
 #include "instream_token.h"
 
 enum InstreamScannerHints {
-	IgnoreCommand = 0x01
+	IgnoreCommand = 0x01,
+	AddEndlTokens = 0x02
 };
 
 class InstreamScanner : public ScannerBase<Token>
 {
 public:
-	InstreamScanner(const std::string& src, const int hints = 0) : ScannerBase(src) {
+	InstreamScanner(const std::string& src, const int hints = 0)
+		: ScannerBase(src)
+	{
 		ignoreCommand = alg::bit::hasBits(hints, IgnoreCommand);
+		addEndlTokens = alg::bit::hasBits(hints, AddEndlTokens);
+
+		currentLine = 1;
 	}
 
 	TokenList scanTokens() override;
+
+	static std::vector<TokenList> separateLinesFromTokens(TokenList tokens);
 
 private:
 	void scanToken() override;
 
 
 	void addToken(const TokenEnum type) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1));
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine));
 	}
 
 	void addToken(const TokenEnum type, const std::string& lex) noexcept {
-		tokens.push_back(Token(type, lex, nullptr, {}, current - 1));
+		tokens.push_back(Token(type, lex, nullptr, {}, current - 1, currentLine));
 	}
 
 	void addToken(const TokenEnum type, lit::LiteralValue* lit) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1));
+		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1, currentLine));
 	}
 
 	bool addBoolean(const std::string& boolStr) {
@@ -113,4 +121,7 @@ private:
 	TokenList tokens;
 
 	bool ignoreCommand;
+	bool addEndlTokens;
+
+	size_t currentLine;
 };

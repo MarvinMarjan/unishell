@@ -13,6 +13,7 @@ INCLUDE_PATHS := \
 
 SOURCE := \
 	main.cpp \
+	entrymodes.cpp \
 	src/algorithm/string/manip.cpp \
 	src/algorithm/vector/sort.cpp \
 	src/color/parser/color_parser.cpp \

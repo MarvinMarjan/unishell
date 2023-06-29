@@ -4,6 +4,8 @@
 
 CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const FlagList& flags)
 {
+	CHECK_CMD(SysCmdExp);
+
 	CHECK_CMD(SysCmdPrint);
 	CHECK_CMD(SysCmdClear);
 	

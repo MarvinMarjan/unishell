@@ -137,7 +137,7 @@ TokenList TokenProcess::processKeywords(const TokenList& source)
 		{
 		case UNPACK:
 			if (i + 1 >= source.size() || source[i + 1].getType() != LIST)
-				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::List, true) + " expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token.getIndex()));
+				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::List, true) + " expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token));
 
 			for (lit::LiteralValue* value : asList(source[i + 1].getLiteral()))
 				res.push_back(Token(lit::typeToTokenEnum(value->type()), "", value, {}, 0));
@@ -203,13 +203,13 @@ Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool
 	retCmd = getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
-		throw new TokenProcessingErr("Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
+		throw new TokenProcessingErr("Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(UNISHLL_USER_INPUT, source[i]));
 
 	ret = retCmd->exec();
 
 	if (hasExplicitList) i++;
 
-	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex());
+	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex(), source[i].getLine());
 }
 
 

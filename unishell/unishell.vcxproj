@@ -149,6 +149,9 @@
     <ClCompile Include="src\data\litvalue\litformat.cpp" />
     <ClCompile Include="src\data\litvalue\obj_predef.cpp" />
     <ClCompile Include="src\data\litvalue\type.cpp" />
+    <ClCompile Include="entrymodes.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\environment\identifier\idformat.cpp" />
     <ClCompile Include="src\expression\interpreter\expr_interpreter.cpp" />
     <ClCompile Include="src\expression\parser\expr_parser.cpp" />
@@ -225,6 +228,7 @@
     <ClInclude Include="src\path\handler\path_handler.h" />
     <ClInclude Include="src\path\scanner\path_scanner.h" />
     <ClInclude Include="src\path\scanner\path_token.h" />
+    <ClInclude Include="src\system\boot\boot.h" />
     <ClInclude Include="src\system\exception\exception_reference.h" />
     <ClInclude Include="src\system\global\typedecl.h" />
     <ClInclude Include="src\system\global\global.h" />
@@ -241,6 +245,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

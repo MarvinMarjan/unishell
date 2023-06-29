@@ -94,7 +94,7 @@ private:
 
 	static void checkIndex(const TokenList& source, size_t& i, const unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
-			throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
+			throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, source[i]));
 		else
 			i++;
 	}

@@ -64,7 +64,7 @@ public:
 	}
 
 	std::string toStrColorStructure() const override {
-		return "id:" + tostr(idc) + ';' + colorModeEnumToString(mode) + ':';
+		return "id:" + tostr(idc) + ',' + colorModeEnumToString(mode) + ':';
 	}
 
 
@@ -85,7 +85,7 @@ public:
 	}
 
 	std::string toStrColorStructure() const override {
-		return "rgb:" + tostr(red) + ';' + tostr(green) + ';' + tostr(blue) + ';' + colorModeEnumToString(mode) + ':';
+		return "rgb:" + tostr(red) + ',' + tostr(green) + ',' + tostr(blue) + ',' + colorModeEnumToString(mode) + ':';
 	}
 
 
@@ -109,7 +109,7 @@ public:
 	}
 
 	std::string toStrColorStructure() const override {
-		return "clr:" + colorEnumToString(color) + ';' + colorModeEnumToString(mode) + ':';
+		return "clr:" + colorEnumToString(color) + ',' + colorModeEnumToString(mode) + ':';
 	}
 
 
