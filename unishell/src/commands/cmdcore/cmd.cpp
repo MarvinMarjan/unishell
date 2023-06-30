@@ -7,6 +7,9 @@ CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const F
 	CHECK_CMD(SysCmdExp);
 	CHECK_CMD(SysCmdDo);
 
+	CHECK_CMD(SysCmdIf);
+	CHECK_CMD(SysCmdWhile);
+
 	CHECK_CMD(SysCmdPrint);
 	CHECK_CMD(SysCmdClear);
 	

@@ -66,6 +66,9 @@ const StringList __color_formats = {
 const std::vector<CommandBase*> __sys_commands = {
 	new SysCmdExp(),
 	new SysCmdDo(),
+	
+	new SysCmdIf(),
+	new SysCmdWhile(),
 
 	new SysCmdPrint(),
 	new SysCmdClear(),

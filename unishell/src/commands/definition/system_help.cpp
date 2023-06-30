@@ -13,6 +13,18 @@ END_HELP
 
 
 
+// if
+START_HELP(SysCmdIf)
+return { .name = SysCmdIf().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"ThenBlock", {lit::LitType::Block}}, {"ElseBlock", {lit::LitType::Block}}}, .description = "if ^0 is true, execute ^1 block, else, execute ^2 block." };
+END_HELP
+
+// while
+START_HELP(SysCmdWhile)
+return { .name = SysCmdWhile().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"Block", {lit::LitType::Block}}}, .description = "executes block ^1 while ^0 is true" };
+END_HELP
+
+
+
 // print
 START_HELP(SysCmdPrint)
 return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console.", .flags = {{"nl", "no-newline"}}};
