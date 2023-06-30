@@ -14,52 +14,46 @@
 #include "src/algorithm/chrono/meter.h"
 
 #include "src/system/windows/system_memory.h"
+#include "src/system/boot/boot.h"
+
+
+
+extern void __repl_entry_mode();
+extern void __fread_entry_mode(const std::string& fpath);
+
+
 
 int main(int argc, char** argv)
 {
+	Boot boot(argv, argc);
+	BootSettings bootConfig;
+
+	try {
+		bootConfig = boot.getBootSettings(boot.flags());
+	}
+	catch (Exception* err) {
+		System::error(err);
+	}
+
 	// disable command line caret
 	setCursorVisible(false);
 
 	System sys;
-	PathHandler* sysPath = sys.path();
-	Environment* sysEnv = sys.env();
 
-	// main loop
-	while (!sys.getAbort()) {
+	
+	// entry modes
+	if (bootConfig.sourceFile.empty())
+		__repl_entry_mode();
+
+	else {
 		try {
-			sysprint(clr(sysPath->getPath(), 41) + clr(" $ ", 127));
-			*sys.input() = INStream::getLine(); // sets global user input
-
-			TokenList input = TokenProcess::process(InstreamScanner(UNISHLL_USER_INPUT).scanTokens());
-
-			// empty
-			if (!input.size())
-				continue;
-
-			FlagList flags = getFlags(input);
-			removeFlags(input);
-
-			ArgList args = getArgs(input);
-			CommandBase* command = getCommand(input[0].getLexical(), args, flags);
-
-			// unknown command
-			if (!command)
-				throw new CommandErr("Unknown command: " + clr(input[0].getLexical(), __clr_command->toString()));
-
-			// execute command
-			command->exec();
+			__fread_entry_mode(bootConfig.sourceFile);
 		}
-
-		// system exception was thrown
-		catch (UserException* sysErr) {
-			sys.error(sysErr);
-		}
-
-		// unhandled exception
-		catch (...) {
-			sys.error(Exception("unknown", "Unexpected error"));
+		catch (UserException* err) {
+			System::error(err);
 		}
 	}
+
 
 
 	__settings->updateDataFromOptions();

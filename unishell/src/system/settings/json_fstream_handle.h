@@ -34,10 +34,14 @@ public:
 		if (data.is_array()) return JSONListToLiteralValueList(data);
 		if (data.is_object()) return JSONObjectToLiteralValueObject(data);
 
+		if (data.is_null()) return nullptr;
+
 		return nullptr;
 	}
 
 	static json LiteralValueToJSONValue(lit::LiteralValue* value) {
+		if (!value) return nullptr;
+
 		if (value->index() == 0) return asStr(value);
 		if (value->index() == 1) return asDbl(value);
 		if (value->index() == 2) return asBool(value);

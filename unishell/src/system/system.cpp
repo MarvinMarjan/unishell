@@ -112,7 +112,7 @@ System::System()
 }
 
 
-Identifier* System::getEnvId(const std::string& idName, const int index)
+Identifier* System::getEnvId(const std::string& idName, const int index, const int line)
 {
 	Identifier* identifier = __environment->getId(idName);
 

@@ -22,9 +22,10 @@ using FSExtension = std::map<StringList, std::string>;
 
 extern SysStat*	__sys_stat;
 
-extern Environment*		__environment; // stores a Environment pointer
-extern PathHandler*		__workingPath; // stores the current working directory path
-extern std::string*		__userInput;   // stores the last user input raw string
+extern Environment*		__environment;
+extern PathHandler*		__workingPath;
+extern std::string*		__userInput;
+extern StringList		__fread_input;
 extern Settings*		__settings;
 
 
@@ -82,6 +83,7 @@ extern BaseColorStructure* __clr_type_number;
 extern BaseColorStructure* __clr_type_bool;
 extern BaseColorStructure* __clr_type_list;
 extern BaseColorStructure* __clr_type_object;
+extern BaseColorStructure* __clr_type_block;
 extern BaseColorStructure* __clr_type_any;
 
 extern BaseColorStructure* __clr_cursor;

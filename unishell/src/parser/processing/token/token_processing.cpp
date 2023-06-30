@@ -1,6 +1,7 @@
 #include "token_processing.h"
 
 #include "../../../commands/cmdcore/cmd.h"
+#include "../../../instream/scanner/instream_scanner.h"
 
 
 TokenList TokenProcess::subToLiteral(const TokenList& source)
@@ -10,10 +11,7 @@ TokenList TokenProcess::subToLiteral(const TokenList& source)
 	for (const Token& token : source)
 		switch (token.getType()) {
 		case LIST: {
-			if (token.getLiteral()) {
-				res.push_back(token);
-				break;
-			}
+			if (addIfHasLiteral(res, token)) break;
 
 			const TokenList parsed = process(token.getSub());
 			res.push_back(Token(LIST, "", lit::getListFromTokenList(parsed), {}, token.getIndex()));
@@ -21,14 +19,24 @@ TokenList TokenProcess::subToLiteral(const TokenList& source)
 		}
 
 		case OBJECT: {
-			if (token.getLiteral()) {
-				res.push_back(token);
-				break;
-			}
+			if (addIfHasLiteral(res, token)) break;
 
 			const TokenList parsed = process(token.getSub());
 			res.push_back(Token(OBJECT, "", lit::getObjFromTokenList(parsed), {}, token.getIndex()));
 			break;
+		}
+
+		case BLOCK: {
+			if (addIfHasLiteral(res, token)) break;
+
+			lit::LiteralValue* block = lit::lit(InstreamScanner::separateLinesFromTokens(token.getSub()));
+
+			res.push_back(Token(BLOCK, "", block, {}, token.getIndex()));
+			break;
+
+			// geração de blocos está concluída.
+			// falta debugar (caso queira) para ver se tudo está indo
+			// como planejado.
 		}
 
 		default:
@@ -137,7 +145,7 @@ TokenList TokenProcess::processKeywords(const TokenList& source)
 		{
 		case UNPACK:
 			if (i + 1 >= source.size() || source[i + 1].getType() != LIST)
-				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::List, true) + " expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token.getIndex()));
+				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::List, true) + " expected for " + keywformat("unpack"), ExceptionRef(UNISHLL_USER_INPUT, token));
 
 			for (lit::LiteralValue* value : asList(source[i + 1].getLiteral()))
 				res.push_back(Token(lit::typeToTokenEnum(value->type()), "", value, {}, 0));
@@ -203,13 +211,13 @@ Token TokenProcess::getRetCommandReturn(const TokenList& source, size_t& i, bool
 	retCmd = getRetCommand(source[i].getLexical().substr(1), args, {});
 
 	if (!retCmd)
-		throw new TokenProcessingErr("Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
+		throw new TokenProcessingErr("Unknown command: " + cmdformat(source[i].getLexical()), ExceptionRef(UNISHLL_USER_INPUT, source[i]));
 
 	ret = retCmd->exec();
 
 	if (hasExplicitList) i++;
 
-	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex());
+	return Token(lit::getLitTokenEnum(ret), "", ret, {}, source[i].getIndex(), source[i].getLine());
 }
 
 

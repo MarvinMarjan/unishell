@@ -1,12 +1,35 @@
 #include "instream_scanner.h"
 
-TokenList InstreamScanner::scanTokens() {
+TokenList InstreamScanner::scanTokens()
+{
 	while (!isAtEnd()) {
 		start = current;
 		scanToken();
 	}
 
 	return tokens;
+}
+
+
+std::vector<TokenList> InstreamScanner::separateLinesFromTokens(TokenList tokens)
+{
+	std::vector<TokenList> lines;
+	TokenList aux;
+
+	for (const Token& token : tokens) {
+		if (token.getType() == ENDLINE) {
+			lines.push_back(aux);
+			aux.clear();
+			continue;
+		}
+
+		aux.push_back(token);
+	}
+
+	if (!aux.empty())
+		lines.push_back(aux);
+
+	return lines;
 }
 
 
@@ -18,10 +41,19 @@ void InstreamScanner::scanToken()
 	switch (ch)
 	{
 	case ' ':
-	case ';':
 	case ',':
 	case '\r':
 	case '\t':
+		break;
+
+	case '\n':
+		currentLine++;
+		break;
+
+	case ';':
+		if (addEndlTokens)
+			addToken(ENDLINE);
+		
 		break;
 
 	case '+': addToken(PLUS); break;
@@ -56,15 +88,15 @@ void InstreamScanner::scanToken()
 	case ':': addToken(COLON); break;
 
 	default:
-		if (tokens.empty() && !ignoreCommand) word(COMMAND);
-
-		else if (alg::string::isDigit(ch)) {
+		if (alg::string::isDigit(ch))
+		{
 			if (ch == '.' && alg::string::isDigit(peek()) && peek() != '.') number();
 			else if (ch != '.') number();
 			else throw new InstreamScannerErr("Unexpected token", ExceptionRef(src, current - 1));
 		}
 
-		else if (!keyword() && !boolean()) word(LITERAL, true);
+		else if (!block() && !keyword() && !boolean())
+			word(LITERAL, true);
 	}
 }
 

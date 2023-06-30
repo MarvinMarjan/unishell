@@ -1,6 +1,8 @@
 #pragma once
 
-#include <string>
+
+#include "../algorithm/string/char.h"
+
 
 template <typename T>
 class ScannerBase 
@@ -34,6 +36,12 @@ protected:
 	virtual char advance() noexcept {
 		return src[current++];
 	}
+
+	virtual std::string advanceWord() noexcept {
+		for (current; alg::string::isAlpha(peek()); current++) {}
+		return getCurrentSubstring();
+	}
+
 
 	virtual char peek() const noexcept {
 		return src[current];

@@ -10,6 +10,8 @@ class TokenProcess
 public:
 	// process all tokens
 	static TokenList process(TokenList source) {
+		source = generateBlocks(source);
+
 		source = expandTokens(source);
 		source = reduceTokens(source);
 		source = parseTokens(source);
@@ -53,6 +55,14 @@ private:
 	// LIST tokens with literals instead
 	static TokenList subToLiteral(const TokenList& source);
 
+	// returns true if "token" has a literal
+	static bool addIfHasLiteral(TokenList& list, const Token& token) noexcept {
+		if (token.getLiteral())
+			list.push_back(token);
+
+		return token.getLiteral();
+	}
+
 	// parse tokens that can be parsed. if token
 	// can be interpreted, interpret it
 	static TokenList parseTokens(const TokenList& source);
@@ -94,7 +104,7 @@ private:
 
 	static void checkIndex(const TokenList& source, size_t& i, const unsigned short aux, const std::string& errMsg) {
 		if (i + 1 >= source.size() && aux)
-			throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, source[i].getIndex()));
+			throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, source[i]));
 		else
 			i++;
 	}
@@ -112,6 +122,14 @@ private:
 		TokenList res;
 
 		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression", true);
+
+		return res;
+	}
+
+	static TokenList generateBlocks(const TokenList& source) {
+		TokenList res;
+
+		getInside(res, source, BEGIN, END, BLOCK, "Unterminated block");
 
 		return res;
 	}

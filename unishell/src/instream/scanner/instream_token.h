@@ -17,10 +17,10 @@ using TokenList = std::vector<Token>;
 enum TokenEnum
 {
 	// word tokens
-	COMMAND, RETCOMMAND, INRETCOMMAND, IDENTIFIER, FLAG,
+	RETCOMMAND, INRETCOMMAND, IDENTIFIER, FLAG,
 	
 	// sub tokens
-	EXPRESSION, COLOR, LIST, OBJECT,
+	BLOCK, EXPRESSION, COLOR, LIST, OBJECT,
 
 	// math operators
 	PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN,
@@ -30,7 +30,7 @@ enum TokenEnum
 	EQUAL_EQUAL, EQUAL_EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
 	
 	// keywords
-	AND, OR, NULLVAL, UNPACK,
+	AND, OR, NULLVAL, UNPACK, BEGIN, END,
 
 	// others
 	COLON, LBRACE, RBRACE, LBRACKET, RBRACKET,
@@ -39,7 +39,10 @@ enum TokenEnum
 	EQUAL,
 
 	// data
-	NUMBER, LITERAL, BOOLEANVAL
+	NUMBER, LITERAL, BOOLEANVAL,
+
+	// analisys
+	ENDLINE
 };
 
 class Token
@@ -47,8 +50,8 @@ class Token
 public:
 	friend class TokenProcess;
 
-	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index) : 
-		type(type), lexical(lexical), lit(lit), sub(sub), index(index)
+	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1) : 
+		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line)
 	{}
 
 	constexpr TokenEnum getType() const noexcept {
@@ -67,6 +70,10 @@ public:
 		return index;
 	}
 
+	constexpr size_t getLine() const noexcept {
+		return line;
+	}
+
 	TokenList getSub() const noexcept {
 		return sub;
 	}
@@ -76,6 +83,7 @@ private:
 	std::string lexical;
 	lit::LiteralValue* lit;
 	size_t index;
+	size_t line;
 
 	TokenList sub;
 };
@@ -85,6 +93,8 @@ constexpr inline TokenEnum keywordToTokenEnum(const std::string& keyword) noexce
 	if (keyword == "or") return OR;
 	if (keyword == "null") return NULLVAL;
 	if (keyword == "unpack") return UNPACK;
+	if (keyword == "begin") return BEGIN;
+	if (keyword == "end") return END;
 
 	return LITERAL;
 }

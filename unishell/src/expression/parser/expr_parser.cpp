@@ -16,7 +16,7 @@ Expr* ExprParser::logicOperator() {
 	}
 
 	if (match({ NUMBER, LITERAL, BOOLEANVAL, LIST, OBJECT, LPAREN }))
-		throw new ExprParserErr("Operator expected", ExceptionRef(rawSource, prev().getIndex()));
+		throw new ExprParserErr("Operator expected", ExceptionRef(rawSource, prev()));
 
 	return expr;
 }
@@ -114,5 +114,5 @@ Expr* ExprParser::primary() {
 	if (!tokens.size())
 		return new LiteralExpr(nullptr);
 
-	throw new ExprParserErr("Expression expected", ExceptionRef(rawSource, prev().getIndex()));
+	throw new ExprParserErr("Expression expected", ExceptionRef(rawSource, prev()));
 }

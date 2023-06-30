@@ -79,7 +79,7 @@ public:
 
 
 
-	static Identifier* getEnvId(const std::string& idName, const int index = -1);
+	static Identifier* getEnvId(const std::string& idName, const int index = -1, const int line = 1);
 
 	static void delEnvId(const std::string& idName);
 

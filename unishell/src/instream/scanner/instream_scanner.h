@@ -9,32 +9,40 @@
 #include "instream_token.h"
 
 enum InstreamScannerHints {
-	IgnoreCommand = 0x01
+	IgnoreCommand = 0x01,
+	AddEndlTokens = 0x02
 };
 
 class InstreamScanner : public ScannerBase<Token>
 {
 public:
-	InstreamScanner(const std::string& src, const int hints = 0) : ScannerBase(src) {
+	InstreamScanner(const std::string& src, const int hints = 0)
+		: ScannerBase(src), hints(hints)
+	{
 		ignoreCommand = alg::bit::hasBits(hints, IgnoreCommand);
+		addEndlTokens = alg::bit::hasBits(hints, AddEndlTokens);
+
+		currentLine = 1;
 	}
 
 	TokenList scanTokens() override;
+
+	static std::vector<TokenList> separateLinesFromTokens(TokenList tokens);
 
 private:
 	void scanToken() override;
 
 
 	void addToken(const TokenEnum type) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1));
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine));
 	}
 
 	void addToken(const TokenEnum type, const std::string& lex) noexcept {
-		tokens.push_back(Token(type, lex, nullptr, {}, current - 1));
+		tokens.push_back(Token(type, lex, nullptr, {}, current - 1, currentLine));
 	}
 
 	void addToken(const TokenEnum type, lit::LiteralValue* lit) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1));
+		tokens.push_back(Token(type, getCurrentSubstring(), lit, {}, current - 1, currentLine));
 	}
 
 	bool addBoolean(const std::string& boolStr) {
@@ -89,19 +97,36 @@ private:
 		addToken(NUMBER, new lit::LiteralValue(std::stod(getCurrentSubstring())));
 	}
 	
-	// if is keyword, returns true and add it
+	// if is keyword, returns true and add it;
 	// else return false
 	bool keyword() {
-		for (current; alg::string::isAlpha(peek()); current++) {}
-		return addKeyword(getCurrentSubstring());
+		return addKeyword(advanceWord());
 	}
 
 	// if is boolean value, returns true and add it;
 	// else return false
 	bool boolean() {
-		for (current; alg::string::isAlpha(peek()); current++) {}
-		return addBoolean(getCurrentSubstring());
+		return addBoolean(advanceWord());
 	}
+
+
+	bool block() {
+		const std::string word = advanceWord();
+
+		if (word == "begin") {
+			addToken(BEGIN);
+			addEndlTokens = true;
+		}
+		
+		else if (word == "end" && !alg::bit::hasBits(hints, AddEndlTokens)) {
+			addToken(END);
+			addEndlTokens = false;
+		}
+
+
+		return (word == "begin" || word == "end");
+	}
+
 
 	// gets a sequence of alpha / digits characters
 	void word(const TokenEnum type, const bool hasLiteral = false) {
@@ -113,4 +138,9 @@ private:
 	TokenList tokens;
 
 	bool ignoreCommand;
+	bool addEndlTokens;
+
+	const int hints;
+
+	size_t currentLine;
 };

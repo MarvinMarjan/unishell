@@ -4,6 +4,8 @@
 
 #include <sstream>
 
+
+
 std::string lit::literalValueToString(LiteralValue* val, const bool color) noexcept
 {
 	if (!val) return ((color) ? nullformat("null") : "null");
@@ -13,8 +15,19 @@ std::string lit::literalValueToString(LiteralValue* val, const bool color) noexc
 	else if (val->index() == 2) return boolToString(asBool(val), color);
 	else if (val->index() == 3) return formatList(val);
 	else if (val->index() == 4) return formatObject(val);
+	else if (val->index() == 5) return formatBlock(val);
 
 	return std::string();
+}
+
+
+std::string lit::formatBlock(LiteralValue* lit) noexcept
+{
+	std::stringstream str;
+
+	str << "Block( " << numformat(tostr(asBlock(lit).size())) << " )";
+
+	return str.str();
 }
 
 
@@ -78,6 +91,7 @@ std::string lit::colorizeStrType(const std::string& type) noexcept
 	else if (type == "Bool")	return clr(type, __clr_type_bool->toString());
 	else if (type == "List")	return clr(type, __clr_type_list->toString());
 	else if (type == "Object")	return clr(type, __clr_type_object->toString());
+	else if (type == "Block")	return clr(type, __clr_type_block->toString());
 	else if (type == "Any")		return clr(type, __clr_type_any->toString());
 
 	else return type;
@@ -93,6 +107,7 @@ TokenEnum lit::typeToTokenEnum(const LiteralValue::Type type) noexcept
 	case lit::LitType::Bool:	return BOOLEANVAL;
 	case lit::LitType::List:	return LIST;
 	case lit::LitType::Object:	return OBJECT;
+	case lit::LitType::Block:	return BLOCK;
 	case lit::LitType::Null:	return NULLVAL;
 	}
 
@@ -110,6 +125,7 @@ std::string lit::getTypeAsString(const LiteralValue::Type type, const bool color
 	case LiteralValue::Type::Bool:		ret = "Bool";	 break;
 	case LiteralValue::Type::List:		ret = "List";	 break;
 	case LiteralValue::Type::Object:	ret = "Object";  break;
+	case LiteralValue::Type::Block:		ret = "Block";  break;
 	case LiteralValue::Type::Null:		ret = "Null";	 break;
 	case LiteralValue::Type::Any:		ret = "Any";	 break;
 

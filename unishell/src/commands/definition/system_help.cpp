@@ -1,8 +1,33 @@
 #include "system.h"
 
+
+// exp
+START_HELP(SysCmdExp)
+return { .name = SysCmdExp().symbol, .params = {{"Expr", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "execute the expression ^0 or more."};
+END_HELP
+
+// do
+START_HELP(SysCmdDo)
+return { .name = SysCmdDo().symbol, .params = {{"Block", {lit::LitType::Block}}}, .description = "execute the block ^0." };
+END_HELP
+
+
+
+// if
+START_HELP(SysCmdIf)
+return { .name = SysCmdIf().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"ThenBlock", {lit::LitType::Block}}, {"ElseBlock", {lit::LitType::Block}}}, .description = "if ^0 is true, execute ^1 block, else, execute ^2 block." };
+END_HELP
+
+// while
+START_HELP(SysCmdWhile)
+return { .name = SysCmdWhile().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"Block", {lit::LitType::Block}}}, .description = "executes block ^1 while ^0 is true" };
+END_HELP
+
+
+
 // print
 START_HELP(SysCmdPrint)
-return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console." };
+return { .name = SysCmdPrint().symbol, .params = {{ "Text", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "prints ^0 in console.", .flags = {{"nl", "no-newline"}}};
 END_HELP
 
 // clear

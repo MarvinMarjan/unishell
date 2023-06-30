@@ -67,3 +67,5 @@ NEW_USER_EXCEPTION(CommandRuntimeErr, "command_runtime")
 
 
 NEW_EXCEPTION(SettingsErr, "settings")
+NEW_EXCEPTION(BootingErr, "boot")
+NEW_EXCEPTION(FilesysErr, "filesystem")

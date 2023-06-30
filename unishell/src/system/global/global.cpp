@@ -19,7 +19,9 @@ const StringList __keywords = {
 	"and",
 	"or",
 	"null",
-	"unpack"
+	"unpack",
+	"begin",
+	"end"
 };
 
 const StringList __boolean = {
@@ -62,6 +64,12 @@ const StringList __color_formats = {
 };
 
 const std::vector<CommandBase*> __sys_commands = {
+	new SysCmdExp(),
+	new SysCmdDo(),
+	
+	new SysCmdIf(),
+	new SysCmdWhile(),
+
 	new SysCmdPrint(),
 	new SysCmdClear(),
 
@@ -233,6 +241,7 @@ BaseColorStructure* __clr_type_number = new IdColorStructure(192);
 BaseColorStructure* __clr_type_bool = new IdColorStructure(219);
 BaseColorStructure* __clr_type_list = new IdColorStructure(38);
 BaseColorStructure* __clr_type_object = new IdColorStructure(215);
+BaseColorStructure* __clr_type_block = new IdColorStructure(186);
 BaseColorStructure* __clr_type_any = new IdColorStructure(198);
 
 BaseColorStructure* __clr_cursor = new IdColorStructure(75, underline);

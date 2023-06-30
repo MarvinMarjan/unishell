@@ -14,11 +14,14 @@ ExceptionRef::ExceptionRef(const std::string& src, const int index) :
 ExceptionRef::ExceptionRef(const std::string& src, const size_t index) :
 	src(src), index((int)index) {}
 
+ExceptionRef::ExceptionRef(const std::string& src, const Token& token) :
+	src(src), index((int)token.getIndex()) {}
+
 
 
 std::string ExceptionRef::getString() const {
 	std::string str = "", space = "\n";
-	const std::string atLoc = "  at " + clr('\"' + src + '\"', 113) + "\n\n";
+	const std::string atLoc = ((!src.empty()) ? "  at " + clr('\"' + src + '\"', 113) + "\n\n" : "");
 
 	if (index != -1) {
 		for (size_t i = 0; i < src.size(); i++)

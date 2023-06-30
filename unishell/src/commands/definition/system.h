@@ -9,6 +9,53 @@
 #include "../../system/settings/settings.h"
 #include "../../system/settings/option_format.h"
 #include "../../data/litvalue/obj_predef.h"
+#include "../../parser/processing/token/token_processing.h"
+
+
+extern void __run_block(const lit::Block&);
+
+
+// exp
+START_COMMAND(SysCmdExp, {}, CommandBase, "exp", CmdFunc::System)
+void exec() override {}
+END_COMMAND
+
+
+// do
+START_COMMAND(SysCmdDo, ParamVec({ {nullptr, {lit::LitType::Block}} }), CommandBase, "do", CmdFunc::System)
+void exec() override
+{
+	__run_block(asBlock(args[0]));
+}
+END_COMMAND
+
+
+
+// if
+START_COMMAND(SysCmdIf, ParamVec({ {nullptr, {lit::LitType::Bool}}, {nullptr, {lit::LitType::Block}}, {lit::lit(lit::Block()), {lit::LitType::Block}} }), CommandBase, "if", CmdFunc::System)
+void exec() override
+{
+	if (asBool(args[0]))
+		__run_block(asBlock(args[1]));
+
+	else if (!asBlock(args[2]).empty())
+		__run_block(asBlock(args[2]));
+}
+END_COMMAND
+
+// while
+START_COMMAND(SysCmdWhile, ParamVec({ {nullptr, {lit::LitType::Literal}}, {nullptr, {lit::LitType::Block}} }), CommandBase, "while", CmdFunc::System)
+void exec() override
+{
+	const TokenList pre = InstreamScanner(asStr(args[0])).scanTokens();
+	bool condition;
+
+	while ((condition = asBool(TokenProcess::process(pre)[0].getLiteral())))
+		__run_block(asBlock(args[1]));
+}
+END_COMMAND
+
+
 
 // print
 START_COMMAND(SysCmdPrint, { lit::lit(std::string("")) }, CommandBase, "print", CmdFunc::System)
@@ -16,7 +63,8 @@ void exec() override {
 	for (lit::LiteralValue* value : args)
 		sysprint(litToStr(value));
 
-	sysprintln("");
+	if (!flags.hasFlag("nl"))
+		sysprintln("");
 }
 END_COMMAND
 

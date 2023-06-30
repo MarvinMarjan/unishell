@@ -24,9 +24,13 @@ public:
 
 
 inline FlagList getFlags(const TokenList& input) noexcept {
-	return FlagList(alg::vector::map<Token, Flag>(input, [](Token token) {
-		return Flag{ token.getLexical() };
-	}));
+	FlagList flags;
+
+	for (const Token& token : input)
+		if (token.getType() == FLAG)
+			flags.push_back(Flag { .name = token.getLexical().substr(1)});
+
+	return flags;
 }
 
 inline void removeFlags(TokenList& input) noexcept {
