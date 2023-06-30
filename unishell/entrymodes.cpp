@@ -6,7 +6,7 @@
 
 
 
-static void __run(TokenList input) {
+void __run(TokenList input) {
 	// empty
 	if (!input.size())
 		return;
@@ -25,6 +25,12 @@ static void __run(TokenList input) {
 	command->exec();
 }
 
+
+void __run_block(const lit::Block& block)
+{
+	for (const TokenList& line : block)
+		__run(TokenProcess::process(line));
+}
 
 
 // runs from user input

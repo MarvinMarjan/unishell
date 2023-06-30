@@ -11,10 +11,21 @@
 #include "../../data/litvalue/obj_predef.h"
 
 
+extern void __run_block(const lit::Block&);
+
 
 // exp
 START_COMMAND(SysCmdExp, {}, CommandBase, "exp", CmdFunc::System)
-void exec() {}
+void exec() override {}
+END_COMMAND
+
+
+// do
+START_COMMAND(SysCmdDo, ParamVec({ {nullptr, {lit::LitType::Block}} }), CommandBase, "do", CmdFunc::System)
+void exec() override
+{
+	__run_block(asBlock(args[0]));
+}
 END_COMMAND
 
 

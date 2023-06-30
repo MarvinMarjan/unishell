@@ -12,6 +12,7 @@
 #define asBool(pLit)	std::get<bool>(*pLit)
 #define asList(pLit)	std::get<std::vector<lit::LiteralValue*>>(*pLit)
 #define asObj(pLit)		std::get<std::map<std::string, lit::LiteralValue*>>(*pLit)
+#define asBlock(pLit)	std::get<lit::Block>(*pLit)
 
 
 extern std::string* __userInput;
@@ -25,7 +26,11 @@ namespace lit
 	using LitObject = std::map<std::string, LiteralValue*>;
 
 
-	using LiteralValueDecl = std::variant<std::string, double, bool, LitList, LitObject>;
+	// private, users can't manipulate directly with it
+	using Block = std::vector<TokenList>;
+
+
+	using LiteralValueDecl = std::variant<std::string, double, bool, LitList, LitObject, Block>;
 
 
 	class LiteralValue : public LiteralValueDecl
@@ -38,6 +43,7 @@ namespace lit
 			Bool,
 			List,
 			Object,
+			Block,
 
 			Null,
 			Any
@@ -51,6 +57,7 @@ namespace lit
 
 		LiteralValue(const LiteralValueDecl& other) : LiteralValueDecl(other) {}
 
+		LiteralValue(const Block& other)		: LiteralValueDecl(other) {}
 		LiteralValue(const LitObject& other)	: LiteralValueDecl(other) {}
 		LiteralValue(const LitList& other)		: LiteralValueDecl(other) {}
 		LiteralValue(const std::string& other)	: LiteralValueDecl(other) {}
@@ -86,6 +93,6 @@ namespace lit
 
 	LiteralValue* getListFromTokenList(const TokenList& source);
 	LiteralValue* getObjFromTokenList(const TokenList& source);
-
+	
 
 } // namespace lit

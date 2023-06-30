@@ -10,6 +10,8 @@ class TokenProcess
 public:
 	// process all tokens
 	static TokenList process(TokenList source) {
+		source = generateBlocks(source);
+
 		source = expandTokens(source);
 		source = reduceTokens(source);
 		source = parseTokens(source);
@@ -52,6 +54,14 @@ private:
 	// transforms LIST tokens with sub tokens into
 	// LIST tokens with literals instead
 	static TokenList subToLiteral(const TokenList& source);
+
+	// returns true if "token" has a literal
+	static bool addIfHasLiteral(TokenList& list, const Token& token) noexcept {
+		if (token.getLiteral())
+			list.push_back(token);
+
+		return token.getLiteral();
+	}
 
 	// parse tokens that can be parsed. if token
 	// can be interpreted, interpret it
@@ -112,6 +122,14 @@ private:
 		TokenList res;
 
 		getInside(res, source, LPAREN, RPAREN, EXPRESSION, "Unterminated expression", true);
+
+		return res;
+	}
+
+	static TokenList generateBlocks(const TokenList& source) {
+		TokenList res;
+
+		getInside(res, source, BEGIN, END, BLOCK, "Unterminated block");
 
 		return res;
 	}

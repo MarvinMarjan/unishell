@@ -37,6 +37,11 @@ namespace lit
 	std::string formatObject(LiteralValue* lit) noexcept;
 
 
+	// returns a string that represents the value of a Block.
+	// Block( 4 ) -> a block of 4 instructions
+	std::string formatBlock(LiteralValue* lit) noexcept;
+
+
 	// returns a string that represents a LiteralValue.
 	std::string literalValueToString(LiteralValue* val, const bool color = false) noexcept;
 

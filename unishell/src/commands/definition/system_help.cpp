@@ -3,7 +3,12 @@
 
 // exp
 START_HELP(SysCmdExp)
-return { .name = SysCmdExp().symbol, .params = {{"Expr", {lit::LitType::Any}, true}} , .undefinedParamSize = true, .description = "execute the expression ^0."};
+return { .name = SysCmdExp().symbol, .params = {{"Expr", {lit::LitType::Any}, true}}, .undefinedParamSize = true, .description = "execute the expression ^0 or more."};
+END_HELP
+
+// do
+START_HELP(SysCmdDo)
+return { .name = SysCmdDo().symbol, .params = {{"Block", {lit::LitType::Block}}}, .description = "execute the block ^0." };
 END_HELP
 
 

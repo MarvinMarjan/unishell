@@ -83,6 +83,7 @@ extern BaseColorStructure* __clr_type_number;
 extern BaseColorStructure* __clr_type_bool;
 extern BaseColorStructure* __clr_type_list;
 extern BaseColorStructure* __clr_type_object;
+extern BaseColorStructure* __clr_type_block;
 extern BaseColorStructure* __clr_type_any;
 
 extern BaseColorStructure* __clr_cursor;

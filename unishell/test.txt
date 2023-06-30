@@ -1,0 +1,14 @@
+print clr:red: "this is a red text.";
+print clr:blue: "this is a blue text.";
+
+print clr:wcyan underline: "https://www.github.com/MarvinMarjan" clr:std:;
+
+var name "";
+
+print %nl "what is your name?: ";
+
+exp ($name = #input);
+
+print "hello, " clr:white underline: $name clr:std: "!!";
+
+del name;

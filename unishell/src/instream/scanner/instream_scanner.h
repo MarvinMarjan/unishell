@@ -17,7 +17,7 @@ class InstreamScanner : public ScannerBase<Token>
 {
 public:
 	InstreamScanner(const std::string& src, const int hints = 0)
-		: ScannerBase(src)
+		: ScannerBase(src), hints(hints)
 	{
 		ignoreCommand = alg::bit::hasBits(hints, IgnoreCommand);
 		addEndlTokens = alg::bit::hasBits(hints, AddEndlTokens);
@@ -97,19 +97,36 @@ private:
 		addToken(NUMBER, new lit::LiteralValue(std::stod(getCurrentSubstring())));
 	}
 	
-	// if is keyword, returns true and add it
+	// if is keyword, returns true and add it;
 	// else return false
 	bool keyword() {
-		for (current; alg::string::isAlpha(peek()); current++) {}
-		return addKeyword(getCurrentSubstring());
+		return addKeyword(advanceWord());
 	}
 
 	// if is boolean value, returns true and add it;
 	// else return false
 	bool boolean() {
-		for (current; alg::string::isAlpha(peek()); current++) {}
-		return addBoolean(getCurrentSubstring());
+		return addBoolean(advanceWord());
 	}
+
+
+	bool block() {
+		const std::string word = advanceWord();
+
+		if (word == "begin") {
+			addToken(BEGIN);
+			addEndlTokens = true;
+		}
+		
+		else if (word == "end" && !alg::bit::hasBits(hints, AddEndlTokens)) {
+			addToken(END);
+			addEndlTokens = false;
+		}
+
+
+		return (word == "begin" || word == "end");
+	}
+
 
 	// gets a sequence of alpha / digits characters
 	void word(const TokenEnum type, const bool hasLiteral = false) {
@@ -122,6 +139,8 @@ private:
 
 	bool ignoreCommand;
 	bool addEndlTokens;
+
+	const int hints;
 
 	size_t currentLine;
 };

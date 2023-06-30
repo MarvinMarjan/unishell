@@ -88,15 +88,15 @@ void InstreamScanner::scanToken()
 	case ':': addToken(COLON); break;
 
 	default:
-		if (tokens.empty() && !ignoreCommand) word(COMMAND);
-
-		else if (alg::string::isDigit(ch)) {
+		if (alg::string::isDigit(ch))
+		{
 			if (ch == '.' && alg::string::isDigit(peek()) && peek() != '.') number();
 			else if (ch != '.') number();
 			else throw new InstreamScannerErr("Unexpected token", ExceptionRef(src, current - 1));
 		}
 
-		else if (!keyword() && !boolean()) word(LITERAL, true);
+		else if (!block() && !keyword() && !boolean())
+			word(LITERAL, true);
 	}
 }
 
