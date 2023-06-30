@@ -45,10 +45,10 @@ private:
 
 
 
-	void checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes);
+	void checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes, const Token& token);
 
-	void checkLiteralType(const std::vector<lit::LiteralValue*>& vals, const std::vector<lit::LiteralValue::Type>& expectedTypes) {
+	void checkLiteralType(const std::vector<lit::LiteralValue*>& vals, const std::vector<lit::LiteralValue::Type>& expectedTypes, const Token& token) {
 		for (lit::LiteralValue* value : vals)
-			checkLiteralType(value, expectedTypes);
+			checkLiteralType(value, expectedTypes, token);
 	}
 };

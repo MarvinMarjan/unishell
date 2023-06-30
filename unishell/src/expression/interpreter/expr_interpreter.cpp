@@ -15,7 +15,7 @@ lit::LiteralValue* ExprInterpreter::visitUnary(Unary* expr) {
 
 	switch (expr->op.getType()) {
 	case MINUS:
-		checkLiteralType(right, { lit::LitType::Number });
+		checkLiteralType(right, { lit::LitType::Number }, expr->op);
 		return new lit::LiteralValue(-asDbl(right));
 
 	case BANG:
@@ -39,25 +39,25 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 		return lit::lit(isTruthy(left) || isTruthy(right));
 
 	case GREATER:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) > asDbl(right));
 
 	case LESS:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) < asDbl(right));
 
 	case GREATER_EQUAL:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) >= asDbl(right));
 
 	case LESS_EQUAL:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) <= asDbl(right));
 
 	case BANG_EQUAL: return lit::lit(!isEqual(left, right));
 	case EQUAL:
 		checkLiteralType({ left, right }, { lit::LitType::Number, lit::LitType::Literal, lit::LitType::Bool,
-											lit::LitType::List, lit::LitType::Object });
+											lit::LitType::List, lit::LitType::Object }, expr->op);
 		*left = *right; // assignment using pointers
 		return left;
 
@@ -69,20 +69,20 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 			return lit::lit(litToStr(left) + litToStr(right));
 
 		else {
-			checkLiteralType({ left, right }, { lit::LitType::Number });
+			checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 			return lit::lit(asDbl(left) + asDbl(right));
 		}
 
 	case MINUS:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) - asDbl(right));
 
 	case STAR:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) * asDbl(right));
 
 	case SLASH:
-		checkLiteralType({ left, right }, { lit::LitType::Number });
+		checkLiteralType({ left, right }, { lit::LitType::Number }, expr->op);
 		return lit::lit(asDbl(left) / asDbl(right));
 	}
 
@@ -90,7 +90,7 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 }
 
 
-void ExprInterpreter::checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes)
+void ExprInterpreter::checkLiteralType(lit::LiteralValue* value, const std::vector<lit::LiteralValue::Type>& expectedTypes, const Token& token)
 {
 	for (const lit::LiteralValue::Type type : expectedTypes)
 		if (lit::isTypeof(value, type))
@@ -99,5 +99,5 @@ void ExprInterpreter::checkLiteralType(lit::LiteralValue* value, const std::vect
 	const std::string strExpected = lit::getTypeAsString(expectedTypes, true);
 	const std::string strGot = lit::getTypeAsString(value->type(), true);
 
-	throw ExprInterpreterErr(strExpected + " expected, got " + strGot, ExceptionRef(UNISHLL_USER_INPUT));
+	throw new ExprInterpreterErr(strExpected + " expected, got " + strGot, ExceptionRef(UNISHLL_USER_INPUT, token));
 }
