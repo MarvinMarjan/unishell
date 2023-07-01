@@ -47,6 +47,14 @@ public:
 		return nullptr;
 	}
 
+	bool hasReferencesOf(lit::LiteralValue* id) noexcept {
+		for (size_t i = 0; i < idList.size(); i++)
+			if (idList[i].getValue() == id)
+				return true;
+
+		return false;
+	}
+
 	void addId(const Identifier& id, const bool addToData = true) {
 		if (exists(id.getName())) {
 			if (getId(id.getName())->isSysId())

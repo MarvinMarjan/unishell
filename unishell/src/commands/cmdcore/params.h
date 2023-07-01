@@ -17,6 +17,7 @@ public:
 		defaultValue(defaultValue), paramTypes(paramTypes)
 	{}
 
+
 	lit::LiteralValue* getDefaultValue() const noexcept {
 		return defaultValue;
 	}

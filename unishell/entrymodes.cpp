@@ -3,10 +3,11 @@
 #include "src/parser/processing/token/token_processing.h"
 #include "src/instream/input/instream.h"
 #include "src/instream/scanner/instream_scanner.h"
+#include "src/system/memory/memfree.h"
 
 
 
-void __run(TokenList input) {
+void __run(TokenList input, bool free_cmd = true) {
 	// empty
 	if (!input.size())
 		return;
@@ -23,13 +24,21 @@ void __run(TokenList input) {
 
 	// execute command
 	command->exec();
+
+	// command name
+	if (free_cmd)
+		delete input[0].getLiteral();
+
+	command->~CommandBase();
+
+	delete command;
 }
 
 
-void __run_block(const lit::Block& block)
+void __run_block(const lit::Block& block, bool free_cmd = true)
 {
 	for (const TokenList& line : block)
-		__run(TokenProcess::process(line));
+		__run(TokenProcess::process(line), free_cmd);
 }
 
 

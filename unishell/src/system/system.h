@@ -52,6 +52,8 @@ public:
 
 	static void error(Exception* exception) noexcept {
 		sysprintln(exception->toString());
+
+		delete exception;
 	}
 
 

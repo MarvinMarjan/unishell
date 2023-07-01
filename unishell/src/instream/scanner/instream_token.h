@@ -54,6 +54,10 @@ public:
 		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line)
 	{}
 
+	~Token() {
+		lexical.~basic_string();
+	}
+
 	constexpr TokenEnum getType() const noexcept {
 		return type;
 	}

@@ -10,9 +10,10 @@
 #include "../../system/settings/option_format.h"
 #include "../../data/litvalue/obj_predef.h"
 #include "../../parser/processing/token/token_processing.h"
+#include "../../system/memory/memfree.h"
 
 
-extern void __run_block(const lit::Block&);
+extern void __run_block(const lit::Block&, bool free_cmd = true);
 
 
 // exp
@@ -48,10 +49,12 @@ START_COMMAND(SysCmdWhile, ParamVec({ {nullptr, {lit::LitType::Literal}}, {nullp
 void exec() override
 {
 	const TokenList pre = InstreamScanner(asStr(args[0])).scanTokens();
-	bool condition;
+	lit::LiteralValue* condition;
 
-	while ((condition = asBool(TokenProcess::process(pre)[0].getLiteral())))
-		__run_block(asBlock(args[1]));
+	while (asBool((condition = TokenProcess::process(pre)[0].getLiteral()))) {
+		__run_block(asBlock(args[1]), false);
+		delete condition;
+	}
 }
 END_COMMAND
 

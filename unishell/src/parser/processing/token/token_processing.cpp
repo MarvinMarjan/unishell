@@ -123,6 +123,8 @@ TokenList TokenProcess::parseTokens(const TokenList& source)
 			lit::checkNull(interpreted);
 			res.push_back(Token(lit::getLitTokenEnum(interpreted),
 				litToStr(interpreted), interpreted, {}, token.getIndex()));
+
+			delete parsed;
 			break;
 		}
 

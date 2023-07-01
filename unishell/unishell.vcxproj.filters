@@ -131,6 +131,9 @@
     <ClCompile Include="src\commands\definition\json_help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="entrymodes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\system\system.h">
@@ -328,8 +331,20 @@
     <ClInclude Include="src\commands\definition\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\system\boot\boot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\windows\system_memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\system\memory\memfree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test.txt" />
   </ItemGroup>
 </Project>

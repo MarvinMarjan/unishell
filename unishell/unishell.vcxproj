@@ -232,6 +232,7 @@
     <ClInclude Include="src\system\exception\exception_reference.h" />
     <ClInclude Include="src\system\global\typedecl.h" />
     <ClInclude Include="src\system\global\global.h" />
+    <ClInclude Include="src\system\memory\memfree.h" />
     <ClInclude Include="src\system\settings\json_fstream_handle.h" />
     <ClInclude Include="src\system\settings\option.h" />
     <ClInclude Include="src\system\settings\option_callback_def.h" />
