@@ -23,6 +23,7 @@ public:
 		addEndlTokens = alg::bit::hasBits(hints, AddEndlTokens);
 
 		currentLine = 1;
+		nestLevel = 0;
 	}
 
 	TokenList scanTokens() override;
@@ -33,8 +34,8 @@ private:
 	void scanToken() override;
 
 
-	void addToken(const TokenEnum type) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine));
+	void addToken(const TokenEnum type, bool ignoreByLineSplitter = false) noexcept {
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine, ignoreByLineSplitter));
 	}
 
 	void addToken(const TokenEnum type, const std::string& lex) noexcept {
@@ -110,22 +111,7 @@ private:
 	}
 
 
-	bool block() {
-		const std::string word = advanceWord();
-
-		if (word == "begin") {
-			addToken(BEGIN);
-			addEndlTokens = true;
-		}
-		
-		else if (word == "end" && !alg::bit::hasBits(hints, AddEndlTokens)) {
-			addToken(END);
-			addEndlTokens = false;
-		}
-
-
-		return (word == "begin" || word == "end");
-	}
+	bool block();
 
 
 	// gets a sequence of alpha / digits characters
@@ -139,6 +125,8 @@ private:
 
 	bool ignoreCommand;
 	bool addEndlTokens;
+
+	int nestLevel;
 
 	const int hints;
 

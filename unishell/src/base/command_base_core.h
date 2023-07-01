@@ -86,9 +86,9 @@ public:
 	}
 
 	~CommandBaseCore() {
-		for (lit::LiteralValue* lit : args)
-			if (!__environment->hasReferencesOf(lit))
-				delete lit;
+		/*for (lit::LiteralValue* lit : args)
+			if (!__environment->hasReferencesOf(lit) && lit)
+				delete lit;*/
 
 		for (const Param& param : params)
 			if (param.getDefaultValue()) {

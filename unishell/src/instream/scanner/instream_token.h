@@ -50,8 +50,8 @@ class Token
 public:
 	friend class TokenProcess;
 
-	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1) : 
-		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line)
+	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1, bool ignoreByLineSplitter = false) :
+		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line), ignoreByLineSplitter(ignoreByLineSplitter)
 	{}
 
 	~Token() {
@@ -78,6 +78,10 @@ public:
 		return line;
 	}
 
+	constexpr bool getIgnoreByLineSplitter() const noexcept {
+		return ignoreByLineSplitter;
+	}
+
 	TokenList getSub() const noexcept {
 		return sub;
 	}
@@ -88,6 +92,8 @@ private:
 	lit::LiteralValue* lit;
 	size_t index;
 	size_t line;
+
+	bool ignoreByLineSplitter;
 
 	TokenList sub;
 };
