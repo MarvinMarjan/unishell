@@ -16,12 +16,17 @@ std::vector<TokenList> InstreamScanner::separateLinesFromTokens(TokenList tokens
 	std::vector<TokenList> lines;
 	TokenList aux;
 
-	for (const Token& token : tokens) {
+	for (Token& token : tokens) {
 		if (token.getType() == ENDLINE) {
-			if (!token.getIgnoreByLineSplitter()) {
+			if (!token.getNestLevel()) {
 				lines.push_back(aux);
 				aux.clear();
 			}
+			else {
+				token.nestLevel--;
+				aux.push_back(token);
+			}
+
 			continue;
 		}
 
@@ -54,7 +59,7 @@ void InstreamScanner::scanToken()
 
 	case ';':
 		if (addEndlTokens)
-			addToken(ENDLINE, (nestLevel > 0));
+			addToken(ENDLINE, nestLevel);
 		
 		break;
 

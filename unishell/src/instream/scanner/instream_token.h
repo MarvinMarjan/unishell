@@ -30,7 +30,7 @@ enum TokenEnum
 	EQUAL_EQUAL, EQUAL_EQUAL_EQUAL, BANG_EQUAL, LESS_EQUAL, GREATER_EQUAL,
 	
 	// keywords
-	AND, OR, NULLVAL, UNPACK, BEGIN, END,
+	AND, OR, NULLVAL, UNPACK, NEW, BEGIN, END,
 
 	// others
 	COLON, LBRACE, RBRACE, LBRACKET, RBRACKET,
@@ -49,9 +49,10 @@ class Token
 {
 public:
 	friend class TokenProcess;
+	friend class InstreamScanner;
 
-	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1, bool ignoreByLineSplitter = false) :
-		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line), ignoreByLineSplitter(ignoreByLineSplitter)
+	Token(const TokenEnum type, const std::string& lexical, lit::LiteralValue* lit, const TokenList& sub, const size_t index, const size_t line = 1, int nestLevel = 0) :
+		type(type), lexical(lexical), lit(lit), sub(sub), index(index), line(line), nestLevel(nestLevel)
 	{}
 
 	~Token() {
@@ -78,8 +79,8 @@ public:
 		return line;
 	}
 
-	constexpr bool getIgnoreByLineSplitter() const noexcept {
-		return ignoreByLineSplitter;
+	constexpr bool getNestLevel() const noexcept {
+		return nestLevel;
 	}
 
 	TokenList getSub() const noexcept {
@@ -93,7 +94,7 @@ private:
 	size_t index;
 	size_t line;
 
-	bool ignoreByLineSplitter;
+	int nestLevel;
 
 	TokenList sub;
 };
@@ -103,6 +104,7 @@ constexpr inline TokenEnum keywordToTokenEnum(const std::string& keyword) noexce
 	if (keyword == "or") return OR;
 	if (keyword == "null") return NULLVAL;
 	if (keyword == "unpack") return UNPACK;
+	if (keyword == "new") return NEW;
 	if (keyword == "begin") return BEGIN;
 	if (keyword == "end") return END;
 

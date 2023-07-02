@@ -15,7 +15,7 @@ END_HELP
 
 // if
 START_HELP(SysCmdIf)
-return { .name = SysCmdIf().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"ThenBlock", {lit::LitType::Block}}, {"ElseBlock", {lit::LitType::Block}}}, .description = "if ^0 is true, execute ^1 block, else, execute ^2 block." };
+return { .name = SysCmdIf().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"ThenBlock", {lit::LitType::Block}, true}, {"ElseBlock", {lit::LitType::Block}, true}}, .description = "if ^0 is true, execute ^1 block, else, execute ^2 block." };
 END_HELP
 
 // while

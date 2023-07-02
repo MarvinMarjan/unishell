@@ -86,10 +86,6 @@ public:
 	}
 
 	~CommandBaseCore() {
-		/*for (lit::LiteralValue* lit : args)
-			if (!__environment->hasReferencesOf(lit) && lit)
-				delete lit;*/
-
 		for (const Param& param : params)
 			if (param.getDefaultValue()) {
 				delete param.getDefaultValue();
@@ -119,7 +115,7 @@ private:
 
 	void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		if (args.size() < params.getRequiredParams())
-			THROW_COMMAND_ERR("(" + cmdSymbol + ") " + "Insufficient arguments");
+			THROW_COMMAND_ERR("Insufficient arguments");
 	}
 };
 

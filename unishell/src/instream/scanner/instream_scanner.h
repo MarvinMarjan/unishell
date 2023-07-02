@@ -34,8 +34,8 @@ private:
 	void scanToken() override;
 
 
-	void addToken(const TokenEnum type, bool ignoreByLineSplitter = false) noexcept {
-		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine, ignoreByLineSplitter));
+	void addToken(const TokenEnum type, int nestLevel = 0) noexcept {
+		tokens.push_back(Token(type, getCurrentSubstring(), nullptr, {}, current - 1, currentLine, nestLevel));
 	}
 
 	void addToken(const TokenEnum type, const std::string& lex) noexcept {

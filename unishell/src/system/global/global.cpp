@@ -20,6 +20,7 @@ const StringList __keywords = {
 	"or",
 	"null",
 	"unpack",
+	"new",
 	"begin",
 	"end"
 };

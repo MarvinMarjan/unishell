@@ -63,13 +63,13 @@ public:
 	}
 
 	void match(ArgList& args) const {
-		const int count = (int)(size() - args.size());
-		lit::LiteralValue* defaultVal;
+		for (size_t i = 0; i < size(); i++)
+			if (i >= args.size()) {
+				if (!(*this)[i].getDefaultValue())
+					break;
 
-		// comparations with unsigned and signed can have trouble. use "(int)i"
-		for (size_t i = 1; (int)i <= count; i++)
-			if ((defaultVal = (*this)[args.size() - 1 + i].getDefaultValue()))
-				args.push_back(defaultVal);
+				args.push_back((*this)[i].getDefaultValue());
+			}
 	}
 };
 

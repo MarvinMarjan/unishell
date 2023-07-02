@@ -33,14 +33,14 @@ END_COMMAND
 
 
 // if
-START_COMMAND(SysCmdIf, ParamVec({ {nullptr, {lit::LitType::Bool}}, {nullptr, {lit::LitType::Block}}, {lit::lit(lit::Block()), {lit::LitType::Block}} }), CommandBase, "if", CmdFunc::System)
+START_COMMAND(SysCmdIf, ParamVec({ {nullptr, {lit::LitType::Bool}}, {lit::lit(lit::Block()), {lit::LitType::Block}}, {lit::lit(lit::Block()), {lit::LitType::Block}} }), CommandBase, "if", CmdFunc::System)
 void exec() override
 {
 	if (asBool(args[0]))
-		__run_block(asBlock(args[1]));
+		__run_block(asBlock(args[1]), false);
 
 	else if (!asBlock(args[2]).empty())
-		__run_block(asBlock(args[2]));
+		__run_block(asBlock(args[2]), false);
 }
 END_COMMAND
 
