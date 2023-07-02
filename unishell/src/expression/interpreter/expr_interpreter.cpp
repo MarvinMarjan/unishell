@@ -1,5 +1,7 @@
 #include "expr_interpreter.h"
 
+#include "../../system/memory/memfree.h"
+
 lit::LiteralValue* ExprInterpreter::visitLiteralExpr(LiteralExpr* expr) {
 	return expr->value;
 }
@@ -30,7 +32,7 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 {
 	lit::LiteralValue* left = evaluate(expr->left);
 	lit::LiteralValue* right = evaluate(expr->right);
-
+	
 	switch (expr->op.getType()) {
 	case AND:
 		return lit::lit(isTruthy((left)) && isTruthy(right));
@@ -59,6 +61,10 @@ lit::LiteralValue* ExprInterpreter::visitBinary(Binary* expr)
 		checkLiteralType({ left, right }, { lit::LitType::Number, lit::LitType::Literal, lit::LitType::Bool,
 											lit::LitType::List, lit::LitType::Object }, expr->op);
 		*left = *right; // assignment using pointers
+		
+		if (!__environment->hasReferencesOf(right))
+			delete right;
+
 		return left;
 
 	case EQUAL_EQUAL: return lit::lit(isEqual(left, right));

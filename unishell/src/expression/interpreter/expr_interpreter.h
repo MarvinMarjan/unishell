@@ -20,7 +20,10 @@ private:
 
 
 	lit::LiteralValue* evaluate(Expr* expr) {
-		return expr->accept(this);
+		lit::LiteralValue* result = expr->accept(this);
+		expr->~Expr();
+
+		return result;
 	}
 	
 	bool isTruthy(lit::LiteralValue* value) {

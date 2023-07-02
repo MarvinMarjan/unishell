@@ -5,10 +5,14 @@
 
 #include "../system/global/global.h"
 
+#include "../environment/environment.h"
+
+
 #define THROW_COMMAND_ERR(msg) \
 	throw new CommandErr("(" + cmdSymbol + ") " + msg) \
 
 struct CommandHelpData;
+
 
 enum class CmdFunc
 {
@@ -81,6 +85,13 @@ public:
 		this->args = args;
 	}
 
+	~CommandBaseCore() {
+		for (const Param& param : params)
+			if (param.getDefaultValue()) {
+				delete param.getDefaultValue();
+			}
+	}
+
 	virtual T exec() = 0;
 
 	virtual CommandHelpData help() = 0;
@@ -104,7 +115,7 @@ private:
 
 	void checkArgumentCount(const ParamList& params, const ArgList& args, const std::string& cmdSymbol) {
 		if (args.size() < params.getRequiredParams())
-			THROW_COMMAND_ERR("(" + cmdSymbol + ") " + "Insufficient arguments");
+			THROW_COMMAND_ERR("Insufficient arguments");
 	}
 };
 
@@ -116,6 +127,10 @@ public:
 	CommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
 	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) : 
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
+
+	~CommandBase() {
+		dynamic_cast<CommandBaseCore*>(this)->~CommandBaseCore();
+	}
 };
 
 // return command bases
@@ -126,4 +141,8 @@ public:
 	RetCommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
 	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
+
+	~RetCommandBase() {
+		dynamic_cast<CommandBaseCore*>(this)->~CommandBaseCore();
+	}
 };

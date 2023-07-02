@@ -16,10 +16,17 @@ std::vector<TokenList> InstreamScanner::separateLinesFromTokens(TokenList tokens
 	std::vector<TokenList> lines;
 	TokenList aux;
 
-	for (const Token& token : tokens) {
+	for (Token& token : tokens) {
 		if (token.getType() == ENDLINE) {
-			lines.push_back(aux);
-			aux.clear();
+			if (!token.getNestLevel()) {
+				lines.push_back(aux);
+				aux.clear();
+			}
+			else {
+				token.nestLevel--;
+				aux.push_back(token);
+			}
+
 			continue;
 		}
 
@@ -52,7 +59,7 @@ void InstreamScanner::scanToken()
 
 	case ';':
 		if (addEndlTokens)
-			addToken(ENDLINE);
+			addToken(ENDLINE, nestLevel);
 		
 		break;
 
@@ -115,4 +122,27 @@ void InstreamScanner::string(const char delimiter, const bool raw)
 
 	addToken(LITERAL, new lit::LiteralValue(src.substr(start + 1, current - 1 - start)));
 	advance(); // closing char
+}
+
+bool InstreamScanner::block()
+{
+	const std::string word = advanceWord();
+
+	if (word == "begin") {
+		addToken(BEGIN);
+		addEndlTokens = true;
+		nestLevel++;
+	}
+
+	else if (word == "end") {
+		addToken(END);
+
+		if (!alg::bit::hasBits(hints, AddEndlTokens))
+			addEndlTokens = false;
+
+		nestLevel--;
+	}
+
+
+	return (word == "begin" || word == "end");
 }

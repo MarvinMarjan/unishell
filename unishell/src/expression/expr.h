@@ -18,6 +18,8 @@ public:
 
 class Expr {
 public:
+	virtual ~Expr() = default;
+
 	virtual lit::LiteralValue* accept(ExprVisitor*) = 0;
 };
 
@@ -27,7 +29,21 @@ public:
 	friend class ExprASTPrinter;
 	friend class ExprInterpreter;
 
-	Binary(Expr* left, Token op, Expr* right) : left(left), op(op), right(right) {}
+	Binary(Expr* left, const Token& op, Expr* right) : left(left), op(op), right(right) {}
+	
+	~Binary() {
+		if (left) {
+			left->~Expr();
+			delete left;
+			left = nullptr;
+		}
+
+		if (right) {
+			right->~Expr();
+			delete right;
+			right = nullptr;
+		}
+	}
 
 	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitBinary(this);
@@ -45,7 +61,14 @@ public:
 	friend class ExprASTPrinter;
 	friend class ExprInterpreter;
 
-	Unary(Token op, Expr* expr) : op(op), expr(expr) {}
+	Unary(const Token& op, Expr* expr) : op(op), expr(expr) {}
+	~Unary() {
+		if (expr) {
+			expr->~Expr();
+			delete expr;
+			expr = nullptr;
+		}
+	}
 
 	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitUnary(this);
@@ -63,6 +86,13 @@ public:
 	friend class ExprInterpreter;
 
 	Group(Expr* expression) : expression(expression) {}
+	~Group() {
+		if (expression) {
+			expression->~Expr();
+			delete expression;
+			expression = nullptr;
+		}
+	}
 
 	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitGroup(this);
@@ -79,6 +109,8 @@ public:
 	friend class ExprInterpreter;
 
 	LiteralExpr(lit::LiteralValue* value) : value(value) {}
+
+	~LiteralExpr() {}
 
 	lit::LiteralValue* accept(ExprVisitor* v) override {
 		return v->visitLiteralExpr(this);

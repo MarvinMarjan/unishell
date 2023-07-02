@@ -20,7 +20,7 @@ END_HELP
 // erase
 START_HELP(ListRetCmdErase)
 return { .name = ListRetCmdErase().symbol, .params = {{"Source", {lit::LitType::List}}, {"Begin", {lit::LitType::Number}}, {"End", {lit::LitType::Number}}},
-			.description = "erases values int ^0 between ^1 and ^2 and returns ^0." };
+			.description = "erases values in ^0 between ^1 and ^2 and returns ^0." };
 END_HELP
 
 // eraseAt

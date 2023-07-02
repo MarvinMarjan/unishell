@@ -33,10 +33,6 @@ TokenList TokenProcess::subToLiteral(const TokenList& source)
 
 			res.push_back(Token(BLOCK, "", block, {}, token.getIndex()));
 			break;
-
-			// geração de blocos está concluída.
-			// falta debugar (caso queira) para ver se tudo está indo
-			// como planejado.
 		}
 
 		default:
@@ -123,6 +119,8 @@ TokenList TokenProcess::parseTokens(const TokenList& source)
 			lit::checkNull(interpreted);
 			res.push_back(Token(lit::getLitTokenEnum(interpreted),
 				litToStr(interpreted), interpreted, {}, token.getIndex()));
+
+			delete parsed;
 			break;
 		}
 
@@ -154,6 +152,20 @@ TokenList TokenProcess::processKeywords(const TokenList& source)
 			i++;
 
 			break;
+
+		case NEW: {
+			if (i + 1 >= source.size())
+				throw new TokenProcessingErr(lit::getTypeAsString(lit::LitType::Any, true) + " expected for " + keywformat("new"), ExceptionRef(UNISHLL_USER_INPUT, token));
+
+			lit::LiteralValue* newVal = new lit::LiteralValue(*source[i + 1].getLiteral());
+
+			res.push_back(Token(lit::typeToTokenEnum(newVal->type()), "", newVal, {}, token.getIndex()));
+
+			// jump next token
+			i++;
+
+			break;
+		}
 
 		default:
 			res.push_back(token);
