@@ -84,7 +84,7 @@ TokenList TokenProcess::generateColorTokens(const TokenList& source)
 			i++;
 
 			if (i + 1 >= source.size())
-				throw new TokenProcessingErr("Unterminated color structure", ExceptionRef(UNISHLL_USER_INPUT, System::input()->size() - 1));
+				throw new TokenProcessingErr("Unterminated color structure", ExceptionRef(UNISHLL_USER_INPUT, __userInput->size() - 1));
 
 			i++;
 			consume(source, COLON, i, "Unterminated color structure");
@@ -114,7 +114,7 @@ TokenList TokenProcess::parseTokens(const TokenList& source)
 		}
 
 		case EXPRESSION: {
-			Expr* const parsed = ExprParser(token.getSub(), *System::input()).parse();
+			Expr* const parsed = ExprParser(token.getSub(), *__userInput).parse();
 			lit::LiteralValue* const interpreted = ExprInterpreter().interpret(parsed);
 			lit::checkNull(interpreted);
 			res.push_back(Token(lit::getLitTokenEnum(interpreted),

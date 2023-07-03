@@ -21,6 +21,7 @@ CommandBase* getCommand(const std::string& cmdName, const ArgList& args, const F
 	CHECK_CMD(SysCmdLs);
 
 	CHECK_CMD(SysCmdVar);
+	CHECK_CMD(SysCmdLoc);
 	CHECK_CMD(SysCmdDel);
 	CHECK_CMD(SysCmdEnv);
 

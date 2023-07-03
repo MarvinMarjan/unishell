@@ -19,7 +19,7 @@
 #define UNISHLL_NAME	"unishell"
 #define UNISHLL_OS		"Windows"
 
-#define UNISHLL_USER_INPUT *System::input()
+#define UNISHLL_USER_INPUT *__userInput
 
 
 struct SysStat
@@ -67,17 +67,7 @@ public:
 
 
 
-	static PathHandler* path() noexcept {
-		return __workingPath;
-	}
-
-	static std::string* input() noexcept {
-		return __userInput;
-	}
-
-	static Environment* env() noexcept {
-		return __environment;
-	}
+	static std::string input() noexcept;
 
 
 
@@ -87,7 +77,7 @@ public:
 
 private:
 	static void addSysId(const std::string& name, lit::LiteralValue* value) {
-		__environment->addId(Identifier(name, value, true));
+		__environment->addId(Identifier(name, value, false, true));
 	}
 
 	static bool abort;

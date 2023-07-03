@@ -39,6 +39,16 @@ enum KeyModifiers
 class INStream
 {
 public:
+	static std::string stdGetLine() {
+		setCursorVisible(true);
+
+		std::string buff;
+
+		std::getline(std::cin, buff);
+
+		return buff;
+	}
+
 	static std::string getLine();
 
 private:

@@ -161,7 +161,7 @@ private:
 	static void consume(const TokenList& source, const TokenEnum delimiter, size_t& i, const std::string& errMsg) {
 		while (source[i].getType() != delimiter) {
 			if (i + 1 >= source.size())
-				throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, System::input()->size() - 1));
+				throw new TokenProcessingErr(errMsg, ExceptionRef(UNISHLL_USER_INPUT, __userInput->size() - 1));
 			else
 				i++;
 		}

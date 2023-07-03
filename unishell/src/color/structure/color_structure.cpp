@@ -72,3 +72,6 @@ std::string colorModeEnumToString(const ColorMode mode)
 	default:		return "normal";
 	}
 }
+
+
+bool BaseColorStructure::disabled = false;

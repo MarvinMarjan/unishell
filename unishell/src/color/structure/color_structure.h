@@ -52,14 +52,19 @@ class BaseColorStructure
 public:
 	virtual std::string toString() const = 0;
 	virtual std::string toStrColorStructure() const = 0;
+
+	static bool disabled;
 };
+
 
 class IdColorStructure : public BaseColorStructure
 {
 public:
-	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : mode(mode), idc(idc) {}
+	explicit IdColorStructure(const unsigned int idc, const ColorMode mode = normal) : 
+		mode(mode), idc(idc) {}
 
 	std::string toString() const override {
+		if (disabled) return "";
 		return id(idc, mode);
 	}
 
@@ -81,6 +86,7 @@ public:
 		mode(mode), red(red), green(green), blue(blue) {}
 
 	std::string toString() const noexcept override {
+		if (disabled) return "";
 		return rgb(red, green, blue, mode);
 	}
 
@@ -105,6 +111,7 @@ public:
 		mode(mode), color(color) {}
 
 	std::string toString() const override {
+		if (disabled) return "";
 		return colorToString(color, mode);
 	}
 

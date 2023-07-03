@@ -89,7 +89,7 @@ private:
 		for (const Token& token : args) {
 			if (token.getType() != expectedType) {
 				if (ignoreExceptions) return Failure;
-				throw new ColorParserErr(expectedTypeStr + " expected", ExceptionRef(*System::input(), token));
+				throw new ColorParserErr(expectedTypeStr + " expected", ExceptionRef(*__userInput, token));
 			}
 		}
 

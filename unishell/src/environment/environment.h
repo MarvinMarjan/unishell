@@ -66,7 +66,7 @@ public:
 		else
 			idList.push_back(id);
 
-		if (addToData && !id.isSysId())
+		if (addToData && !id.isSysId() && !id.isLocal())
 			data_["id"][id.getName()] = data_.LiteralValueToJSONValue(id.getValue());
 	}
 

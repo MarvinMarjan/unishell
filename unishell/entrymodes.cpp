@@ -48,8 +48,8 @@ void __repl_entry_mode()
 	// main loop
 	while (!System::getAbort()) {
 		try {
-			sysprint(clr(__workingPath->getPath(), 41) + clr(" $ ", 127));
-			*System::input() = INStream::getLine(); // sets global user input
+			sysprint(clr(__workingPath->getPath(), __clr_path_color->toString()) + clr(" $ ", __clr_path_dollar_sign_color->toString()));
+			*__userInput = System::input(); // sets global user input
 
 			TokenList input = TokenProcess::process(InstreamScanner(UNISHLL_USER_INPUT).scanTokens());
 

@@ -68,6 +68,11 @@ START_HELP(SysCmdVar)
 return { .name = SysCmdVar().symbol, .params = {{"Name", {lit::LitType::Literal}}, {"Value", {lit::LitType::Any}}}, .description = "creates a variable called ^0 that stores ^1." };
 END_HELP
 
+// loc
+START_HELP(SysCmdLoc)
+return { .name = SysCmdLoc().symbol, .params = {{"Name", {lit::LitType::Literal}}, {"Value", {lit::LitType::Any}}}, .description = "creates a local variable called ^0 that stores ^1. local vaiables will be automatically deleted when the program ends." };
+END_HELP
+
 // del
 START_HELP(SysCmdDel)
 return { .name = SysCmdDel().symbol, .params = {{"Name", {lit::LitType::Literal}}}, .description = "deletes a variable called ^0." };

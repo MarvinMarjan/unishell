@@ -6,20 +6,24 @@
 
 // predefined color
 inline std::string clr(const std::string& text, const Color color = null, const ColorMode mode = normal) noexcept {
+	if (BaseColorStructure::disabled) return text;
 	return colorToString(color, mode) + text + endclr;
 }
 
 // id color
 inline std::string clr(const std::string& text, const unsigned int i, const ColorMode mode = normal) noexcept {
+	if (BaseColorStructure::disabled) return text;
 	return id(i, mode) + text + endclr;
 }
 
 // rgb color
 inline std::string clr(const std::string& text, const std::vector<unsigned int>& rgbVec = {0, 0, 0}, const ColorMode mode = normal) noexcept {
+	if (BaseColorStructure::disabled) return text;
 	return rgb(rgbVec[0], rgbVec[1], rgbVec[2], mode) + text + endclr;
 }
 
-constexpr inline std::string clr(const std::string& text, const std::string& strColor) noexcept {
+inline std::string clr(const std::string& text, const std::string& strColor) noexcept {
+	if (BaseColorStructure::disabled) return text;
 	return strColor + text + endclr;
 }
 
