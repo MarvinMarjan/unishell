@@ -13,6 +13,8 @@ const std::vector<int> INStream::ctrlCombinations = {
 
 
 std::string INStream::getLine() {
+	setCursorVisible(false);
+
 	INStreamBuffer lineInput;
 	char charInput = 0;
 

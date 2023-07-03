@@ -44,16 +44,8 @@ int main(int argc, char** argv)
 	// entry modes
 	if (bootConfig.sourceFile.empty())
 		__repl_entry_mode();
-
-	else {
-		try {
-			__fread_entry_mode(bootConfig.sourceFile);
-		}
-		catch (UserException* err) {
-			System::error(err);
-		}
-	}
-
+	else
+		__fread_entry_mode(bootConfig.sourceFile);
 
 
 	__settings->updateDataFromOptions();

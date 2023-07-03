@@ -70,6 +70,7 @@ const std::vector<CommandBase*> __sys_commands = {
 	
 	new SysCmdIf(),
 	new SysCmdWhile(),
+	new SysCmdForeach(),
 
 	new SysCmdPrint(),
 	new SysCmdClear(),
@@ -80,6 +81,7 @@ const std::vector<CommandBase*> __sys_commands = {
 	new SysCmdLs(),
 
 	new SysCmdVar(),
+	new SysCmdLoc(),
 	new SysCmdDel(),
 	new SysCmdEnv(),
 
@@ -221,6 +223,9 @@ const std::string __regex_color_escape_char_pattern = "\033\\[[0-9;]*m";
 
 
 
+BaseColorStructure* __clr_path_color = new IdColorStructure(41);
+BaseColorStructure* __clr_path_dollar_sign_color = new IdColorStructure(127);
+
 BaseColorStructure* __clr_autocomplete_suggestion = new IdColorStructure(240);
 
 BaseColorStructure* __clr_quoted = new IdColorStructure(106);
@@ -295,3 +300,8 @@ BaseColorStructure* __clr_help_undefined_param_size = new IdColorStructure(208);
 
 BaseColorStructure* __clr_exception_title = new IdColorStructure(153);
 BaseColorStructure* __clr_exception_error = new IdColorStructure(196);
+
+
+
+bool __config_input_code_highlight = true;
+bool __config_coloring = true;

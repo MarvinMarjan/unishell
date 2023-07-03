@@ -11,8 +11,8 @@ using IdentifierList = std::vector<Identifier>;
 class Identifier
 {
 public:
-	Identifier(const std::string& name, lit::LiteralValue* value, const bool sysId = false) : 
-		name(name), value(value), sysId(sysId)
+	Identifier(const std::string& name, lit::LiteralValue* value, const bool local = false, const bool sysId = false) : 
+		name(name), value(value), local(local), sysId(sysId)
 	{
 		updateType();
 	}
@@ -39,6 +39,10 @@ public:
 		return sysId;
 	}
 
+	constexpr bool isLocal() const noexcept {
+		return local;
+	}
+
 private:
 	void updateType() noexcept {
 		type = (value) ? (lit::LitType)value->index() : lit::LitType::Null;
@@ -49,4 +53,5 @@ private:
 	lit::LitType type;
 
 	bool sysId;
+	bool local;
 };

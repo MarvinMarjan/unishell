@@ -62,6 +62,9 @@ extern const std::string __regex_clr_color_escape_char_pattern;
 
 
 // --> global color variables
+extern BaseColorStructure* __clr_path_color;
+extern BaseColorStructure* __clr_path_dollar_sign_color;
+
 extern BaseColorStructure* __clr_autocomplete_suggestion;
 
 extern BaseColorStructure* __clr_quoted;
@@ -141,5 +144,8 @@ extern BaseColorStructure* __clr_exception_error;
 
 
 // --> Application settings
+
+extern bool __config_input_code_highlight;
+extern bool __config_coloring;
 
 // <--

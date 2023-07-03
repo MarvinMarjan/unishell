@@ -4,7 +4,7 @@
 #include "../../outstream/color/color_chars.h"
 
 ExceptionRef::ExceptionRef() {
-	src = *System::input();
+	src = *__userInput;
 	index = -1;
 }
 

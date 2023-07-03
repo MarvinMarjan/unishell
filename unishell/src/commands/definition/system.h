@@ -58,6 +58,19 @@ void exec() override
 }
 END_COMMAND
 
+// foreach
+START_COMMAND(SysCmdForeach, ParamVec({ {nullptr, {lit::LitType::Any}}, {nullptr, {lit::LitType::List}}, {nullptr, {lit::LitType::Block}} }), CommandBase, "foreach", CmdFunc::System)
+void exec() override
+{
+	lit::LiteralValue* buff = args[0];
+	
+	for (lit::LiteralValue* item : asList(args[1])) {
+		*buff = *item;
+		__run_block(asBlock(args[2]), false);
+	}
+}
+END_COMMAND
+
 
 
 // print
@@ -106,7 +119,7 @@ END_COMMAND
 // ls
 START_COMMAND(SysCmdLs, {}, CommandBase, "ls", CmdFunc::System)
 void exec() override {
-	FileList list = fsys::File::fileList(System::path()->getPath());
+	FileList list = fsys::File::fileList(__workingPath->getPath());
 
 	for (const FileEntry& file : list) {
 		sysprintln(fsys::FileF::formatFileEntryAsString(file));
@@ -119,7 +132,14 @@ END_COMMAND
 // var
 START_COMMAND(SysCmdVar, ParamVec({ {nullptr, {lit::LitType::Literal}},	nullptr }), CommandBase, "var", CmdFunc::System)
 void exec() override {
-	System::env()->addId(Identifier(litToStr(args[0]), args[1]));
+	__environment->addId(Identifier(litToStr(args[0]), args[1]));
+}
+END_COMMAND
+
+// loc
+START_COMMAND(SysCmdLoc, ParamVec({ {nullptr, {lit::LitType::Literal}},	nullptr }), CommandBase, "loc", CmdFunc::System)
+void exec() override {
+	__environment->addId(Identifier(litToStr(args[0]), args[1], true));
 }
 END_COMMAND
 

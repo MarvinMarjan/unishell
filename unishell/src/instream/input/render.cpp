@@ -88,7 +88,7 @@ void INStreamRender::renderIdentifier(std::stringstream& stream, const std::stri
 
 	if (i + 1 < text.size()) {
 		const std::string idName = std::string(text.begin() + i, text.begin() + getWordEndPos(text, i + 1) + 1);
-		const Identifier* const id = System::env()->getId(idName);
+		const Identifier* const id = __environment->getId(idName);
 
 		if (id) idColor = __clr_ex_identifier;
 
