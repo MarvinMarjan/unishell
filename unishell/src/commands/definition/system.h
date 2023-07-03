@@ -58,6 +58,19 @@ void exec() override
 }
 END_COMMAND
 
+// foreach
+START_COMMAND(SysCmdForeach, ParamVec({ {nullptr, {lit::LitType::Any}}, {nullptr, {lit::LitType::List}}, {nullptr, {lit::LitType::Block}} }), CommandBase, "foreach", CmdFunc::System)
+void exec() override
+{
+	lit::LiteralValue* buff = args[0];
+	
+	for (lit::LiteralValue* item : asList(args[1])) {
+		*buff = *item;
+		__run_block(asBlock(args[2]), false);
+	}
+}
+END_COMMAND
+
 
 
 // print

@@ -23,6 +23,11 @@ START_HELP(SysCmdWhile)
 return { .name = SysCmdWhile().symbol, .params = {{"Condition", {lit::LitType::Bool}}, {"Block", {lit::LitType::Block}}}, .description = "executes block ^1 while ^0 is true" };
 END_HELP
 
+// foreach
+START_HELP(SysCmdForeach)
+return { .name = SysCmdForeach().symbol, .params = {{"Buffer", {lit::LitType::Any}}, {"Container", {lit::LitType::List}}, {"Block", {lit::LitType::Block}}}, .description = "executes block ^2 for each element of ^1 and uses ^0 to represent each element that will be iterate." };
+END_HELP
+
 
 
 // print

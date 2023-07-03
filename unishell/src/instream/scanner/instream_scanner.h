@@ -23,7 +23,8 @@ public:
 		addEndlTokens = alg::bit::hasBits(hints, AddEndlTokens);
 
 		currentLine = 1;
-		nestLevel = 0;
+
+		nestLevel = (addEndlTokens) ? 0 : -1;
 	}
 
 	TokenList scanTokens() override;

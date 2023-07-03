@@ -27,19 +27,16 @@ while '(!$stop)' begin
 		print %nl "who?: ";
 		exp ($who = #input);
 
-		var count 0;
 		var found false;
+		var item null;
 
-		while '($count < $objs@size)' begin
-			if (($objs@at[$count])@at["name"] == $who) begin
-				print "removing: " $objs@at[$count];
+		foreach $item $objs begin
+			if ($item@at["name"] == $who) begin
+				print "removing: " $item;
 
-				exp ($objs@eraseAt[$count]);
-
-				exp ($found = true);
+				exp ($objs@eraseAt[$count]) 
+					($found = true);
 			end;
-
-			exp ($count = $count + 1);
 		end;
 
 		if (!$found) begin

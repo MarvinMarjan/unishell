@@ -70,6 +70,7 @@ const std::vector<CommandBase*> __sys_commands = {
 	
 	new SysCmdIf(),
 	new SysCmdWhile(),
+	new SysCmdForeach(),
 
 	new SysCmdPrint(),
 	new SysCmdClear(),
