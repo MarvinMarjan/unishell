@@ -85,7 +85,7 @@ public:
 		this->args = args;
 	}
 
-	~CommandBaseCore() {
+	virtual ~CommandBaseCore() {
 		for (const Param& param : params)
 			if (param.getDefaultValue()) {
 				delete param.getDefaultValue();
@@ -127,10 +127,6 @@ public:
 	CommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
 	CommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) : 
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
-
-	~CommandBase() {
-		dynamic_cast<CommandBaseCore*>(this)->~CommandBaseCore();
-	}
 };
 
 // return command bases
@@ -141,8 +137,4 @@ public:
 	RetCommandBase(const std::string& cmdSymbol, const CmdFunc func) : CommandBaseCore(cmdSymbol, func) {}
 	RetCommandBase(const ParamList& params, const ArgList& args, const FlagList& flags, const std::string& cmdSymbol, const CmdFunc func) :
 		CommandBaseCore(params, args, flags, cmdSymbol, func) {}
-
-	~RetCommandBase() {
-		dynamic_cast<CommandBaseCore*>(this)->~CommandBaseCore();
-	}
 };

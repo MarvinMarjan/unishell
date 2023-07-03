@@ -29,8 +29,6 @@ void __run(TokenList input, bool free_cmd = true) {
 	if (free_cmd)
 		delete input[0].getLiteral();
 
-	//command->~CommandBase();
-
 	delete command;
 }
 

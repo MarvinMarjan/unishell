@@ -8,8 +8,22 @@ OBJECT_PATH := $(BUILD_PATH)/obj
 
 CC := g++
 CPP_VERSION := -std=c++20
+
 INCLUDE_PATHS := \
 	-I deps/json/include
+
+
+STATIC_LINKING := -static-libstdc++ -static-libgcc
+
+
+# use OPTZ=1 to enable runtime optimization
+
+ifdef OPTZ
+	ORT := -O3
+else
+	ORT := -O0
+endif
+
 
 SOURCE := \
 	main.cpp \
@@ -64,21 +78,38 @@ OBJECTS := $(addprefix $(OBJECT_PATH)/, $(notdir $(SOURCE:.cpp=.o)))
 # compile the object if it was not found
 .PHONY: build
 build: $(OBJECT_PATH) $(OBJECTS)
-	@ echo Creating $(APP_NAME)
+	@ echo Creating $(APP_NAME) with shared linking.
 	@ $(CC) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
 
 
+.PHONY: static_build
+static_build: $(OBJECT_PATH) $(OBJECTS)
+	@ echo Creating $(APP_NAME) with static linking.
+	@ $(CC) $(STATIC_LINKING) $(OBJECTS) -o $(BUILD_PATH)/$(APP_NAME)
+
+
+
+# create object directory
 $(OBJECT_PATH):
 	@ echo Creating $(OBJECT_PATH) folder
 	@ mkdir "$(OBJECT_PATH)"
 
 
+
+
 # compile source file into objects
 $(OBJECT_PATH)/%.o: %.cpp
 	@ echo Compiling $(notdir $<)
-	@ $(CC) $(CPP_VERSION) $(INCLUDE_PATHS) -c $< -o $@
+	@ $(CC) $(ORT) $(CPP_VERSION) $(INCLUDE_PATHS) -c $< -o $@
 
 
+
+
+# builds in distribution mode
+.PHONY: distribute
+distribute:
+	@ $(MAKE) -s clean
+	@ $(MAKE) -s OPTZ=1 static_build 
 
 
 # rebuild all
@@ -92,7 +123,7 @@ rebuild:
 
 # clear build folder
 .PHONY: clean
-clean:
+clean: $(OBJECT_PATH)
 	@ echo Removing object files
 	@ del /Q "$(OBJECT_PATH)"
 	@ rmdir "$(OBJECT_PATH)"
